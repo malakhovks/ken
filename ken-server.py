@@ -27,7 +27,7 @@ def file_Sentence_Segmentation(lib_name):
 
 def file_Sentence_Segmentation_NLTK():
     try:
-        file = request. files['file']
+        file = request.files['file']
         raw_text = file.read().decode('utf-8')
         file.close()
         sentences = sent_tokenize(raw_text)
@@ -39,7 +39,7 @@ def file_Sentence_Segmentation_NLTK():
 
 def file_Sentence_Segmentation_SpaCy():
     try:
-        file = request. files['file']
+        file = request.files['file']
         raw_text = file.read().decode('utf-8')
         file.close()
         nlp = spacy.load('en_core_web_sm')
