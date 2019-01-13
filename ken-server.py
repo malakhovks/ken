@@ -84,7 +84,8 @@ def clean_File():
         raw_text = file.read().decode('utf-8')
         file.close()
         for line in raw_text.splitlines(True):
-            if re.search(r'[a-zA-z]+', line):
+            # if line contains letters
+            if re.search(r'[a-z]+', line):
                 # remove tabs and insert spaces
                 line = re.sub('[\t]',' ',line)
                 # remove multiple spaces
@@ -95,12 +96,9 @@ def clean_File():
                 line = line.strip()
                 yet_raw_text_list.append(line)
             else:
-                print(line)
-        # remove empty lines
-        # filtered = filter(lambda x: not re.match(r'^\s*$', x), yet_raw_text_list)
-        # print(filtered)
-        # tok_text = '\n'.join(filtered)
-        return yet_raw_text_list
+                print('Excluded line: ' + line)
+        tok_text = '\n'.join(yet_raw_text_list)
+        return tok_text
     except KeyError:
         return jsonify({"Error": {"KeyError": "One of the words is missing" }})
 
