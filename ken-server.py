@@ -2,10 +2,19 @@
 # -*- coding: utf-8 -*-
 
 """
+Solving Unicode Problems in Python 2.7
+# ------------------------------------------------------------------------------------------------------
 It makes Python 2 behave as Python 3 does when it comes to string literals.
 It makes your code cross-Python-version compatible.
 
 # from __future__ import unicode_literals
+# ------------------------------------------------------------------------------------------------------
+    encode(): Gets you from Unicode -> bytes
+    decode(): Gets you from bytes -> Unicode
+    codecs.open(encoding=”utf-8″): Read and write files directly to/from Unicode (you can use any encoding, not just utf-8, but utf-8 is most common).
+    u”: Makes your string literals into Unicode objects rather than byte sequences.
+Warning: Don’t use encode() on bytes or decode() on Unicode objects.
+# ------------------------------------------------------------------------------------------------------
 """
 import sys
 
@@ -216,13 +225,17 @@ def parcexml_Generator():
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 new_sentence_element.append(new_sent_element)
 
-                # create and append <item>, <lemma>, <number>, <speech>
+                # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
                 # TODO optimize for using only 1 nlp
                 doc_for_lemmas = nlp(sentence_clean)
                 for lemma in doc_for_lemmas:
                 # for lemma in sentence:
                     # create and append <item>
                     new_item_element = ET.Element('item')
+                    # create and append <word>
+                    new_word_element = ET.Element('word')
+                    new_word_element.text = lemma.text
+                    new_item_element.append(new_word_element)
                     # create and append <lemma>
                     new_lemma_element = ET.Element('lemma')
                     # TODO optimize encodings UNICODE UTF-8
@@ -231,12 +244,15 @@ def parcexml_Generator():
                     # create and append <number>
                     new_number_element = ET.Element('number')
                     new_number_element.text = str(lemma.i+1)
-                    # new_number_element.text = str(lemma.i+1-sentence.start)
                     new_item_element.append(new_number_element)
                     # create and append <speech>
                     new_speech_element = ET.Element('speech')
                     new_speech_element.text = lemma.pos_
                     new_item_element.append(new_speech_element)
+                    # create and append <pos>
+                    new_pos_element = ET.Element('pos')
+                    new_pos_element.text = str(lemma.idx+1)
+                    new_item_element.append(new_pos_element)
 
                     new_sentence_element.append(new_item_element)
                     print(lemma.text, lemma.lemma_, lemma.i)
