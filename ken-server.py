@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+"""
+It makes Python 2 behave as Python 3 does when it comes to string literals.
+It makes your code cross-Python-version compatible.
+
+# from __future__ import unicode_literals
+"""
+import sys
 
 # libraries for NLP pipeline
 from nltk import sent_tokenize
@@ -21,16 +27,40 @@ from json_tricks.np import dumps, loads
 # import json
 
 # libraries for XML proccessing
-
+import xml.etree.ElementTree as ET
 
 # libraries for API proccessing
-from flask import Flask, jsonify, request
-from flask import abort
+from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
+
+# ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
+ALLOWED_EXTENSIONS = set(['txt']) 
+
+class XMLResponse(Response):
+    default_mimetype = 'application/xml'
+
 app = Flask(__name__)
+app.response_class = XMLResponse
+"""
+Limited the maximum allowed payload to 16 megabytes.
+If a larger file is transmitted, Flask will raise an RequestEntityTooLarge exception.
+"""
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+# TODO Generate new secret_key
+# TODO Set secret_key via CMD arguments at startup. Using import argparse
+"""
+Set the secret key to some random bytes. Keep this really secret!
+How to generate good secret keys.
+A secret key should be as random as possible. Your operating system has ways to generate pretty random data based on a cryptographic random generator. Use the following command to quickly generate a value for Flask.secret_key (or SECRET_KEY):
+$ python -c 'import os; print(os.urandom(16))'
+b'_5#y2L"F4Q8z\n\xec]/'
+"""
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # ------------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
-def text_Normalization(raw_text):
+
+def text_normalization(raw_text):
     normal_text_list = []
     for line in raw_text.splitlines(True):
         # if line contains letters
@@ -49,132 +79,208 @@ def text_Normalization(raw_text):
             print('Excluded line: ' + line)
     normal_text = '\n'.join(normal_text_list)
     return normal_text
+
+# function that check if an extension is valid
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 # ------------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
 
 # Sentence segmentation service
-@app.route('/ken/api/v1.0/en/file/sentences/<string:lib_name>', methods=['POST'])
-def file_Sentence_Segmentation(lib_name):
-    if lib_name == "nltk":
-        return file_Sentence_Segmentation_NLTK()
-    if lib_name == "spacy":
-        return file_Sentence_Segmentation_SpaCy()
+# @app.route('/ken/api/v1.0/en/file/sentences/<string:lib_name>', methods=['POST'])
+# def file_Sentence_Segmentation(lib_name):
+#     if lib_name == "nltk":
+#         return file_Sentence_Segmentation_NLTK()
+#     if lib_name == "spacy":
+#         return file_Sentence_Segmentation_SpaCy()
 
-def file_Sentence_Segmentation_NLTK():
-    try:
-        file = request.files['file']
-        raw_text = file.read().decode('utf-8')
-        file.close()
-        sentences = sent_tokenize(raw_text)
-        for sentence in sentences:
-            print(sentence + "\n")
-        return sentences[0]
-    except KeyError:
-        return jsonify({"Error": {"KeyError": "One of the words is missing" }})
+# def file_Sentence_Segmentation_NLTK():
+#     try:
+#         file = request.files['file']
+#         raw_text = file.read().decode('utf-8')
+#         file.close()
+#         sentences = sent_tokenize(raw_text)
+#         for sentence in sentences:
+#             print(sentence + "\n")
+#         return sentences[0]
+#     except KeyError:
+#         return jsonify({"Error": {"KeyError": "One of the words is missing" }})
 
-def file_Sentence_Segmentation_SpaCy():
-    sentences_list = []
-    try:
-        file = request.files['file']
-        raw_text = file.read().decode('utf-8')
-        file.close()
-        nlp = spacy.load('en_core_web_sm')
-        # nlp = spacy.load('en_core_web_lg')
-        doc = nlp(raw_text)
-        print('''
-        sentences\t{num_sent}
-        '''.format(
-        num_sent=len(list(doc.sents)),))
-        for sentence in doc.sents:
-            print("-------")
-            print(sentence)
-            sentences_list.append(sentence.text)
-        return dumps(sentences_list)
-    except KeyError:
-        return jsonify({"Error": {"KeyError": "One of the words is missing" }})
+# def file_Sentence_Segmentation_SpaCy():
+#     sentences_list = []
+#     try:
+#         file = request.files['file']
+#         raw_text = file.read().decode('utf-8')
+#         file.close()
+#         nlp = spacy.load('en_core_web_sm')
+#         # nlp = spacy.load('en_core_web_lg')
+#         doc = nlp(raw_text)
+#         print('''
+#         sentences\t{num_sent}
+#         '''.format(
+#         num_sent=len(list(doc.sents)),))
+#         for sentence in doc.sents:
+#             print("-------")
+#             print(sentence)
+#             sentences_list.append(sentence.text)
+#         return dumps(sentences_list)
+#     except KeyError:
+#         return jsonify({"Error": {"KeyError": "One of the words is missing" }})
 
+"""
 # ------------------------------------------------------------------------------------------------------
-# parce.xml generation service
+# <parce.xml> generation service
+# ------------------------------------------------------------------------------------------------------
+# """
 @app.route('/ken/api/v1.0/en/file/parcexml', methods=['POST'])
 def parcexml_Generator():
-    try:
-        file = request.files['file']
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    file = request.files['file']
+
+    # if user does not select file, browser also submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return abort(400)
+
+    if file and allowed_file(file.filename):
         raw_text = file.read().decode('utf-8')
         file.close()
-    except KeyError:
-        return jsonify({"Error": {"KeyError": "One of the words is missing"}})
 
-    raw_text_list = []
+        raw_text_list = []
 
-    for line in raw_text.splitlines(True):
-        # if line contains letters
-        if re.search(r'[a-z]+', line):
-            # remove tabs and insert spaces
-            line = re.sub('[\t]', ' ', line)
-            # remove multiple spaces
-            line = re.sub('\s\s+', ' ', line)
-            # remove all numbers
-            # line = re.sub(r'\d+','',line)
-            # remove leading and ending spaces
-            line = line.strip()
-            raw_text_list.append(line)
-            print('Encluded line: ' + line)
-        else:
-            print('Excluded line: ' + line)
-    yet_raw_text = '\n'.join(raw_text_list)
+        for line in raw_text.splitlines(True):
+            # if line contains letters
+            if re.search(r'[a-z]+', line):
+                # remove tabs and insert spaces
+                line = re.sub('[\t]', ' ', line)
+                # remove multiple spaces
+                line = re.sub('\s\s+', ' ', line)
+                # remove all numbers
+                # line = re.sub(r'\d+','',line)
+                # remove leading and ending spaces
+                line = line.strip()
+                raw_text_list.append(line)
+                print('Included line: ' + line)
+            else:
+                print('Excluded line: ' + line)
+        yet_raw_text = '\n'.join(raw_text_list)
 
-    sentences_list = []
-    # noun_phrases_list = []
+        sentences_list = []
 
-    blob = TextBlob(yet_raw_text)
-    print('+++++++++++++++')
-    print(blob.noun_phrases)
-    print('+++++++++++++++')
-    
-    try:
-        nlp = spacy.load('en_core_web_sm')
-        # nlp = spacy.load('en_core_web_lg')
-        doc = nlp(yet_raw_text)
-        print('''
-        sentences\t{num_sent}
-        '''.format(
-            num_sent=len(list(doc.sents)),))
-        for sentence in doc.sents:
-            # remove \n and insert spaces
-            sentence_clean = re.sub('[\n]', ' ', sentence.text)
-            # remove multiple spaces
-            sentence_clean = line = re.sub('\s\s+', ' ', sentence_clean)
-            # remove leading and ending spaces
-            sentence_clean = sentence_clean.strip()
-            # list creation
-            sentences_list.append(sentence_clean)
-            # NP shallow parsing
-            doc_for_chunks = nlp(sentence_clean)
-            for chunk in doc_for_chunks.noun_chunks:
-                print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-            print("-----")
-        return dumps({"sentences": sentences_list})
-    except KeyError:
-        return jsonify({"Error": {"KeyError": "One of the words is missing"}})
+        # noun_phrases_list = []
+        #  TextBlob
+        # blob = TextBlob(yet_raw_text)
+        # print('+++++++++++++++')
+        # print(blob.noun_phrases)
+        # print('+++++++++++++++')
 
+        try:
+            # Load spaCy model via package name
+            nlp = spacy.load('en_core_web_sm')
+            # nlp = spacy.load('en_core_web_lg')
+            doc = nlp(yet_raw_text)
+            print('''
+            sentences\t{num_sent}
+            '''.format(
+                num_sent=len(list(doc.sents)),))
+
+            # create the <parce.xml> file structure
+            # create root element <text>
+            root_element = ET.Element("text")
+            sentence_index = 0
+
+            for sentence in doc.sents:
+                sentence_index+=1
+                # remove \n and insert spaces
+                sentence_clean = re.sub('[\n]', ' ', sentence.text)
+                # remove multiple spaces
+                sentence_clean = line = re.sub('\s\s+', ' ', sentence_clean)
+                # remove leading and ending spaces
+                sentence_clean = sentence_clean.strip()
+
+                # XML structure creation
+                new_sentence_element = ET.Element('sentence')
+                # create and append <sentnumber>
+                new_sentnumber_element = ET.Element('sentnumber')
+                new_sentnumber_element.text = str(sentence_index)
+                new_sentence_element.append(new_sentnumber_element)
+                # create and append <sent>
+                new_sent_element = ET.Element('sent')
+                # TODO optimize encodings UNICODE UTF-8
+                new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
+                new_sentence_element.append(new_sent_element)
+
+                # create and append <item>, <lemma>, <number>, <speech>
+                # TODO optimize for using only 1 nlp
+                doc_for_lemmas = nlp(sentence_clean)
+                for lemma in doc_for_lemmas:
+                # for lemma in sentence:
+                    # create and append <item>
+                    new_item_element = ET.Element('item')
+                    # create and append <lemma>
+                    new_lemma_element = ET.Element('lemma')
+                    # TODO optimize encodings UNICODE UTF-8
+                    new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
+                    new_item_element.append(new_lemma_element)
+                    # create and append <number>
+                    new_number_element = ET.Element('number')
+                    new_number_element.text = str(lemma.i+1)
+                    # new_number_element.text = str(lemma.i+1-sentence.start)
+                    new_item_element.append(new_number_element)
+                    # create and append <speech>
+                    new_speech_element = ET.Element('speech')
+                    new_speech_element.text = lemma.pos_
+                    new_item_element.append(new_speech_element)
+
+                    new_sentence_element.append(new_item_element)
+                    print(lemma.text, lemma.lemma_, lemma.i)
+
+                print("-----")
+
+                # create full <parce.xml> file structure
+                root_element.append(new_sentence_element)
+
+                # NP shallow parsing
+                # doc_for_chunks = nlp(sentence_clean)
+                # for chunk in doc_for_chunks.noun_chunks:
+                #     print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
+                # print("-----")
+            print ET.tostring(root_element, encoding='utf8', method='xml')
+            return ET.tostring(root_element, encoding='utf8', method='xml')
+        except:
+            print "Unexpected error:", sys.exc_info()
+            return abort(500)
+    file.close()
+    return abort(400)
+"""
+# ------------------------------------------------------------------------------------------------------
+# <parce>.xml generation service
+# ------------------------------------------------------------------------------------------------------
+# """
 # ------------------------------------------------------------------------------------------------------
 # Text normalization service
-@app.route('/ken/api/v1.0/en/file/clean', methods=['POST'])
-def raw_Text_Normalization_From_File():
-    try:
-        file = request.files['file']
-        raw_text = file.read().decode('utf-8')
-        file.close()
-    except Exception as e:
-        s,r = getattr(e, 'message') or str(e), getattr(e, 'message') or repr(e)
-        print 's:', s, 'len(s):', len(s)
-        print 'r:', r, 'len(r):', len(r)
-        return jsonify({"InternalError": 500})
-    return text_Normalization(raw_text)
+# @app.route('/ken/api/v1.0/en/file/clean', methods=['POST'])
+# def raw_Text_Normalization_From_File():
+#     try:
+#         file = request.files['file']
+#         raw_text = file.read().decode('utf-8')
+#         file.close()
+#     except Exception as e:
+#         s,r = getattr(e, 'message') or str(e), getattr(e, 'message') or repr(e)
+#         print 's:', s, 'len(s):', len(s)
+#         print 'r:', r, 'len(r):', len(r)
+#         return jsonify({"InternalError": 500})
+#     return text_normalization(raw_text)
 
 
 # ------------------------------------------------------------------------------------------------------
-# TODO exception handling
+# TODO exception handling in a good way
 # try:
 #     f = open('myfile.txt')
 #     s = f.readline()
@@ -186,7 +292,7 @@ def raw_Text_Normalization_From_File():
 # except:
 #     print "Unexpected error:", sys.exc_info()[0]
 #     raise
-
 # ------------------------------------------------------------------------------------------------------
+
 if __name__ == '__main__':
     app.run(host = '127.0.0.1', port = 8000)
