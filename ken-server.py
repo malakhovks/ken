@@ -6,7 +6,6 @@ Solving Unicode Problems in Python 2.7
 # ------------------------------------------------------------------------------------------------------
 It makes Python 2 behave as Python 3 does when it comes to string literals.
 It makes your code cross-Python-version compatible.
-
 # from __future__ import unicode_literals
 # ------------------------------------------------------------------------------------------------------
     encode(): Gets you from Unicode -> bytes
