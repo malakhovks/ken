@@ -156,7 +156,6 @@ def parcexml_Generator():
                 new_sentence_element.append(new_sentnumber_element)
                 # create and append <sent>
                 new_sent_element = ET.Element('sent')
-                # TODO REVIEW encodings UNICODE UTF-8
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 new_sentence_element.append(new_sent_element)
 
@@ -173,7 +172,6 @@ def parcexml_Generator():
                     new_item_element.append(new_word_element)
                     # create and append <lemma>
                     new_lemma_element = ET.Element('lemma')
-                    # TODO REVIEW encodings UNICODE UTF-8
                     new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
                     new_item_element.append(new_lemma_element)
                     # create and append <number>
@@ -182,6 +180,7 @@ def parcexml_Generator():
                     new_item_element.append(new_number_element)
                     # create and append <speech>
                     new_speech_element = ET.Element('speech')
+                    # relate the universal dependencies parts of speech with konspekt tags
                     new_speech_element.text = speech_dict_Universal_POS_tags[lemma.pos_]
                     new_item_element.append(new_speech_element)
                     # create and append <pos>
@@ -209,13 +208,7 @@ def parcexml_Generator():
             return abort(500)
     file.close()
     return abort(400)
-"""
-# ------------------------------------------------------------------------------------------------------
-# <parce>.xml generation service
-# ------------------------------------------------------------------------------------------------------
-# """
 
-# ------------------------------------------------------------------------------------------------------
 # TODO exception handling in a good way
 # try:
 #     f = open('myfile.txt')
@@ -228,7 +221,23 @@ def parcexml_Generator():
 # except:
 #     print "Unexpected error:", sys.exc_info()[0]
 #     raise
+
+"""
 # ------------------------------------------------------------------------------------------------------
+# <parce>.xml generation service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+""" 
+# ------------------------------------------------------------------------------------------------------
+# FEATURE LIST
+# ------------------------------------------------------------------------------------------------------
+TODO Ability to customize settings via an external configuration xml-file:
+    + host, port, envionment
+    + symbols for text normalization
+
+# ------------------------------------------------------------------------------------------------------
+"""
 
 if __name__ == '__main__':
     app.run(host = '127.0.0.1', port = 8000)
