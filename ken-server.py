@@ -19,7 +19,6 @@ Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 import sys
 
 # libraries for NLP pipeline
-from nltk import sent_tokenize
 import spacy
 from textblob import TextBlob
 
@@ -30,10 +29,6 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 # libraries for JSON proccessing
 import re, string
-
-# libraries for JSON proccessing
-from json_tricks.np import dumps, loads
-# import json
 
 # libraries for XML proccessing
 import xml.etree.ElementTree as ET
@@ -69,74 +64,10 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 # ------------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
 
-def text_normalization(raw_text):
-    normal_text_list = []
-    for line in raw_text.splitlines(True):
-        # if line contains letters
-        if re.search(r'[a-z]+', line):
-            # remove tabs and insert spaces
-            line = re.sub('[\t]', ' ', line)
-            # remove multiple spaces
-            line = re.sub('\s\s+', ' ', line)
-            # remove all numbers
-            # line = re.sub(r'\d+','',line)
-            # remove leading and ending spaces
-            line = line.strip()
-            normal_text_list.append(line)
-            print('Encluded line: ' + line)
-        else:
-            print('Excluded line: ' + line)
-    normal_text = '\n'.join(normal_text_list)
-    return normal_text
-
 # function that check if an extension is valid
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# ------------------------------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------------------------------
-
-# Sentence segmentation service
-# @app.route('/ken/api/v1.0/en/file/sentences/<string:lib_name>', methods=['POST'])
-# def file_Sentence_Segmentation(lib_name):
-#     if lib_name == "nltk":
-#         return file_Sentence_Segmentation_NLTK()
-#     if lib_name == "spacy":
-#         return file_Sentence_Segmentation_SpaCy()
-
-# def file_Sentence_Segmentation_NLTK():
-#     try:
-#         file = request.files['file']
-#         raw_text = file.read().decode('utf-8')
-#         file.close()
-#         sentences = sent_tokenize(raw_text)
-#         for sentence in sentences:
-#             print(sentence + "\n")
-#         return sentences[0]
-#     except KeyError:
-#         return jsonify({"Error": {"KeyError": "One of the words is missing" }})
-
-# def file_Sentence_Segmentation_SpaCy():
-#     sentences_list = []
-#     try:
-#         file = request.files['file']
-#         raw_text = file.read().decode('utf-8')
-#         file.close()
-#         nlp = spacy.load('en_core_web_sm')
-#         # nlp = spacy.load('en_core_web_lg')
-#         doc = nlp(raw_text)
-#         print('''
-#         sentences\t{num_sent}
-#         '''.format(
-#         num_sent=len(list(doc.sents)),))
-#         for sentence in doc.sents:
-#             print("-------")
-#             print(sentence)
-#             sentences_list.append(sentence.text)
-#         return dumps(sentences_list)
-#     except KeyError:
-#         return jsonify({"Error": {"KeyError": "One of the words is missing" }})
 
 """
 # ------------------------------------------------------------------------------------------------------
@@ -162,6 +93,10 @@ def parcexml_Generator():
         file.close()
 
         raw_text_list = []
+
+        # TODO Correctly relate the parts of speech
+        # https://universaldependencies.org/u/pos/
+        speech_dict_Universal_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
         for line in raw_text.splitlines(True):
             # if line contains letters
@@ -221,7 +156,7 @@ def parcexml_Generator():
                 new_sentence_element.append(new_sentnumber_element)
                 # create and append <sent>
                 new_sent_element = ET.Element('sent')
-                # TODO optimize encodings UNICODE UTF-8
+                # TODO REVIEW encodings UNICODE UTF-8
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 new_sentence_element.append(new_sent_element)
 
@@ -238,7 +173,7 @@ def parcexml_Generator():
                     new_item_element.append(new_word_element)
                     # create and append <lemma>
                     new_lemma_element = ET.Element('lemma')
-                    # TODO optimize encodings UNICODE UTF-8
+                    # TODO REVIEW encodings UNICODE UTF-8
                     new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
                     new_item_element.append(new_lemma_element)
                     # create and append <number>
@@ -247,7 +182,7 @@ def parcexml_Generator():
                     new_item_element.append(new_number_element)
                     # create and append <speech>
                     new_speech_element = ET.Element('speech')
-                    new_speech_element.text = lemma.pos_
+                    new_speech_element.text = speech_dict_Universal_POS_tags[lemma.pos_]
                     new_item_element.append(new_speech_element)
                     # create and append <pos>
                     new_pos_element = ET.Element('pos')
@@ -279,21 +214,6 @@ def parcexml_Generator():
 # <parce>.xml generation service
 # ------------------------------------------------------------------------------------------------------
 # """
-# ------------------------------------------------------------------------------------------------------
-# Text normalization service
-# @app.route('/ken/api/v1.0/en/file/clean', methods=['POST'])
-# def raw_Text_Normalization_From_File():
-#     try:
-#         file = request.files['file']
-#         raw_text = file.read().decode('utf-8')
-#         file.close()
-#     except Exception as e:
-#         s,r = getattr(e, 'message') or str(e), getattr(e, 'message') or repr(e)
-#         print 's:', s, 'len(s):', len(s)
-#         print 'r:', r, 'len(r):', len(r)
-#         return jsonify({"InternalError": 500})
-#     return text_normalization(raw_text)
-
 
 # ------------------------------------------------------------------------------------------------------
 # TODO exception handling in a good way
