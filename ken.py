@@ -231,12 +231,14 @@ def parcexml_Generator():
 # ------------------------------------------------------------------------------------------------------
 # FEATURE LIST
 # ------------------------------------------------------------------------------------------------------
-TODO Ability to customize settings via an external configuration xml-file:
-    + host, port, envionment
-    + symbols for text normalization
+TODO Flask in production with uWSGI
+
+TODO Flask in production with Docker
 
 # ------------------------------------------------------------------------------------------------------
 """
 
 if __name__ == '__main__':
-    app.run(host = '127.0.0.1', port = 8000)
+    # default port = 5000
+    app.run(host = '0.0.0.0')
+    # app.run(host = '127.0.0.1', port = 8000)
