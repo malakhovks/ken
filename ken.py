@@ -15,7 +15,7 @@ It makes your code cross-Python-version compatible.
 Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 # ------------------------------------------------------------------------------------------------------
 """
-import sys
+import sys, os
 
 # libraries for NLP pipeline
 import spacy
@@ -58,7 +58,8 @@ A secret key should be as random as possible. Your operating system has ways to 
 $ python -c 'import os; print(os.urandom(16))'
 b'_5#y2L"F4Q8z\n\xec]/'
 """
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+# app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = os.urandom(42)
 
 # ------------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
