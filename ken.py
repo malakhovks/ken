@@ -113,13 +113,6 @@ def parcexml_Generator():
                 print('Excluded line: ' + line)
         yet_raw_text = '\n'.join(raw_text_list)
 
-        # noun_phrases_list = []
-        #  TextBlob
-        # blob = TextBlob(yet_raw_text)
-        # print('+++++++++++++++')
-        # print(blob.noun_phrases)
-        # print('+++++++++++++++')
-
         try:
             # Load spaCy model via package name
             nlp = spacy.load('en_core_web_sm')
