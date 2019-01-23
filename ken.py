@@ -49,8 +49,6 @@ If a larger file is transmitted, Flask will raise an RequestEntityTooLarge excep
 """
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-# TODO Generate new secret_key
-# TODO Set secret_key via CMD arguments at startup. Using import argparse
 """
 Set the secret key to some random bytes. Keep this really secret!
 How to generate good secret keys.
@@ -235,6 +233,10 @@ def parcexml_Generator():
 TODO Flask in production with uWSGI
 
 TODO Flask in production with Docker
+
+TODO hunspell integration
+
+TODO def text_normalization(raw_text):
 
 # ------------------------------------------------------------------------------------------------------
 """
