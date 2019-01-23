@@ -113,8 +113,6 @@ def parcexml_Generator():
                 print('Excluded line: ' + line)
         yet_raw_text = '\n'.join(raw_text_list)
 
-        sentences_list = []
-
         # noun_phrases_list = []
         #  TextBlob
         # blob = TextBlob(yet_raw_text)
@@ -145,6 +143,10 @@ def parcexml_Generator():
                 sentence_clean = line = re.sub('\s\s+', ' ', sentence_clean)
                 # remove leading and ending spaces
                 sentence_clean = sentence_clean.strip()
+
+                # Spelling Correction with TextBlob
+                blob = TextBlob(sentence_clean)
+                sentence_clean = str(blob.correct()).decode('utf-8')
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
@@ -234,7 +236,7 @@ TODO Flask in production with uWSGI
 
 TODO Flask in production with Docker
 
-TODO hunspell integration
+TODO hunspell integration or TextBlob spelling correction
 
 TODO def text_normalization(raw_text):
 

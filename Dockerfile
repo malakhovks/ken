@@ -13,6 +13,7 @@ RUN apt-get -y install nginx \
     && apt-get -y install build-essential
 
 RUN pip install -r requirements.txt --src /usr/local/src
+RUN python -m textblob.download_corpora
 
 COPY nginx.conf /etc/nginx
 RUN chmod +x ./start.sh
