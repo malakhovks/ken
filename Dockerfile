@@ -1,4 +1,5 @@
-FROM python:2.7-slim
+FROM python:2.7-alpine
+# FROM python:2.7-slim
 
 LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua>"
 LABEL description "KEN project (Nginx + uWSGI + Flask)"
