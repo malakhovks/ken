@@ -16,8 +16,10 @@ RUN apt-get -y install nginx \
 
 # for python:2.7-alpine
 # RUN apk update
-# RUN apk add nginx \
-#     && apk add python-dev \
+# RUN apk add --no-cache nginx \
+#     uwsgi \
+#     uwsgi-python \
+#     && apk add --no-cache python-dev \
 #     && apk add --no-cache build-base
 
 RUN pip install -r requirements.txt --src /usr/local/src
