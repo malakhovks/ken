@@ -18,7 +18,13 @@ WORKDIR /srv/ken
 RUN apk update
 RUN apk add nginx \
     && apk add python-dev \
-    && apk add build-essential
+    && apk add --virtual build-dependencies \
+        build-base \
+        gcc \
+        wget \
+        git \
+    && apk add \
+        bash
 
 RUN pip install -r requirements.txt --src /usr/local/src
 RUN python -m textblob.download_corpora
