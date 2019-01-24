@@ -60,12 +60,57 @@ b'_5#y2L"F4Q8z\n\xec]/'
 app.secret_key = os.urandom(42)
 
 # ------------------------------------------------------------------------------------------------------
+# secondary functions
 # ------------------------------------------------------------------------------------------------------
 
 # function that check if an extension is valid
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# default text normalization
+def text_normalization_default(raw_text):
+    raw_text_list = []
+    for line in raw_text.splitlines(True):
+        # if line contains letters
+        if re.search(r'[a-z]+', line):
+            # remove tabs and insert spaces
+            line = re.sub('[\t]', ' ', line)
+            # remove multiple spaces
+            line = re.sub('\s\s+', ' ', line)
+            # remove all numbers
+            # line = re.sub(r'\d+','',line)
+            # remove leading and ending spaces
+            line = line.strip()
+            raw_text_list.append(line)
+            print('Included line: ' + line)
+        else:
+            print('Excluded line: ' + line)
+    yet_raw_text = '\n'.join(raw_text_list)
+    return yet_raw_text
+
+# default sentence normalization
+def sentence_normalization_default(raw_sentence):
+    # remove tabs and insert spaces
+    raw_sentence = re.sub('[\t]', ' ', raw_sentence)
+    # remove multiple spaces
+    raw_sentence = re.sub('\s\s+', ' ', raw_sentence)
+    # remove all numbers
+    # line = re.sub(r'\d+','',line)
+    # remove leading and ending spaces
+    raw_sentence = raw_sentence.strip()
+    normalized_sentence = raw_sentence
+    return normalized_sentence
+
+# sentence spelling TextBlob
+def sentence_spelling(unchecked_sentence):
+    blob = TextBlob(unchecked_sentence)
+    checked_sentence = str(blob.correct()).decode('utf-8')
+    return checked_sentence
+
+# ------------------------------------------------------------------------------------------------------
+# secondary functions
+# ------------------------------------------------------------------------------------------------------
 
 """
 # ------------------------------------------------------------------------------------------------------
@@ -90,34 +135,18 @@ def parcexml_Generator():
         raw_text = file.read().decode('utf-8')
         file.close()
 
-        raw_text_list = []
 
         # TODO Correctly relate the parts of speech
         # https://universaldependencies.org/u/pos/
         speech_dict_Universal_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
-        for line in raw_text.splitlines(True):
-            # if line contains letters
-            if re.search(r'[a-z]+', line):
-                # remove tabs and insert spaces
-                line = re.sub('[\t]', ' ', line)
-                # remove multiple spaces
-                line = re.sub('\s\s+', ' ', line)
-                # remove all numbers
-                # line = re.sub(r'\d+','',line)
-                # remove leading and ending spaces
-                line = line.strip()
-                raw_text_list.append(line)
-                print('Included line: ' + line)
-            else:
-                print('Excluded line: ' + line)
-        yet_raw_text = '\n'.join(raw_text_list)
-
         try:
             # Load spaCy model via package name
-            nlp = spacy.load('en_core_web_sm')
-            # nlp = spacy.load('en_core_web_lg')
-            doc = nlp(yet_raw_text)
+            nlp = spacy.load('en_core_web_sm') # nlp = spacy.load('en_core_web_lg')
+
+            # default sentence normalization + spaCy doc init
+            doc = nlp(text_normalization_default(raw_text))
+
             print('''
             sentences\t{num_sent}
             '''.format(
@@ -130,16 +159,12 @@ def parcexml_Generator():
 
             for sentence in doc.sents:
                 sentence_index+=1
-                # remove \n and insert spaces
-                sentence_clean = re.sub('[\n]', ' ', sentence.text)
-                # remove multiple spaces
-                sentence_clean = line = re.sub('\s\s+', ' ', sentence_clean)
-                # remove leading and ending spaces
-                sentence_clean = sentence_clean.strip()
 
-                # Spelling Correction with TextBlob
-                blob = TextBlob(sentence_clean)
-                sentence_clean = str(blob.correct()).decode('utf-8')
+                # default sentence normalization
+                sentence_clean = sentence_spelling(sentence.text)
+
+                # spelling Correction with TextBlob
+                sentence_clean = sentence_spelling(sentence_clean)
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
@@ -230,9 +255,6 @@ TODO Flask in production with uWSGI
 TODO Flask in production with Docker
 
 TODO hunspell integration or TextBlob spelling correction
-
-TODO def text_normalization(raw_text):
-
 # ------------------------------------------------------------------------------------------------------
 """
 
