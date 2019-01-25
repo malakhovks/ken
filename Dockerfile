@@ -15,6 +15,8 @@ RUN apt-get -y install nginx \
 RUN pip install -r requirements.txt --src /usr/local/src
 RUN python -m textblob.download_corpora
 
+RUN rm -r /root/.cache
+
 COPY nginx.conf /etc/nginx
 RUN chmod +x ./start.sh
 CMD ["./start.sh"]
