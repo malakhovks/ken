@@ -7,15 +7,13 @@ COPY . /srv/ken
 WORKDIR /srv/ken
 
 RUN apt-get clean \
-    && apt-get -y update
-RUN apt-get -y install nginx \
+    && apt-get -y update \
+    && apt-get -y install nginx \
     && apt-get -y install python-dev \
-    && apt-get -y install build-essential
-
-RUN pip install -r requirements.txt --src /usr/local/src
-RUN python -m textblob.download_corpora
-
-RUN rm -r /root/.cache
+    && apt-get -y install build-essential \
+    && pip install -r requirements.txt --src /usr/local/src \
+    && python -m textblob.download_corpora \
+    && rm -r /root/.cache
 
 COPY nginx.conf /etc/nginx
 RUN chmod +x ./start.sh
