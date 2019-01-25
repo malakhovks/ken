@@ -2,11 +2,13 @@
 ken NLP project
 ## Building and running
 
-Clone from git repo:
+Clone from git repository:
 ```
 git clone https://username:password@github.com/username/repo_name.git
 ```
 <!-- ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c -->
+<!-- https://github.com/malakhovks/ken.git -->
+
 Image build can be done like so:
 ```
 docker build . -t ken_image
