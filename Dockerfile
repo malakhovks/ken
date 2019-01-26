@@ -1,7 +1,7 @@
 FROM python:2.7-slim
 
 LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua>"
-LABEL description "KEN project (Nginx + uWSGI + Flask)"
+LABEL description "KEN project (python:2.7-slim + Nginx + uWSGI + Flask)"
 
 COPY . /srv/ken
 WORKDIR /srv/ken
