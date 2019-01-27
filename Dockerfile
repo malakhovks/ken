@@ -15,6 +15,6 @@ RUN apt-get clean \
     && python -m textblob.download_corpora \
     && rm -r /root/.cache
 
-COPY nginx.conf /etc/nginx
+COPY ./deploy/nginx.conf /etc/nginx
 RUN chmod +x ./start.sh
 CMD ["./start.sh"]
