@@ -11,7 +11,7 @@ RUN apt-get clean \
     && apt-get -y install nginx \
     && apt-get -y install python-dev \
     && apt-get -y install build-essential \
-    && pip install -r requirements.txt --src /usr/local/src \
+    && pip install -r ./deploy/requirements.txt --src /usr/local/src \
     && python -m textblob.download_corpora \
     && rm -r /root/.cache
 
