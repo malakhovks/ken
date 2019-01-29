@@ -119,6 +119,7 @@ def sentence_spelling(unchecked_sentence):
 # """
 @app.route('/ken/api/v1.0/en/file/parcexml', methods=['POST'])
 def parcexml_Generator():
+    print request.args.get('spell', None)
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file part')
@@ -161,10 +162,11 @@ def parcexml_Generator():
                 sentence_index+=1
 
                 # default sentence normalization
-                sentence_clean = sentence_spelling(sentence.text)
+                sentence_clean = sentence_normalization_default(sentence.text)
 
                 # spelling Correction with TextBlob
-                sentence_clean = sentence_spelling(sentence_clean)
+                if request.args.get('spell', None) != None:
+                    sentence_clean = sentence_spelling(sentence_clean)
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
@@ -226,20 +228,6 @@ def parcexml_Generator():
             return abort(500)
     file.close()
     return abort(400)
-
-# TODO exception handling in a good way
-# try:
-#     f = open('myfile.txt')
-#     s = f.readline()
-#     i = int(s.strip())
-# except IOError as (errno, strerror):
-#     print "I/O error({0}): {1}".format(errno, strerror)
-# except ValueError:
-#     print "Could not convert data to an integer."
-# except:
-#     print "Unexpected error:", sys.exc_info()[0]
-#     raise
-
 """
 # ------------------------------------------------------------------------------------------------------
 # <parce>.xml generation service
@@ -250,6 +238,8 @@ def parcexml_Generator():
 # ------------------------------------------------------------------------------------------------------
 # FEATURE LIST
 # ------------------------------------------------------------------------------------------------------
+TODO exception handling in a good way
+
 TODO Flask in production with uWSGI
 
 TODO Flask in production with Docker
