@@ -9,13 +9,14 @@ git clone https://username:password@github.com/username/repo_name.git
 <!-- ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c -->
 <!-- https://github.com/malakhovks/ken.git -->
 
-Image build can be done like so:
+Build an image from a Dockerfile:
 ```
+<!-- It creates an image named `ken_image`  -->
 docker build . -t ken_image
 ```
 It creates an image named `ken_image` that can be run with this command:
 ```
-docker run --name flask_container -p 80:80 ken_image
+docker run --name ken_container -p 80:80 ken_image
 ```
 Some useful options when running container:
 
