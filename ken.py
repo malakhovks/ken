@@ -245,11 +245,11 @@ def parcexml_Generator():
 # ------------------------------------------------------------------------------------------------------
 TODO exception handling in a good way
 
-TODO Flask in production with uWSGI
-
-TODO Flask in production with Docker
+TODO in production on Linux with uWSGI, Nginx, Docker
 
 TODO hunspell integration or TextBlob spelling correction
+
+TODO in production on Windows
 # ------------------------------------------------------------------------------------------------------
 """
 
