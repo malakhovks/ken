@@ -1,5 +1,6 @@
 # ken NLP project
-## Building and running under linux + docker
+
+## Building and running under Linux + Docker
 
 Clone from git repository:
 ```bash
@@ -26,13 +27,14 @@ Some useful options when running container:
 * `-d` runs container detached from terminal. Logs then can be viewed by issuing `docker logs` command
 
 * `--restart on-failure` with `docker run` automatic restart of failed containers.
+
 ## Building and running under Windows
 
-Install latest `Python 2.7.X`:
+Install latest `Python 2.7.x`:
 ```http
 https://www.python.org/downloads/windows/
 ```
-Update the `setuptools`:
+Update `setuptools`:
 ```bash
 pip install -U setuptools
 ```
