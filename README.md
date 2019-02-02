@@ -1,5 +1,4 @@
-# ken
-ken NLP project
+# ken NLP project
 ## Building and running under linux + docker
 
 Clone from git repository:
