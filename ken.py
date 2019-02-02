@@ -217,9 +217,6 @@ def parcexml_Generator():
                     new_item_element.append(new_pos_element)
 
                     new_sentence_element.append(new_item_element)
-                    print(lemma.text, lemma.lemma_, lemma.i)
-
-                print("-----")
 
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
