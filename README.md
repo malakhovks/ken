@@ -3,19 +3,19 @@ ken NLP project
 ## Building and running
 
 Clone from git repository:
-```
+```bash
 git clone https://username:password@github.com/username/repo_name.git
 ```
 <!-- ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c -->
 <!-- https://github.com/malakhovks/ken.git -->
 
 Build an image from a Dockerfile:
-```
+```bash
 <!-- It creates an image named `ken_image`  -->
 docker build . -t ken_image
 ```
 It creates an image named `ken_image` that can be run with this command:
-```
+```bash
 docker run --name ken_container -p 80:80 ken_image
 ```
 Some useful options when running container:
