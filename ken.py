@@ -119,7 +119,6 @@ def sentence_spelling(unchecked_sentence):
 # """
 @app.route('/ken/api/v1.0/en/file/parcexml', methods=['POST'])
 def parcexml_Generator():
-    print request.args.get('spell', None)
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file part')
@@ -136,10 +135,15 @@ def parcexml_Generator():
         raw_text = file.read().decode('utf-8')
         file.close()
 
-
-        # TODO Correctly relate the parts of speech
+        # POS UD
         # https://universaldependencies.org/u/pos/
-        speech_dict_Universal_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
+        if request.args.get('pos', None) == 'ud' or None:
+            speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'99', 'PRON':'S11', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'99', 'CCONJ':'U', 'DET':'99', 'PART':'99', 'SCONJ':'U', 'SPACE':'98'}
+
+        # TODO Correctly relate the parts of speech with spaCy
+        # POS spacCy
+        if request.args.get('pos', None) == 'spacy':
+            peech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
         try:
             # Load spaCy model via package name
@@ -201,7 +205,7 @@ def parcexml_Generator():
                     # create and append <speech>
                     new_speech_element = ET.Element('speech')
                     # relate the universal dependencies parts of speech with konspekt tags
-                    new_speech_element.text = speech_dict_Universal_POS_tags[lemma.pos_]
+                    new_speech_element.text = speech_dict_POS_tags[lemma.pos_]
                     new_item_element.append(new_speech_element)
                     # create and append <pos>
                     new_pos_element = ET.Element('pos')
