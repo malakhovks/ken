@@ -14,6 +14,10 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import BytesIO
 # from io import StringIO
+""" I figured out my mistake I have to use
+`from io import BytesIO`
+instead of **StringIO** ,since **StringIO** is an in-memory stream for unicode text.
+Thank you so much for the help . """
 
 import codecs
 import logging
