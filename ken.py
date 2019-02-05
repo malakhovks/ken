@@ -36,8 +36,7 @@ import xml.etree.ElementTree as ET
 # for pdf processing pdfminer
 from io import BytesIO
 from pdfminer.converter import TextConverter
-from pdfminer.pdfinterp import PDFPageInterpreter
-from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 
 # libraries for API proccessing
@@ -120,16 +119,17 @@ def sentence_spelling(unchecked_sentence):
 # Extracting all the text with PDFMiner
 def extract_text_from_pdf_pdfminer(pdf_path):
     resource_manager = PDFResourceManager()
-    fake_file_handle = BytesIO()
-    converter = TextConverter(resource_manager, fake_file_handle)
-    page_interpreter = PDFPageInterpreter(resource_manager, converter)
+    retstr = BytesIO()
+    device = TextConverter(resource_manager, retstr)
+    page_interpreter = PDFPageInterpreter(resource_manager, device)
     with open(pdf_path, 'rb') as fh:
         for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
             page_interpreter.process_page(page)
-        text = fake_file_handle.getvalue()
+        text = retstr.getvalue()
     # close open handles
-    converter.close()
-    fake_file_handle.close()
+    fh.close()
+    device.close()
+    retstr.close()
     if text:
         return text
 

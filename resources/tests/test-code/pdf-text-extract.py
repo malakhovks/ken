@@ -7,12 +7,13 @@ import tempfile
 # for pdf processing PyPDF2
 from PyPDF2 import PdfFileReader
 
-# for pdf processing pdfminer
-from io import BytesIO
+# for pdf processing pdfmine and pdfminerpro
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
-from pdfminer.pdfinterp import PDFPageInterpreter
-from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
+from io import BytesIO
+# from io import StringIO
 
 import codecs
 import logging
@@ -59,39 +60,32 @@ def extract_text_from_pdf(pdf_path):
             page_interpreter.process_page(page)
         text = fake_file_handle.getvalue()
     # close open handles
+    fh.close()
     converter.close()
     fake_file_handle.close()
     if text:
         return text
+ 
+def extract_text_from_pdf_pdfminerpro(path):
+    rsrcmgr = PDFResourceManager()
+    retstr = BytesIO()
+    codec = 'utf-8'
+    laparams = LAParams()
+    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+    fp = open(path, 'rb')
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
+    password = ""
+    caching = True
+    pagenos=set()
 
-# from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-# from pdfminer.converter import TextConverter
-# from pdfminer.layout import LAParams
-# from pdfminer.pdfpage import PDFPage
-# from io import StringIO
-# 
-# def convert_pdf_to_txt(path):
-#     rsrcmgr = PDFResourceManager()
-#     retstr = StringIO()
-#     codec = 'utf-8'
-#     laparams = LAParams()
-#     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-#     fp = open(path, 'rb')
-#     interpreter = PDFPageInterpreter(rsrcmgr, device)
-#     password = ""
-#     maxpages = 0
-#     caching = True
-#     pagenos=set()
+    for page in PDFPage.get_pages(fp, pagenos, password=password,caching=caching, check_extractable=True):
+        interpreter.process_page(page)
+    text = retstr.getvalue()
 
-#     for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password,caching=caching, check_extractable=True):
-#         interpreter.process_page(page)
-
-#     text = retstr.getvalue()
-
-#     fp.close()
-#     device.close()
-#     retstr.close()
-#     return text
+    fp.close()
+    device.close()
+    retstr.close()
+    return text
 
 # ------------------------------------------------------------------------------------------------------
 # PDF extract service
@@ -122,7 +116,29 @@ def text_from_pdf_pypdf2():
     file.close()
     return abort(400)
 
-@app.route('/ken/api/v1.0/en/file/pdf/pdfminer/extract', methods=['POST'])
+# @app.route('/ken/api/v1.0/en/file/pdf/pdfminer/extract', methods=['POST'])
+# def text_from_pdf_pdfminer():
+#     # check if the post request has the file part
+#     if 'file' not in request.files:
+#         flash('No file part')
+#         return abort(400)
+#     file = request.files['file']
+#     # if user does not select file, browser also
+#     # submit an empty part without filename
+#     if file.filename == '':
+#         flash('No selected file')
+#         return abort(400)
+#     if file and allowed_file(file.filename):
+#         pdf_file = secure_filename(file.filename)
+#         destination = "/".join([tempfile.mkdtemp(),pdf_file])
+#         file.save(destination)
+#         file.close()
+#         if os.path.isfile(destination):
+#             return extract_text_from_pdf(destination)
+#     file.close()
+#     return abort(400)
+
+@app.route('/ken/api/v1.0/en/file/pdf/pdfminerpro/extract', methods=['POST'])
 def text_from_pdf_pdfminer():
     # check if the post request has the file part
     if 'file' not in request.files:
@@ -140,7 +156,7 @@ def text_from_pdf_pdfminer():
         file.save(destination)
         file.close()
         if os.path.isfile(destination):
-            return extract_text_from_pdf(destination)
+            return extract_text_from_pdf_pdfminerpro(destination)
     file.close()
     return abort(400)
 # ------------------------------------------------------------------------------------------------------
