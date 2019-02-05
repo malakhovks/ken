@@ -15,7 +15,8 @@ It makes your code cross-Python-version compatible.
 Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 # ------------------------------------------------------------------------------------------------------
 """
-import sys, os
+# tempfile for temporary dir creation
+import sys, os, tempfile
 
 # libraries for NLP pipeline
 import spacy
@@ -32,11 +33,19 @@ import re, string
 # libraries for XML proccessing
 import xml.etree.ElementTree as ET
 
+# for pdf processing pdfminer
+from io import BytesIO
+from pdfminer.converter import TextConverter
+from pdfminer.pdfinterp import PDFPageInterpreter
+from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.pdfpage import PDFPage
+
 # libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
+from werkzeug.utils import secure_filename
 
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
-ALLOWED_EXTENSIONS = set(['txt']) 
+ALLOWED_EXTENSIONS = set(['txt', 'pdf']) 
 
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
@@ -108,6 +117,22 @@ def sentence_spelling(unchecked_sentence):
     checked_sentence = str(blob.correct()).decode('utf-8')
     return checked_sentence
 
+# Extracting all the text with PDFMiner
+def extract_text_from_pdf_pdfminer(pdf_path):
+    resource_manager = PDFResourceManager()
+    fake_file_handle = BytesIO()
+    converter = TextConverter(resource_manager, fake_file_handle)
+    page_interpreter = PDFPageInterpreter(resource_manager, converter)
+    with open(pdf_path, 'rb') as fh:
+        for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
+            page_interpreter.process_page(page)
+        text = fake_file_handle.getvalue()
+    # close open handles
+    converter.close()
+    fake_file_handle.close()
+    if text:
+        return text
+
 # ------------------------------------------------------------------------------------------------------
 # secondary functions
 # ------------------------------------------------------------------------------------------------------
@@ -132,8 +157,18 @@ def parcexml_Generator():
         return abort(400)
 
     if file and allowed_file(file.filename):
-        raw_text = file.read().decode('utf-8')
-        file.close()
+        # pdf processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+            pdf_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),pdf_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = extract_text_from_pdf_pdfminer(destination).decode('utf-8')
+        # txt processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            raw_text = file.read().decode('utf-8')
+            file.close()
 
         # POS UD
         # https://universaldependencies.org/u/pos/
