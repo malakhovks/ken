@@ -43,8 +43,14 @@ from pdfminer.pdfpage import PDFPage
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
 from werkzeug.utils import secure_filename
 
+# for docx processing
+import zipfile
+WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+PARA = WORD_NAMESPACE + 'p'
+TEXT = WORD_NAMESPACE + 't'
+
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
-ALLOWED_EXTENSIONS = set(['txt', 'pdf']) 
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx']) 
 
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
@@ -67,9 +73,11 @@ b'_5#y2L"F4Q8z\n\xec]/'
 # app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.secret_key = os.urandom(42)
 
+"""
 # ------------------------------------------------------------------------------------------------------
 # secondary functions
 # ------------------------------------------------------------------------------------------------------
+# """
 
 # function that check if an extension is valid
 def allowed_file(filename):
@@ -116,8 +124,8 @@ def sentence_spelling(unchecked_sentence):
     checked_sentence = str(blob.correct()).decode('utf-8')
     return checked_sentence
 
-# Extracting all the text with PDFMiner
-def extract_text_from_pdf_pdfminer(pdf_path):
+# Extracting all the text from PDF with PDFMiner
+def get_text_from_pdf_pdfminer(pdf_path):
     resource_manager = PDFResourceManager()
     retstr = BytesIO()
     device = TextConverter(resource_manager, retstr)
@@ -133,9 +141,29 @@ def extract_text_from_pdf_pdfminer(pdf_path):
     if text:
         return text
 
+# Extracting all the text from DOCX
+def get_text_from_docx(docx_path):
+    """
+    Take the path of a docx file as argument, return the text in unicode.
+    """
+    document = zipfile.ZipFile(docx_path)
+    xml_content = document.read('word/document.xml')
+    document.close()
+    tree = ET.XML(xml_content)
+    paragraphs = []
+    for paragraph in tree.getiterator(PARA):
+        texts = [node.text
+                 for node in paragraph.getiterator(TEXT)
+                 if node.text]
+        if texts:
+            paragraphs.append(''.join(texts))
+    return '\n\n'.join(paragraphs)
+
+"""
 # ------------------------------------------------------------------------------------------------------
 # secondary functions
 # ------------------------------------------------------------------------------------------------------
+# """
 
 """
 # ------------------------------------------------------------------------------------------------------
@@ -165,7 +193,15 @@ def parcexml_Generator():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = extract_text_from_pdf_pdfminer(destination).decode('utf-8')
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+        # docx processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'docx':
+            docx_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),docx_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
             raw_text = file.read().decode('utf-8')
