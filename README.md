@@ -15,9 +15,8 @@ Checkout the branch you want to use:
 git checkout <branch_name>
 ```
 
-Build an image from a Dockerfile:
+Build an image from a Dockerfile (It creates an image named `ken_image`):
 ```bash
-<!-- It creates an image named `ken_image`  -->
 docker build . -t ken_image
 ```
 It creates an image named `ken_image` that can be run with this command:
