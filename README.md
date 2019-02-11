@@ -8,6 +8,7 @@ git clone https://username:password@github.com/username/repo_name.git
 ```
 <!-- ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c -->
 <!-- https://github.com/malakhovks/ken.git -->
+<!-- https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git -->
 
 Checkout the branch you want to use:
 ```bash
