@@ -22,7 +22,7 @@ docker build . -t ken_image
 ```
 It creates an image named `ken_image` that can be run with this command:
 ```bash
-docker run --name ken_container -p 80:80 ken_image
+docker run -d --name ken_container -p 80:80 ken_image
 ```
 Some useful options when running container:
 
