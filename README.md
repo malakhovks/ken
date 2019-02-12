@@ -24,7 +24,7 @@ It creates an image named `ken_image`. You can run the image now with command:
 docker run --name ken -d -p 80:80 ken_image
 ```
 
-(to see the console output, attach to the container; to detach press Ctrl-c):
+(to see the console output, attach to the container; to detach press Ctrl+C):
 ```bash
 docker attach ken
 ```
