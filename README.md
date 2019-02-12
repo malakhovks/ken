@@ -56,6 +56,8 @@ Some useful options when running container:
 
 * `--restart on-failure` with `docker run` automatic restart of failed containers.
 
+-------
+
 ## Building and running under Windows
 
 Install latest `Python 2.7.x`:
