@@ -1,6 +1,6 @@
 # ken NLP project
 
-## Building and running under Linux + Docker
+## Building and running under with Docker
 
 Clone from git repository:
 ```bash
