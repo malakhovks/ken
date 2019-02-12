@@ -41,7 +41,7 @@ docker start ken
 
 (to remove the container; needs to be stopped):
 ```bash
-docker rm graphdb
+docker rm ken
 ```
 
 Some useful options when running container:
