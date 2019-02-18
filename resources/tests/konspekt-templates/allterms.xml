@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<termsintext>
+<filepath>/home/recapService/consoles/console_1543823713324/fileForAnalysisDocXCP1251.txt</filepath>
+<exporterms>
+<term><ttype>Noun</ttype><tname>Дніпро</tname><wcount>1</wcount><osn>Дніпр</osn><sentpos>0/1</sentpos><sentpos>2/1</sentpos><sentpos>3/1</sentpos><sentpos>5/1</sentpos><sentpos>8/6</sentpos><sentpos>11/13</sentpos><sentpos>12/9</sentpos><sentpos>13/2</sentpos><sentpos>13/51</sentpos><sentpos>14/12</sentpos><sentpos>15/1</sentpos><sentpos>16/13</sentpos><sentpos>17/1</sentpos><sentpos>18/3</sentpos><sentpos>19/1</sentpos></term>
+<term><ttype>Noun</ttype><tname>річка</tname><wcount>1</wcount><osn>річ</osn><sentpos>0/4</sentpos><sentpos>9/4</sentpos><sentpos>11/4</sentpos><sentpos>11/19</sentpos><sentpos>19/4</sentpos><relup>2</relup><relup>3</relup></term>
+<term><ttype>Noun_noun</ttype><tname>річка України</tname><wcount>2</wcount><osn>річ</osn><osn>Україн</osn><sentpos>0/4</sentpos><sentpos>0/5</sentpos><relup>4</relup><reldown>1</reldown><reldown>5</reldown></term>
+<term><ttype>Adj_noun</ttype><tname>найбільша річка</tname><wcount>2</wcount><osn>найбільш</osn><osn>річ</osn><sentpos>0/3</sentpos><sentpos>0/4</sentpos><relup>4</relup><reldown>1</reldown></term>
+<term><ttype>adj_noun_noun</ttype><tname>найбільша річка України</tname><wcount>3</wcount><osn>найбільш</osn><osn>річ</osn><osn>Україн</osn><sentpos>0/3</sentpos><sentpos>0/4</sentpos><sentpos>0/5</sentpos><reldown>2</reldown><reldown>3</reldown></term>
+<term><ttype>Noun</ttype><tname>Україна</tname><wcount>1</wcount><osn>Україн</osn><sentpos>0/5</sentpos><sentpos>0/13</sentpos><sentpos>1/12</sentpos><sentpos>2/32</sentpos><sentpos>14/17</sentpos><sentpos>17/7</sentpos><sentpos>18/10</sentpos><relup>2</relup><relup>116</relup><relup>137</relup></term>
+<term><ttype>Noun</ttype><tname>теча</tname><wcount>1</wcount><osn>теч</osn><sentpos>0/7</sentpos></term>
+<term><ttype>Noun</ttype><tname>територія</tname><wcount>1</wcount><osn>територі</osn><sentpos>0/8</sentpos><sentpos>1/11</sentpos></term>
+<term><ttype>Noun</ttype><tname>Росія</tname><wcount>1</wcount><osn>Росі</osn><sentpos>0/9</sentpos><sentpos>2/11</sentpos><relup>18</relup></term>
+<term><ttype>Noun</ttype><tname>Білорусь</tname><wcount>1</wcount><osn>Білорус</osn><sentpos>0/11</sentpos></term>
+<term><ttype>Noun</ttype><tname>протяжність</tname><wcount>1</wcount><osn>протяжн</osn><sentpos>1/1</sentpos><sentpos>19/16</sentpos></term>
+<term><ttype>Noun</ttype><tname>площа</tname><wcount>1</wcount><osn>площ</osn><sentpos>1/14</sentpos><sentpos>19/12</sentpos></term>
+<term><ttype>Noun</ttype><tname>тис</tname><wcount>1</wcount><osn>тис</osn><sentpos>1/18</sentpos><sentpos>3/5</sentpos></term>
+<term><ttype>Noun</ttype><tname>частина</tname><wcount>1</wcount><osn>частин</osn><sentpos>2/5</sentpos><sentpos>11/32</sentpos><sentpos>14/16</sentpos><relup>116</relup></term>
+<term><ttype>Noun</ttype><tname>верховина</tname><wcount>1</wcount><osn>верховин</osn><sentpos>2/7</sentpos><relup>15</relup></term>
+<term><ttype>Adj_noun</ttype><tname>валдайська верховина</tname><wcount>2</wcount><osn>валдайськ</osn><osn>верховин</osn><sentpos>2/6</sentpos><sentpos>2/7</sentpos><relup>16</relup><reldown>14</reldown></term>
+<term><ttype>noun_adj_noun</ttype><tname>частина валдайської верховини</tname><wcount>3</wcount><osn>частин</osn><osn>валдайськ</osn><osn>верховин</osn><sentpos>2/5</sentpos><sentpos>2/6</sentpos><sentpos>2/7</sentpos><reldown>15</reldown></term>
+<term><ttype>Noun</ttype><tname>область</tname><wcount>1</wcount><osn>област</osn><sentpos>2/10</sentpos><relup>18</relup></term>
+<term><ttype>Noun_noun</ttype><tname>область Росії</tname><wcount>2</wcount><osn>област</osn><osn>Росі</osn><sentpos>2/10</sentpos><sentpos>2/11</sentpos><reldown>8</reldown><reldown>17</reldown></term>
+<term><ttype>Noun</ttype><tname>села</tname><wcount>1</wcount><osn>с</osn><sentpos>2/14</sentpos></term>
+<term><ttype>Noun</ttype><tname>район</tname><wcount>1</wcount><osn>район</osn><sentpos>2/17</sentpos></term>
+<term><ttype>Noun</ttype><tname>озера</tname><wcount>1</wcount><osn>озер</osn><sentpos>2/21</sentpos></term>
+<term><ttype>Noun</ttype><tname>лиман</tname><wcount>1</wcount><osn>лиман</osn><sentpos>2/28</sentpos></term>
+<term><ttype>Noun</ttype><tname>море</tname><wcount>1</wcount><osn>мор</osn><sentpos>2/30</sentpos><relup>24</relup></term>
+<term><ttype>Adj_noun</ttype><tname>чорне море</tname><wcount>2</wcount><osn>чорн</osn><osn>мор</osn><sentpos>2/29</sentpos><sentpos>2/30</sentpos><reldown>23</reldown></term>
+<term><ttype>Noun</ttype><tname>березина</tname><wcount>1</wcount><osn>березин</osn><sentpos>4/9</sentpos></term>
+<term><ttype>Noun</ttype><tname>Прип'ять</tname><wcount>1</wcount><osn>Прип'ят</osn><sentpos>4/11</sentpos></term>
+<term><ttype>Noun</ttype><tname>Тетерів</tname><wcount>1</wcount><osn>Тетер</osn><sentpos>4/13</sentpos></term>
+<term><ttype>Noun</ttype><tname>Ірпінь</tname><wcount>1</wcount><osn>Ірп</osn><sentpos>4/15</sentpos></term>
+<term><ttype>Noun</ttype><tname>Базавлук</tname><wcount>1</wcount><osn>Базавлук</osn><sentpos>4/19</sentpos></term>
+<term><ttype>Noun</ttype><tname>Інгулець</tname><wcount>1</wcount><osn>Інгул</osn><sentpos>4/21</sentpos></term>
+<term><ttype>Noun</ttype><tname>Десна</tname><wcount>1</wcount><osn>Десн</osn><sentpos>4/23</sentpos></term>
+<term><ttype>Noun</ttype><tname>Оріль</tname><wcount>1</wcount><osn>Оріл</osn><sentpos>4/25</sentpos></term>
+<term><ttype>Noun</ttype><tname>Псел</tname><wcount>1</wcount><osn>Пс</osn><sentpos>4/27</sentpos></term>
+<term><ttype>Noun</ttype><tname>Ворскла</tname><wcount>1</wcount><osn>Ворскл</osn><sentpos>4/29</sentpos></term>
+<term><ttype>Noun</ttype><tname>Самара</tname><wcount>1</wcount><osn>Самар</osn><sentpos>4/31</sentpos></term>
+<term><ttype>Noun</ttype><tname>Сож</tname><wcount>1</wcount><osn>Сож</osn><sentpos>4/33</sentpos></term>
+<term><ttype>Noun</ttype><tname>ріка</tname><wcount>1</wcount><osn>рі</osn><sentpos>5/3</sentpos><sentpos>7/3</sentpos><sentpos>10/15</sentpos><sentpos>11/23</sentpos><relup>82</relup></term>
+<term><ttype>Noun</ttype><tname>течія</tname><wcount>1</wcount><osn>течі</osn><sentpos>5/6</sentpos><sentpos>5/18</sentpos><sentpos>12/8</sentpos></term>
+<term><ttype>Noun</ttype><tname>вири</tname><wcount>1</wcount><osn>вир</osn><sentpos>5/15</sentpos></term>
+<term><ttype>Noun</ttype><tname>глибина</tname><wcount>1</wcount><osn>глибин</osn><sentpos>6/1</sentpos><sentpos>6/8</sentpos><sentpos>6/18</sentpos></term>
+<term><ttype>Noun</ttype><tname>перекати</tname><wcount>1</wcount><osn>перекат</osn><sentpos>6/5</sentpos></term>
+<term><ttype>Noun</ttype><tname>ями</tname><wcount>1</wcount><osn>ям</osn><sentpos>6/17</sentpos></term>
+<term><ttype>Noun</ttype><tname>рослинність</tname><wcount>1</wcount><osn>рослинн</osn><sentpos>6/25</sentpos></term>
+<term><ttype>Noun</ttype><tname>види</tname><wcount>1</wcount><osn>вид</osn><sentpos>8/3</sentpos></term>
+<term><ttype>Noun</ttype><tname>риби</tname><wcount>1</wcount><osn>риб</osn><sentpos>8/4</sentpos></term>
+<term><ttype>Noun</ttype><tname>в'юн</tname><wcount>1</wcount><osn>в'юн</osn><sentpos>8/8</sentpos></term>
+<term><ttype>Noun</ttype><tname>голець</tname><wcount>1</wcount><osn>гол</osn><sentpos>8/10</sentpos></term>
+<term><ttype>Noun</ttype><tname>густера</tname><wcount>1</wcount><osn>густер</osn><sentpos>8/12</sentpos></term>
+<term><ttype>Noun</ttype><tname>жерех</tname><wcount>1</wcount><osn>жерех</osn><sentpos>8/16</sentpos></term>
+<term><ttype>Noun</ttype><tname>карась</tname><wcount>1</wcount><osn>карас</osn><sentpos>8/18</sentpos></term>
+<term><ttype>Noun</ttype><tname>короп</tname><wcount>1</wcount><osn>короп</osn><sentpos>8/21</sentpos></term>
+<term><ttype>Noun</ttype><tname>краснопірка</tname><wcount>1</wcount><osn>краснопір</osn><sentpos>8/24</sentpos></term>
+<term><ttype>Noun</ttype><tname>лінь</tname><wcount>1</wcount><osn>лін</osn><sentpos>8/28</sentpos></term>
+<term><ttype>Noun</ttype><tname>мині</tname><wcount>1</wcount><osn>мин</osn><sentpos>8/30</sentpos></term>
+<term><ttype>Noun</ttype><tname>окунь</tname><wcount>1</wcount><osn>окун</osn><sentpos>8/32</sentpos></term>
+<term><ttype>Noun</ttype><tname>піскар</tname><wcount>1</wcount><osn>піскар</osn><sentpos>8/34</sentpos></term>
+<term><ttype>Noun</ttype><tname>плітка</tname><wcount>1</wcount><osn>пліт</osn><sentpos>8/37</sentpos></term>
+<term><ttype>Noun</ttype><tname>сазан</tname><wcount>1</wcount><osn>сазан</osn><sentpos>8/39</sentpos></term>
+<term><ttype>Noun</ttype><tname>синець</tname><wcount>1</wcount><osn>син</osn><sentpos>8/41</sentpos></term>
+<term><ttype>Noun</ttype><tname>сом</tname><wcount>1</wcount><osn>сом</osn><sentpos>8/43</sentpos></term>
+<term><ttype>Noun</ttype><tname>судак</tname><wcount>1</wcount><osn>суда</osn><sentpos>8/45</sentpos></term>
+<term><ttype>Noun</ttype><tname>уклейка</tname><wcount>1</wcount><osn>уклей</osn><sentpos>8/47</sentpos></term>
+<term><ttype>Noun</ttype><tname>щука</tname><wcount>1</wcount><osn>щу</osn><sentpos>8/49</sentpos></term>
+<term><ttype>Noun</ttype><tname>язь</tname><wcount>1</wcount><osn>яз</osn><sentpos>8/51</sentpos></term>
+<term><ttype>Noun</ttype><tname>час</tname><wcount>1</wcount><osn>час</osn><sentpos>9/3</sentpos><sentpos>11/29</sentpos><sentpos>13/26</sentpos></term>
+<term><ttype>Noun</ttype><tname>назви</tname><wcount>1</wcount><osn>назв</osn><sentpos>9/8</sentpos></term>
+<term><ttype>Noun</ttype><tname>таки</tname><wcount>1</wcount><osn>та</osn><sentpos>10/1</sentpos></term>
+<term><ttype>Noun</ttype><tname>історик</tname><wcount>1</wcount><osn>історик</osn><sentpos>10/3</sentpos><sentpos>11/2</sentpos><relup>69</relup><relup>75</relup></term>
+<term><ttype>Adj_noun</ttype><tname>давньогрецький історик</tname><wcount>2</wcount><osn>давньогрецьк</osn><osn>історик</osn><sentpos>10/2</sentpos><sentpos>10/3</sentpos><reldown>68</reldown></term>
+<term><ttype>Noun</ttype><tname>Геродот</tname><wcount>1</wcount><osn>Геродот</osn><sentpos>10/4</sentpos></term>
+<term><ttype>Noun</ttype><tname>трактати</tname><wcount>1</wcount><osn>трактат</osn><sentpos>10/10</sentpos></term>
+<term><ttype>Noun</ttype><tname>Борисфен</tname><wcount>1</wcount><osn>Борисфен</osn><sentpos>10/11</sentpos></term>
+<term><ttype>Noun</ttype><tname>як</tname><wcount>1</wcount><osn>я</osn><sentpos>10/17</sentpos></term>
+<term><ttype>Noun</ttype><tname>північ</tname><wcount>1</wcount><osn>півн</osn><sentpos>10/20</sentpos></term>
+<term><ttype>Adj_noun</ttype><tname>римські історики</tname><wcount>2</wcount><osn>римськ</osn><osn>історик</osn><sentpos>11/1</sentpos><sentpos>11/2</sentpos><reldown>68</reldown></term>
+<term><ttype>Noun</ttype><tname>ім'я</tname><wcount>1</wcount><osn>ім</osn><sentpos>11/5</sentpos></term>
+<term><ttype>Noun</ttype><tname>століття</tname><wcount>1</wcount><osn>століт</osn><sentpos>11/10</sentpos><sentpos>12/3</sentpos></term>
+<term><ttype>Noun</ttype><tname>період</tname><wcount>1</wcount><osn>період</osn><sentpos>11/16</sentpos></term>
+<term><ttype>Noun</ttype><tname>Русь</tname><wcount>1</wcount><osn>Рус</osn><sentpos>11/18</sentpos><relup>80</relup></term>
+<term><ttype>Adj_noun</ttype><tname>київська Русь</tname><wcount>2</wcount><osn>київськ</osn><osn>Рус</osn><sentpos>11/17</sentpos><sentpos>11/18</sentpos><reldown>79</reldown></term>
+<term><ttype>Noun</ttype><tname>Славутич</tname><wcount>1</wcount><osn>Славутич</osn><sentpos>11/21</sentpos></term>
+<term><ttype>Noun_noun</ttype><tname>ріка слов'ян</tname><wcount>2</wcount><osn>рі</osn><osn>слов'ян</osn><sentpos>11/23</sentpos><sentpos>11/24</sentpos><reldown>37</reldown><reldown>83</reldown></term>
+<term><ttype>Noun</ttype><tname>слов'яни</tname><wcount>1</wcount><osn>слов'ян</osn><sentpos>11/24</sentpos><relup>82</relup></term>
+<term><ttype>Noun</ttype><tname>Прибалтика</tname><wcount>1</wcount><osn>Прибалти</osn><sentpos>11/38</sentpos></term>
+<term><ttype>Noun</ttype><tname>Причорномор'я</tname><wcount>1</wcount><osn>Причорномор'</osn><sentpos>11/40</sentpos></term>
+<term><ttype>Noun</ttype><tname>історії</tname><wcount>1</wcount><osn>історі</osn><sentpos>11/44</sentpos><sentpos>13/47</sentpos></term>
+<term><ttype>Noun</ttype><tname>варяг</tname><wcount>1</wcount><osn>варя</osn><sentpos>11/48</sentpos></term>
+<term><ttype>Noun</ttype><tname>греки</tname><wcount>1</wcount><osn>грек</osn><sentpos>11/50</sentpos></term>
+<term><ttype>Noun</ttype><tname>землі</tname><wcount>1</wcount><osn>зем</osn><sentpos>12/5</sentpos></term>
+<term><ttype>Noun</ttype><tname>ядро</tname><wcount>1</wcount><osn>яд</osn><sentpos>12/11</sentpos></term>
+<term><ttype>Noun</ttype><tname>держава</tname><wcount>1</wcount><osn>держав</osn><sentpos>12/13</sentpos><relup>92</relup></term>
+<term><ttype>Adj_noun</ttype><tname>давньоруська держава</tname><wcount>2</wcount><osn>давньоруськ</osn><osn>держав</osn><sentpos>12/12</sentpos><sentpos>12/13</sentpos><reldown>91</reldown></term>
+<term><ttype>Noun</ttype><tname>столиця</tname><wcount>1</wcount><osn>столиц</osn><sentpos>12/15</sentpos></term>
+<term><ttype>Noun</ttype><tname>місто</tname><wcount>1</wcount><osn>міст</osn><sentpos>12/18</sentpos></term>
+<term><ttype>Noun</ttype><tname>Київ</tname><wcount>1</wcount><osn>Ки</osn><sentpos>12/19</sentpos><sentpos>16/5</sentpos></term>
+<term><ttype>Noun</ttype><tname>пороги</tname><wcount>1</wcount><osn>пор</osn><sentpos>13/4</sentpos></term>
+<term><ttype>Noun</ttype><tname>Дніпропетровськ</tname><wcount>1</wcount><osn>Дніпропетровськ</osn><sentpos>13/8</sentpos></term>
+<term><ttype>Noun</ttype><tname>Запоріжжя</tname><wcount>1</wcount><osn>Запоріжж</osn><sentpos>13/10</sentpos></term>
+<term><ttype>Noun</ttype><tname>плавні</tname><wcount>1</wcount><osn>плав</osn><sentpos>13/14</sentpos></term>
+<term><ttype>Noun</ttype><tname>Січ</tname><wcount>1</wcount><osn>Січ</osn><sentpos>13/20</sentpos></term>
+<term><ttype>Noun</ttype><tname>рік</tname><wcount>1</wcount><osn>р</osn><sentpos>13/24</sentpos></term>
+<term><ttype>Noun</ttype><tname>війна</tname><wcount>1</wcount><osn>в</osn><sentpos>13/29</sentpos><relup>103</relup></term>
+<term><ttype>Adj_noun</ttype><tname>світова війна</tname><wcount>2</wcount><osn>світов</osn><osn>в</osn><sentpos>13/28</sentpos><sentpos>13/29</sentpos><reldown>102</reldown></term>
+<term><ttype>Noun</ttype><tname>рамки</tname><wcount>1</wcount><osn>рам</osn><sentpos>13/31</sentpos></term>
+<term><ttype>Noun</ttype><tname>кампанія</tname><wcount>1</wcount><osn>кампані</osn><sentpos>13/33</sentpos><relup>106</relup></term>
+<term><ttype>Adj_noun</ttype><tname>військова кампанія</tname><wcount>2</wcount><osn>військов</osn><osn>кампані</osn><sentpos>13/32</sentpos><sentpos>13/33</sentpos><reldown>105</reldown></term>
+<term><ttype>Abbr</ttype><tname>СРСР</tname><wcount>1</wcount><osn>СРСР</osn><sentpos>13/34</sentpos></term>
+<term><ttype>Noun</ttype><tname>коаліція</tname><wcount>1</wcount><osn>коаліці</osn><sentpos>13/38</sentpos></term>
+<term><ttype>Noun</ttype><tname>битва</tname><wcount>1</wcount><osn>битв</osn><sentpos>13/45</sentpos><sentpos>13/49</sentpos><sentpos>14/3</sentpos></term>
+<term><ttype>Noun</ttype><tname>результат</tname><wcount>1</wcount><osn>результат</osn><sentpos>14/2</sentpos></term>
+<term><ttype>Noun</ttype><tname>війська</tname><wcount>1</wcount><osn>військ</osn><sentpos>14/5</sentpos></term>
+<term><ttype>Noun</ttype><tname>оборона</tname><wcount>1</wcount><osn>оборон</osn><sentpos>14/7</sentpos><relup>113</relup></term>
+<term><ttype>Noun_noun</ttype><tname>оборона супротивника</tname><wcount>2</wcount><osn>оборон</osn><osn>супротивник</osn><sentpos>14/7</sentpos><sentpos>14/8</sentpos><reldown>112</reldown><reldown>114</reldown></term>
+<term><ttype>Noun</ttype><tname>супротивник</tname><wcount>1</wcount><osn>супротивник</osn><sentpos>14/8</sentpos><relup>113</relup></term>
+<term><ttype>Noun</ttype><tname>ділянка</tname><wcount>1</wcount><osn>ділян</osn><sentpos>14/10</sentpos></term>
+<term><ttype>Noun_noun</ttype><tname>частина України</tname><wcount>2</wcount><osn>частин</osn><osn>Україн</osn><sentpos>14/16</sentpos><sentpos>14/17</sentpos><reldown>5</reldown><reldown>13</reldown></term>
+<term><ttype>Noun</ttype><tname>окупація</tname><wcount>1</wcount><osn>окупаці</osn><sentpos>14/20</sentpos><relup>118</relup></term>
+<term><ttype>Adj_noun</ttype><tname>німецька окупація</tname><wcount>2</wcount><osn>німецьк</osn><osn>окупаці</osn><sentpos>14/19</sentpos><sentpos>14/20</sentpos><reldown>117</reldown></term>
+<term><ttype>Noun</ttype><tname>поети</tname><wcount>1</wcount><osn>поет</osn><sentpos>15/7</sentpos></term>
+<term><ttype>Noun</ttype><tname>письменники</tname><wcount>1</wcount><osn>письменник</osn><sentpos>15/9</sentpos></term>
+<term><ttype>Noun</ttype><tname>художники</tname><wcount>1</wcount><osn>художник</osn><sentpos>15/11</sentpos></term>
+<term><ttype>Noun</ttype><tname>фотографи</tname><wcount>1</wcount><osn>фотограф</osn><sentpos>15/13</sentpos></term>
+<term><ttype>Noun</ttype><tname>музиканти</tname><wcount>1</wcount><osn>музикант</osn><sentpos>15/15</sentpos></term>
+<term><ttype>Noun</ttype><tname>режисери</tname><wcount>1</wcount><osn>режисер</osn><sentpos>15/17</sentpos></term>
+<term><ttype>Noun</ttype><tname>рок</tname><wcount>1</wcount><osn>рок</osn><sentpos>16/3</sentpos></term>
+<term><ttype>Noun</ttype><tname>субота</tname><wcount>1</wcount><osn>субот</osn><sentpos>16/9</sentpos></term>
+<term><ttype>Noun</ttype><tname>липень</tname><wcount>1</wcount><osn>лип</osn><sentpos>16/10</sentpos></term>
+<term><ttype>Noun</ttype><tname>день</tname><wcount>1</wcount><osn>д</osn><sentpos>16/12</sentpos></term>
+<term><ttype>Noun</ttype><tname>постачальник</tname><wcount>1</wcount><osn>постачальник</osn><sentpos>17/4</sentpos><relup>130</relup><relup>131</relup></term>
+<term><ttype>Noun_noun</ttype><tname>постачальник води</tname><wcount>2</wcount><osn>постачальник</osn><osn>вод</osn><sentpos>17/4</sentpos><sentpos>17/5</sentpos><relup>132</relup><reldown>129</reldown><reldown>133</reldown></term>
+<term><ttype>Adj_noun</ttype><tname>головний постачальник</tname><wcount>2</wcount><osn>головн</osn><osn>постачальник</osn><sentpos>17/3</sentpos><sentpos>17/4</sentpos><relup>132</relup><reldown>129</reldown></term>
+<term><ttype>adj_noun_noun</ttype><tname>головний постачальник води</tname><wcount>3</wcount><osn>головн</osn><osn>постачальник</osn><osn>вод</osn><sentpos>17/3</sentpos><sentpos>17/4</sentpos><sentpos>17/5</sentpos><reldown>130</reldown><reldown>131</reldown></term>
+<term><ttype>Noun</ttype><tname>води</tname><wcount>1</wcount><osn>вод</osn><sentpos>17/5</sentpos><relup>130</relup></term>
+<term><ttype>Noun</ttype><tname>ресурси</tname><wcount>1</wcount><osn>ресурс</osn><sentpos>18/2</sentpos><relup>135</relup></term>
+<term><ttype>Adj_noun</ttype><tname>водні ресурси</tname><wcount>2</wcount><osn>водн</osn><osn>ресурс</osn><sentpos>18/1</sentpos><sentpos>18/2</sentpos><reldown>134</reldown></term>
+<term><ttype>Noun</ttype><tname>мешканці</tname><wcount>1</wcount><osn>мешкан</osn><sentpos>18/9</sentpos><relup>137</relup></term>
+<term><ttype>Noun_noun</ttype><tname>мешканці України</tname><wcount>2</wcount><osn>мешкан</osn><osn>Україн</osn><sentpos>18/9</sentpos><sentpos>18/10</sentpos><reldown>5</reldown><reldown>136</reldown></term>
+<term><ttype>Noun</ttype><tname>третини</tname><wcount>1</wcount><osn>третин</osn><sentpos>18/15</sentpos></term>
+<term><ttype>Noun</ttype><tname>населення</tname><wcount>1</wcount><osn>населенн</osn><sentpos>18/18</sentpos></term>
+<term><ttype>Noun</ttype><tname>Європа</tname><wcount>1</wcount><osn>Європ</osn><sentpos>19/6</sentpos></term>
+<term><ttype>Noun</ttype><tname>Волга</tname><wcount>1</wcount><osn>Вол</osn><sentpos>19/8</sentpos></term>
+<term><ttype>Noun</ttype><tname>Дунай</tname><wcount>1</wcount><osn>Дуна</osn><sentpos>19/10</sentpos></term>
+<term><ttype>Noun</ttype><tname>басейн</tname><wcount>1</wcount><osn>басейн</osn><sentpos>19/14</sentpos><relup>144</relup></term>
+<term><ttype>Adj_noun</ttype><tname>водозбірний басейн</tname><wcount>2</wcount><osn>водозбірн</osn><osn>басейн</osn><sentpos>19/13</sentpos><sentpos>19/14</sentpos><reldown>143</reldown></term>
+</exporterms>
+<sentences>
+<sent>Дніпро - найбільша річка України; тече територією Росії, Білорусі та України.</sent>
+<sent>Протяжність - 2201 км, з них 1005 км - територією України, площа бассейну - 504 тис. кв. км.</sent>
+<sent>Дніпро починається у північній частині Валдайської верховини у Смоленської області Росії, біля села Бочарово Сичевського району, неподалік від озера Гаврилівське, а впадає у Дніпровський лиман Чорного моря в Україні.</sent>
+<sent>Дніпро має більше 15 тис. притоків.</sent>
+<sent>Найбільші з них: Вопь, Друпь, Березина, Прип'ять, Тетерів, Ірпінь, Рось, Базавлук, Інгулець, Десна, Оріль, Псел, Ворскла, Самара, Сож.</sent>
+<sent>Дніпро - ріка рівнинна, течія переважно швидка, але зустрічаються тихі плеси й вири зі зворотною течією.</sent>
+<sent>Глибини різні - існують перекати, де глибина може досягати 0,5 м, а є ще ями глибиною 20-30 м; добре розвинута водна рослинність.</sent>
+<sent>У басейні ріки переважають піщані та мулисто-піщані, хрящуваті, глинисті, галькові, місцями кам'янисті ґрунти.</sent>
+<sent>Найбільш розповсюджені види риб у Дніпрі: в'юн, голець, густера, єлець, жерех, карась сріблястий, короп дзеркальний, краснопірка, лящ, лінь, минь, окунь, піскар звичайний, плітка, сазан, синець, сом, судак, уклейка, щука, язь.</sent>
+<sent>У давні часи річка згадувалася під іншими назвами.</sent>
+<sent>Так давньогрецький історик Геродот називав її у своїх історичних трактатах Борисфеном (що означає ріка, яка тече з півночі).</sent>
+<sent>Римські історики називали річку іменем Данапріс, яке через століття перетворилося на Дніпро.У період Київської Русі річку називали Славутичем (ріка слов'ян), у ті часи вона була частиною торговельного шляху, що з'єднував Прибалтику з Причорномор'ям і відомого в історії як Шлях з варяг у греки.</sent>
+<sent>У ІХ столітті на землях навколо середньої течії Дніпра сформувалося ядро Давньоруської держави, столицею якої стало місто Київ.</sent>
+<sent>На Дніпрі за порогами, між сучасними Дніпропетровськом і Запоріжжям, у дніпровських плавнях була народжена славна козацька Запорізька Січ.У 1943 році під час Другої світової війни у рамках військової кампанії СРСР проти країн гітлерівської коаліції відбулася одна з найбільших і найжорстокіших битв в історії - Битва за Дніпро, в якій взяло участь більш ніж 4 мільйони людей з обох боків.</sent>
+<sent>У результаті битви радянські війська ліквідували оборону супротивника на ділянці уздовж Дніпра і звільнили значну частину України від німецької окупації.</sent>
+<sent>Дніпру присвячували і присвячують свої твори поети, письменники, художники, фотографи, музиканти, режисери.</sent>
+<sent>З 2003 року у Києві щорічно у першу суботу липня відзначається День Дніпра.</sent>
+<sent>Дніпро - головний постачальник води в Україні.</sent>
+<sent>Водними ресурсами Дніпра користуються біля 30 млн. мешканців України (це фактично дві третини від усього населення).</sent>
+<sent>Дніпро - третя річка в Європі після Волги і Дунаю за площею водозбірного басейну і протяжністю.</sent>
+</sentences>
+</termsintext>
