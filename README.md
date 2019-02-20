@@ -48,14 +48,12 @@ docker rm ken
 Some useful options when running container:
 
 * `--name` gives the container a name that can be found in docker ps output
-
 * `-p` instructs to publish port 80. Second `80` after semicolons tells what port nginx inside the container listens on
-
 * `-d` runs container detached from terminal. Logs then can be viewed by issuing `docker logs` command
-
 * `-t` allocate a pseudo TTY, so you see the console output
-
-* `--restart on-failure` with `docker run` automatic restart of failed containers.
+* `--restart on-failure` with `docker run` automatic restart of failed containers. Restart the container if it exits due to an error, which manifests as a non-zero exit code.
+* `--restart always` with `docker run` always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted.
+* `--restart unless-stopped` with `docker run` similar to `always`, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts.
 
 -------
 
