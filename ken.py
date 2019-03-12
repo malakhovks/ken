@@ -319,7 +319,7 @@ TODO exception handling in a good way
 
 TODO in production on Linux with uWSGI, Nginx, Docker
 
-TODO hunspell integration or TextBlob spelling correction
+TODO Languagetool in a separate container for spelling correction
 
 TODO in production on Windows
 # ------------------------------------------------------------------------------------------------------
