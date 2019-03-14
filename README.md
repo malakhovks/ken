@@ -9,7 +9,7 @@ git clone https://username:password@github.com/username/repo_name.git
 Or clone from the specific branch/tag of git repository:
 
 ```bash
-git clone --branch <tag_name> <repo_url>
+git clone -b <tag_name> --single-branch <repo_url>
 ```
 > Credentials needed
 > ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c
