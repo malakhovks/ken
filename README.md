@@ -12,7 +12,6 @@ Or clone from the specific branch/tag of git repository:
 git clone --depth=1 --branch=<tag_name> <repo_url>
 ```
 > Credentials needed
-> ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c
 > https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 
 Checkout the branch you want to use:
