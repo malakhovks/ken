@@ -52,6 +52,11 @@ TEXT = WORD_NAMESPACE + 't'
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx']) 
 
+# Load globally spaCy model via package name
+NLP_en = spacy.load('en_core_web_sm')
+# or
+# NLP_en_lg = spacy.load('en_core_web_lg')
+
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
 
@@ -99,8 +104,10 @@ def text_normalization_default(raw_text):
             # remove leading and ending spaces
             line = line.strip()
             raw_text_list.append(line)
+            # TODO Remove debug log in production release
             print('Included line: ' + line)
         else:
+            # TODO Remove debug log in production release
             print('Excluded line: ' + line)
     yet_raw_text = '\n'.join(raw_text_list)
     return yet_raw_text
@@ -218,12 +225,10 @@ def parcexml_Generator():
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
         try:
-            # Load spaCy model via package name
-            nlp = spacy.load('en_core_web_sm') # nlp = spacy.load('en_core_web_lg')
-
             # default sentence normalization + spaCy doc init
-            doc = nlp(text_normalization_default(raw_text))
+            doc = NLP_en(text_normalization_default(raw_text))
 
+            # TODO Remove debug log in production release
             print('''
             sentences\t{num_sent}
             '''.format(
@@ -257,7 +262,7 @@ def parcexml_Generator():
 
                 # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
                 # TODO optimize for using only 1 nlp
-                doc_for_lemmas = nlp(sentence_clean)
+                doc_for_lemmas = NLP_en(sentence_clean)
                 for lemma in doc_for_lemmas:
                 # for lemma in sentence:
                     # create and append <item>
@@ -298,6 +303,7 @@ def parcexml_Generator():
                 # for chunk in doc_for_chunks.noun_chunks:
                 #     print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
                 # print("-----")
+            # TODO Remove debug log in production release
             print ET.tostring(root_element, encoding='utf8', method='xml')
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
@@ -311,13 +317,80 @@ def parcexml_Generator():
 # ------------------------------------------------------------------------------------------------------
 # """
 
+"""
+# ------------------------------------------------------------------------------------------------------
+# Get terms list service
+# ------------------------------------------------------------------------------------------------------
+# """
+@app.route('/ken/api/v1.0/en/file/gettermslist', methods=['POST'])
+def get_terms_list():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    file = request.files['file']
+
+    # if user does not select file, browser also submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return abort(400)
+
+    if file and allowed_file(file.filename):
+        # TODO doc/docx processing
+        # pdf processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+            pdf_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),pdf_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+        # docx processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'docx':
+            docx_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),docx_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_docx(destination)
+        # txt processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            raw_text = file.read().decode('utf-8')
+            file.close()
+        try:
+            # default sentence normalization + spaCy doc init
+            doc = NLP_en(text_normalization_default(raw_text))
+
+            noun_chunks = []
+
+            for sentence in doc.sents:
+                # default sentence normalization
+                sentence_clean = sentence_normalization_default(sentence.text)
+                # NP shallow parsing
+                doc_for_chunks = NLP_en(sentence_clean)
+                for chunk in doc_for_chunks.noun_chunks:
+                    noun_chunks.append(chunk.text)
+            return '\n'.join(noun_chunks)
+        except:
+            print "Unexpected error:", sys.exc_info()
+            return abort(500)
+    file.close()
+    return abort(400)
+"""
+# ------------------------------------------------------------------------------------------------------
+# Get terms list service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+
 """ 
 # ------------------------------------------------------------------------------------------------------
 # FEATURE LIST
 # ------------------------------------------------------------------------------------------------------
 TODO exception handling in a good way
 
-TODO in production on Linux with uWSGI, Nginx, Docker
+Done in production on Linux with uWSGI, Nginx, Docker
 
 TODO Languagetool in a separate container for spelling correction
 
