@@ -53,7 +53,7 @@ TEXT = WORD_NAMESPACE + 't'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx']) 
 
 # Load globally spaCy model via package name
-NLP_en = spacy.load('en_core_web_sm')
+NLP_EN = spacy.load('en_core_web_sm')
 # or
 # NLP_en_lg = spacy.load('en_core_web_lg')
 
@@ -226,7 +226,7 @@ def parcexml_Generator():
 
         try:
             # default sentence normalization + spaCy doc init
-            doc = NLP_en(text_normalization_default(raw_text))
+            doc = NLP_EN(text_normalization_default(raw_text))
 
             # TODO Remove debug log in production release
             print('''
@@ -262,7 +262,7 @@ def parcexml_Generator():
 
                 # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
                 # TODO optimize for using only 1 nlp
-                doc_for_lemmas = NLP_en(sentence_clean)
+                doc_for_lemmas = NLP_EN(sentence_clean)
                 for lemma in doc_for_lemmas:
                 # for lemma in sentence:
                     # create and append <item>
@@ -360,7 +360,7 @@ def get_terms_list():
             file.close()
         try:
             # default sentence normalization + spaCy doc init
-            doc = NLP_en(text_normalization_default(raw_text))
+            doc = NLP_EN(text_normalization_default(raw_text))
 
             noun_chunks = []
 
@@ -368,7 +368,7 @@ def get_terms_list():
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)
                 # NP shallow parsing
-                doc_for_chunks = NLP_en(sentence_clean)
+                doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
                     noun_chunks.append(chunk.text)
             return '\n'.join(noun_chunks)
