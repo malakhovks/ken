@@ -228,8 +228,18 @@ def parcexml_Generator():
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
         try:
+
+            text_normalized = text_normalization_default(raw_text)
+
+            # spelling Correction with LanguageTools
+            if request.args.get('spell', None) != None:
+                lt = language_check.LanguageTool('en-US')
+                text_normalized = text_normalization_default(raw_text)
+                matches = lt.check(text_normalized)
+                text_normalized = language_check.correct(text_normalized, matches)
+
             # default sentence normalization + spaCy doc init
-            doc = NLP_EN(text_normalization_default(raw_text))
+            doc = NLP_EN(text_normalized)
 
             # TODO Remove debug log in production release
             print('''
@@ -247,13 +257,6 @@ def parcexml_Generator():
 
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)
-
-                # spelling Correction with LanguageTools
-                # TODO LanguageTools
-                if request.args.get('spell', None) != None:
-                    lt = language_check.LanguageTool('en-US')
-                    matches = lt.check(sentence_clean)
-                    sentence_clean = language_check.correct(sentence_clean, matches)
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
