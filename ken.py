@@ -43,6 +43,7 @@ from pdfminer.pdfpage import PDFPage
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
 from werkzeug.utils import secure_filename
 
+# Python wrapper for LanguageTool grammar checker
 import language_check
 
 # for docx processing
