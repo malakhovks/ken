@@ -220,7 +220,7 @@ def parcexml_Generator():
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'99', 'PRON':'S11', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'99', 'CCONJ':'U', 'DET':'99', 'PART':'99', 'SCONJ':'U', 'SPACE':'98'}
 
         # TODO Correctly relate the parts of speech with spaCy
-        # POS spacCy
+        # POS spaCy
         if request.args.get('pos', None) == 'spacy':
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
@@ -293,16 +293,30 @@ def parcexml_Generator():
                     new_pos_element.text = str(lemma.idx+1)
                     new_item_element.append(new_pos_element)
 
+                    # create and append <relate> and <rel_type>
+                    new_rel_type_element = ET.Element('rel_type')
+                    new_relate_element = ET.Element('relate')
+                    if lemma.dep_ == 'punct':
+                        new_rel_type_element.text = 'K0'
+                        new_relate_element.text = '0'
+                        new_item_element.append(new_rel_type_element)
+                        new_item_element.append(new_relate_element)
+                    else:
+                        new_rel_type_element.text = lemma.dep_
+                        new_item_element.append(new_rel_type_element)
+                        new_relate_element.text = str(lemma.head.i)
+                        new_item_element.append(new_relate_element)
+
                     new_sentence_element.append(new_item_element)
 
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
 
                 # NP shallow parsing
-                # doc_for_chunks = nlp(sentence_clean)
-                # for chunk in doc_for_chunks.noun_chunks:
-                #     print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-                # print("-----")
+                doc_for_chunks = NLP_EN(sentence_clean)
+                for chunk in doc_for_chunks.noun_chunks:
+                    print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
+                print("-----")
             # TODO Remove debug log in production release
             print ET.tostring(root_element, encoding='utf8', method='xml')
             return ET.tostring(root_element, encoding='utf8', method='xml')
