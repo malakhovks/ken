@@ -20,7 +20,7 @@ import sys, os, tempfile
 
 # libraries for NLP pipeline
 import spacy
-from textblob import TextBlob
+# from textblob import TextBlob
 
 import pickle
 import codecs
@@ -42,6 +42,8 @@ from pdfminer.pdfpage import PDFPage
 # libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
 from werkzeug.utils import secure_filename
+
+import language_check
 
 # for docx processing
 import zipfile
@@ -126,10 +128,10 @@ def sentence_normalization_default(raw_sentence):
     return normalized_sentence
 
 # sentence spelling TextBlob
-def sentence_spelling(unchecked_sentence):
-    blob = TextBlob(unchecked_sentence)
-    checked_sentence = str(blob.correct()).decode('utf-8')
-    return checked_sentence
+# def sentence_spelling(unchecked_sentence):
+#     blob = TextBlob(unchecked_sentence)
+#     checked_sentence = str(blob.correct()).decode('utf-8')
+#     return checked_sentence
 
 # Extracting all the text from PDF with PDFMiner
 def get_text_from_pdf_pdfminer(pdf_path):
@@ -245,9 +247,12 @@ def parcexml_Generator():
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)
 
-                # spelling Correction with TextBlob
+                # spelling Correction with LanguageTools
+                # TODO LanguageTools
                 if request.args.get('spell', None) != None:
-                    sentence_clean = sentence_spelling(sentence_clean)
+                    lt = language_check.LanguageTool('en-US')
+                    matches = lt.check(sentence_clean)
+                    sentence_clean = language_check.correct(sentence_clean, matches)
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
