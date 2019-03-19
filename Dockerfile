@@ -11,6 +11,8 @@ RUN apt-get clean \
     && apt-get -y install nginx \
     && apt-get -y install python-dev \
     && apt-get -y install build-essential \
+    && mkdir -p /usr/share/man/man1 \
+    && apt-get -y install openjdk-8-jdk-headless \
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \
     && python -m textblob.download_corpora \
     && rm -r /root/.cache
