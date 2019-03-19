@@ -304,7 +304,7 @@ def parcexml_Generator():
                     else:
                         new_rel_type_element.text = lemma.dep_
                         new_item_element.append(new_rel_type_element)
-                        new_relate_element.text = str(lemma.head.i)
+                        new_relate_element.text = str(lemma.head.i+1)
                         new_item_element.append(new_relate_element)
 
                     new_sentence_element.append(new_item_element)
