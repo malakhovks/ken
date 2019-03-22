@@ -307,6 +307,11 @@ def parcexml_Generator():
                         new_relate_element.text = str(lemma.head.i+1)
                         new_item_element.append(new_relate_element)
 
+                    # create and append <group_n>
+                    new_group_n_element = ET.Element('group_n')
+                    new_group_n_element.text = '1'
+                    new_item_element.append(new_group_n_element)
+
                     new_sentence_element.append(new_item_element)
 
                 # create full <parce.xml> file structure
