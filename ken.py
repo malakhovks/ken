@@ -407,6 +407,10 @@ def get_terms_list():
 # ------------------------------------------------------------------------------------------------------
 # FEATURE LIST
 # ------------------------------------------------------------------------------------------------------
+TODO - in pdf
+TODO 2 files, comparable
+
+
 TODO exception handling in a good way
 
 Done in production on Linux with uWSGI, Nginx, Docker
