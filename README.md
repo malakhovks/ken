@@ -23,7 +23,7 @@ git checkout <branch_name>
 Build an image from a Dockerfile (It creates an image named `ken_image`):
 ```bash
 docker build . -t ken_image
-docker build . -t ken_image > dLog.txt 2>&1 < /dev/null &
+docker build . -t ken_image >dLog.txt 2>&1 < /dev/null &
 ```
 It creates an image named `ken_image`. You can run the image now with command:
 ```bash
