@@ -62,40 +62,6 @@ Some useful options when running container:
 
 -------
 
-## Building and running under Windows
-
-Install latest `Python 2.7.x`:
-```http
-https://www.python.org/downloads/windows/
-```
-Update `setuptools`:
-```bash
-pip install -U setuptools
-```
-Update `pip`:
-```bash
-python -m pip install --upgrade pip
-```
-Install `Visual C++ compiler`:
-[Install corresponding visual c++ compiler](https://wiki.python.org/moin/WindowsCompilers) and make sure it match with your python version.
-
-| Visual C++ |         CPython         |
-| :--------: | :---------------------: |
-|    14.0    |        3.5, 3.6         |
-|    10.0    |        3.3, 3.4         |
-|    9.0     | 2.6, 2.7, 3.0, 3.1, 3.2 |
-
-If `connection error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed` then:
-```bash
-pip install --trusted-host pypi.python.org linkchecker
-```
-Install `requirements.txt`:
-```bash
-pip install -r requirements.txt
-```
-
--------
-
 ## Essential Docker CLI commands
 
 [Docker](https://www.docker.com/) is a great tool for building [microservices](https://pivotal.io/microservices), allowing you to create [cloud-based](https://www.docker.com/what-docker) applications and [systems](https://www.docker.com/what-docker). To make the most of it via your terminal, here is a run down of the top 10 Docker commands for your terminal.
