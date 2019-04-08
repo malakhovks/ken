@@ -1,6 +1,6 @@
-# ken NLP project
+# ken NLP arm32v7 project
 
-## Building and running under UNIX (Linux/MacOS) with Docker
+## Building and running under Linux arm32v7
 
 Clone from git repository:
 ```bash
