@@ -1,20 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-Solving Unicode Problems in Python 2.7
-# ------------------------------------------------------------------------------------------------------
-It makes Python 2 behave as Python 3 does when it comes to string literals.
-It makes your code cross-Python-version compatible.
-# from __future__ import unicode_literals
-# ------------------------------------------------------------------------------------------------------
-    encode(): Gets you from Unicode -> bytes
-    decode(): Gets you from bytes -> Unicode
-    codecs.open(encoding=”utf-8″): Read and write files directly to/from Unicode (you can use any encoding, not just utf-8, but utf-8 is most common).
-    u”: Makes your string literals into Unicode objects rather than byte sequences.
-Warning: Don’t use encode() on bytes or decode() on Unicode objects.
-# ------------------------------------------------------------------------------------------------------
-"""
 # tempfile for temporary dir creation
 import sys, os, tempfile
 
@@ -424,4 +410,3 @@ TODO in production on Windows
 if __name__ == '__main__':
     # default port = 5000
     app.run(host = '0.0.0.0')
-    # app.run(host = '127.0.0.1', port = 8000)
