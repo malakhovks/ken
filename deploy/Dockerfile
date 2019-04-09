@@ -1,7 +1,6 @@
 FROM arm32v7/python:2.7-slim
 
 LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua>"
-LABEL description "KEN project (arm32v7/python:2.7-slim + Nginx + uWSGI + Flask)"
 
 COPY . /srv/ken
 WORKDIR /srv/ken
