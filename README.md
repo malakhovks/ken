@@ -22,6 +22,6 @@ git checkout <branch_name>
 
 Run `start.sh`:
 ```bash
-docker build . -t ken_image
-docker build . -t ken_image >dLog.txt 2>&1 < /dev/null &
+chmod +x ./start.sh
+./start.sh
 ```
