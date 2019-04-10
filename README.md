@@ -15,11 +15,18 @@ git clone --depth=1 --branch=arm32v7 https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa
 > Credentials needed
 > https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 
-Checkout the branch you want to use:
+Install `nginx`:
 ```bash
-git checkout <branch_name>
+apt-get -y install nginx
 ```
-
+Install dependencies from `requirements.txt`:
+```bash
+pip install -r ./deploy/requirements.txt --src /usr/local/src
+```
+Install textblob corpora:
+```bash
+python -m textblob.download_corpora
+```
 Run `start.sh`:
 ```bash
 chmod +x ./start.sh
