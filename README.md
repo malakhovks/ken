@@ -25,18 +25,18 @@ $ pip install -r ./deploy/requirements.txt --src /usr/local/src
 ```bash
 $ python -m textblob.download_corpora
 ```
-6. Copy `nginx` congiguration file:
+6. Copy `nginx` configuration file:
 ```bash
-$ cp ./deploy/nginx.conf /etc/nginx 
+$ cp ./deploy/nginx.conf /etc/nginx/ 
 ```
-7. Remove `cache`:
+7. Copy `uwsgi` configuration file
+```bash
+$ cp ./deploy/uwsgi.conf /etc/init/
+```
+8. Remove `cache`:
 ```bash
 $ rm -r /root/.cache
 $ apt-get -y clean
 $ apt-get -y autoremove
 ```
-7. Run `start.sh`:
-```bash
-$ chmod +x ./start.sh
-$ ./start.sh
-```
+9. Reboot system.
