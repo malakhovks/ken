@@ -19,6 +19,7 @@ $ apt-get -y install nginx
 ```
 4. Install dependencies from `requirements.txt`:
 ```bash
+$ pip install -U 3to2
 $ pip install -r ./deploy/requirements.txt --src /usr/local/src
 ```
 5. Install `textblob` corpora:
