@@ -40,3 +40,12 @@ $ apt-get -y clean
 $ apt-get -y autoremove
 ```
 9. Reboot system.
+
+install OpenJRE
+```bash
+$ sudo apt-get install default-jre
+```
+install OpenJDK
+```bash
+$ sudo apt-get install default-jdk
+```
