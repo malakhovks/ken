@@ -5,3 +5,4 @@ textblob>=0.15.2
 pdfminer==20140328
 uWSGI>=2.0.17.1
 # 3to2>=1.1.1
+# language-check>=1.1
