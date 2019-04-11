@@ -200,9 +200,16 @@ def parcexml_Generator():
         try:
 
             text_normalized = text_normalization_default(raw_text)
-            
+
+            # spelling Correction with LanguageTools
+            if request.args.get('spell', None) != None:
+                lt = language_check.LanguageTool('en-US')
+                text_normalized = text_normalization_default(raw_text)
+                matches = lt.check(text_normalized)
+                text_normalized = language_check.correct(text_normalized, matches)
+
             # default sentence normalization + spaCy doc init
-            doc = NLP_EN(text_normalization_default(raw_text))
+            doc = NLP_EN(text_normalized)
 
             # create the <parce.xml> file structure
             # create root element <text>
