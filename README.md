@@ -39,12 +39,14 @@ $ rm -r /root/.cache
 $ apt-get -y clean
 $ apt-get -y autoremove
 ```
-9. Install OpenJRE
+9. Install OpenJRE and OpenJDK
 ```bash
 $ sudo apt-get install default-jre
-```
-10. Install OpenJDK
-```bash
 $ sudo apt-get install default-jdk
 ```
-11. Reboot system.
+or
+```bash
+$ sudo apt-get install default-jre
+$ sudo apt-get install default-jdk
+```
+10. Reboot system.
