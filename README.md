@@ -46,7 +46,7 @@ $ sudo apt-get install default-jdk
 ```
 or
 ```bash
-$ sudo apt-get install default-jre
-$ sudo apt-get install default-jdk
+$ mkdir -p /usr/share/man/man1
+$ apt-get -y install openjdk-8-jdk-headless
 ```
 10. Reboot system.
