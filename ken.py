@@ -6,7 +6,10 @@ import sys, os, tempfile
 
 # libraries for NLP pipeline
 import spacy
-from textblob import TextBlob
+# from textblob import TextBlob
+
+# Python wrapper for LanguageTool grammar checker
+import language_check
 
 import pickle
 import codecs
