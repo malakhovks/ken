@@ -283,14 +283,6 @@ def parcexml_Generator():
 
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
-
-                # NP shallow parsing
-                # doc_for_chunks = NLP_EN(sentence_clean)
-                # for chunk in doc_for_chunks.noun_chunks:
-                #     print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-                # print("-----")
-            # TODO Remove debug log in production release
-            print ET.tostring(root_element, encoding='utf8', method='xml')
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
             print "Unexpected error:", sys.exc_info()
