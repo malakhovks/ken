@@ -198,6 +198,9 @@ def parcexml_Generator():
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
         try:
+
+            text_normalized = text_normalization_default(raw_text)
+            
             # default sentence normalization + spaCy doc init
             doc = NLP_EN(text_normalization_default(raw_text))
 
