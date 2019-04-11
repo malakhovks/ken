@@ -53,14 +53,6 @@ Limited the maximum allowed payload to 16 megabytes.
 If a larger file is transmitted, Flask will raise an RequestEntityTooLarge exception.
 """
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-
-"""
-Set the secret key to some random bytes. Keep this really secret!
-How to generate good secret keys.
-A secret key should be as random as possible. Your operating system has ways to generate pretty random data based on a cryptographic random generator. Use the following command to quickly generate a value for Flask.secret_key (or SECRET_KEY):
-$ python -c 'import os; print(os.urandom(16))'
-b'_5#y2L"F4Q8z\n\xec]/'
-"""
 # app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.secret_key = os.urandom(42)
 
@@ -90,11 +82,6 @@ def text_normalization_default(raw_text):
             # remove leading and ending spaces
             line = line.strip()
             raw_text_list.append(line)
-            # TODO Remove debug log in production release
-            print('Included line: ' + line)
-        else:
-            # TODO Remove debug log in production release
-            print('Excluded line: ' + line)
     yet_raw_text = '\n'.join(raw_text_list)
     return yet_raw_text
 
@@ -178,7 +165,7 @@ def parcexml_Generator():
         return abort(400)
 
     if file and allowed_file(file.filename):
-        # TODO doc/docx processing
+        # TODO doc processing
         # pdf processing
         if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
             pdf_file = secure_filename(file.filename)
@@ -213,12 +200,6 @@ def parcexml_Generator():
         try:
             # default sentence normalization + spaCy doc init
             doc = NLP_EN(text_normalization_default(raw_text))
-
-            # TODO Remove debug log in production release
-            print('''
-            sentences\t{num_sent}
-            '''.format(
-                num_sent=len(list(doc.sents)),))
 
             # create the <parce.xml> file structure
             # create root element <text>
