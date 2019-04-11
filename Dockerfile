@@ -11,6 +11,8 @@ RUN apt-get -y clean \
     && apt-get -y install nginx \
     && apt-get -y install python-dev \
     && apt-get -y install build-essential \
+    && mkdir -p /usr/share/man/man1 \
+    && apt-get -y install openjdk-8-jdk-headless \
     # && apt-get -y install ca-certificates-java \
     # && apt-get -y install ca-certificates \
     # && apt-get -y install default-jre \
