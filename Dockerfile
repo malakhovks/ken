@@ -11,6 +11,8 @@ RUN apt-get -y clean \
     && apt-get -y install nginx \
     && apt-get -y install python-dev \
     && apt-get -y install build-essential \
+    # && apt-get -y install ca-certificates-java \
+    # && apt-get -y install ca-certificates \
     # && apt-get -y install default-jre \
     # && apt-get -y install default-jdk \
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \
