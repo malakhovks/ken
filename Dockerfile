@@ -13,10 +13,6 @@ RUN apt-get -y clean \
     && apt-get -y install build-essential \
     && mkdir -p /usr/share/man/man1 \
     && apt-get -y install openjdk-8-jdk-headless \
-    # && apt-get -y install ca-certificates-java \
-    # && apt-get -y install ca-certificates \
-    # && apt-get -y install default-jre \
-    # && apt-get -y install default-jdk \
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \
     && python -m textblob.download_corpora \
     && rm -r /root/.cache \
