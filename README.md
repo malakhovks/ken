@@ -10,7 +10,7 @@ Or clone from the specific branch/tag of git repository:
 
 ```bash
 git clone --depth=1 --branch=<tag_name> <repo_url>
-git clone  --depth=1 --branch=develop https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+git clone --depth=1 --branch=develop https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 > Credentials needed
 > https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
