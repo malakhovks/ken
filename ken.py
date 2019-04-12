@@ -20,7 +20,9 @@ import sys, os, tempfile
 
 # libraries for NLP pipeline
 import spacy
-from textblob import TextBlob
+# Python wrapper for LanguageTool grammar checker
+import language_check
+# from textblob import TextBlob
 
 import pickle
 import codecs
@@ -125,11 +127,11 @@ def sentence_normalization_default(raw_sentence):
     normalized_sentence = raw_sentence
     return normalized_sentence
 
-# sentence spelling TextBlob
-def sentence_spelling(unchecked_sentence):
-    blob = TextBlob(unchecked_sentence)
-    checked_sentence = str(blob.correct()).decode('utf-8')
-    return checked_sentence
+# # sentence spelling TextBlob
+# def sentence_spelling(unchecked_sentence):
+#     blob = TextBlob(unchecked_sentence)
+#     checked_sentence = str(blob.correct()).decode('utf-8')
+#     return checked_sentence
 
 # Extracting all the text from PDF with PDFMiner
 def get_text_from_pdf_pdfminer(pdf_path):
@@ -244,8 +246,8 @@ def parcexml_Generator():
                 sentence_clean = sentence_normalization_default(sentence.text)
 
                 # spelling Correction with TextBlob
-                if request.args.get('spell', None) != None:
-                    sentence_clean = sentence_spelling(sentence_clean)
+                # if request.args.get('spell', None) != None:
+                #     sentence_clean = sentence_spelling(sentence_clean)
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
