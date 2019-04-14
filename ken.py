@@ -210,7 +210,7 @@ def parcexml_Generator():
 
             # create the <parce.xml> file structure
             # create root element <text>
-            root_element = ET.Element("text")
+            root_element = ET.Element("text")termsintext
             sentence_index = 0
 
             for sentence in doc.sents:
@@ -339,11 +339,13 @@ def get_terms_list():
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
             raw_text = file.read().decode('utf-8')
             file.close()
+
+        # create root element <text>
+        root_element = ET.Element("termsintext")
+
         try:
             # default sentence normalization + spaCy doc init
             doc = NLP_EN(text_normalization_default(raw_text))
-
-            noun_chunks = []
 
             for sentence in doc.sents:
                 # default sentence normalization
@@ -351,8 +353,12 @@ def get_terms_list():
                 # NP shallow parsing
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
-                    noun_chunks.append(chunk.text)
-            return '\n'.join(noun_chunks)
+                    new_term_element = ET.Element('term')
+                    new_term_element.text = chunk.text
+
+                # create full allterms file structure
+                root_element.append(new_term_element)
+            return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
             print "Unexpected error:", sys.exc_info()
             return abort(500)
