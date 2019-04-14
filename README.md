@@ -28,11 +28,13 @@ $ python -m textblob.download_corpora
 ```
 6. Copy `nginx` configuration file:
 ```bash
-$ cp ./deploy/nginx.conf /etc/nginx/ 
+$ cp ./deploy/nginx.conf /etc/nginx/
+$ service nginx reload 
 ```
 7. Copy `uwsgi` configuration file
 ```bash
 $ cp ./deploy/uwsgi.conf /etc/init/
+$ uwsgi --ini ./deploy/uwsgi.ini &
 ```
 8. Remove `cache`:
 ```bash

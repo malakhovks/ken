@@ -210,7 +210,7 @@ def parcexml_Generator():
 
             # create the <parce.xml> file structure
             # create root element <text>
-            root_element = ET.Element("text")termsintext
+            root_element = ET.Element("text")
             sentence_index = 0
 
             for sentence in doc.sents:
