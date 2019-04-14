@@ -26,23 +26,7 @@ $ pip install -r ./deploy/requirements.txt --src /usr/local/src
 ```bash
 $ python -m textblob.download_corpora
 ```
-6. Copy `nginx` configuration file:
-```bash
-$ cp ./deploy/nginx.conf /etc/nginx/
-$ service nginx reload 
-```
-7. Copy `uwsgi` configuration file
-```bash
-$ cp ./deploy/uwsgi.conf /etc/init/
-$ uwsgi --ini ./deploy/uwsgi.ini &
-```
-8. Remove `cache`:
-```bash
-$ rm -r /root/.cache
-$ apt-get -y clean
-$ apt-get -y autoremove
-```
-9. Install OpenJRE and OpenJDK
+6. Install OpenJRE and OpenJDK
 ```bash
 $ sudo apt-get install default-jre
 $ sudo apt-get install default-jdk
@@ -51,5 +35,21 @@ or
 ```bash
 $ mkdir -p /usr/share/man/man1
 $ apt-get -y install openjdk-8-jdk-headless
+```
+7. Remove `cache`:
+```bash
+$ rm -r /root/.cache
+$ apt-get -y clean
+$ apt-get -y autoremove
+```
+8. Copy `nginx` configuration file:
+```bash
+$ cp ./deploy/nginx.conf /etc/nginx/
+$ service nginx reload 
+```
+9. Copy `uwsgi` configuration file
+```bash
+$ cp ./deploy/uwsgi.conf /etc/init/
+$ uwsgi --ini ./deploy/uwsgi.ini &
 ```
 10. Reboot system.
