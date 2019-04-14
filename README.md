@@ -49,7 +49,7 @@ $ service nginx reload
 ```
 9. Copy `uwsgi` configuration file
 ```bash
-$ cp ./deploy/uwsgi.conf /etc/init/
-$ uwsgi --ini ./deploy/uwsgi.ini &
+$ apt install supervisor
+$ cp ./deploy/site.conf /etc/supervisor/conf.d/
 ```
 10. Reboot system.
