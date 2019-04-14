@@ -5,10 +5,10 @@
 1. Clone from the specific branch `arm32v7` of `ken` git repository:
 
 ```bash
-$ git clone --depth=1 --branch=arm32v7 https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+$ git clone --depth=1 --branch=arm32v7 https://malakhovks:15ad57f17bdc98eafb398eaf53ae95fede7a49a6@github.com/malakhovks/ken.git
 ```
 > Credentials needed
-> https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+> https://malakhovks:15ad57f17bdc98eafb398eaf53ae95fede7a49a6@github.com/malakhovks/ken.git
 
 2. Install `python 2.7` environment + `build-essential`.
 
