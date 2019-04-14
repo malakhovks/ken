@@ -52,6 +52,7 @@ $ service nginx reload
 $ apt install supervisor
 $ cp ./deploy/site.conf /etc/supervisor/conf.d/
 ```
+> supervisorctl
 10. Reboot system
 ```bash
 $ reboot
