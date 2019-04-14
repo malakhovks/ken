@@ -52,4 +52,7 @@ $ service nginx reload
 $ apt install supervisor
 $ cp ./deploy/site.conf /etc/supervisor/conf.d/
 ```
-10. Reboot system.
+10. Reboot system
+```bash
+$ reboot
+```
