@@ -45,7 +45,7 @@ $ apt-get -y autoremove
 8. Copy `nginx` configuration file:
 ```bash
 $ cp ./deploy/nginx.conf /etc/nginx/
-$ service nginx reload 
+$ service nginx reload
 ```
 9. Copy `uwsgi` configuration file
 ```bash
