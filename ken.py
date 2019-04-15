@@ -97,6 +97,8 @@ def text_normalization_default(raw_text):
     for line in raw_text.splitlines(True):
         # if line contains letters
         if re.search(r'[a-z]+', line):
+            # remove \n new lines and insert spaces
+            line = re.sub('[\n]', ' ', line)
             # remove tabs and insert spaces
             line = re.sub('[\t]', ' ', line)
             # remove multiple spaces
