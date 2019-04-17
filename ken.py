@@ -105,7 +105,7 @@ def text_normalization_default(raw_text):
             """
             line = re.sub('[\n]', ' ', line)
             line = re.sub('[\r\n]', ' ', line)
-            line = re.sub('[\n]', ' ', line)
+            line = re.sub('[\r]', ' ', line)
             # remove tabs and insert spaces
             line = re.sub('[\t]', ' ', line)
             # remove multiple spaces
