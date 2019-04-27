@@ -13,6 +13,7 @@ RUN apt-get -y clean \
     && apt-get -y install build-essential \
     && mkdir -p /usr/share/man/man1 \
     && apt-get -y install openjdk-8-jdk-headless \
+    # for language_check
     && pip install -U 3to2 \
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \ 
     && python -m textblob.download_corpora \
