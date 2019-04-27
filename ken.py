@@ -263,7 +263,7 @@ def parcexml_Generator():
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)
 
-                spelling Correction with TextBlob
+                # spelling Correction with TextBlob
                 if request.args.get('spell', None) != None:
                     sentence_clean = sentence_spelling(sentence_clean)
 
