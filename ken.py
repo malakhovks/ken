@@ -237,7 +237,7 @@ def parcexml_Generator():
 
             text_normalized = text_normalization_default(raw_text)
 
-            # spelling Correction with LanguageTools
+            # spelling correction with language_check - Python wrapper for LanguageTool
             # if request.args.get('spell', None) != None:
             #     lt = language_check.LanguageTool('en-US')
             #     matches = lt.check(text_normalized)
