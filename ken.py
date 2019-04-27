@@ -401,6 +401,7 @@ def get_terms_list():
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
                     noun_chunks.append(chunk.text)
+                    noun_chunks.append(chunk.text.root)
             return '\n'.join(noun_chunks)
         except:
             print "Unexpected error:", sys.exc_info()
