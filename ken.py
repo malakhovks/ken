@@ -401,8 +401,10 @@ def get_terms_list():
                 # NP shallow parsing
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
+                    noun_chunks.append(str(chunk.start))
                     noun_chunks.append(chunk.text)
                     noun_chunks.append(chunk.root.text)
+                    noun_chunks.append(chunk.lemma_)
             return '\n'.join(noun_chunks)
         except:
             print "Unexpected error:", sys.exc_info()
