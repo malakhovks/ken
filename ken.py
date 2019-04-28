@@ -15,37 +15,38 @@ It makes your code cross-Python-version compatible.
 Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 # ------------------------------------------------------------------------------------------------------
 """
-# tempfile for temporary dir creation
+# load tempfile for temporary dir creation
 import sys, os, tempfile
 
-# libraries for NLP pipeline
+# load libraries for NLP pipeline
 import spacy
-# Python wrapper for LanguageTool grammar checker
-# import language_check
 from textblob import TextBlob
+# load python wrapper language_check for LanguageTool grammar checker
+# import language_check
 
+# load misc utils
 import pickle
 import codecs
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-# libraries for JSON proccessing
+# load libraries for string proccessing
 import re, string
 
-# libraries for XML proccessing
+# load libraries for XML proccessing
 import xml.etree.ElementTree as ET
 
-# for pdf processing pdfminer
+# load libraries for pdf processing pdfminer
 from io import BytesIO
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 
-# libraries for API proccessing
+# load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
 from werkzeug.utils import secure_filename
 
-# for docx processing
+# load libraries for docx processing
 import zipfile
 WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 PARA = WORD_NAMESPACE + 'p'
