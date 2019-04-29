@@ -353,7 +353,7 @@ def parcexml_Generator():
 # Get terms list service
 # ------------------------------------------------------------------------------------------------------
 # """
-@app.route('/ken/api/v1.0/en/file/gettermslist', methods=['POST'])
+@app.route('/ken/api/v1.0/en/file/allterms', methods=['POST'])
 def get_terms_list():
     # check if the post request has the file part
     if 'file' not in request.files:
@@ -390,12 +390,19 @@ def get_terms_list():
             raw_text = file.read().decode('utf-8')
             file.close()
         try:
-            # default sentence normalization + spaCy doc init
+            # spaCy doc init + default sentence normalization
             doc = NLP_EN(text_normalization_default(raw_text))
+
+            # create the <allterms.xml> file structure
+            # create root element <termsintext>
+            root_element = ET.Element("termsintext")
+            # sentence counter
+            sentence_index = 0
 
             noun_chunks = []
 
             for sentence in doc.sents:
+                sentence_index+=1
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)
                 # NP shallow parsing
