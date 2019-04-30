@@ -395,23 +395,32 @@ def get_terms_list():
 
             # create the <allterms.xml> file structure
             # create root element <termsintext>
-            root_element = ET.Element("termsintext")
+            root_termsintext_element = ET.Element("termsintext")
+            # create element <sentences>
+            sentences_element = ET.Element("sentences")
             # sentence counter
             sentence_index = 0
 
             noun_chunks = []
 
             for sentence in doc.sents:
+
                 sentence_index+=1
+
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)
+                # create and append <sent>
+                new_sent_element = ET.Element('sent')
+                new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
+                sentences_element.append(new_sent_element)
+
                 # NP shallow parsing
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
-                    noun_chunks.append(str(chunk.start))
+                    # noun_chunks.append(str(chunk.start))
                     noun_chunks.append(chunk.text)
                     noun_chunks.append(chunk.root.text)
-                    noun_chunks.append(chunk.lemma_)
+                    # noun_chunks.append(chunk.lemma_)
             return '\n'.join(noun_chunks)
         except:
             print "Unexpected error:", sys.exc_info()
