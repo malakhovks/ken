@@ -417,6 +417,12 @@ def get_terms_list():
                 # NP shallow parsing
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
+
+                    doc_for_tokens = NLP_EN(chunk.text)
+                    for token in doc_for_tokens:
+                        print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
+
+                    print('-------------------------')
                     # noun_chunks.append(str(chunk.start))
                     noun_chunks.append(chunk.text)
                     noun_chunks.append(chunk.root.text)
