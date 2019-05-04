@@ -398,6 +398,13 @@ def get_terms_list():
             root_termsintext_element = ET.Element("termsintext")
             # create element <sentences>
             sentences_element = ET.Element("sentences")
+            # create element <filepath>
+            filepath_element = ET.Element("filepath")
+            filepath_element.text = file.filename
+            # create element <exporterms>
+            exporterms_element = ET.Element("exporterms")
+            # create element <exporterms>
+            exporterms_element = ET.Element("exporterms")
             # sentence counter
             sentence_index = 0
 
@@ -418,16 +425,31 @@ def get_terms_list():
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
 
+                    # create and append <term>
+                    new_term_element = ET.Element('term')
+                    # create and append <tname>
+                    new_tname_element = ET.Element('tname')
+                    new_tname_element.text = chunk.text
+                    new_term_element.append(new_tname_element)
+                    exporterms_element.append(new_term_element)
+
                     doc_for_tokens = NLP_EN(chunk.text)
                     for token in doc_for_tokens:
                         print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
 
                     print('-------------------------')
+                    
                     # noun_chunks.append(str(chunk.start))
-                    noun_chunks.append(chunk.text)
-                    noun_chunks.append(chunk.root.text)
+                    # noun_chunks.append(chunk.text)
+                    # noun_chunks.append(chunk.root.text)
                     # noun_chunks.append(chunk.lemma_)
-            return '\n'.join(noun_chunks)
+
+            # create full <allterms.xml> file structure
+            root_termsintext_element.append(filepath_element)
+            root_termsintext_element.append(exporterms_element)
+            root_termsintext_element.append(sentences_element)
+
+            return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
         except:
             print "Unexpected error:", sys.exc_info()
             return abort(500)
@@ -444,6 +466,8 @@ def get_terms_list():
 # ------------------------------------------------------------------------------------------------------
 TODO - in pdf
 TODO 2 files, comparable
+
+TODO NER feature
 
 
 TODO exception handling in a good way
