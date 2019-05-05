@@ -4,13 +4,30 @@ from spacy.symbols import *
 
 NLP_EN = spacy.load('en_core_web_sm')
 
-doc = NLP_EN('Python is a high-level programming language for the natural language processing pipeline.')
+doc = NLP_EN('Python is a high-level programming language for the natural language processing.')
+print(len(doc))
+for noun_token in doc:
+    if noun_token.pos_ in ["NOUN"]:
+        comps = [j for j in noun_token.children if j.dep_ == "compound"]
+        if comps:
+            print(comps, noun_token)
 
-span = doc[doc[3].left_edge.i : doc[3].right_edge.i+1]
-span.merge()
-for token in doc:
-    print(token.text, token.pos_)
-print span
+print('----------------------------------')
+
+for i in doc:
+    if i.pos_ in ["NOUN"]:
+        comps = [j for j in i.children if j.pos_ in ["ADJ", "NOUN"]]
+        if comps:
+            print(comps, i)
+
+print('----------------------------------')
+
+for chunk in doc.noun_chunks:
+    print(chunk.text, chunk.root.text, chunk.root.dep_,
+            chunk.root.head.text)
+
+
+
 
 # -------------
 
