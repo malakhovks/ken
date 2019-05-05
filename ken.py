@@ -259,8 +259,10 @@ def parcexml_Generator():
             sentences\t{num_sent}
             '''.format(
                 num_sent=len(list(doc.sents)),))
-
+            
+            """
             # create the <parce.xml> file structure
+            """
             # create root element <text>
             root_element = ET.Element("text")
             sentence_index = 0
