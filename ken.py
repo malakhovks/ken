@@ -23,6 +23,8 @@ import spacy
 # load Visualizers 
 from spacy import displacy
 from textblob import TextBlob
+# load SnowballStemmer stemmer from nltk
+from nltk.stem.snowball import SnowballStemmer
 # load python wrapper language_check for LanguageTool grammar checker
 # import language_check
 
@@ -61,6 +63,9 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 NLP_EN = spacy.load('en_core_web_sm')
 # or
 # NLP_en_lg = spacy.load('en_core_web_lg')
+
+# Load globally english SnowballStemmer
+ENGLISH_STEMMER = SnowballStemmer("english")
 
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
@@ -439,9 +444,13 @@ def get_terms_list():
                             # create and append <tname>
                             new_tname_element = ET.Element('tname')
                             new_tname_element.text = doc_for_tokens[0].lemma_
+                            # create and append <osn>
+                            new_osn_element = ET.Element('osn')
+                            new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
                             # append to <term>
                             new_term_element.append(new_ttype_element)
                             new_term_element.append(new_tname_element)
+                            new_term_element.append(new_osn_element)
                             new_term_element.append(new_wcount_element)
                             # append to <exporterms>
                             exporterms_element.append(new_term_element)
