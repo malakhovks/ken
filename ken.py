@@ -428,8 +428,8 @@ def get_terms_list():
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 sentences_element.append(new_sent_element)
 
-                # NP shallow parsing 
                 """
+                NP shallow parsing 
                 Noun chunks are “base noun phrases” – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
                 """
                 doc_for_chunks = NLP_EN(sentence_clean)
