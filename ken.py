@@ -400,9 +400,9 @@ def get_terms_list():
             # spaCy doc init + default sentence normalization
             doc = NLP_EN(text_normalization_default(raw_text))
 
-            # 
+            """
             # create the <allterms.xml> file structure
-            # 
+            """
             # create root element <termsintext>
             root_termsintext_element = ET.Element("termsintext")
             # create element <sentences>
@@ -432,13 +432,15 @@ def get_terms_list():
                 NP shallow parsing 
                 Noun chunks are “base noun phrases” – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
                 """
+
                 doc_for_chunks = NLP_EN(sentence_clean)
+
                 for chunk in doc_for_chunks.noun_chunks:
 
                     doc_for_tokens = NLP_EN(chunk.text)
 
                     # one-word terms extraction
-                    if  len(doc_for_tokens) < 2:
+                    if len(doc_for_tokens) < 2:
                         if doc_for_tokens[0].pos_ in ['NOUN', 'ADJ', 'NUM', 'PROPN']:
 
                             # check if already term in exporterms
@@ -508,6 +510,9 @@ def get_terms_list():
                             new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
                             # create and append <sentpos>
                             new_sentpos_element = ET.Element('sentpos')
+                            # for one_word_token in doc_for_chunks:
+                            #     if one_word_token.text == doc_for_tokens[0].text:
+                            #         new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i)
                             new_sentpos_element.text = str(sentence_index) + '/'
                             # append to <term>
                             new_term_element.append(new_ttype_element)
