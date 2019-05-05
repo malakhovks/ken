@@ -428,7 +428,10 @@ def get_terms_list():
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 sentences_element.append(new_sent_element)
 
-                # NP shallow parsing
+                # NP shallow parsing 
+                """
+                Noun chunks are “base noun phrases” – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
+                """
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
 
@@ -437,6 +440,58 @@ def get_terms_list():
                     # one-word terms extraction
                     if  len(doc_for_tokens) < 2:
                         if doc_for_tokens[0].pos_ in ['NOUN', 'ADJ', 'NUM', 'PROPN']:
+
+                            # check if already term in exporterms
+                            # if exporterms_element.find('term') is not None:
+                            #     for term in exporterms_element.findall('term'):
+                            #         tname = term.find('tname')
+                            #         if tname.text == doc_for_tokens[0].lemma_:
+                            #             print('repeat --------> ' + doc_for_tokens[0].lemma_)
+                            #         else:
+                            #             # create and append <wcount>
+                            #             new_wcount_element = ET.Element('wcount')
+                            #             new_wcount_element.text = '1'
+                            #             # create and append <ttype>
+                            #             new_ttype_element = ET.Element('ttype')
+                            #             new_ttype_element.text = doc_for_tokens[0].pos_
+                            #             # create <term>
+                            #             new_term_element = ET.Element('term')
+                            #             # create and append <tname>
+                            #             new_tname_element = ET.Element('tname')
+                            #             new_tname_element.text = doc_for_tokens[0].lemma_
+                            #             # create and append <osn>
+                            #             new_osn_element = ET.Element('osn')
+                            #             new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                            #             # append to <term>
+                            #             new_term_element.append(new_ttype_element)
+                            #             new_term_element.append(new_tname_element)
+                            #             new_term_element.append(new_osn_element)
+                            #             new_term_element.append(new_wcount_element)
+                            #             # append to <exporterms>
+                            #             exporterms_element.append(new_term_element)
+                            # else:
+                            #     # create and append <wcount>
+                            #     new_wcount_element = ET.Element('wcount')
+                            #     new_wcount_element.text = '1'
+                            #     # create and append <ttype>
+                            #     new_ttype_element = ET.Element('ttype')
+                            #     new_ttype_element.text = doc_for_tokens[0].pos_
+                            #     # create <term>
+                            #     new_term_element = ET.Element('term')
+                            #     # create and append <tname>
+                            #     new_tname_element = ET.Element('tname')
+                            #     new_tname_element.text = doc_for_tokens[0].lemma_
+                            #     # create and append <osn>
+                            #     new_osn_element = ET.Element('osn')
+                            #     new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                            #     # append to <term>
+                            #     new_term_element.append(new_ttype_element)
+                            #     new_term_element.append(new_tname_element)
+                            #     new_term_element.append(new_osn_element)
+                            #     new_term_element.append(new_wcount_element)
+                            #     # append to <exporterms>
+                            #     exporterms_element.append(new_term_element)
+
                             # create and append <wcount>
                             new_wcount_element = ET.Element('wcount')
                             new_wcount_element.text = '1'
@@ -451,24 +506,22 @@ def get_terms_list():
                             # create and append <osn>
                             new_osn_element = ET.Element('osn')
                             new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                            # create and append <sentpos>
+                            new_sentpos_element = ET.Element('sentpos')
+                            new_sentpos_element.text = str(sentence_index) + '/'
                             # append to <term>
                             new_term_element.append(new_ttype_element)
                             new_term_element.append(new_tname_element)
                             new_term_element.append(new_osn_element)
                             new_term_element.append(new_wcount_element)
+                            new_term_element.append(new_sentpos_element)
                             # append to <exporterms>
                             exporterms_element.append(new_term_element)
-
 
                     for token in doc_for_tokens:
                         print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
 
                     print('-------------------------')
-                    
-                    # noun_chunks.append(str(chunk.start))
-                    # noun_chunks.append(chunk.text)
-                    # noun_chunks.append(chunk.root.text)
-                    # noun_chunks.append(chunk.lemma_)
 
             # create full <allterms.xml> file structure
             root_termsintext_element.append(filepath_element)
