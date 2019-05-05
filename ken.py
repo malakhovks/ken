@@ -186,7 +186,7 @@ def get_text_from_docx(docx_path):
 # """
 
 """
-# <parce.xml> generation service
+# parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 @app.route('/ken/api/v1.0/en/file/parcexml', methods=['POST'])
@@ -347,12 +347,12 @@ def parcexml_Generator():
     file.close()
     return abort(400)
 """
-# <parce>.xml generation service
+# parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 
 """
-# Get terms list service
+# allterms.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 @app.route('/ken/api/v1.0/en/file/allterms', methods=['POST'])
@@ -458,7 +458,7 @@ def get_terms_list():
     file.close()
     return abort(400)
 """
-# Get terms list service
+# allterms.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 
