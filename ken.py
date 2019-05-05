@@ -513,6 +513,7 @@ def get_terms_list():
 
                             # create and append <sentpos>
                             for one_word_token in doc_for_chunks:
+                                # TODO Can be noun that a part of compound: "ontology" and "an ontology"
                                 if one_word_token.text.lower() == doc_for_tokens[0].text.lower():
                                     new_sentpos_element = ET.Element('sentpos')
                                     new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i+1)
