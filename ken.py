@@ -405,8 +405,6 @@ def get_terms_list():
             filepath_element.text = file.filename
             # create element <exporterms>
             exporterms_element = ET.Element("exporterms")
-            # create element <exporterms>
-            exporterms_element = ET.Element("exporterms")
             # sentence counter
             sentence_index = 0
 
@@ -427,15 +425,28 @@ def get_terms_list():
                 doc_for_chunks = NLP_EN(sentence_clean)
                 for chunk in doc_for_chunks.noun_chunks:
 
-                    # create and append <term>
-                    new_term_element = ET.Element('term')
-                    # create and append <tname>
-                    new_tname_element = ET.Element('tname')
-                    new_tname_element.text = chunk.text
-                    new_term_element.append(new_tname_element)
-                    exporterms_element.append(new_term_element)
-
                     doc_for_tokens = NLP_EN(chunk.text)
+                    if  len(doc_for_tokens) < 2:
+                        if doc_for_tokens[0].pos_ in ['NOUN', 'ADJ', 'NUM', 'PROPN']:
+                            # create and append <wcount>
+                            new_wcount_element = ET.Element('wcount')
+                            new_wcount_element.text = '1'
+                            # create and append <ttype>
+                            new_ttype_element = ET.Element('ttype')
+                            new_ttype_element.text = doc_for_tokens[0].pos_
+                            # create <term>
+                            new_term_element = ET.Element('term')
+                            # create and append <tname>
+                            new_tname_element = ET.Element('tname')
+                            new_tname_element.text = doc_for_tokens[0].lemma_
+                            # append to <term>
+                            new_term_element.append(new_ttype_element)
+                            new_term_element.append(new_tname_element)
+                            new_term_element.append(new_wcount_element)
+                            # append to <exporterms>
+                            exporterms_element.append(new_term_element)
+
+
                     for token in doc_for_tokens:
                         print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
 
