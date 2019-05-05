@@ -508,18 +508,20 @@ def get_terms_list():
                             # create and append <osn>
                             new_osn_element = ET.Element('osn')
                             new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+
                             # create and append <sentpos>
-                            new_sentpos_element = ET.Element('sentpos')
-                            # for one_word_token in doc_for_chunks:
-                            #     if one_word_token.text == doc_for_tokens[0].text:
-                            #         new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i)
-                            new_sentpos_element.text = str(sentence_index) + '/'
+                            for one_word_token in doc_for_chunks:
+                                if one_word_token.text.lower() == doc_for_tokens[0].text.lower():
+                                    new_sentpos_element = ET.Element('sentpos')
+                                    new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i+1)
+                                    new_term_element.append(new_sentpos_element)
+
                             # append to <term>
                             new_term_element.append(new_ttype_element)
                             new_term_element.append(new_tname_element)
                             new_term_element.append(new_osn_element)
                             new_term_element.append(new_wcount_element)
-                            new_term_element.append(new_sentpos_element)
+
                             # append to <exporterms>
                             exporterms_element.append(new_term_element)
 
