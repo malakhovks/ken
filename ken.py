@@ -433,6 +433,8 @@ def get_terms_list():
                 for chunk in doc_for_chunks.noun_chunks:
 
                     doc_for_tokens = NLP_EN(chunk.text)
+
+                    # one-word terms extraction
                     if  len(doc_for_tokens) < 2:
                         if doc_for_tokens[0].pos_ in ['NOUN', 'ADJ', 'NUM', 'PROPN']:
                             # create and append <wcount>
