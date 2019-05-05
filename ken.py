@@ -20,6 +20,8 @@ import sys, os, tempfile
 
 # load libraries for NLP pipeline
 import spacy
+# load Visualizers 
+from spacy import displacy
 from textblob import TextBlob
 # load python wrapper language_check for LanguageTool grammar checker
 # import language_check
@@ -459,6 +461,25 @@ def get_terms_list():
 # Get terms list service
 # ------------------------------------------------------------------------------------------------------
 # """
+
+
+"""
+# Visualizers service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+@app.route('/ken/api/v1.0/en/html/sentence/depparse', methods=['GET'])
+def get_dependency_parse():
+    # here we want to get the value of user (i.e. ?sentence=some-value)
+    sentence = request.args.get('sentence')
+    doc = NLP_EN(sentence)
+    return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
+
+"""
+# Visualizers service
+# ------------------------------------------------------------------------------------------------------
+# """
+
 
 
 """ 
