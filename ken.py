@@ -400,7 +400,9 @@ def get_terms_list():
             # spaCy doc init + default sentence normalization
             doc = NLP_EN(text_normalization_default(raw_text))
 
+            # 
             # create the <allterms.xml> file structure
+            # 
             # create root element <termsintext>
             root_termsintext_element = ET.Element("termsintext")
             # create element <sentences>
