@@ -4,7 +4,9 @@ from spacy.symbols import *
 
 NLP_EN = spacy.load('en_core_web_sm')
 
-doc = NLP_EN('Python is a high-level programming language for the natural language processing.')
+# doc = NLP_EN('Python is a high-level programming language for the natural language processing.')
+doc = NLP_EN('After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.')
+
 print(len(doc))
 for noun_token in doc:
     if noun_token.pos_ in ["NOUN"]:
