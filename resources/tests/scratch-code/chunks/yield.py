@@ -4,8 +4,11 @@ from spacy.symbols import *
 
 NLP_EN = spacy.load('en_core_web_sm')
 
-# doc = NLP_EN('Python is a high-level programming language for the natural language processing.')
-doc = NLP_EN('After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.')
+doc = NLP_EN('Python is a high-level programming language for the natural language processing.')
+
+#doc = NLP_EN('After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.')
+
+# doc = NLP_EN('Some years later, the success of Google shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up - as compared to simply uploading an HTML page.')
 
 print(len(doc))
 for noun_token in doc:
@@ -21,6 +24,12 @@ for i in doc:
         comps = [j for j in i.children if j.pos_ in ["ADJ", "NOUN"]]
         if comps:
             print(comps, i)
+
+print('----------------------------------')
+
+for token in doc:
+    print('ent ------- >>>>>>> ' + token.text + ' --->> '+ token.ent_type_)
+
 
 print('----------------------------------')
 

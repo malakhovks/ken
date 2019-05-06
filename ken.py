@@ -513,8 +513,12 @@ def get_terms_list():
 
                             # create and append <sentpos>
                             for one_word_token in doc_for_chunks:
-                                # TODO Can be noun that a part of compound: "ontology" and "an ontology"
+                                # now includes nouns that a part of compound: "ontology" and "an ontology"
                                 if one_word_token.text.lower() == doc_for_tokens[0].text.lower():
+
+                                # for including just one-word junk
+                                # if chunk.start == one_word_token.i:
+
                                     new_sentpos_element = ET.Element('sentpos')
                                     new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i+1)
                                     new_term_element.append(new_sentpos_element)
@@ -528,10 +532,9 @@ def get_terms_list():
                             # append to <exporterms>
                             exporterms_element.append(new_term_element)
 
-                    for token in doc_for_tokens:
-                        print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_)
-
-                    print('-------------------------')
+                    # multi-word terms extraction
+                    if len(doc_for_tokens) > 1:
+                        print('-------->>>>>> ' + doc_for_tokens.text)
 
             # create full <allterms.xml> file structure
             root_termsintext_element.append(filepath_element)
@@ -577,7 +580,7 @@ TODO 2 files, comparable
 
 
 
-TODO NER feature
+TODO Handling NER in terms
 
 
 TODO exception handling in a good way
