@@ -443,7 +443,7 @@ def get_terms_list():
 
                     # one-word terms extraction
                     if len(doc_for_tokens) < 2:
-                        if doc_for_tokens[0].pos_ in ['NOUN', 'ADJ', 'NUM', 'PROPN']:
+                        if doc_for_tokens[0].pos_ in ['NOUN', 'PROPN']:
 
                             # check if already term in exporterms
                             # if exporterms_element.find('term') is not None:
