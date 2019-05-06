@@ -1,4 +1,6 @@
-# ken NLP project
+# ken (konspekt English)
+
+ken (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ## Building and running under UNIX (Linux/MacOS) with Docker
 
