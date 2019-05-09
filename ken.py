@@ -288,8 +288,36 @@ def parcexml_Generator():
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 new_sentence_element.append(new_sent_element)
 
+                # create amd append <ner>, <entity>
+                # NER labels description https://spacy.io/api/annotation#named-entities
+                if len(sentence.ents) != 0:
+                    # create <ner>
+                    ner_element = ET.Element('ner')
+                    for ent in sentence.ents:
+                        # create <entity>
+                        new_entity_element = ET.Element('entity')
+                        # create and append <entitytext>
+                        new_entity_text_element = ET.Element('entitytext')
+                        new_entity_text_element.text = ent.text
+                        new_entity_element.append(new_entity_text_element)
+                        # create and append <label>
+                        new_entity_label_element = ET.Element('label')
+                        new_entity_label_element.text = ent.label_
+                        new_entity_element.append(new_entity_label_element)
+                        # create and append <startentitypos>
+                        new_start_entity_pos_element = ET.Element('startentitypos')
+                        new_start_entity_pos_element.text = str(ent.start_char + 1)
+                        new_entity_element.append(new_start_entity_pos_element)
+                        # create and append <endentitypos>
+                        new_end_entity_pos_element = ET.Element('endentitypos')
+                        new_end_entity_pos_element.text = str(ent.end_char + 1)
+                        new_entity_element.append(new_end_entity_pos_element)
+                        # append <entity> to <ner>
+                        ner_element.append(new_entity_element)
+                    # append <ner> to <sentence>
+                    new_sentence_element.append(ner_element)
+
                 # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
-                # TODO optimize for using only 1 nlp
                 doc_for_lemmas = NLP_EN(sentence_clean)
                 for lemma in doc_for_lemmas:
                 # for lemma in sentence:
