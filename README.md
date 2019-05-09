@@ -1,6 +1,6 @@
 # ken (konspekt English)
 
-ken (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
+**ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ## Building and running under UNIX (Linux/MacOS) with Docker
 
@@ -14,8 +14,6 @@ Or clone from the specific branch/tag of git repository:
 git clone --depth=1 --branch=<tag_name> <repo_url>
 git clone --depth=1 --branch=develop https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
-> Credentials needed
-> https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 
 Checkout the branch you want to use:
 ```bash
