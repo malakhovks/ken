@@ -6,4 +6,4 @@
 # -c is concurrent clients
 # -n is the number of requests to run in the test
 
-ab -p test_data.pdf -T 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' -c 5 -n 6 http://icybcluster.org.ua:35145/api/v1/recap
+ab -v 2 -c 3 -n 3 -p about-ontology.txt -T 'multipart/form-data; boundary=1234567890' http://192.168.1.120/ken/api/v1.0/en/file/parcexml

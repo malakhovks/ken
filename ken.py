@@ -15,35 +15,42 @@ It makes your code cross-Python-version compatible.
 Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 # ------------------------------------------------------------------------------------------------------
 """
-# tempfile for temporary dir creation
+# load tempfile for temporary dir creation
 import sys, os, tempfile
 
-# libraries for NLP pipeline
+# load libraries for NLP pipeline
 import spacy
+# load Visualizers 
+from spacy import displacy
 from textblob import TextBlob
+# load SnowballStemmer stemmer from nltk
+from nltk.stem.snowball import SnowballStemmer
+# load python wrapper language_check for LanguageTool grammar checker
+# import language_check
 
+# load misc utils
 import pickle
 import codecs
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-# libraries for JSON proccessing
+# load libraries for string proccessing
 import re, string
 
-# libraries for XML proccessing
+# load libraries for XML proccessing
 import xml.etree.ElementTree as ET
 
-# for pdf processing pdfminer
+# load libraries for pdf processing pdfminer
 from io import BytesIO
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 
-# libraries for API proccessing
+# load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
 from werkzeug.utils import secure_filename
 
-# for docx processing
+# load libraries for docx processing
 import zipfile
 WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 PARA = WORD_NAMESPACE + 'p'
@@ -51,6 +58,14 @@ TEXT = WORD_NAMESPACE + 't'
 
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx']) 
+
+# Load globally spaCy model via package name
+NLP_EN = spacy.load('en_core_web_sm')
+# or
+# NLP_en_lg = spacy.load('en_core_web_lg')
+
+# Load globally english SnowballStemmer
+ENGLISH_STEMMER = SnowballStemmer("english")
 
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
@@ -90,6 +105,15 @@ def text_normalization_default(raw_text):
     for line in raw_text.splitlines(True):
         # if line contains letters
         if re.search(r'[a-z]+', line):
+            # remove \n \r \r\n new lines and insert spaces
+            """
+            \r = CR (Carriage Return) → Used as a new line character in Mac OS before X
+            \n = LF (Line Feed) → Used as a new line character in Unix/Mac OS X
+            \r\n = CR + LF → Used as a new line character in Windows
+            """
+            line = re.sub('[\n]', ' ', line)
+            line = re.sub('[\r\n]', ' ', line)
+            line = re.sub('[\r]', ' ', line)
             # remove tabs and insert spaces
             line = re.sub('[\t]', ' ', line)
             # remove multiple spaces
@@ -99,8 +123,10 @@ def text_normalization_default(raw_text):
             # remove leading and ending spaces
             line = line.strip()
             raw_text_list.append(line)
+            # TODO Remove debug log in production release
             print('Included line: ' + line)
         else:
+            # TODO Remove debug log in production release
             print('Excluded line: ' + line)
     yet_raw_text = '\n'.join(raw_text_list)
     return yet_raw_text
@@ -160,14 +186,12 @@ def get_text_from_docx(docx_path):
     return '\n\n'.join(paragraphs)
 
 """
-# ------------------------------------------------------------------------------------------------------
 # secondary functions
 # ------------------------------------------------------------------------------------------------------
 # """
 
 """
-# ------------------------------------------------------------------------------------------------------
-# <parce.xml> generation service
+# parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 @app.route('/ken/api/v1.0/en/file/parcexml', methods=['POST'])
@@ -213,23 +237,32 @@ def parcexml_Generator():
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'99', 'PRON':'S11', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'99', 'CCONJ':'U', 'DET':'99', 'PART':'99', 'SCONJ':'U', 'SPACE':'98'}
 
         # TODO Correctly relate the parts of speech with spaCy
-        # POS spacCy
+        # POS spaCy
         if request.args.get('pos', None) == 'spacy':
             speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
         try:
-            # Load spaCy model via package name
-            nlp = spacy.load('en_core_web_sm') # nlp = spacy.load('en_core_web_lg')
+
+            text_normalized = text_normalization_default(raw_text)
+
+            # spelling correction with language_check - Python wrapper for LanguageTool
+            # if request.args.get('spell', None) != None:
+            #     lt = language_check.LanguageTool('en-US')
+            #     matches = lt.check(text_normalized)
+            #     text_normalized = language_check.correct(text_normalized, matches)
 
             # default sentence normalization + spaCy doc init
-            doc = nlp(text_normalization_default(raw_text))
+            doc = NLP_EN(text_normalized)
 
+            # TODO Remove debug log in production release
             print('''
             sentences\t{num_sent}
             '''.format(
                 num_sent=len(list(doc.sents)),))
-
+            
+            """
             # create the <parce.xml> file structure
+            """
             # create root element <text>
             root_element = ET.Element("text")
             sentence_index = 0
@@ -255,9 +288,37 @@ def parcexml_Generator():
                 new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
                 new_sentence_element.append(new_sent_element)
 
+                # create amd append <ner>, <entity>
+                # NER labels description https://spacy.io/api/annotation#named-entities
+                if len(sentence.ents) != 0:
+                    # create <ner>
+                    ner_element = ET.Element('ner')
+                    for ent in sentence.ents:
+                        # create <entity>
+                        new_entity_element = ET.Element('entity')
+                        # create and append <entitytext>
+                        new_entity_text_element = ET.Element('entitytext')
+                        new_entity_text_element.text = ent.text
+                        new_entity_element.append(new_entity_text_element)
+                        # create and append <label>
+                        new_entity_label_element = ET.Element('label')
+                        new_entity_label_element.text = ent.label_
+                        new_entity_element.append(new_entity_label_element)
+                        # create and append <startentitypos>
+                        new_start_entity_pos_element = ET.Element('startentitypos')
+                        new_start_entity_pos_element.text = str(ent.start_char + 1)
+                        new_entity_element.append(new_start_entity_pos_element)
+                        # create and append <endentitypos>
+                        new_end_entity_pos_element = ET.Element('endentitypos')
+                        new_end_entity_pos_element.text = str(ent.end_char + 1)
+                        new_entity_element.append(new_end_entity_pos_element)
+                        # append <entity> to <ner>
+                        ner_element.append(new_entity_element)
+                    # append <ner> to <sentence>
+                    new_sentence_element.append(ner_element)
+
                 # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
-                # TODO optimize for using only 1 nlp
-                doc_for_lemmas = nlp(sentence_clean)
+                doc_for_lemmas = NLP_EN(sentence_clean)
                 for lemma in doc_for_lemmas:
                 # for lemma in sentence:
                     # create and append <item>
@@ -288,16 +349,31 @@ def parcexml_Generator():
                     new_pos_element.text = str(lemma.idx+1)
                     new_item_element.append(new_pos_element)
 
+                    # create and append <relate> and <rel_type>
+                    new_rel_type_element = ET.Element('rel_type')
+                    new_relate_element = ET.Element('relate')
+                    if lemma.dep_ == 'punct':
+                        new_rel_type_element.text = 'K0'
+                        new_relate_element.text = '0'
+                        new_item_element.append(new_rel_type_element)
+                        new_item_element.append(new_relate_element)
+                    else:
+                        new_rel_type_element.text = lemma.dep_
+                        new_item_element.append(new_rel_type_element)
+                        new_relate_element.text = str(lemma.head.i+1)
+                        new_item_element.append(new_relate_element)
+
+                    # create and append <group_n>
+                    new_group_n_element = ET.Element('group_n')
+                    new_group_n_element.text = '1'
+                    new_item_element.append(new_group_n_element)
+
                     new_sentence_element.append(new_item_element)
 
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
 
-                # NP shallow parsing
-                # doc_for_chunks = nlp(sentence_clean)
-                # for chunk in doc_for_chunks.noun_chunks:
-                #     print(chunk.text, chunk.root.text, chunk.root.dep_, chunk.root.head.text)
-                # print("-----")
+            # TODO Remove debug log in production release
             print ET.tostring(root_element, encoding='utf8', method='xml')
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
@@ -306,20 +382,240 @@ def parcexml_Generator():
     file.close()
     return abort(400)
 """
-# ------------------------------------------------------------------------------------------------------
-# <parce>.xml generation service
+# parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 
-""" 
+"""
+# allterms.xml service
 # ------------------------------------------------------------------------------------------------------
+# """
+@app.route('/ken/api/v1.0/en/file/allterms', methods=['POST'])
+def get_terms_list():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    file = request.files['file']
+
+    # if user does not select file, browser also submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return abort(400)
+
+    if file and allowed_file(file.filename):
+        # TODO doc/docx processing
+        # pdf processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+            pdf_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),pdf_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+        # docx processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'docx':
+            docx_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),docx_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_docx(destination)
+        # txt processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            raw_text = file.read().decode('utf-8')
+            file.close()
+        try:
+            # spaCy doc init + default sentence normalization
+            doc = NLP_EN(text_normalization_default(raw_text))
+
+            """
+            # create the <allterms.xml> file structure
+            """
+            # create root element <termsintext>
+            root_termsintext_element = ET.Element("termsintext")
+            # create element <sentences>
+            sentences_element = ET.Element("sentences")
+            # create element <filepath>
+            filepath_element = ET.Element("filepath")
+            filepath_element.text = file.filename
+            # create element <exporterms>
+            exporterms_element = ET.Element("exporterms")
+            # sentence counter
+            sentence_index = 0
+
+            noun_chunks = []
+
+            for sentence in doc.sents:
+
+                sentence_index+=1
+
+                # default sentence normalization
+                sentence_clean = sentence_normalization_default(sentence.text)
+                # create and append <sent>
+                new_sent_element = ET.Element('sent')
+                new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
+                sentences_element.append(new_sent_element)
+
+                """
+                NP shallow parsing 
+                Noun chunks are “base noun phrases” – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
+                """
+
+                doc_for_chunks = NLP_EN(sentence_clean)
+
+                for chunk in doc_for_chunks.noun_chunks:
+
+                    doc_for_tokens = NLP_EN(chunk.text)
+
+                    # one-word terms extraction
+                    if len(doc_for_tokens) < 2:
+                        if doc_for_tokens[0].pos_ in ['NOUN', 'PROPN']:
+
+                            # check if already term in exporterms
+                            # if exporterms_element.find('term') is not None:
+                            #     for term in exporterms_element.findall('term'):
+                            #         tname = term.find('tname')
+                            #         if tname.text == doc_for_tokens[0].lemma_:
+                            #             print('repeat --------> ' + doc_for_tokens[0].lemma_)
+                            #         else:
+                            #             # create and append <wcount>
+                            #             new_wcount_element = ET.Element('wcount')
+                            #             new_wcount_element.text = '1'
+                            #             # create and append <ttype>
+                            #             new_ttype_element = ET.Element('ttype')
+                            #             new_ttype_element.text = doc_for_tokens[0].pos_
+                            #             # create <term>
+                            #             new_term_element = ET.Element('term')
+                            #             # create and append <tname>
+                            #             new_tname_element = ET.Element('tname')
+                            #             new_tname_element.text = doc_for_tokens[0].lemma_
+                            #             # create and append <osn>
+                            #             new_osn_element = ET.Element('osn')
+                            #             new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                            #             # append to <term>
+                            #             new_term_element.append(new_ttype_element)
+                            #             new_term_element.append(new_tname_element)
+                            #             new_term_element.append(new_osn_element)
+                            #             new_term_element.append(new_wcount_element)
+                            #             # append to <exporterms>
+                            #             exporterms_element.append(new_term_element)
+                            # else:
+                            #     # create and append <wcount>
+                            #     new_wcount_element = ET.Element('wcount')
+                            #     new_wcount_element.text = '1'
+                            #     # create and append <ttype>
+                            #     new_ttype_element = ET.Element('ttype')
+                            #     new_ttype_element.text = doc_for_tokens[0].pos_
+                            #     # create <term>
+                            #     new_term_element = ET.Element('term')
+                            #     # create and append <tname>
+                            #     new_tname_element = ET.Element('tname')
+                            #     new_tname_element.text = doc_for_tokens[0].lemma_
+                            #     # create and append <osn>
+                            #     new_osn_element = ET.Element('osn')
+                            #     new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                            #     # append to <term>
+                            #     new_term_element.append(new_ttype_element)
+                            #     new_term_element.append(new_tname_element)
+                            #     new_term_element.append(new_osn_element)
+                            #     new_term_element.append(new_wcount_element)
+                            #     # append to <exporterms>
+                            #     exporterms_element.append(new_term_element)
+
+                            # create and append <wcount>
+                            new_wcount_element = ET.Element('wcount')
+                            new_wcount_element.text = '1'
+                            # create and append <ttype>
+                            new_ttype_element = ET.Element('ttype')
+                            new_ttype_element.text = doc_for_tokens[0].pos_
+                            # create <term>
+                            new_term_element = ET.Element('term')
+                            # create and append <tname>
+                            new_tname_element = ET.Element('tname')
+                            new_tname_element.text = doc_for_tokens[0].lemma_
+                            # create and append <osn>
+                            new_osn_element = ET.Element('osn')
+                            new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+
+                            # create and append <sentpos>
+                            for one_word_token in doc_for_chunks:
+                                # now includes nouns that a part of compound: "ontology" and "an ontology"
+                                if one_word_token.text.lower() == doc_for_tokens[0].text.lower():
+
+                                # for including just one-word junk
+                                # if chunk.start == one_word_token.i:
+
+                                    new_sentpos_element = ET.Element('sentpos')
+                                    new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i+1)
+                                    new_term_element.append(new_sentpos_element)
+
+                            # append to <term>
+                            new_term_element.append(new_ttype_element)
+                            new_term_element.append(new_tname_element)
+                            new_term_element.append(new_osn_element)
+                            new_term_element.append(new_wcount_element)
+
+                            # append to <exporterms>
+                            exporterms_element.append(new_term_element)
+
+                    # multi-word terms extraction
+                    if len(doc_for_tokens) > 1:
+                        print('-------->>>>>> ' + doc_for_tokens.text)
+
+            # create full <allterms.xml> file structure
+            root_termsintext_element.append(filepath_element)
+            root_termsintext_element.append(exporterms_element)
+            root_termsintext_element.append(sentences_element)
+
+            return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
+        except:
+            print "Unexpected error:", sys.exc_info()
+            return abort(500)
+    file.close()
+    return abort(400)
+"""
+# allterms.xml service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+
+"""
+# Visualizers service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+@app.route('/ken/api/v1.0/en/html/sentence/depparse', methods=['GET'])
+def get_dependency_parse():
+    # here we want to get the value of user (i.e. ?sentence=some-value)
+    sentence = request.args.get('sentence')
+    doc = NLP_EN(sentence)
+    return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
+
+"""
+# Visualizers service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+
+
+""" 
 # FEATURE LIST
 # ------------------------------------------------------------------------------------------------------
+TODO - in pdf
+TODO 2 files, comparable
+
+
+
+TODO Handling NER in terms
+
+
 TODO exception handling in a good way
 
-TODO in production on Linux with uWSGI, Nginx, Docker
+Done in production on Linux with uWSGI, Nginx, Docker
 
-TODO hunspell integration or TextBlob spelling correction
+TODO Languagetool in a separate container for spelling correction
 
 TODO in production on Windows
 # ------------------------------------------------------------------------------------------------------
