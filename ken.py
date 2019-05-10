@@ -471,7 +471,7 @@ def get_terms_list():
                     doc_for_tokens = NLP_EN(chunk.text)
 
                     # one-word terms extraction
-                    if len(doc_for_tokens) < 2:
+                    if len(doc_for_tokens) == 1:
                         if doc_for_tokens[0].pos_ in ['NOUN', 'PROPN']:
 
                             # check if already term in exporterms
