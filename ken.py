@@ -128,7 +128,8 @@ def text_normalization_default(raw_text):
         else:
             # TODO Remove debug log in production release
             print('Excluded line: ' + line)
-    yet_raw_text = '\n'.join(raw_text_list)
+    # yet_raw_text = '\n'.join(raw_text_list)
+    yet_raw_text = ' '.join(raw_text_list)
     return yet_raw_text
 
 # default sentence normalization
