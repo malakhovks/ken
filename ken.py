@@ -105,8 +105,8 @@ def text_normalization_default(raw_text):
     for line in raw_text.splitlines(True):
         # if line contains letters
         if re.search(r'[a-z]+', line):
-            # remove \n \r \r\n new lines and insert spaces
             """
+            remove \n \r \r\n new lines and insert spaces
             \r = CR (Carriage Return) → Used as a new line character in Mac OS before X
             \n = LF (Line Feed) → Used as a new line character in Unix/Mac OS X
             \r\n = CR + LF → Used as a new line character in Windows
