@@ -446,8 +446,14 @@ def get_terms_list():
             # sentence counter
             sentence_index = 0
 
+            # Helper list for one-word terms 
+            one_word_terms_help_list = []
+
             noun_chunks = []
 
+            '''
+            # Main text parsing cycle for sentences
+            '''
             for sentence in doc.sents:
 
                 sentence_index+=1
@@ -464,106 +470,115 @@ def get_terms_list():
                 Noun chunks are “base noun phrases” – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
                 """
 
+                # for processing specific sentence
                 doc_for_chunks = NLP_EN(sentence_clean)
 
+                # sentence NP shallow parsing cycle
                 for chunk in doc_for_chunks.noun_chunks:
 
                     doc_for_tokens = NLP_EN(chunk.text)
 
+                    #TODO если два однословных термина встречаются в одном предложении то они дулируються computer computers
+                    '''
                     # one-word terms extraction
+                    '''
                     if len(doc_for_tokens) == 1:
+
                         if doc_for_tokens[0].pos_ in ['NOUN', 'PROPN']:
 
-                            # check if already term in exporterms
-                            # if exporterms_element.find('term') is not None:
-                            #     for term in exporterms_element.findall('term'):
-                            #         tname = term.find('tname')
-                            #         if tname.text == doc_for_tokens[0].lemma_:
-                            #             print('repeat --------> ' + doc_for_tokens[0].lemma_)
-                            #         else:
-                            #             # create and append <wcount>
-                            #             new_wcount_element = ET.Element('wcount')
-                            #             new_wcount_element.text = '1'
-                            #             # create and append <ttype>
-                            #             new_ttype_element = ET.Element('ttype')
-                            #             new_ttype_element.text = doc_for_tokens[0].pos_
-                            #             # create <term>
-                            #             new_term_element = ET.Element('term')
-                            #             # create and append <tname>
-                            #             new_tname_element = ET.Element('tname')
-                            #             new_tname_element.text = doc_for_tokens[0].lemma_
-                            #             # create and append <osn>
-                            #             new_osn_element = ET.Element('osn')
-                            #             new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
-                            #             # append to <term>
-                            #             new_term_element.append(new_ttype_element)
-                            #             new_term_element.append(new_tname_element)
-                            #             new_term_element.append(new_osn_element)
-                            #             new_term_element.append(new_wcount_element)
-                            #             # append to <exporterms>
-                            #             exporterms_element.append(new_term_element)
-                            # else:
-                            #     # create and append <wcount>
-                            #     new_wcount_element = ET.Element('wcount')
-                            #     new_wcount_element.text = '1'
-                            #     # create and append <ttype>
-                            #     new_ttype_element = ET.Element('ttype')
-                            #     new_ttype_element.text = doc_for_tokens[0].pos_
-                            #     # create <term>
-                            #     new_term_element = ET.Element('term')
-                            #     # create and append <tname>
-                            #     new_tname_element = ET.Element('tname')
-                            #     new_tname_element.text = doc_for_tokens[0].lemma_
-                            #     # create and append <osn>
-                            #     new_osn_element = ET.Element('osn')
-                            #     new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
-                            #     # append to <term>
-                            #     new_term_element.append(new_ttype_element)
-                            #     new_term_element.append(new_tname_element)
-                            #     new_term_element.append(new_osn_element)
-                            #     new_term_element.append(new_wcount_element)
-                            #     # append to <exporterms>
-                            #     exporterms_element.append(new_term_element)
+                            # print(one_word_terms_help_list)
+                            # print('--------')
 
-                            # create and append <wcount>
-                            new_wcount_element = ET.Element('wcount')
-                            new_wcount_element.text = '1'
-                            # create and append <ttype>
-                            new_ttype_element = ET.Element('ttype')
-                            new_ttype_element.text = doc_for_tokens[0].pos_
-                            # create <term>
-                            new_term_element = ET.Element('term')
-                            # create and append <tname>
-                            new_tname_element = ET.Element('tname')
-                            new_tname_element.text = doc_for_tokens[0].lemma_
-                            # create and append <osn>
-                            new_osn_element = ET.Element('osn')
-                            new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                            if doc_for_tokens[0].lemma_ not in one_word_terms_help_list:
 
-                            # create and append <sentpos>
-                            for one_word_token in doc_for_chunks:
-                                # now includes nouns that a part of compound: "ontology" and "an ontology"
-                                if one_word_token.text.lower() == doc_for_tokens[0].text.lower():
+                                one_word_terms_help_list.append(doc_for_tokens[0].lemma_)
+                                # create and append <wcount>
+                                new_wcount_element = ET.Element('wcount')
+                                new_wcount_element.text = '1'
+                                # create and append <ttype>
+                                new_ttype_element = ET.Element('ttype')
+                                new_ttype_element.text = doc_for_tokens[0].pos_
+                                # create <term>
+                                new_term_element = ET.Element('term')
+                                # create and append <tname>
+                                new_tname_element = ET.Element('tname')
+                                new_tname_element.text = doc_for_tokens[0].lemma_
+                                # create and append <osn>
+                                new_osn_element = ET.Element('osn')
+                                new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
 
-                                # for including just one-word junk
-                                # if chunk.start == one_word_token.i:
+                                # create and append <sentpos>
+                                new_sentpos_element = ET.Element('sentpos')
+                                new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                new_term_element.append(new_sentpos_element)
 
-                                    new_sentpos_element = ET.Element('sentpos')
-                                    new_sentpos_element.text = str(sentence_index) + '/' + str(one_word_token.i+1)
-                                    new_term_element.append(new_sentpos_element)
+                                # append to <term>
+                                new_term_element.append(new_ttype_element)
+                                new_term_element.append(new_tname_element)
+                                new_term_element.append(new_osn_element)
+                                new_term_element.append(new_wcount_element)
 
-                            # append to <term>
-                            new_term_element.append(new_ttype_element)
-                            new_term_element.append(new_tname_element)
-                            new_term_element.append(new_osn_element)
-                            new_term_element.append(new_wcount_element)
+                                # append to <exporterms>
+                                exporterms_element.append(new_term_element)
 
-                            # append to <exporterms>
-                            exporterms_element.append(new_term_element)
+                            if doc_for_tokens[0].lemma_ in one_word_terms_help_list:
+                                for term in exporterms_element.findall('term'):
+                                    if term.find('tname').text == doc_for_tokens[0].lemma_:
+                                        new_sentpos_element = ET.Element('sentpos')
+                                        new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                        term.append(new_sentpos_element)
 
+                    '''
                     # multi-word terms extraction
-                    if len(doc_for_tokens) > 1:
-                        print('-------->>>>>> ' + doc_for_tokens.text)
+                    '''
+                    if len(doc_for_tokens) == 2:
+
+                        '''
+                        # extract one-word terms from 2 word statements (excluding articles DET)
+                        '''
+                        if doc_for_tokens[0].pos_ in ['DET']:
+
+                            if doc_for_tokens[1].lemma_ in one_word_terms_help_list:
+                                for term in exporterms_element.findall('term'):
+                                    if term.find('tname').text == doc_for_tokens[1].lemma_:
+                                        new_sentpos_element = ET.Element('sentpos')
+                                        new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+2)
+                                        term.append(new_sentpos_element)
+
+                            if doc_for_tokens[1].lemma_ not in one_word_terms_help_list:
+
+                                one_word_terms_help_list.append(doc_for_tokens[1].lemma_)
+                                # create and append <wcount>
+                                new_wcount_element = ET.Element('wcount')
+                                new_wcount_element.text = '1'
+                                # create and append <ttype>
+                                new_ttype_element = ET.Element('ttype')
+                                new_ttype_element.text = doc_for_tokens[1].pos_
+                                # create <term>
+                                new_term_element = ET.Element('term')
+                                # create and append <tname>
+                                new_tname_element = ET.Element('tname')
+                                new_tname_element.text = doc_for_tokens[1].lemma_
+                                # create and append <osn>
+                                new_osn_element = ET.Element('osn')
+                                new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[1].text)
+
+                                # create and append <sentpos>
+                                new_sentpos_element = ET.Element('sentpos')
+                                new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+2)
+                                new_term_element.append(new_sentpos_element)
+
+                                # append to <term>
+                                new_term_element.append(new_ttype_element)
+                                new_term_element.append(new_tname_element)
+                                new_term_element.append(new_osn_element)
+                                new_term_element.append(new_wcount_element)
+
+                                # append to <exporterms>
+                                exporterms_element.append(new_term_element)
+
+                        if doc_for_tokens[0].pos_ not in ['DET']:
+                            print doc_for_tokens[0].text
 
             # create full <allterms.xml> file structure
             root_termsintext_element.append(filepath_element)

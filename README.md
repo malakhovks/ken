@@ -24,7 +24,7 @@ Build an image from a Dockerfile (It creates an image named `ken_image`):
 ```bash
 docker build . -t ken_image
 ```
-It creates an image named `ken_image`. You can run the image now with command:
+You can run the image `ken_image` now with command:
 ```bash
 docker run --name ken -d -p 80:80 ken_image
 ```
