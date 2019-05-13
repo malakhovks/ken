@@ -577,6 +577,9 @@ def get_terms_list():
                                 # append to <exporterms>
                                 exporterms_element.append(new_term_element)
 
+                        '''
+                        # extract one-word terms
+                        '''
                         if doc_for_tokens[0].pos_ not in ['DET']:
                             print doc_for_tokens[0].text
 
