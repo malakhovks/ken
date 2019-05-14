@@ -700,16 +700,16 @@ TODO 2 files, comparable
 
 
 
-TODO Handling NER in terms
-
-
 TODO exception handling in a good way
-
-Done in production on Linux with uWSGI, Nginx, Docker
 
 TODO Languagetool in a separate container for spelling correction
 
 TODO in production on Windows
+
+
+Done in production on Linux with uWSGI, Nginx, Docker
+Done Handling NER in terms
+
 # ------------------------------------------------------------------------------------------------------
 """
 
