@@ -652,6 +652,7 @@ def get_terms_list():
                                     # print('--------------------')
 
                                     one_word_terms_help_list.append(chunk.root.lemma_)
+
                                     # create and append <wcount>
                                     new_wcount_element = ET.Element('wcount')
                                     new_wcount_element.text = '1'
@@ -718,7 +719,7 @@ def get_terms_list():
                                                             for two_term in exporterms_element.findall('term'):
                                                                 reldown_index+=1
                                                                 if two_term.find('tname').text == chunk.lower_:
-                                                                    
+
                                                                     for sent_pos in one_term.findall('sentpos'):
                                                                         sent_pos_helper.append(sent_pos.text)
 
@@ -733,6 +734,69 @@ def get_terms_list():
                                                                     new_reldown_element = ET.Element('reldown')
                                                                     new_reldown_element.text = str(reldown_index)
                                                                     one_term.append(new_reldown_element)
+
+                                                if t.lemma_ not in one_word_terms_help_list:
+                                                    print('if t.lemma_ not in one_word_terms_help_list ----->>>>>>' + t.lemma_)
+
+                                                    relup_index = 0
+                                                    reldown_index = 0
+                                                    sent_pos_helper = []
+
+                                                    if t.i == 0:
+                                                        index_helper = chunk.start+1
+                                                    else:
+                                                        index_helper = chunk.start+2
+
+                                                    one_word_terms_help_list.append(t.lemma_)
+
+                                                    # create and append <wcount>
+                                                    new_wcount_element = ET.Element('wcount')
+                                                    new_wcount_element.text = '1'
+                                                    # create and append <ttype>
+                                                    new_ttype_element = ET.Element('ttype')
+                                                    new_ttype_element.text = 'NOUN'
+                                                    # create <term>
+                                                    new_term_element = ET.Element('term')
+                                                    # create and append <tname>
+                                                    new_tname_element = ET.Element('tname')
+                                                    new_tname_element.text = t.lemma_
+                                                    # create and append <osn>
+                                                    new_osn_element = ET.Element('osn')
+                                                    new_osn_element.text = ENGLISH_STEMMER.stem(t.lower_)
+                                                    # create and append <sentpos>
+                                                    new_sentpos_element = ET.Element('sentpos')
+                                                    new_sentpos_element.text = str(sentence_index) + '/' + str(index_helper)
+                                                    # append to <term>
+                                                    new_term_element.append(new_sentpos_element)
+                                                    new_term_element.append(new_ttype_element)
+                                                    new_term_element.append(new_tname_element)
+                                                    new_term_element.append(new_wcount_element)
+
+                                                    # append to <exporterms>
+                                                    exporterms_element.append(new_term_element)
+
+                                                    for one_term in exporterms_element.findall('term'):
+                                                        relup_index+=1
+                                                        if one_term.find('tname').text == t.lemma_:
+                                                            for two_term in exporterms_element.findall('term'):
+                                                                reldown_index+=1
+                                                                if two_term.find('tname').text == chunk.lower_:
+
+                                                                    for sent_pos in one_term.findall('sentpos'):
+                                                                        sent_pos_helper.append(sent_pos.text)
+
+                                                                    if (str(sentence_index) + '/' + str(index_helper)) not in sent_pos_helper:
+                                                                        new_sentpos_element = ET.Element('sentpos')
+                                                                        new_sentpos_element.text = str(sentence_index) + '/' + str(index_helper)
+                                                                        one_term.append(new_sentpos_element)
+
+                                                                    new_relup_element = ET.Element('relup')
+                                                                    new_relup_element.text = str(relup_index)
+                                                                    two_term.append(new_relup_element)
+                                                                    new_reldown_element = ET.Element('reldown')
+                                                                    new_reldown_element.text = str(reldown_index)
+                                                                    one_term.append(new_reldown_element)
+
 
                     '''
                     # extract three-word terms
