@@ -700,7 +700,8 @@ def get_terms_list():
                                 for t in doc_for_tokens:
                                         if t.lemma_ != chunk.root.lemma_:
                                             if t.pos_ in ['NOUN']:
-                                                print('-------->>>>>>' + t.lemma_)
+
+                                                # print('-------->>>>>>' + t.lemma_)
 
                                                 if t.lemma_ in one_word_terms_help_list:
 
@@ -736,7 +737,8 @@ def get_terms_list():
                                                                     one_term.append(new_reldown_element)
 
                                                 if t.lemma_ not in one_word_terms_help_list:
-                                                    print('if t.lemma_ not in one_word_terms_help_list ----->>>>>>' + t.lemma_)
+
+                                                    # print('if t.lemma_ not in one_word_terms_help_list ----->>>>>>' + t.lemma_)
 
                                                     relup_index = 0
                                                     reldown_index = 0
@@ -800,10 +802,10 @@ def get_terms_list():
                     '''
                     # extract three-word terms
                     '''
-                    # if len(doc_for_tokens) == 3:
+                    if len(doc_for_tokens) == 3:
 
-                    #     print(chunk.lower_)
-                    #     print('-----')
+                        print('three-word terms ---> ' + chunk.lower_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
+                        print('--------------------')
 
             # create full <allterms.xml> file structure
             root_termsintext_element.append(filepath_element)
