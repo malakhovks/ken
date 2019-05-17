@@ -797,7 +797,6 @@ def get_terms_list():
                                                                     new_reldown_element.text = str(reldown_index)
                                                                     one_term.append(new_reldown_element)
 
-
                     '''
                     # extract three-word terms
                     '''
