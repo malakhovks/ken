@@ -531,7 +531,7 @@ def get_terms_list():
                         '''
                         # extract one-word terms from 2 word statements (excluding articles DET)
                         '''
-                        if doc_for_tokens[0].pos_ in ['DET']:
+                        if doc_for_tokens[0].pos_ in ['DET', 'PUNCT']:
 
                             if doc_for_tokens[1].lemma_ in one_word_terms_help_list:
                                 for term in exporterms_element.findall('term'):
@@ -575,7 +575,7 @@ def get_terms_list():
                         '''
                         # extract two-word terms
                         '''
-                        if doc_for_tokens[0].pos_ not in ['DET']:
+                        if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
 
                             print('two-word terms ---> ' + chunk.lower_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_)
                             print('--------------------')
