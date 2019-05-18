@@ -578,16 +578,18 @@ def get_terms_list():
                         '''
                         if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
 
-                            print('two-word terms ---> ' + chunk.lower_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_ + ' Lemma:' + chunk.lemma_)
+                            print('two-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_)
 
                             print('--------------------')
 
                             # If two-word term already exists in two_word_terms_help_list
-                            if chunk.lower_ in two_word_terms_help_list:
+                            # if chunk.lower_ in two_word_terms_help_list:
+                            if chunk.lemma_ in two_word_terms_help_list:
 
                                 # add new <sentpos> for existing two-word term
                                 for term in exporterms_element.findall('term'):
-                                    if term.find('tname').text == chunk.lower_:
+                                    # if term.find('tname').text == chunk.lower_:
+                                    if term.find('tname').text == chunk.lemma_:
                                         new_sentpos_element = ET.Element('sentpos')
                                         new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
                                         term.append(new_sentpos_element)
@@ -650,10 +652,12 @@ def get_terms_list():
 
 
                             # If two-word term not exists in two_word_terms_help_list
-                            if chunk.lower_ not in two_word_terms_help_list:
+                            # if chunk.lower_ not in two_word_terms_help_list:
+                            if chunk.lemma_ not in two_word_terms_help_list:
 
                                 # update  two_word_terms_help_list with the new two-word term
-                                two_word_terms_help_list.append(chunk.lower_)
+                                # two_word_terms_help_list.append(chunk.lower_)
+                                two_word_terms_help_list.append(chunk.lemma_)
 
                                 # create and append <wcount>
                                 new_wcount_element = ET.Element('wcount')
@@ -665,7 +669,8 @@ def get_terms_list():
                                 new_term_element = ET.Element('term')
                                 # create and append <tname>
                                 new_tname_element = ET.Element('tname')
-                                new_tname_element.text = chunk.lower_
+                                # new_tname_element.text = chunk.lower_
+                                new_tname_element.text = chunk.lemma_
                                 # create and append <osn>
                                 new_osn_element = ET.Element('osn')
                                 new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
@@ -693,13 +698,30 @@ def get_terms_list():
 
                                     relup_index = 0
                                     reldown_index = 0
+                                    sent_pos_helper = []
 
                                     for one_term in exporterms_element.findall('term'):
                                         relup_index+=1
                                         if one_term.find('tname').text == chunk.root.lemma_:
+
+                                            for sent_pos in one_term.findall('sentpos'):
+                                                sent_pos_helper.append(sent_pos.text)
+
+                                            if chunk.root.lower_ == doc_for_tokens[0].lower_:
+                                                if (str(sentence_index) + '/' + str(chunk.start+1)) not in sent_pos_helper:
+                                                    new_sentpos_element = ET.Element('sentpos')
+                                                    new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                                    one_term.append(new_sentpos_element)
+                                            else:
+                                                if (str(sentence_index) + '/' + str(chunk.start+2)) not in sent_pos_helper:
+                                                    new_sentpos_element = ET.Element('sentpos')
+                                                    new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+2)
+                                                    one_term.append(new_sentpos_element)
+
                                             for two_term in exporterms_element.findall('term'):
                                                 reldown_index+=1
-                                                if two_term.find('tname').text == chunk.lower_:
+                                                # if two_term.find('tname').text == chunk.lower_:
+                                                if two_term.find('tname').text == chunk.lemma_:
                                                     new_relup_element = ET.Element('relup')
                                                     new_relup_element.text = str(relup_index)
                                                     two_term.append(new_relup_element)
@@ -753,7 +775,8 @@ def get_terms_list():
                                         if one_term.find('tname').text == chunk.root.lemma_:
                                             for two_term in exporterms_element.findall('term'):
                                                 reldown_index+=1
-                                                if two_term.find('tname').text == chunk.lower_:
+                                                # if two_term.find('tname').text == chunk.lower_:
+                                                if two_term.find('tname').text == chunk.lemma_:
                                                     new_relup_element = ET.Element('relup')
                                                     new_relup_element.text = str(relup_index)
                                                     two_term.append(new_relup_element)
@@ -783,7 +806,8 @@ def get_terms_list():
                                                         if one_term.find('tname').text == t.lemma_:
                                                             for two_term in exporterms_element.findall('term'):
                                                                 reldown_index+=1
-                                                                if two_term.find('tname').text == chunk.lower_:
+                                                                # if two_term.find('tname').text == chunk.lower_:
+                                                                if two_term.find('tname').text == chunk.lemma_:
 
                                                                     for sent_pos in one_term.findall('sentpos'):
                                                                         sent_pos_helper.append(sent_pos.text)
@@ -846,7 +870,8 @@ def get_terms_list():
                                                         if one_term.find('tname').text == t.lemma_:
                                                             for two_term in exporterms_element.findall('term'):
                                                                 reldown_index+=1
-                                                                if two_term.find('tname').text == chunk.lower_:
+                                                                # if two_term.find('tname').text == chunk.lower_:
+                                                                if two_term.find('tname').text == chunk.lemma_:
 
                                                                     for sent_pos in one_term.findall('sentpos'):
                                                                         sent_pos_helper.append(sent_pos.text)
@@ -868,7 +893,12 @@ def get_terms_list():
                     '''
                     if len(doc_for_tokens) == 3:
 
-                        print('three-word terms ---> ' + chunk.lower_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
+                        print('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
+                        print('--------------------')
+
+                    if len(doc_for_tokens) > 3:
+
+                        print('multi-word term lemma ---> ' + chunk.lemma_)
                         print('--------------------')
 
             # create full <allterms.xml> file structure
