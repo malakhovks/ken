@@ -469,7 +469,8 @@ def get_terms_list():
 
                 """
                 NP shallow parsing 
-                Noun chunks are “base noun phrases” – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
+                Noun chunks are "base noun phrases" – flat phrases that have a noun as their head. You can think of noun chunks as a noun plus the words describing the noun – for example, “the lavish green grass” or “the world’s largest tech fund”.
+                https://spacy.io/usage/linguistic-features/#dependency-parse
                 """
 
                 # for processing specific sentence
@@ -481,7 +482,7 @@ def get_terms_list():
                     doc_for_tokens = NLP_EN(chunk.text)
 
                     '''
-                    # one-word terms extraction
+                    # EXTRACT ONE-WORD TERMS ----------------------------------------------------------------------
                     '''
                     if len(doc_for_tokens) == 1:
 
@@ -529,7 +530,7 @@ def get_terms_list():
                     if len(doc_for_tokens) == 2:
 
                         '''
-                        # extract one-word terms from 2 word statements (excluding articles DET)
+                        # extract one-word terms from 2-words statements (excluding articles DET)
                         '''
                         if doc_for_tokens[0].pos_ in ['DET', 'PUNCT']:
 
@@ -573,23 +574,85 @@ def get_terms_list():
                                 exporterms_element.append(new_term_element)
 
                         '''
-                        # extract two-word terms
+                        # EXTRACT TWO-WORD TERMS ---------------------------------------------------------------
                         '''
                         if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
 
-                            print('two-word terms ---> ' + chunk.lower_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_)
+                            print('two-word terms ---> ' + chunk.lower_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_ + ' Lemma:' + chunk.lemma_)
+
                             print('--------------------')
 
+                            # If two-word term already exists in two_word_terms_help_list
                             if chunk.lower_ in two_word_terms_help_list:
 
+                                # add new <sentpos> for existing two-word term
                                 for term in exporterms_element.findall('term'):
                                     if term.find('tname').text == chunk.lower_:
                                         new_sentpos_element = ET.Element('sentpos')
                                         new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
                                         term.append(new_sentpos_element)
 
+                                # Check If root (root of Noun chunks always is a NOUN) of the two-word term
+                                # already exists in one_word_terms_help_list
+                                if chunk.root.lemma_ in one_word_terms_help_list:
+
+                                    relup_index = 0
+                                    reldown_index = 0
+                                    sent_pos_helper = []
+
+                                    for one_term in exporterms_element.findall('term'):
+                                        relup_index+=1
+                                        if one_term.find('tname').text == chunk.root.lemma_:
+
+                                            for sent_pos in one_term.findall('sentpos'):
+                                                sent_pos_helper.append(sent_pos.text)
+
+                                            # create and append new <sentpos>
+                                            # check if new <sentpos> already exist, if no then add new <sentpos>
+                                            if chunk.root.lower_ == doc_for_tokens[0].lower_:
+                                                if (str(sentence_index) + '/' + str(chunk.start+1)) not in sent_pos_helper:
+                                                    new_sentpos_element = ET.Element('sentpos')
+                                                    new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                                    one_term.append(new_sentpos_element)
+                                            else:
+                                                if (str(sentence_index) + '/' + str(chunk.start+2)) not in sent_pos_helper:
+                                                    new_sentpos_element = ET.Element('sentpos')
+                                                    new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+2)
+                                                    one_term.append(new_sentpos_element)
+
+                                # Check If child of the root (Child not always be a NOUN, so not always be a term) of the two-word term
+                                # already exists in one_word_terms_help_list
+                                for t in doc_for_tokens:
+                                        if t.lemma_ != chunk.root.lemma_:
+                                            # if child of the root is NOUN, so it is a term
+                                            if t.pos_ in ['NOUN']:
+                                                if t.lemma_ in one_word_terms_help_list:
+
+                                                    relup_index = 0
+                                                    reldown_index = 0
+                                                    sent_pos_helper = []
+                                                    if t.i == 0:
+                                                        index_helper = chunk.start+1
+                                                    else:
+                                                        index_helper = chunk.start+2
+
+                                                    for one_term in exporterms_element.findall('term'):
+                                                        relup_index+=1
+                                                        if one_term.find('tname').text == t.lemma_:
+
+                                                            for sent_pos in one_term.findall('sentpos'):
+                                                                sent_pos_helper.append(sent_pos.text)
+
+                                                            if (str(sentence_index) + '/' + str(index_helper)) not in sent_pos_helper:
+                                                                    new_sentpos_element = ET.Element('sentpos')
+                                                                    new_sentpos_element.text = str(sentence_index) + '/' + str(index_helper)
+                                                                    one_term.append(new_sentpos_element)
+
+
+                            # If two-word term not exists in two_word_terms_help_list
                             if chunk.lower_ not in two_word_terms_help_list:
 
+                                # update  two_word_terms_help_list with the new two-word term
                                 two_word_terms_help_list.append(chunk.lower_)
 
                                 # create and append <wcount>
@@ -623,7 +686,8 @@ def get_terms_list():
                                 # append to <exporterms>
                                 exporterms_element.append(new_term_element)
 
-                                # Check If root NOUN already exists in one_word_terms_help_list
+                                # Check If root (root of Noun chunks always is a NOUN) of the two-word term
+                                # already exists in one_word_terms_help_list
                                 # add relup/reldown
                                 if chunk.root.lemma_ in one_word_terms_help_list:
 
