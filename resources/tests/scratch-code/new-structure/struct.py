@@ -37,3 +37,4 @@ allterms = {
   }
 }
 print(allterms['termsintext']['filepath'])
+print(allterms['termsintext']['exporterms']['term'][0]['tname'])
