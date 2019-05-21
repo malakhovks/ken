@@ -10,28 +10,28 @@ doc = NLP_EN('Python is a high-level programming language for the natural langua
 
 # doc = NLP_EN('Some years later, the success of Google shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up - as compared to simply uploading an HTML page.')
 
-print(len(doc))
-for noun_token in doc:
-    if noun_token.pos_ in ["NOUN"]:
-        comps = [j for j in noun_token.children if j.dep_ == "compound"]
-        if comps:
-            print(comps, noun_token)
+# print(len(doc))
+# for noun_token in doc:
+#     if noun_token.pos_ in ["NOUN"]:
+#         comps = [j for j in noun_token.children if j.dep_ == "compound"]
+#         if comps:
+#             print(comps, noun_token)
 
-print('----------------------------------')
+# print('----------------------------------')
 
-for i in doc:
-    if i.pos_ in ["NOUN"]:
-        comps = [j for j in i.children if j.pos_ in ["ADJ", "NOUN"]]
-        if comps:
-            print(comps, i)
+# for i in doc:
+#     if i.pos_ in ["NOUN"]:
+#         comps = [j for j in i.children if j.pos_ in ["ADJ", "NOUN"]]
+#         if comps:
+#             print(comps, i)
 
-print('----------------------------------')
+# print('----------------------------------')
 
-for token in doc:
-    print('ent ------- >>>>>>> ' + token.text + ' --->> '+ token.ent_type_)
+# for token in doc:
+#     print('ent ------- >>>>>>> ' + token.text + ' --->> '+ token.ent_type_)
 
 
-print('----------------------------------')
+# print('----------------------------------')
 
 for chunk in doc.noun_chunks:
     print(chunk.text, chunk.root.text, chunk.root.dep_,
