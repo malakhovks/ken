@@ -5,7 +5,7 @@
 ### Table of Contents
 **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
 **[Building and running under Windows](#building-running-windows)**<br>
-**[In Ukrainian](../wiki/README.ua.md)**<br>
+**[In Ukrainian](../blob/develop/wiki/README.ua.md)**<br>
 
 <a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
