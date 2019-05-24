@@ -1,12 +1,14 @@
 # ken (konspekt English)
 
-**ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
-
 ## Choose your language
 **[Українська](#toc-ua)**<br>
 **[English](#toc-en)**<br>
 
+-------
+
 <a name="toc-en"></a>
+**ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
+
 ### Table of Contents
 **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
 **[Building and running under Windows](#building-running-windows)**<br>
@@ -134,4 +136,6 @@ pip install -r requirements.txt
 -------
 
 <a name="toc-ua"></a>
+**ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
+
 ### Зміст
