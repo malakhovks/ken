@@ -8,6 +8,7 @@
 ### Table of Contents
 **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
 **[Building and running under Windows](#building-running-windows)**<br>
+**[Essential Docker CLI commands](#docker-cli-commands)**<br>
 
 <a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
@@ -104,6 +105,7 @@ pip install -r requirements.txt
 
 -------
 
+<a name="docker-cli-commands"></a>
 ## Essential Docker CLI commands
 
 [Docker](https://www.docker.com/) is a great tool for building [microservices](https://pivotal.io/microservices), allowing you to create [cloud-based](https://www.docker.com/what-docker) applications and [systems](https://www.docker.com/what-docker). To make the most of it via your terminal, here is a run down of the top 10 Docker commands for your terminal.
