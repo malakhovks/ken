@@ -3,8 +3,10 @@
 **ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ## Choose your language
-**[Українська](../develop/wiki/README.ua.md)**<br>
+**[Українська](#toc-ua)**<br>
+**[English](#toc-en)**<br>
 
+<a name="toc-en"></a>
 ### Table of Contents
 **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
 **[Building and running under Windows](#building-running-windows)**<br>
@@ -128,3 +130,8 @@ pip install -r requirements.txt
 - kill all running containers with `docker kill $(docker ps -q)`
 - delete all stopped containers with `docker rm $(docker ps -a -q)`
 - delete all images with `docker rmi $(docker images -q)`
+
+-------
+
+<a name="toc-ua"></a>
+### Зміст
