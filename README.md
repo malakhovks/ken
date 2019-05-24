@@ -2,6 +2,10 @@
 
 **ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
+### Table of Contents
+**[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
+**[Building and running under Windows](#building-running-windows)**<br>
+
 ## Building and running under UNIX (Linux/MacOS) with Docker
 
 Clone from git repository:
