@@ -1,6 +1,6 @@
 # ken (konspekt English)
 
-### Choose your language
+### Choose your language / Оберіть мову
 **[Українська](#toc-ua)**<br>
 **[English](#toc-en)**<br>
 
@@ -168,4 +168,5 @@ pip install -r requirements.txt
 мережевий
 
 <a name="about-input-data-ua"></a>
+
 ## Опис вхідних даних
