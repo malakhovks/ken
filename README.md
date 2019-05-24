@@ -1,7 +1,20 @@
 # ken (konspekt English)
 
+### Choose your language
+**[Українська](#toc-ua)**<br>
+**[English](#toc-en)**<br>
+
+-------
+
+<a name="toc-en"></a>
 **ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
+### Table of Contents
+**[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
+**[Building and running under Windows](#building-running-windows)**<br>
+**[Essential Docker CLI commands](#docker-cli-commands)**<br>
+
+<a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
 
 Clone from git repository:
@@ -59,8 +72,7 @@ Some useful options when running container:
 * `--restart always` with `docker run` always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted.
 * `--restart unless-stopped` with `docker run` similar to `always`, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts.
 
--------
-
+<a name="building-running-windows"></a> 
 ## Building and running under Windows
 
 Install latest `Python 2.7.x`:
@@ -93,8 +105,7 @@ Install `requirements.txt`:
 pip install -r requirements.txt
 ```
 
--------
-
+<a name="docker-cli-commands"></a>
 ## Essential Docker CLI commands
 
 [Docker](https://www.docker.com/) is a great tool for building [microservices](https://pivotal.io/microservices), allowing you to create [cloud-based](https://www.docker.com/what-docker) applications and [systems](https://www.docker.com/what-docker). To make the most of it via your terminal, here is a run down of the top 10 Docker commands for your terminal.
@@ -117,3 +128,44 @@ pip install -r requirements.txt
 - kill all running containers with `docker kill $(docker ps -q)`
 - delete all stopped containers with `docker rm $(docker ps -a -q)`
 - delete all images with `docker rmi $(docker images -q)`
+
+-------
+
+<a name="toc-ua"></a>
+**ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
+
+### Зміст
+**[Призначення](#about-ua)**<br>
+**[Системні вимоги](#system-requirements-ua)**<br>
+**[Розгортання сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
+**[Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
+**[Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
+**[Опис вхідних даних](#about-input-data-ua)**<br>
+
+<a name="about-ua"></a>
+## Призначення
+
+мережевий
+
+<a name="system-requirements-ua"></a>
+## Системні вимоги
+
+мережевий
+
+<a name="unix-deployment-ua"></a>
+## Розгортання сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем Linux
+
+мережевий
+
+<a name="virtualbox-deployment-ua"></a>
+## Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
+
+мережевий
+
+<a name="windows-deployment-ua"></a>
+## Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище
+
+мережевий
+
+<a name="about-input-data-ua"></a>
+## Опис вхідних даних
