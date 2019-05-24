@@ -72,8 +72,6 @@ Some useful options when running container:
 * `--restart always` with `docker run` always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted.
 * `--restart unless-stopped` with `docker run` similar to `always`, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts.
 
--------
-
 <a name="building-running-windows"></a> 
 ## Building and running under Windows
 
@@ -106,8 +104,6 @@ Install `requirements.txt`:
 ```bash
 pip install -r requirements.txt
 ```
-
--------
 
 <a name="docker-cli-commands"></a>
 ## Essential Docker CLI commands
