@@ -135,3 +135,37 @@ pip install -r requirements.txt
 **ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
 
 ### Зміст
+**[Призначення](#about-ua)**<br>
+**[Системні вимоги](#system-requirements-ua)**<br>
+**[Розгортання сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
+**[Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
+**[Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
+**[Опис вхідних даних](#about-input-data-ua)**<br>
+
+<a name="about-ua"></a>
+## Призначення
+
+мережевий
+
+<a name="system-requirements-ua"></a>
+## Системні вимоги
+
+мережевий
+
+<a name="unix-deployment-ua"></a>
+## Розгортання сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем Linux
+
+мережевий
+
+<a name="virtualbox-deployment-ua"></a>
+## Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
+
+мережевий
+
+<a name="windows-deployment-ua"></a>
+## Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище
+
+мережевий
+
+<a name="about-input-data-ua"></a>
+## Опис вхідних даних
