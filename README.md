@@ -1,6 +1,6 @@
 # ken (konspekt English)
 
-## Choose your language
+### Choose your language
 **[Українська](#toc-ua)**<br>
 **[English](#toc-en)**<br>
 
