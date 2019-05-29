@@ -458,6 +458,8 @@ def get_terms_list():
             one_word_terms_help_list = []
             # Helper list for two-word terms
             two_word_terms_help_list = []
+            # Helper list for multiple-word terms (from 4-word terms)
+            multiple_word_terms_help_list = []
 
             noun_chunks = []
 
@@ -663,7 +665,7 @@ def get_terms_list():
                             # if chunk.lower_ not in two_word_terms_help_list:
                             if chunk.lemma_ not in two_word_terms_help_list:
 
-                                # update  two_word_terms_help_list with the new two-word term
+                                # update two_word_terms_help_list with the new two-word term
                                 # two_word_terms_help_list.append(chunk.lower_)
                                 two_word_terms_help_list.append(chunk.lemma_)
 
@@ -908,6 +910,57 @@ def get_terms_list():
 
                         print('multi-word term lemma ---> ' + chunk.lemma_)
                         print('--------------------')
+
+                        if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
+
+                            # If multiple-word term already exists in multiple_word_terms_help_list
+                            if chunk.lemma_ in multiple_word_terms_help_list:
+
+                                # add new <sentpos> for existing two-word term
+                                for term in exporterms_element.findall('term'):
+                                    if term.find('tname').text == chunk.lemma_:
+                                        new_sentpos_element = ET.Element('sentpos')
+                                        new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                        term.append(new_sentpos_element)
+                            
+                            # If multiple-word term not exists in multiple_word_terms_help_list
+                            if chunk.lemma_ not in multiple_word_terms_help_list:
+                                # update  multiple_word_terms_help_list with the new multiple-word term
+                                multiple_word_terms_help_list.append(chunk.lemma_)
+
+                                # create and append <wcount>
+                                new_wcount_element = ET.Element('wcount')
+                                new_wcount_element.text = str(len(chunk))
+                                # create and append <ttype>
+                                multiple_pos_helper = []
+                                for multiple_pos in doc_for_tokens:
+                                    multiple_pos_helper.append(multiple_pos.pos_)
+                                new_ttype_element = ET.Element('ttype')
+                                new_ttype_element.text = '_'.join(multiple_pos_helper)
+                                # create <term>
+                                new_term_element = ET.Element('term')
+                                # create and append <tname>
+                                new_tname_element = ET.Element('tname')
+                                # new_tname_element.text = chunk.lower_
+                                new_tname_element.text = chunk.lemma_
+                                # create and append <osn>
+                                multiple_osn_helper = []
+                                for multiple_osn in doc_for_tokens:
+                                    new_osn_element = ET.Element('osn')
+                                    new_osn_element.text = ENGLISH_STEMMER.stem(multiple_osn.text)
+                                    new_term_element.append(new_osn_element)
+                                # create and append <sentpos>
+                                new_sentpos_element = ET.Element('sentpos')
+                                new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                new_term_element.append(new_sentpos_element)
+
+                                # append to <term>
+                                new_term_element.append(new_ttype_element)
+                                new_term_element.append(new_tname_element)
+                                new_term_element.append(new_wcount_element)
+
+                                # append to <exporterms>
+                                exporterms_element.append(new_term_element)
 
             # create full <allterms.xml> file structure
             root_termsintext_element.append(filepath_element)

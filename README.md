@@ -1,6 +1,6 @@
 # ken (konspekt English)
 
-### Choose your language
+### Choose your language / Оберіть мову
 **[Українська](#toc-ua)**<br>
 **[English](#toc-en)**<br>
 
@@ -19,7 +19,7 @@
 
 Clone from git repository:
 ```bash
-git clone https://username:password@github.com/username/repo_name.git
+git clone https://username:token@github.com/username/repo_name.git
 ```
 Or clone from the specific branch/tag of git repository:
 
@@ -153,9 +153,92 @@ pip install -r requirements.txt
 мережевий
 
 <a name="unix-deployment-ua"></a>
-## Розгортання сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем Linux
+## Розгортання (компіляція та збірка) сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем Linux
 
-мережевий
+##### Системні вимоги
+
+- [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`: [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) або [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/);
+- [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
+- [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
+- обліковий запис [GitHub](https://github.com);
+- швидкісне підключення до мережі Інтернет;
+
+
+##### Розгортання (компіляція та збірка) сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
+1. Завантаження операційної системи `Linux`.
+2. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) використовуючи в терміналі команду `git clone`:
+```bash
+git clone https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
+```
+```bash
+git clone https://username1:token@github.com/username/repo_name.git
+```
+де:
+`username1` - Ваше ім'я користувача [GitHub](https://github.com)
+`token` - Personal access tokens - особистий маркер доступу до приватного репозиторію [GitHub](https://github.com)
+`username1` - Ваше ім'я користувача [GitHub](https://github.com)
+`github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`
+
+3. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
+```bash
+git checkout master
+```
+```bash
+git checkout branch_name
+```
+де:
+`<branch_name>` - ім'я гілки;
+`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+Гілка `master` містить стабільний початковий код програми `ken`.
+Гілка `develop` містить робочий початковий код програми `ken`.
+
+4. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега можна виконати використовуючи наступну команду:
+```bash
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
+```
+```bash
+git clone --depth=1 --branch=tag_name repo_url
+```
+де:
+`tag_name` - ім'я гілки/тега;
+`repo_url` - https-адреса приватного репозиторія.
+
+5. Перехід в діректорію програми `ken`:
+```bash
+cd ken
+```
+6. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+```bash
+docker build . -t ken_image
+```
+```bash
+docker build . -t imagename
+```
+де `ken_image` - ім'я ізольованого застосунку `docker image`
+Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
+7. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
+```bash
+docker run --restart always --name ken -d -p 80:80 ken_image 
+```
+Команда `docker run` з параметром `--restart always` дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.
+
+##### Основні команди керування [Docker](https://docs.docker.com)-контейнером:
+
+- `docker attach ken` - побачити вихід конслолі контейнера `ken`;
+- `docker stop ken` - зупинити контейнер `ken`;
+- `docker start ken` - відновити роботу (старт) контейнера `ken`;
+- `docker rm ken` - видалення контейнера `ken` (перед видаленням контейнера, його потрібно зупинити);
+
+##### Деякі корисні параметри для запуску [Docker](https://docs.docker.com)-контейнера:
+
+- `--name` - дає контейнеру ім'я, яке можна знайти у виводі команди `docker ps`;
+- `-p 80:80` - публікує порт 80. Другий номер 80 після двокрапки повідомляє, який порт сервер `nginx` слухає всередині контейнера;
+- `-d` - запускає контейнер, від'єднаний від терміналу. Потім журнали можна переглядати за допомогою команди журналів [Docker](https://docs.docker.com) `docker logs`;
+- `-t` - щоб бачити консольний вихід [Docker](https://docs.docker.com)-контейнера;
+- `--restart on-failure` - автоматичний перезапуск невдалих контейнерів. Перезапускає контейнер, якщо він вийде з ладу через помилку, яка виявляється як ненульовий код виходу;
+- `--restart always` - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба `Docker` перезапускається або сам контейнер перезапускається вручну.
+
 
 <a name="virtualbox-deployment-ua"></a>
 ## Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
@@ -168,4 +251,8 @@ pip install -r requirements.txt
 мережевий
 
 <a name="about-input-data-ua"></a>
+
 ## Опис вхідних даних
+```
+
+```
