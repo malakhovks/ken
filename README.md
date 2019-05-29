@@ -155,7 +155,7 @@ pip install -r requirements.txt
 <a name="unix-deployment-ua"></a>
 ## Розгортання (компіляція та збірка) сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем Linux
 
-#####Системні вимоги
+##### Системні вимоги
 
 - [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`: [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) або [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/);
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
