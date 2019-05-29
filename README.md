@@ -195,6 +195,8 @@ git checkout branch_name
 4. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега можна виконати використовуючи наступну команду:
 ```bash
 git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
+```
+```bash
 git clone --depth=1 --branch=tag_name repo_url
 ```
 де:
