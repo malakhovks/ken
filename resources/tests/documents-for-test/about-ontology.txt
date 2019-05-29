@@ -24,6 +24,7 @@ In the remainder   of this section, the usage of ontology is illustrated very br
 In section 2, a variety of methods for learning ontologies from unstructured text sources are classified and explained on a conceptual level. Section 3 deals with the evaluation of automatically generated ontologies and section 4 concludes.
 Python is a high-level programming language.
 Python is a high-level programming language for the natural language processing pipeline.
+Python is a high-level programming language for natural language processing pipeline.
 
 934845-593 453 4535 ---- 3 @#%#$%^&$ @#4@#%^~~~#^ 
 934845-593 453 4535 ---- 3 @#%#$%
