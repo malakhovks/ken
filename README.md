@@ -144,6 +144,8 @@ pip install -r requirements.txt
 - **[Опис вихідних даних](#about-output-data-ua)**<br>
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
 
+-------
+
 <a name="about-ua"></a>
 ## Призначення
 
