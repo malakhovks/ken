@@ -150,7 +150,7 @@ pip install -r requirements.txt
 <a name="system-requirements-ua"></a>
 ## Системні вимоги
 
-##### **[Для розгортання (компіляція та збірка) сервісу `ken` в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`](#system-requirements-1)**<br>
+- **[Для розгортання (компіляція та збірка) сервісу `ken` в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
 
 
 <a name="unix-deployment-ua"></a>
