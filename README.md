@@ -137,11 +137,12 @@ pip install -r requirements.txt
 ### Зміст
 **[Призначення](#about-ua)**<br>
 **[Системні вимоги](#system-requirements-ua)**<br>
-**[Розгортання сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
-**[Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
+**[Розгортання (компіляція та збірка) сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
+**[Розгортання (компіляція та збірка) сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
 **[Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
 **[Опис вхідних даних](#about-input-data-ua)**<br>
 **[Опис вихідних даних](#about-output-data-ua)**<br>
+**[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
 
 <a name="about-ua"></a>
 ## Призначення
@@ -394,6 +395,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="system-requirements-3"></a>
 ##### Системні вимоги
 
+
 <a name="about-input-data-ua"></a>
 
 ## Опис вхідних даних
@@ -407,3 +409,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 ```
 
 ```
+
+<a name="deployment-ua"></a>
+
+## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
