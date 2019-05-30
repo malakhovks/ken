@@ -135,14 +135,14 @@ pip install -r requirements.txt
 **ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
 
 ### Зміст
-**[Призначення](#about-ua)**<br>
-**[Системні вимоги](#system-requirements-ua)**<br>
-**[Розгортання (компіляція та збірка) сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
-**[Розгортання (компіляція та збірка) сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
-**[Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
-**[Опис вхідних даних](#about-input-data-ua)**<br>
-**[Опис вихідних даних](#about-output-data-ua)**<br>
-**[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
+- **[Призначення](#about-ua)**<br>
+- **[Системні вимоги](#system-requirements-ua)**<br>
+- **[Розгортання (компіляція та збірка) сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
+- **[Розгортання (компіляція та збірка) сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
+- **[Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
+- **[Опис вхідних даних](#about-input-data-ua)**<br>
+- **[Опис вихідних даних](#about-output-data-ua)**<br>
+- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
 
 <a name="about-ua"></a>
 ## Призначення
