@@ -151,7 +151,7 @@ pip install -r requirements.txt
 ## Системні вимоги
 
 - **[Для розгортання (компіляція та збірка) сервісу `ken` в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
-- ** [Для розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
+- **[Для розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
 
 
 <a name="unix-deployment-ua"></a>
