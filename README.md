@@ -150,11 +150,13 @@ pip install -r requirements.txt
 <a name="system-requirements-ua"></a>
 ## Системні вимоги
 
-мережевий
+##### **[Для розгортання (компіляція та збірка) сервісу `ken` в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`](#system-requirements-1)**<br>
+
 
 <a name="unix-deployment-ua"></a>
-## Розгортання (компіляція та збірка) сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем Linux
+## Розгортання (компіляція та збірка) сервісу `ken` в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
 
+<a name="system-requirements-1"></a>
 ##### Системні вимоги
 
 - [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`: [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) або [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/);
