@@ -151,6 +151,7 @@ pip install -r requirements.txt
 ## Системні вимоги
 
 - **[Для розгортання (компіляція та збірка) сервісу `ken` в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
+- ** [Для розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
 
 
 <a name="unix-deployment-ua"></a>
@@ -245,12 +246,14 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="virtualbox-deployment-ua"></a>
 ## Розгортання сервісу ken в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
 
-мережевий
+<a name="system-requirements-2"></a>
+##### Системні вимоги
 
 <a name="windows-deployment-ua"></a>
 ## Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище
 
-мережевий
+<a name="system-requirements-3"></a>
+##### Системні вимоги
 
 <a name="about-input-data-ua"></a>
 
