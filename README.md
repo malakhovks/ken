@@ -1,8 +1,8 @@
 # ken (konspekt English)
 
 ### Choose your language / Оберіть мову
-**[Українська](#toc-ua)**<br>
-**[English](#toc-en)**<br>
+- **[Українська](#toc-ua)**
+- **[English](#toc-en)**
 
 -------
 
@@ -135,14 +135,15 @@ pip install -r requirements.txt
 **ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
 
 ### Зміст
-- **[Призначення](#about-ua)**<br>
-- **[Системні вимоги](#system-requirements-ua)**<br>
-- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
-- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
-- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
-- **[Опис вхідних даних](#about-input-data-ua)**<br>
-- **[Опис вихідних даних](#about-output-data-ua)**<br>
-- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
+- **[Призначення](#about-ua)**
+- **[Системні вимоги](#system-requirements-ua)**
+- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
+- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
+- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
+- **[Опис API веб-сервісу ken (konspekt English)](#api-ua)**
+- **[Опис вхідних даних](#about-input-data-ua)**
+- **[Опис вихідних даних](#about-output-data-ua)**
+- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
 
 -------
 
@@ -451,7 +452,10 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 ##### Системні вимоги
 
 
-<a name="about-input-data-ua"></a>
+<a name="api-ua"></a>
+
+## Опис `API` веб-сервісу `ken` (konspekt English)
+
 
 ## Опис вхідних даних
 ```
