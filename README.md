@@ -311,7 +311,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 **VirtualBox** - програма для створення віртуальних машин, що належить Oracle Corporation. Ця програма є в вільному доступі та підтримується основними операційними системами *Linux, FreeBSD, Mac OS X, OS/2 Warp, Microsoft Windows*, які підтримують роботу гостьових операційних систем FreeBSD, Linux, OpenBSD, OS/2 Warp, Windows і Solaris.
 
-**Ключові можливості**
+##### Ключові можливості
 
 - Кроссплатформовість
 - Модульність
