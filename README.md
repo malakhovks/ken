@@ -10,9 +10,15 @@
 **ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ### Table of Contents
-**[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
-**[Building and running under Windows](#building-running-windows)**<br>
-**[Essential Docker CLI commands](#docker-cli-commands)**<br>
+- **[About ken project](#about-en)**
+- **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**
+- **[Building and running under Windows](#building-running-windows)**
+- **[Essential Docker CLI commands](#docker-cli-commands)**
+
+<a name="about-en"></a>
+## About `ken` project
+
+The **ken** (konspekt English) network toolkit (Web service with API) is design to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
 <a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
@@ -140,7 +146,7 @@ pip install -r requirements.txt
 - **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
 - **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
 - **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
-- **[Опис API веб-сервісу ken (konspekt English)](#api-ua)**
+- **[Опис API веб-сервісу ken (konspekt English) доступний розробнику](#api-ua)**
 - **[Опис вхідних даних](#about-input-data-ua)**
 - **[Опис вихідних даних](#about-output-data-ua)**
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
@@ -150,7 +156,7 @@ pip install -r requirements.txt
 <a name="about-ua"></a>
 ## Призначення
 
-Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) призначений для виділення термінів з англомовних природномовних текстів з використвнням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
+Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) призначений для виділення термінів з англомовних природномовних текстів з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 
 Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) охоплює всі найважливіші етапи обробки природної мови, а саме:
 
@@ -454,7 +460,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="api-ua"></a>
 
-## Опис `API` веб-сервісу `ken` (konspekt English)
+## Опис `API` веб-сервісу `ken` (konspekt English) доступний розробнику
 
 Розробнику доступні наступні кінцеві точки API (API endpoints):
 ```
