@@ -137,9 +137,9 @@ pip install -r requirements.txt
 ### Зміст
 - **[Призначення](#about-ua)**<br>
 - **[Системні вимоги](#system-requirements-ua)**<br>
-- **[Розгортання (компіляція та збірка) сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
-- **[Розгортання (компіляція та збірка) сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
-- **[Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
+- **[Компіляція, збірка та розгортання сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
+- **[Компіляція, збірка та розгортання сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
+- **[Компіляція, збірка та розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
 - **[Опис вхідних даних](#about-input-data-ua)**<br>
 - **[Опис вихідних даних](#about-output-data-ua)**<br>
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
@@ -160,19 +160,19 @@ pip install -r requirements.txt
 - розмічування частин мови (англ. part-of-speech tagging) для кожного речення тексту (поверхневий синтаксичний аналіз);
 - лематизація слів (приведення до словарної форми слова) на рівні речення;
 - стемінг (англ. stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;
-- екстракт термінів (так званих `base noun phrases`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase)
-- формування спеціалізованої структури тексту в форматі `xml`.
+- екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase)
+- формування спеціалізованої `xml`-структури тексту.
 
 
 <a name="system-requirements-ua"></a>
 ## Системні вимоги
 
-- **[Для розгортання (компіляція та збірка) сервісу `ken` в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
-- **[Для розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
+- **[Для компіляції, збірки та розгортання сервісу `ken` в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
+- **[Для компіляції, збірки та розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
 
 
 <a name="unix-deployment-ua"></a>
-## Розгортання (компіляція та збірка) сервісу `ken` в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
+## Компіляція, збірка та розгортання сервісу `ken` в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
 
 <a name="system-requirements-1"></a>
 ##### Системні вимоги
@@ -181,7 +181,7 @@ pip install -r requirements.txt
 - [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`: [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) або новіша; [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новіша;
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
 - [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
-- обліковий запис [GitHub](https://github.com);
+- обліковий запис [GitHub](https://github.com) та ключ розгортання (Deploy key);
 - швидкісне підключення до мережі Інтернет;
 
 
@@ -213,9 +213,8 @@ git checkout branch_name
 Гілка `master` містить стабільний початковий код програми `ken`.
 Гілка `develop` містить робочий початковий код програми `ken`.
 
-Або виконати етап 3.
+Або клонувати початковий код програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега  використовуючи наступну команду:
 
-3. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега можна виконати використовуючи наступну команду:
 ```bash
 git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
 ```
@@ -226,11 +225,11 @@ git clone --depth=1 --branch=tag_name repo_url
 `tag_name` - ім'я гілки/тега;
 `repo_url` - https-адреса приватного репозиторія.
 
-4. Перехід в діректорію програми `ken`:
+3. Перехід в діректорію програми `ken`:
 ```bash
 cd ken
 ```
-5. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+4. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
 ```bash
 docker build . -t ken_image
 ```
@@ -240,7 +239,7 @@ docker build . -t imagename
 де `ken_image` - ім'я ізольованого застосунку `docker image`
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
-6. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
+5. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
 docker run --restart always --name ken -d -p 80:80 ken_image 
 ```
@@ -264,7 +263,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 
 <a name="virtualbox-deployment-ua"></a>
-## Розгортання (компіляція та збірка) сервісу `ken` в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
+## Компіляція, збірка та розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
 
 <a name="system-requirements-2"></a>
 ##### Системні вимоги
@@ -272,7 +271,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 - x86-64 сумісна [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`; x86-64 сумісна операційна система `Microsoft Windows 7 Service Pack 1` або новіша;
 - [VirtualBox](https://www.virtualbox.org/) програма віртуалізації для операційних систем версії `VirtualBox 6.0.8` або новіша;
 - Віртуальна машина з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новіша, яка включає наступне встановлене програмне забезпечення: [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи; [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
-- обліковий запис [GitHub](https://github.com);
+- обліковий запис [GitHub](https://github.com) та ключ розгортання (Deploy key);
 - швидкісне підключення до мережі Інтернет;
 
 Віртуальна машина - модель обчислювальної машини, створеної шляхом віртуалізації обчислювальних ресурсів: процесора, оперативної пам'яті, пристроїв зберігання та вводу і виводу інформації.
@@ -377,7 +376,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 - `--restart always` - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба `Docker` перезапускається або сам контейнер перезапускається вручну.
 
 <a name="windows-deployment-ua"></a>
-## Розгортання сервісу ken в середовищі операційної системй Windows 7 та вище
+## Компіляція, збірка та розгортання сервісу ken в середовищі операційної системй Windows 7 та вище
 
 <a name="system-requirements-3"></a>
 ##### Системні вимоги
