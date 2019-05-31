@@ -57,6 +57,8 @@ from pdfminer.pdfpage import PDFPage
 
 # load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
+# A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 # load libraries for docx processing
@@ -80,6 +82,7 @@ class XMLResponse(Response):
     default_mimetype = 'application/xml'
 
 app = Flask(__name__)
+CORS(app)
 app.response_class = XMLResponse
 """
 Limited the maximum allowed payload to 16 megabytes.
