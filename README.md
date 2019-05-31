@@ -182,7 +182,7 @@ pip install -r requirements.txt
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
 - [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
 - обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
-- швидкісне підключення до мережі Інтернет;
+- швидкісне підключення до мережі Інтернет.
 
 
 ##### Компіляція, збірка та розгортання сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
@@ -228,7 +228,7 @@ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd
 
 **Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
-*Настанови цього етапу в розробці.*
+<p style="text-align: center;">Настанови цього етапу в розробці.</p>
 
 2. Перехід в діректорію програми `ken`:
 ```bash
@@ -359,9 +359,13 @@ git checkout master
 git checkout branch_name
 ```
 де:
+
 `<branch_name>` - ім'я гілки;
+
 `git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+
 Гілка `master` містить стабільний початковий код програми `ken`.
+
 Гілка `develop` містить робочий початковий код програми `ken`.
 
 або виконати етап 5.
@@ -392,7 +396,9 @@ docker build . -t imagename
 ```
 де `ken_image` - ім'я ізольованого застосунку `docker image`
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
+
 8. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
 docker run --restart always --name ken -d -p 80:80 ken_image 
@@ -418,7 +424,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="windows-deployment-ua"></a>
 ## Компіляція, збірка та розгортання сервісу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 7 та вище
 
-*Настанови цього етапу в розробці.*
+<p style="text-align: center;">Настанови цього етапу в розробці.</p>
 
 <a name="system-requirements-3"></a>
 ##### Системні вимоги
@@ -441,4 +447,4 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="deployment-ua"></a>
 
 ## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
-*Настанови цього етапу в розробці.*
+<p style="text-align: center;">Настанови цього етапу в розробці.</p>
