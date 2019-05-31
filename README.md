@@ -196,12 +196,17 @@ pip install -r requirements.txt
 git clone https://username1:token@github.com/username/repo_name.git
 ```
 де:
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
-`token` - Personal access tokens - особистий маркер доступу до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com)
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
+`token` - Personal access tokens - особистий маркер доступу до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com);
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
 `github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`.
 
 **Приклад:**
+
 ```bash
 git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
@@ -211,7 +216,9 @@ git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@gith
 git clone --depth=1 --branch=tag_name repo_url
 ```
 де:
+
 `tag_name` - ім'я гілки/тега;
+
 `repo_url` - https-адреса приватного репозиторія з параметрами авторизації.
 
 **Приклад:**
@@ -233,9 +240,13 @@ cd ken
 git checkout branch_name
 ```
 де:
+
 `<branch_name>` - ім'я гілки;
+
 `git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+
 Гілка `master` містить стабільний початковий код програми `ken`.
+
 Гілка `develop` містить робочий початковий код програми `ken`.
 
 **Приклад:**
@@ -244,15 +255,22 @@ git checkout master
 ```
 
 4. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
-```bash
-docker build . -t ken_image
-```
+
 ```bash
 docker build . -t imagename
 ```
-де `ken_image` - ім'я ізольованого застосунку `docker image`
+де:
+
+ `imagename` - ім'я ізольованого застосунку `docker image`.
+
+**Приклад:**
+
+```bash
+docker build . -t ken_image
+```
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
+
 5. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
 docker run --restart always --name ken -d -p 80:80 ken_image 
@@ -324,10 +342,15 @@ git clone https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
 git clone https://username1:token@github.com/username/repo_name.git
 ```
 де:
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
-`token` - Personal access tokens - особистий маркер доступу до приватного репозиторію [GitHub](https://github.com)
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
+`token` - Personal access tokens - особистий маркер доступу до приватного репозиторію [GitHub](https://github.com);
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
 `github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`.
+
 4. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
 ```bash
 git checkout master
@@ -351,8 +374,11 @@ git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/m
 git clone --depth=1 --branch=tag_name repo_url
 ```
 де:
+
 `tag_name` - ім'я гілки/тега;
+
 `repo_url` - https-адреса приватного репозиторія.
+
 6. Перехід в діректорію програми `ken`:
 ```bash
 cd ken
