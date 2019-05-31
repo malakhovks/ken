@@ -456,6 +456,16 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 ## Опис `API` веб-сервісу `ken` (konspekt English)
 
+Розробнику доступні наступні кінцеві точки API (API endpoints):
+```
+/ken/api/v1.0/en/file/parcexml
+```
+```
+/ken/api/v1.0/en/file/allterms
+```
+```
+/ken/api/v1.0/en/html/sentence/depparse
+```
 
 ## Опис вхідних даних
 ```
