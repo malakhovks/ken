@@ -37,6 +37,15 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 # load libraries for string proccessing
 import re, string
 
+"""
+https://effbot.org/zone/celementtree.htm
+
+It is the same library (same API, same features) but ElementTree is implemented in Python and cElementTree is implemented in C.
+If you can, use the C implementation because it is optimized for fast parsing and low memory use, and is 15-20 times faster than the Python implementation.
+Use the Python version if you are in a limited environment (C library loading not allowed).
+"""
+# import xml.etree.cElementTree as ET
+
 # load libraries for XML proccessing
 import xml.etree.ElementTree as ET
 
