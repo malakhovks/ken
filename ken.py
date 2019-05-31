@@ -124,7 +124,7 @@ def text_normalization_default(raw_text):
             line = line.strip()
             raw_text_list.append(line)
             # TODO Remove debug log in production release
-            print('Included line: ' + line)
+            # print('Included line: ' + line)
         else:
             # TODO Remove debug log in production release
             print('Excluded line: ' + line)
@@ -256,10 +256,10 @@ def parcexml_Generator():
             doc = NLP_EN(text_normalized)
 
             # TODO Remove debug log in production release
-            print('''
-            sentences\t{num_sent}
-            '''.format(
-                num_sent=len(list(doc.sents)),))
+            # print('''
+            # sentences\t{num_sent}
+            # '''.format(
+            #     num_sent=len(list(doc.sents)),))
             
             """
             # create the <parce.xml> file structure
@@ -383,10 +383,10 @@ def parcexml_Generator():
                 root_element.append(new_sentence_element)
 
             # TODO Remove debug log in production release
-            print ET.tostring(root_element, encoding='utf8', method='xml')
+            # print ET.tostring(root_element, encoding='utf8', method='xml')
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
-            print "Unexpected error:", sys.exc_info()
+            # print "Unexpected error:", sys.exc_info()
             return abort(500)
     file.close()
     return abort(400)
@@ -588,9 +588,9 @@ def get_terms_list():
                         '''
                         if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
 
-                            print('two-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[0]:'+ doc_for_tokens[0].tag_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[1]:'+ doc_for_tokens[1].tag_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_)
+                            # print('two-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[0]:'+ doc_for_tokens[0].tag_ + ' HEAD[0]:' + doc_for_tokens[0].head.lower_ +' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[1]:'+ doc_for_tokens[1].tag_ + ' HEAD[1]:' + doc_for_tokens[1].head.lower_)
 
-                            print('--------------------')
+                            # print('--------------------')
 
                             # If two-word term already exists in two_word_terms_help_list
                             # if chunk.lower_ in two_word_terms_help_list:
@@ -903,13 +903,13 @@ def get_terms_list():
                     '''
                     if len(doc_for_tokens) == 3:
 
-                        print('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
-                        print('--------------------')
+                        # print('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
+                        # print('--------------------')
 
                     if len(doc_for_tokens) > 3:
 
-                        print('multi-word term lemma ---> ' + chunk.lemma_)
-                        print('--------------------')
+                        # print('multi-word term lemma ---> ' + chunk.lemma_)
+                        # print('--------------------')
 
                         if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
 
@@ -969,7 +969,7 @@ def get_terms_list():
 
             return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
         except:
-            print "Unexpected error:", sys.exc_info()
+            # print "Unexpected error:", sys.exc_info()
             return abort(500)
     file.close()
     return abort(400)
