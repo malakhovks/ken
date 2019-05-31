@@ -18,7 +18,19 @@
 <a name="about-en"></a>
 ## About `ken` project
 
-The **ken** (konspekt English) network toolkit (Web service with API) is design to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
+**ken** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
+
+**ken** (konspekt English) network toolkit (Web service with API) covers all the most important stages of natural language processing, namely:
+
+- extracting text data from e-documents (`pdf`, `docx`, `txt`);
+- text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
+- spell checking and automatic correction;
+- split text into sentences/words;
+- part-of-speech tagging;
+- lemmatization of words;
+- stemming of words;
+- shallow parsing (extraction of `base noun phrases`, `noun chunks`). Check links to learn more about this proccess: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
+- generation an xml-structure of the text.
 
 <a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
@@ -162,12 +174,12 @@ pip install -r requirements.txt
 
 - екстракт тексту з документів форматів `pdf`, `docx`, `txt`;
 - базова нормалізація текстів - так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстракту тексту з документів `pdf`, `docx`, `txt`);
-- перевірка орфографії тексту та атоматичне виправлення помилок;
+- перевірка орфографії тексту та автоматичне виправлення помилок;
 - базова сегментація тексту на речення;
 - розмічування частин мови (англ. part-of-speech tagging) для кожного речення тексту (поверхневий синтаксичний аналіз);
 - лематизація слів (приведення до словарної форми слова) на рівні речення;
 - стемінг (англ. stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;
-- екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase)
+- екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - формування спеціалізованої `xml`-структури тексту.
 
 
