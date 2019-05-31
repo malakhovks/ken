@@ -20,7 +20,7 @@
 
 **ken** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
-**ken** (konspekt English) network toolkit (Web service with API) covers all the most important stages of natural language processing, namely:
+**ken** (konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
 
 - extracting text data from e-documents (`pdf`, `docx`, `txt`);
 - text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
