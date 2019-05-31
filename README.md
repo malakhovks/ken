@@ -299,6 +299,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="system-requirements-2"></a>
 ##### Системні вимоги
+
 - мінімальні апаратні ресурси: `x86-64` сумісний процесор з тактовою частотою 2 ГГц; оперативна пам'ять: 4 Гб; Місце на жорсткому диску: 20 Гб;
 - x86-64 сумісна [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`; x86-64 сумісна операційна система `Microsoft Windows 7 Service Pack 1` або новіша;
 - [VirtualBox](https://www.virtualbox.org/) програма віртуалізації для операційних систем версії `VirtualBox 6.0.8` або новіша;
@@ -332,12 +333,15 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 ##### Компіляція, збірка та розгортання сервісу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox) складається з наступних етапів:
 
-1. Створення віртуальної машини з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новішою, згідно настановам користувача наведених на офіційному сайті `wiki`-документації [VirtualBox Documentation](https://www.virtualbox.org/wiki/Documentation). Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс `ken`.
-2. Встановлення [Git](https://git-scm.com/) та [Docker CE](https://docs.docker.com) в середовиші віртуальної машини з операційною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) згідно настановам користувача наведених на офіційному сайті `wiki`-документації [wiki.alpinelinux.org](https://wiki.alpinelinux.org/wiki/Main_Page).
-3. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) використовуючи в терміналі команду `git clone`:
-```bash
-git clone https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
-```
+1. Створення віртуальної машини з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новішою, згідно настановам користувача наведених на офіційному сайті [`wiki`-документації VirtualBox](https://www.virtualbox.org/wiki/Documentation).
+Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс `ken`.
+
+2. Встановлення [Git](https://git-scm.com/) та [Docker CE](https://docs.docker.com) в середовиші віртуальної машини з операційною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) згідно настановам користувача наведених на офіційному сайті [`wiki`-документації wiki.alpinelinux.org](https://wiki.alpinelinux.org/wiki/Main_Page).
+
+3. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com).
+Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com). 
+
+**Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 ```bash
 git clone https://username1:token@github.com/username/repo_name.git
 ```
@@ -345,16 +349,43 @@ git clone https://username1:token@github.com/username/repo_name.git
 
 `username1` - Ваше ім'я користувача [GitHub](https://github.com);
 
-`token` - Personal access tokens - особистий маркер доступу до приватного репозиторію [GitHub](https://github.com);
+`token` - Personal access tokens - особистий маркер доступу до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com);
 
 `username1` - Ваше ім'я користувача [GitHub](https://github.com);
 
 `github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`.
 
-4. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
+**Приклад:**
+
 ```bash
-git checkout master
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
+**Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
+
+```bash
+git clone --depth=1 --branch=tag_name repo_url
+```
+де:
+
+`tag_name` - ім'я гілки/тега;
+
+`repo_url` - https-адреса приватного репозиторія з параметрами авторизації.
+
+**Приклад:**
+```bash
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+```
+
+**Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
+
+*Настанови цього етапу в розробці.*
+
+4. Перехід в діректорію програми `ken`:
+```bash
+cd ken
+```
+
+5. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
 ```bash
 git checkout branch_name
 ```
@@ -368,38 +399,29 @@ git checkout branch_name
 
 Гілка `develop` містить робочий початковий код програми `ken`.
 
-або виконати етап 5.
-
-5. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега можна виконати використовуючи наступну команду:
+**Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
+git checkout master
 ```
-```bash
-git clone --depth=1 --branch=tag_name repo_url
-```
-де:
 
-`tag_name` - ім'я гілки/тега;
+6. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
 
-`repo_url` - https-адреса приватного репозиторія.
-
-6. Перехід в діректорію програми `ken`:
-```bash
-cd ken
-```
-7. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
-```bash
-docker build . -t ken_image
-```
 ```bash
 docker build . -t imagename
 ```
-де `ken_image` - ім'я ізольованого застосунку `docker image`
-Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+де:
 
+ `imagename` - ім'я ізольованого застосунку `docker image`.
+
+**Приклад:**
+
+```bash
+docker build . -t ken_image
+```
+Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
 
-8. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
+7. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
 docker run --restart always --name ken -d -p 80:80 ken_image 
 ```
