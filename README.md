@@ -188,7 +188,8 @@ pip install -r requirements.txt
 ##### Компіляція, збірка та розгортання сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
 
 1. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com).
-Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com).
+
+  Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com).
 
 **Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 
@@ -339,7 +340,8 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 2. Встановлення [Git](https://git-scm.com/) та [Docker CE](https://docs.docker.com) в середовиші віртуальної машини з операційною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) згідно настановам користувача наведених на офіційному сайті [`wiki`-документації wiki.alpinelinux.org](https://wiki.alpinelinux.org/wiki/Main_Page).
 
 3. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com).
-Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com). 
+
+  Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com). 
 
 **Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 ```bash
