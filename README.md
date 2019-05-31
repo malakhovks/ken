@@ -228,7 +228,7 @@ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd
 
 **Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
-<p style="text-align: center;">Настанови цього етапу в розробці.</p>
+<p align="center">Настанови цього етапу в розробці.</p>
 
 2. Перехід в діректорію програми `ken`:
 ```bash
@@ -424,7 +424,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="windows-deployment-ua"></a>
 ## Компіляція, збірка та розгортання сервісу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 7 та вище
 
-<p style="text-align: center;">Настанови цього етапу в розробці.</p>
+<p align="center">Настанови цього етапу в розробці.</p>
 
 <a name="system-requirements-3"></a>
 ##### Системні вимоги
@@ -447,4 +447,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="deployment-ua"></a>
 
 ## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
-<p style="text-align: center;">Настанови цього етапу в розробці.</p>
+<p align="center">Настанови цього етапу в розробці.</p>
+
+<!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
+
