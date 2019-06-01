@@ -37,8 +37,17 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 # load libraries for string proccessing
 import re, string
 
+"""
+https://effbot.org/zone/celementtree.htm
+
+It is the same library (same API, same features) but ElementTree is implemented in Python and cElementTree is implemented in C.
+If you can, use the C implementation because it is optimized for fast parsing and low memory use, and is 15-20 times faster than the Python implementation.
+Use the Python version if you are in a limited environment (C library loading not allowed).
+"""
+import xml.etree.cElementTree as ET
+
 # load libraries for XML proccessing
-import xml.etree.ElementTree as ET
+# import xml.etree.ElementTree as ET
 
 # load libraries for pdf processing pdfminer
 from io import BytesIO
@@ -48,6 +57,8 @@ from pdfminer.pdfpage import PDFPage
 
 # load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
+# A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 # load libraries for docx processing
@@ -71,6 +82,7 @@ class XMLResponse(Response):
     default_mimetype = 'application/xml'
 
 app = Flask(__name__)
+CORS(app)
 app.response_class = XMLResponse
 """
 Limited the maximum allowed payload to 16 megabytes.

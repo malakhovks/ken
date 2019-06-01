@@ -1,8 +1,8 @@
 # ken (konspekt English)
 
 ### Choose your language / Оберіть мову
-**[Українська](#toc-ua)**<br>
-**[English](#toc-en)**<br>
+- **[Українська](#toc-ua)**
+- **[English](#toc-en)**
 
 -------
 
@@ -10,9 +10,27 @@
 **ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ### Table of Contents
-**[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**<br>
-**[Building and running under Windows](#building-running-windows)**<br>
-**[Essential Docker CLI commands](#docker-cli-commands)**<br>
+- **[About ken project](#about-en)**
+- **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**
+- **[Building and running under Windows](#building-running-windows)**
+- **[Essential Docker CLI commands](#docker-cli-commands)**
+
+<a name="about-en"></a>
+## About `ken` project
+
+**ken** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
+
+**ken** (konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
+
+- extracting text data from e-documents (`pdf`, `docx`, `txt`);
+- text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
+- spell checking and automatic correction;
+- split text into sentences/words;
+- part-of-speech tagging;
+- lemmatization of words;
+- stemming of words;
+- shallow parsing (extraction of `base noun phrases`, `noun chunks`). Check links to learn more about this proccess: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
+- generation an xml-structure of the text.
 
 <a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
@@ -135,44 +153,45 @@ pip install -r requirements.txt
 **ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
 
 ### Зміст
-- **[Призначення](#about-ua)**<br>
-- **[Системні вимоги](#system-requirements-ua)**<br>
-- **[Компіляція, збірка та розгортання сервісу ken в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**<br>
-- **[Компіляція, збірка та розгортання сервісу ken в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**<br>
-- **[Компіляція, збірка та розгортання сервісу ken в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**<br>
-- **[Опис вхідних даних](#about-input-data-ua)**<br>
-- **[Опис вихідних даних](#about-output-data-ua)**<br>
-- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**<br>
+- **[Призначення](#about-ua)**
+- **[Системні вимоги](#system-requirements-ua)**
+- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
+- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
+- **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
+- **[Опис API веб-сервісу ken (konspekt English) доступний розробнику](#api-ua)**
+- **[Опис вхідних даних](#about-input-data-ua)**
+- **[Опис вихідних даних](#about-output-data-ua)**
+- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
 
 -------
 
 <a name="about-ua"></a>
 ## Призначення
 
-Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) призначений для виділення термінів з англомовних природномовних текстів з використвнням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
+Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) призначений для виділення термінів з англомовних природномовних текстів з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 
 Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) охоплює всі найважливіші етапи обробки природної мови, а саме:
 
 - екстракт тексту з документів форматів `pdf`, `docx`, `txt`;
 - базова нормалізація текстів - так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстракту тексту з документів `pdf`, `docx`, `txt`);
-- перевірка орфографії тексту та атоматичне виправлення помилок;
+- перевірка орфографії тексту та автоматичне виправлення помилок;
 - базова сегментація тексту на речення;
 - розмічування частин мови (англ. part-of-speech tagging) для кожного речення тексту (поверхневий синтаксичний аналіз);
 - лематизація слів (приведення до словарної форми слова) на рівні речення;
 - стемінг (англ. stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;
-- екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase)
+- екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - формування спеціалізованої `xml`-структури тексту.
 
 
 <a name="system-requirements-ua"></a>
 ## Системні вимоги
 
-- **[Для компіляції, збірки та розгортання сервісу `ken` в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
-- **[Для компіляції, збірки та розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
+- **[Для компіляції, збірки та розгортання сервісу `ken` (з приватного репозиторію) в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
+- **[Для компіляції, збірки та розгортання сервісу `ken` (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
 
 
 <a name="unix-deployment-ua"></a>
-## Компіляція, збірка та розгортання сервісу `ken` в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
+## Компіляція, збірка та розгортання сервісу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
 
 <a name="system-requirements-1"></a>
 ##### Системні вимоги
@@ -181,64 +200,95 @@ pip install -r requirements.txt
 - [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`: [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) або новіша; [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новіша;
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
 - [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
-- обліковий запис [GitHub](https://github.com) та ключ розгортання (Deploy key);
-- швидкісне підключення до мережі Інтернет;
+- обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
+- швидкісне підключення до мережі Інтернет.
 
 
-##### Розгортання (компіляція та збірка) сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
+##### Компіляція, збірка та розгортання сервісу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
 
-1. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) використовуючи в терміналі команду `git clone`:
-```bash
-git clone https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
-```
+1. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com). Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com).
+
+**Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
+
 ```bash
 git clone https://username1:token@github.com/username/repo_name.git
 ```
 де:
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
-`token` - Personal access tokens - особистий маркер доступу до приватного репозиторію [GitHub](https://github.com)
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
+`token` - Personal access tokens - особистий маркер доступу до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com);
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
 `github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`.
 
-2. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
-```bash
-git checkout master
-```
-```bash
-git checkout branch_name
-```
-де:
-`<branch_name>` - ім'я гілки;
-`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
-Гілка `master` містить стабільний початковий код програми `ken`.
-Гілка `develop` містить робочий початковий код програми `ken`.
-
-Або клонувати початковий код програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега  використовуючи наступну команду:
+**Приклад:**
 
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
+**Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
+
 ```bash
 git clone --depth=1 --branch=tag_name repo_url
 ```
 де:
-`tag_name` - ім'я гілки/тега;
-`repo_url` - https-адреса приватного репозиторія.
 
-3. Перехід в діректорію програми `ken`:
+`tag_name` - ім'я гілки/тега;
+
+`repo_url` - https-адреса приватного репозиторія з параметрами авторизації.
+
+**Приклад:**
+```bash
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+```
+
+**Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
+
+*Настанови цього етапу в розробці.*
+
+2. Перехід в діректорію програми `ken`:
 ```bash
 cd ken
 ```
-4. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+
+3. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
 ```bash
-docker build . -t ken_image
+git checkout branch_name
 ```
+де:
+
+`<branch_name>` - ім'я гілки;
+
+`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+
+Гілка `master` містить стабільний початковий код програми `ken`.
+
+Гілка `develop` містить робочий початковий код програми `ken`.
+
+**Приклад:**
+```bash
+git checkout master
+```
+
+4. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+
 ```bash
 docker build . -t imagename
 ```
-де `ken_image` - ім'я ізольованого застосунку `docker image`
+де:
+
+ `imagename` - ім'я ізольованого застосунку `docker image`.
+
+**Приклад:**
+
+```bash
+docker build . -t ken_image
+```
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
+
 5. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
 docker run --restart always --name ken -d -p 80:80 ken_image 
@@ -263,15 +313,16 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 
 <a name="virtualbox-deployment-ua"></a>
-## Компіляція, збірка та розгортання сервісу `ken` в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
+## Компіляція, збірка та розгортання сервісу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
 
 <a name="system-requirements-2"></a>
 ##### Системні вимоги
+
 - мінімальні апаратні ресурси: `x86-64` сумісний процесор з тактовою частотою 2 ГГц; оперативна пам'ять: 4 Гб; Місце на жорсткому диску: 20 Гб;
 - x86-64 сумісна [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`; x86-64 сумісна операційна система `Microsoft Windows 7 Service Pack 1` або новіша;
 - [VirtualBox](https://www.virtualbox.org/) програма віртуалізації для операційних систем версії `VirtualBox 6.0.8` або новіша;
 - Віртуальна машина з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новіша, яка включає наступне встановлене програмне забезпечення: [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи; [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
-- обліковий запис [GitHub](https://github.com) та ключ розгортання (Deploy key);
+- обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
 - швидкісне підключення до мережі Інтернет;
 
 Віртуальна машина - модель обчислювальної машини, створеної шляхом віртуалізації обчислювальних ресурсів: процесора, оперативної пам'яті, пристроїв зберігання та вводу і виводу інформації.
@@ -279,81 +330,115 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 **VirtualBox** - програма для створення віртуальних машин, що належить Oracle Corporation. Ця програма є в вільному доступі та підтримується основними операційними системами *Linux, FreeBSD, Mac OS X, OS/2 Warp, Microsoft Windows*, які підтримують роботу гостьових операційних систем FreeBSD, Linux, OpenBSD, OS/2 Warp, Windows і Solaris.
 
-**Ключові можливості**
+##### Ключові можливості
 
-- Кроссплатформовість
-- Модульність
-- Жива міграція
-- Підтримка USB 2.0, коли пристрої хост-машини стають доступними для гостьових ОС (лише в пропрієтарній версії)
-- Підтримка 64-бітних гостьових систем[2] (починаючи з версії 2.0), навіть на 32-бітних хост-системах[3] (починаючи з версії 2.1, для цього потрібна підтримка технології віртуалізації процесором)
-- Підтримка SMP на стороні гостьової системи (починаючи з версії 3.0, для цього потрібна підтримка технології віртуалізації процесором)
-- Вбудований RDP-сервер, а також підтримка клієнтських USB-пристроїв поверх протоколу RDP (лише в пропрієтарній версії)
-- Експериментальна підтримка апаратного 3D-прискорення (OpenGL, DirectX 8/9 (з використанням коду wine) (лише в 32-бітних Windows XP и Vista)), для гостьових DOS / Windows 3.x / 95 / 98 / ME підтримка апаратного 3D-прискорення не передбачена
-- Підтримка образів жостких дисків VMDK (VMware) и VHD (Microsoft Virtual PC), включаючи snapshots (починаючи з версії 2.1[4])
-- Підтримка iSCSI (лише в пропрієтарній версії)
-- Підтримка віртуалізації аудіопристроїв (емуляція AC97 або SoundBlaster 16 на вибір)
-- Підтримка різноманітних видів мережевої взаємодії (NAT, Host Networking via Bridged, Internal)
-- Підтримка ланцюжка збережених станів віртуальної машини (snapshots), до яких можна повернутися з будь-якого стану гостьової системи
-- Підтримка Shared Folders для простого обміну файлами між хостовою та гостьовою системами (для гостьових систем Windows 2000 і новіше, Linux та Solaris)
-- Підтримка інтеграції робочих столів (seamless mode) хостової та гостьової ОС
-- Є можливість вибору мови інтерфейса (підтримується і україномовний інтерфейс).
+- кроссплатформовість;
+- модульність;
+- жива міграція;
+- підтримка USB 2.0, коли пристрої хост-машини стають доступними для гостьових ОС (лише в пропрієтарній версії);
+- підтримка 64-бітних гостьових систем[2] (починаючи з версії 2.0), навіть на 32-бітних хост-системах[3] (починаючи з версії 2.1, для цього потрібна підтримка технології віртуалізації процесором);
+- підтримка SMP на стороні гостьової системи (починаючи з версії 3.0, для цього потрібна підтримка технології віртуалізації процесором);
+- вбудований RDP-сервер, а також підтримка клієнтських USB-пристроїв поверх протоколу RDP (лише в пропрієтарній версії);
+- експериментальна підтримка апаратного 3D-прискорення (OpenGL, DirectX 8/9 (з використанням коду wine) (лише в 32-бітних Windows XP и Vista)), для гостьових DOS / Windows 3.x / 95 / 98 / ME підтримка апаратного 3D-прискорення не передбачена;
+- підтримка образів жостких дисків VMDK (VMware) и VHD (Microsoft Virtual PC), включаючи snapshots (починаючи з версії 2.1[4]);
+- підтримка iSCSI (лише в пропрієтарній версії);
+- підтримка віртуалізації аудіопристроїв (емуляція AC97 або SoundBlaster 16 на вибір);
+- підтримка різноманітних видів мережевої взаємодії (NAT, Host Networking via Bridged, Internal);
+- підтримка ланцюжка збережених станів віртуальної машини (snapshots), до яких можна повернутися з будь-якого стану гостьової системи;
+- підтримка Shared Folders для простого обміну файлами між хостовою та гостьовою системами (для гостьових систем Windows 2000 і новіше, Linux та Solaris);
+- підтримка інтеграції робочих столів (seamless mode) хостової та гостьової ОС;
+- є можливість вибору мови інтерфейса (підтримується і україномовний інтерфейс).
 
-##### Розгортання (компіляція та збірка) сервісу `ken` в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox) складається з наступних етапів:
+##### Компіляція, збірка та розгортання сервісу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox) складається з наступних етапів:
 
-1. Створення віртуальної машини з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новішою, згідно настановам користувача наведених на офіційному сайті `wiki`-документації [VirtualBox Documentation](https://www.virtualbox.org/wiki/Documentation). Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс `ken`.
-2. Встановлення [Git](https://git-scm.com/) та [Docker CE](https://docs.docker.com) в середовиші віртуальної машини з операційною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) згідно настановам користувача наведених на офіційному сайті `wiki`-документації [wiki.alpinelinux.org](https://wiki.alpinelinux.org/wiki/Main_Page).
-3. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) використовуючи в терміналі команду `git clone`:
-```bash
-git clone https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
-```
+1. Створення віртуальної машини з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новішою, згідно настановам користувача наведених на офіційному сайті [`wiki`-документації VirtualBox](https://www.virtualbox.org/wiki/Documentation).
+Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс `ken`.
+
+2. Встановлення [Git](https://git-scm.com/) та [Docker CE](https://docs.docker.com) в середовиші віртуальної машини з операційною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) згідно настановам користувача наведених на офіційному сайті [`wiki`-документації wiki.alpinelinux.org](https://wiki.alpinelinux.org/wiki/Main_Page).
+
+3. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com). Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com). 
+
+**Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 ```bash
 git clone https://username1:token@github.com/username/repo_name.git
 ```
 де:
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
-`token` - Personal access tokens - особистий маркер доступу до приватного репозиторію [GitHub](https://github.com)
-`username1` - Ваше ім'я користувача [GitHub](https://github.com)
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
+`token` - Personal access tokens - особистий маркер доступу до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com);
+
+`username1` - Ваше ім'я користувача [GitHub](https://github.com);
+
 `github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`.
-4. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
-```bash
-git checkout master
-```
-```bash
-git checkout branch_name
-```
-де:
-`<branch_name>` - ім'я гілки;
-`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
-Гілка `master` містить стабільний початковий код програми `ken`.
-Гілка `develop` містить робочий початковий код програми `ken`.
 
-або виконати етап 5.
+**Приклад:**
 
-5. Клонування початкового коду програми `ken` з `git`-репозиторію сервісу [GitHub](https://github.com) з конкретної гілки/тега можна виконати використовуючи наступну команду:
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:token@github.com/malakhovks/ken.git
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
+**Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
+
 ```bash
 git clone --depth=1 --branch=tag_name repo_url
 ```
 де:
+
 `tag_name` - ім'я гілки/тега;
-`repo_url` - https-адреса приватного репозиторія.
-6. Перехід в діректорію програми `ken`:
+
+`repo_url` - https-адреса приватного репозиторія з параметрами авторизації.
+
+**Приклад:**
+```bash
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+```
+
+**Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
+
+*Настанови цього етапу в розробці.*
+
+4. Перехід в діректорію програми `ken`:
 ```bash
 cd ken
 ```
-7. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+
+5. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
 ```bash
-docker build . -t ken_image
+git checkout branch_name
 ```
+де:
+
+`<branch_name>` - ім'я гілки;
+
+`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+
+Гілка `master` містить стабільний початковий код програми `ken`.
+
+Гілка `develop` містить робочий початковий код програми `ken`.
+
+**Приклад:**
+```bash
+git checkout master
+```
+
+6. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+
 ```bash
 docker build . -t imagename
 ```
-де `ken_image` - ім'я ізольованого застосунку `docker image`
+де:
+
+ `imagename` - ім'я ізольованого застосунку `docker image`.
+
+**Приклад:**
+
+```bash
+docker build . -t ken_image
+```
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
-8. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
+
+7. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
 docker run --restart always --name ken -d -p 80:80 ken_image 
 ```
@@ -376,13 +461,29 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 - `--restart always` - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба `Docker` перезапускається або сам контейнер перезапускається вручну.
 
 <a name="windows-deployment-ua"></a>
-## Компіляція, збірка та розгортання сервісу ken в середовищі операційної системй Windows 7 та вище
+## Компіляція, збірка та розгортання сервісу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 7 та вище
+
+*Настанови цього етапу в розробці.*
 
 <a name="system-requirements-3"></a>
+
 ##### Системні вимоги
 
 
-<a name="about-input-data-ua"></a>
+<a name="api-ua"></a>
+
+## Опис `API` веб-сервісу `ken` (konspekt English) доступний розробнику
+
+Розробнику доступні наступні кінцеві точки API (API endpoints):
+```
+/ken/api/v1.0/en/file/parcexml
+```
+```
+/ken/api/v1.0/en/file/allterms
+```
+```
+/ken/api/v1.0/en/html/sentence/depparse
+```
 
 ## Опис вхідних даних
 ```
@@ -399,3 +500,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="deployment-ua"></a>
 
 ## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
+*Настанови цього етапу в розробці*
+
+<!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
+
