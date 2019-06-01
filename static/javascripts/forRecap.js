@@ -287,15 +287,6 @@ function fetchFileToRecapService() {
 
                         // // add to local storage recap of this file for #projectFileList
                         localStorage[uploadFileName.split('\\').pop()] = JSON.stringify(resJSON);
-                        // // add to local storage recap of this file for #projectFileList
-                        // // for known words
-                        // for (let elementKnownTxtJson of result.TERMSINTEXT.EXPORTERMS[0].TERM) {
-                        //     termsWithIndexDict[elementKnownTxtJson.TNAME[0]] = result.TERMSINTEXT.EXPORTERMS[0].TERM.indexOf(elementKnownTxtJson); // for dictionary structure
-                        //     $uploadResultList.append($('<option>', {
-                        //         value: elementKnownTxtJson.TNAME[0],
-                        //         text: elementKnownTxtJson.TNAME[0] + ' (' + elementKnownTxtJson.SENTPOS.length + ')'
-                        //     }));
-                        // }
 
                         for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
                             termsWithIndexDict[elementKnownTxtJson.tname] = resJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
