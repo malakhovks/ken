@@ -137,9 +137,9 @@ def text_normalization_default(raw_text):
             raw_text_list.append(line)
             # TODO Remove debug log in production release
             # print('Included line: ' + line)
-        else:
-            # TODO Remove debug log in production release
-            print('Excluded line: ' + line)
+        # else:
+        #     # TODO Remove debug log in production release
+        #     print('Excluded line: ' + line)
     # yet_raw_text = '\n'.join(raw_text_list)
     yet_raw_text = ' '.join(raw_text_list)
     return yet_raw_text
@@ -916,7 +916,7 @@ def get_terms_list():
                     if len(doc_for_tokens) == 3:
 
                         # print('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
-                        # print('--------------------')
+                        print('--------------------')
 
                     if len(doc_for_tokens) > 3:
 
