@@ -56,7 +56,7 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
 
 # load libraries for API proccessing
-from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort
+from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template
 # A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -202,6 +202,10 @@ def get_text_from_docx(docx_path):
 # secondary functions
 # ------------------------------------------------------------------------------------------------------
 # """
+
+@app.route('/')
+def index():  
+    return Response(render_template('index.html'), mimetype='text/html')
 
 """
 # parce.xml service
