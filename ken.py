@@ -44,10 +44,10 @@ It is the same library (same API, same features) but ElementTree is implemented 
 If you can, use the C implementation because it is optimized for fast parsing and low memory use, and is 15-20 times faster than the Python implementation.
 Use the Python version if you are in a limited environment (C library loading not allowed).
 """
-# import xml.etree.cElementTree as ET
+import xml.etree.cElementTree as ET
 
 # load libraries for XML proccessing
-import xml.etree.ElementTree as ET
+# import xml.etree.ElementTree as ET
 
 # load libraries for pdf processing pdfminer
 from io import BytesIO
