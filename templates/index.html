@@ -3,11 +3,11 @@
   <head>
     <title>Flask Template Example</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen" />
-    <link rel="stylesheet" type="text/css" href="./bootstrap/css/flatly.bootstrap.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="./stylesheets/tippy.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="./stylesheets/jquery.highlight-within-textarea.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="./stylesheets/textAreaHighlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/flatly.bootstrap.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./static/stylesheets/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./static/stylesheets/tippy.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./static/stylesheets/jquery.highlight-within-textarea.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./static/stylesheets/textAreaHighlight.css" media="screen" />
   </head>
   <body>
 <div class="container_adapter_for_one_page_view">
@@ -62,15 +62,13 @@
         </button>
       </div>
       <div class="table_edit_elements">
-        <button id="addColsToTable" type="button" title="Додати нову колонку в таблицю"><img src="./images/forTableColAdd.png" height="30" alt=""/></button>
-        <button id="removeColsFromTable" type="button" title="Видалити колонку з таблиці"><img src="./images/forTableColDel.png" height="30" alt=""/></button>
-        <button id="addRowsToTable" type="button" title="Додати новий рядок в таблицю"><img src="./images/forTableRowAdd.png" height="30" alt=""/></button>
-        <button id="removeRowsfromTable" type="button" title="Видалити рядок з таблиці"><img src="./images/forTableRowDel.png" height="30" alt=""/></button>
-        <button id="saveTerms" type="button" title="Зберегти терміни в файл (txt, utf-8)"><img src="./images/forTableSaveTerms.png" height="30" alt=""/></button>
-        <button id="saveNewTerms" type="button" title="Зберегти нові терміни в файл (txt, utf-8)"><img src="./images/forTableSaveNewTerms.png" height="30" alt=""/></button>
-        <button id="saveProjectFileList" type="button" title="Зберегти список документів проекту в файл (txt, utf-8)"><img src="./images/forTableSaveFileListNames.png" height="30" alt=""/></button>
-        <!-- <button id="saveLinguisticTextPreprocessingResult" type="button" title="Зберегти результати автоматичної попередньої композиціональної лінгвістичної обробки тексту в файл (txt, utf-8)"><img src="./images/forTableSaveLinguisticTextPreprocessingResult.png" height="30" alt=""/></button> -->
-        <!-- <button id="saveLPResultsForQA" type="button" title="Зберегти результати лінгвістичного препроцесингу тексту в файл (формат txt, utf-8) для навчання мовної векторної моделі, з подальшим використанням в системі Запитання/Відповідь"><img src="./images/forLPQA.png" height="30" alt=""/></button> -->
+        <button id="addColsToTable" type="button" title="Додати нову колонку в таблицю"><img src="./static/images/forTableColAdd.png" height="30" alt=""/></button>
+        <button id="removeColsFromTable" type="button" title="Видалити колонку з таблиці"><img src="./static/images/forTableColDel.png" height="30" alt=""/></button>
+        <button id="addRowsToTable" type="button" title="Додати новий рядок в таблицю"><img src="./static/images/forTableRowAdd.png" height="30" alt=""/></button>
+        <button id="removeRowsfromTable" type="button" title="Видалити рядок з таблиці"><img src="./static/images/forTableRowDel.png" height="30" alt=""/></button>
+        <button id="saveTerms" type="button" title="Зберегти терміни в файл (txt, utf-8)"><img src="./static/images/forTableSaveTerms.png" height="30" alt=""/></button>
+        <button id="saveNewTerms" type="button" title="Зберегти нові терміни в файл (txt, utf-8)"><img src="./static/images/forTableSaveNewTerms.png" height="30" alt=""/></button>
+        <button id="saveProjectFileList" type="button" title="Зберегти список документів проекту в файл (txt, utf-8)"><img src="./static/images/forTableSaveFileListNames.png" height="30" alt=""/></button>
         <button id="clear-table" type="button"><i class="material-icons">clear</i>
           <div>Очистити таблицю</div>
         </button>
@@ -81,11 +79,11 @@
 </div>
 </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="./javascripts/bootstrap-treeview.min.js"></script>
-  <script src="./bootstrap/js/bootstrap.min.js"></script>
-  <script src="./javascripts/tippy.min.js"></script>
-  <script src="./javascripts/jquery.highlight-within-textarea.js"></script>
-  <script src="./javascripts/forRecap.js"></script>
-  <script src="./javascripts/tableForRecap.js"></script>
-  <script src="./javascripts/dragAndDrop.js"></script>
+  <script src="./static/javascripts/bootstrap-treeview.min.js"></script>
+  <script src="./static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./static/javascripts/tippy.min.js"></script>
+  <script src="./static/javascripts/jquery.highlight-within-textarea.js"></script>
+  <script src="./static/javascripts/forRecap.js"></script>
+  <script src="./static/javascripts/tableForRecap.js"></script>
+  <script src="./static/javascripts/dragAndDrop.js"></script>
   </html>
