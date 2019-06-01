@@ -260,8 +260,6 @@ function fetchFileToRecapService() {
 
         if (self.fetch) {
 
-            // fetch('http://icybcluster.org.ua:32145/recapservice/api/txtjson', {
-            // fetch('http://0.0.0.0/ken/api/v1.0/en/file/allterms', {
             fetch('/ken/api/v1.0/en/file/allterms', {
                 method: 'post',
                 body: form
