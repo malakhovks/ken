@@ -1,8 +1,3 @@
-/**
- * Created by Щуров Олександр on 30.10.2016.
- */
-
-
 /*
 
  Saving Selections

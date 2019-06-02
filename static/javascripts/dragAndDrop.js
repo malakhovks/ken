@@ -1,7 +1,3 @@
-/**
- * Created by Щуров Олександр on 03.11.2016.
- */
-
 // Mouse handler for select-list with terms (DRAG):
 $('#uploadResultList').on('mousedown', 'option', clickDragAndDrop);
 $('#uploadUnknownTerms').on('mousedown', 'option', clickDragAndDrop);
