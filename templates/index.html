@@ -86,9 +86,30 @@
             <div>Очистити таблицю</div>
           </button>
         </div>
-        <table id="term-table"></table>
+        <!-- <table id="term-table"></table> -->
+        <div class="tabs">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#table_tab" data-toggle="data" title="Таблиця для CONFOR">Таблиця</a></li>
+            <li><a href="#text_tab" data-toggle="data" title="Текст робочого документа">Текст документа</a></li>
+          </ul>
+        </div>
+        <div class="tab-content" id="select-block" style="display: flex; justify-content: flex-end;">
+          <div class="tab-pane active fade in" id="table_tab">
+            <div id="table-block">
+              <table id="term-table"></table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="text_tab">
+            <textarea id="sents_from_text" name="sents_from_text" size="16"></textarea>
+          </div>
+        </div>
       </div>
     </section>
+  </div>
+  <div class="loader">
+    <div class="outer"></div>
+    <div class="middle"></div>
+    <div class="inner"></div>
   </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

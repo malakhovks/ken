@@ -24,7 +24,8 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $saveTerms = $('#saveTerms'),
     $saveNewTerms = $('#saveNewTerms'),
     $saveProjectFileList = $('#saveProjectFileList'),
-    $upload_button = $('#upload-button');
+    $upload_button = $('#upload-button'),
+    $sents_from_text = $('#sents_from_text');
 
 $newProjectAndClearAll.click(function () {
     ClearAllForNewProject();
@@ -228,6 +229,7 @@ function fetchFileToRecapService() {
 
         // Show progress bar
         $("body").css("cursor", "progress");
+        $(".loader").show();
 
         //add filename to localStorage and projectFileList
         if (fileNamesForProjectFileListAndLocalStorage.fileNamesArray.length > 0) {
@@ -268,6 +270,7 @@ function fetchFileToRecapService() {
 
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
+                        $(".loader").hide();
                         alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + response.status);
                         return;
                     }
@@ -293,12 +296,18 @@ function fetchFileToRecapService() {
                             }));
                         }
 
+                        // add to textarea id="sents_from_text"
+                        for (let sent_element of resJSON.termsintext.sentences.sent) {
+                            $sents_from_text.append(sent_element + '\n\n')
+                        }
                         // hide progress bar
                         $("body").css("cursor", "default");
+                        $(".loader").hide();
                     });
                 })
                 .catch(function (error) {
                     $("body").css("cursor", "default");
+                    $(".loader").hide();
                     alert('Виникла помилка на стороні серевера.' + '\n' + 'Помилка: ' + error + '\n' + ' Cпробуйте ще раз.');
                 });
 
