@@ -1,0 +1,1133 @@
+{
+    "termsintext": {
+        "filepath": "about-ontology.txt",
+        "exporterms": {
+            "term": [
+                {
+                    "sentpos": [
+                        "1/3",
+                        "2/13"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "vision",
+                    "osn": "vision",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "1/12",
+                    "ttype": "NOUN",
+                    "tname": "turn",
+                    "osn": "turn",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "1/15",
+                    "ttype": "NOUN",
+                    "tname": "millennium",
+                    "osn": "millennium",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "1/17",
+                        "1/42",
+                        "3/10",
+                        "3/22",
+                        "4/6",
+                        "12/6",
+                        "14/7",
+                        "16/16",
+                        "17/1",
+                        "17/12",
+                        "17/15",
+                        "17/18",
+                        "20/11",
+                        "20/31",
+                        "21/11"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "ontology",
+                    "osn": "ontolog",
+                    "wcount": "1",
+                    "reldown": [
+                        "23",
+                        "25",
+                        "91",
+                        "93"
+                    ]
+                },
+                {
+                    "sentpos": "1/20",
+                    "ttype": "NOUN",
+                    "tname": "synonym",
+                    "osn": "synonym",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "1/23",
+                        "5/17"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "solution",
+                    "osn": "solut",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "mani",
+                        "problem"
+                    ],
+                    "sentpos": "1/25",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "many problem",
+                    "wcount": "2",
+                    "relup": "8"
+                },
+                {
+                    "sentpos": "1/26",
+                    "ttype": "NOUN",
+                    "tname": "problem",
+                    "wcount": "1",
+                    "reldown": "7"
+                },
+                {
+                    "sentpos": "1/29",
+                    "ttype": "NOUN",
+                    "tname": "fact",
+                    "osn": "fact",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "1/31",
+                        "1/64",
+                        "14/12",
+                        "20/24"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "computer",
+                    "osn": "comput",
+                    "wcount": "1",
+                    "reldown": "76"
+                },
+                {
+                    "osn": [
+                        "human",
+                        "languag"
+                    ],
+                    "sentpos": "1/35",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "human language",
+                    "wcount": "2",
+                    "relup": "12"
+                },
+                {
+                    "sentpos": [
+                        "1/36",
+                        "17/10"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "language",
+                    "wcount": "1",
+                    "reldown": [
+                        "11",
+                        "89"
+                    ]
+                },
+                {
+                    "sentpos": "1/45",
+                    "ttype": "NOUN",
+                    "tname": "document",
+                    "osn": "document",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "1/54",
+                    "ttype": "NOUN",
+                    "tname": "agent",
+                    "osn": "agent",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "our",
+                        "queri"
+                    ],
+                    "sentpos": "1/71",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "-PRON- query",
+                    "wcount": "2",
+                    "relup": "16"
+                },
+                {
+                    "sentpos": "1/72",
+                    "ttype": "NOUN",
+                    "tname": "query",
+                    "wcount": "1",
+                    "reldown": "15"
+                },
+                {
+                    "sentpos": "2/6",
+                    "ttype": "NOUN",
+                    "tname": "success",
+                    "osn": "success",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "2/8",
+                    "ttype": "PROPN",
+                    "tname": "google",
+                    "osn": "googl",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "extra",
+                        "work"
+                    ],
+                    "sentpos": "2/26",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "extra work",
+                    "wcount": "2",
+                    "relup": "20"
+                },
+                {
+                    "sentpos": "2/27",
+                    "ttype": "NOUN",
+                    "tname": "work",
+                    "wcount": "1",
+                    "reldown": "19"
+                },
+                {
+                    "osn": [
+                        "semant",
+                        "mark",
+                        "-",
+                        "up"
+                    ],
+                    "sentpos": "2/34",
+                    "ttype": "ADJ_NOUN_PUNCT_NOUN",
+                    "tname": "semantic mark - up",
+                    "wcount": "4"
+                },
+                {
+                    "sentpos": [
+                        "3/8",
+                        "14/10",
+                        "20/18"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "field",
+                    "osn": "field",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "ontolog",
+                        "learn"
+                    ],
+                    "sentpos": "3/10",
+                    "ttype": "NOUN_NOUN",
+                    "tname": "ontology learning",
+                    "wcount": "2",
+                    "relup": [
+                        "24",
+                        "4"
+                    ]
+                },
+                {
+                    "sentpos": "3/11",
+                    "ttype": "NOUN",
+                    "tname": "learning",
+                    "wcount": "1",
+                    "reldown": "23"
+                },
+                {
+                    "osn": [
+                        "ontolog",
+                        "engin"
+                    ],
+                    "sentpos": "3/22",
+                    "ttype": "NOUN_NOUN",
+                    "tname": "ontology engineering",
+                    "wcount": "2",
+                    "relup": [
+                        "26",
+                        "4"
+                    ]
+                },
+                {
+                    "sentpos": "3/23",
+                    "ttype": "NOUN",
+                    "tname": "engineering",
+                    "wcount": "1",
+                    "reldown": "25"
+                },
+                {
+                    "osn": [
+                        "text",
+                        "understand"
+                    ],
+                    "sentpos": [
+                        "4/9",
+                        "12/9"
+                    ],
+                    "ttype": "NOUN_NOUN",
+                    "tname": "text understanding",
+                    "wcount": "2",
+                    "relup": [
+                        "28",
+                        "29"
+                    ]
+                },
+                {
+                    "sentpos": [
+                        "4/10",
+                        "12/10"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "understanding",
+                    "wcount": "1",
+                    "reldown": "27"
+                },
+                {
+                    "sentpos": [
+                        "4/9",
+                        "8/5",
+                        "9/4",
+                        "9/8",
+                        "12/9",
+                        "16/24",
+                        "18/6"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "text",
+                    "wcount": "1",
+                    "reldown": [
+                        "27",
+                        "58",
+                        "85"
+                    ]
+                },
+                {
+                    "osn": [
+                        "automat",
+                        "process"
+                    ],
+                    "sentpos": [
+                        "4/12",
+                        "12/12"
+                    ],
+                    "ttype": "ADJ_NOUN",
+                    "tname": "automatic processing",
+                    "wcount": "2",
+                    "relup": "31"
+                },
+                {
+                    "sentpos": [
+                        "4/13",
+                        "9/5",
+                        "12/13"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "processing",
+                    "wcount": "1",
+                    "reldown": [
+                        "30",
+                        "58"
+                    ]
+                },
+                {
+                    "osn": [
+                        "textual",
+                        "resourc"
+                    ],
+                    "sentpos": [
+                        "4/15",
+                        "12/15"
+                    ],
+                    "ttype": "ADJ_NOUN",
+                    "tname": "textual resource",
+                    "wcount": "2",
+                    "relup": "33"
+                },
+                {
+                    "sentpos": [
+                        "4/16",
+                        "6/43",
+                        "8/3",
+                        "9/2",
+                        "11/18",
+                        "12/16"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "resource",
+                    "wcount": "1",
+                    "reldown": [
+                        "32",
+                        "52"
+                    ]
+                },
+                {
+                    "sentpos": "5/3",
+                    "ttype": "NOUN",
+                    "tname": "word",
+                    "osn": "word",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "5/21",
+                    "ttype": "NOUN",
+                    "tname": "homonymy",
+                    "osn": "homonymi",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "non",
+                        "-",
+                        "ambigu",
+                        "concept"
+                    ],
+                    "sentpos": "5/24",
+                    "ttype": "ADJ_PUNCT_ADJ_NOUN",
+                    "tname": "non - ambiguous concept",
+                    "wcount": "4"
+                },
+                {
+                    "osn": [
+                        "various",
+                        "realize"
+                    ],
+                    "sentpos": "5/32",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "various realization",
+                    "wcount": "2",
+                    "relup": "38"
+                },
+                {
+                    "sentpos": "5/33",
+                    "ttype": "NOUN",
+                    "tname": "realization",
+                    "wcount": "1",
+                    "reldown": "37"
+                },
+                {
+                    "osn": [
+                        "possibl",
+                        "ambigu",
+                        "–",
+                        "word"
+                    ],
+                    "sentpos": "5/36",
+                    "ttype": "ADV_ADJ_PUNCT_NOUN",
+                    "tname": "possibly ambiguous – word",
+                    "wcount": "4"
+                },
+                {
+                    "osn": [
+                        "numer",
+                        "applic"
+                    ],
+                    "sentpos": "6/1",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "numerous application",
+                    "wcount": "2",
+                    "relup": "41"
+                },
+                {
+                    "sentpos": "6/2",
+                    "ttype": "NOUN",
+                    "tname": "application",
+                    "wcount": "1",
+                    "reldown": "40"
+                },
+                {
+                    "osn": [
+                        "lexic",
+                        "-",
+                        "semant",
+                        "databas"
+                    ],
+                    "sentpos": "6/4",
+                    "ttype": "ADJ_PUNCT_ADJ_NOUN",
+                    "tname": "lexical - semantic database",
+                    "wcount": "4"
+                },
+                {
+                    "sentpos": "6/9",
+                    "ttype": "PROPN",
+                    "tname": "wordnet",
+                    "osn": "wordnet",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "6/11",
+                    "ttype": "PROPN",
+                    "tname": "miller",
+                    "osn": "miller",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "it",
+                        "non",
+                        "-",
+                        "english",
+                        "counterpart"
+                    ],
+                    "sentpos": "6/16",
+                    "ttype": "ADJ_ADJ_PUNCT_ADJ_NOUN",
+                    "tname": "-PRON- non - english counterpart",
+                    "wcount": "5"
+                },
+                {
+                    "osn": [
+                        "e.g.",
+                        "eurowordnet"
+                    ],
+                    "sentpos": "6/22",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "e.g. eurowordnet",
+                    "wcount": "2",
+                    "relup": "47"
+                },
+                {
+                    "sentpos": "6/23",
+                    "ttype": "NOUN",
+                    "tname": "eurowordnet",
+                    "wcount": "1",
+                    "reldown": "46"
+                },
+                {
+                    "sentpos": "6/25",
+                    "ttype": "PROPN",
+                    "tname": "vossen",
+                    "osn": "vossen",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "6/30",
+                    "ttype": "PROPN",
+                    "tname": "corenet",
+                    "osn": "corenet",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "6/32",
+                    "ttype": "NOUN",
+                    "tname": "choi",
+                    "osn": "choi",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "6/40",
+                    "ttype": "NOUN",
+                    "tname": "utility",
+                    "osn": "util",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "semant",
+                        "resourc"
+                    ],
+                    "sentpos": [
+                        "6/42",
+                        "8/2",
+                        "11/17"
+                    ],
+                    "ttype": "ADJ_NOUN",
+                    "tname": "semantic resource",
+                    "wcount": "2",
+                    "relup": "33"
+                },
+                {
+                    "sentpos": [
+                        "7/1",
+                        "15/1",
+                        "23/1",
+                        "24/1",
+                        "25/1"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "python",
+                    "osn": "python",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "8/15",
+                    "ttype": "NOUN",
+                    "tname": "term",
+                    "osn": "term",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "8/17",
+                    "ttype": "NOUN",
+                    "tname": "correctness",
+                    "osn": "correct",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "undeni",
+                        "advantag"
+                    ],
+                    "sentpos": "8/21",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "undeniable advantage",
+                    "wcount": "2",
+                    "relup": "57"
+                },
+                {
+                    "sentpos": "8/22",
+                    "ttype": "NOUN",
+                    "tname": "advantage",
+                    "wcount": "1",
+                    "reldown": "56"
+                },
+                {
+                    "osn": [
+                        "text",
+                        "process"
+                    ],
+                    "sentpos": "9/4",
+                    "ttype": "NOUN_NOUN",
+                    "tname": "text processing",
+                    "wcount": "2",
+                    "relup": [
+                        "31",
+                        "29"
+                    ]
+                },
+                {
+                    "osn": [
+                        "general",
+                        "-",
+                        "purpos",
+                        "resourc"
+                    ],
+                    "sentpos": "9/29",
+                    "ttype": "ADJ_PUNCT_NOUN_NOUN",
+                    "tname": "general - purpose resource",
+                    "wcount": "4"
+                },
+                {
+                    "sentpos": "10/4",
+                    "ttype": "NOUN",
+                    "tname": "cost",
+                    "osn": "cost",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "10/6",
+                    "ttype": "NOUN",
+                    "tname": "entry",
+                    "osn": "entri",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "10/19",
+                    "ttype": "NOUN",
+                    "tname": "advocate",
+                    "osn": "advoc",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "11/6",
+                    "ttype": "NOUN",
+                    "tname": "none",
+                    "osn": "none",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "11/9",
+                        "11/30",
+                        "16/13",
+                        "21/8"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "method",
+                    "osn": "method",
+                    "wcount": "1",
+                    "reldown": [
+                        "66",
+                        "83"
+                    ]
+                },
+                {
+                    "sentpos": "11/21",
+                    "ttype": "NOUN",
+                    "tname": "kind",
+                    "osn": "kind",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "automat",
+                        "method"
+                    ],
+                    "sentpos": "11/29",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "automatic method",
+                    "wcount": "2",
+                    "relup": "64"
+                },
+                {
+                    "osn": [
+                        "manual",
+                        "construct"
+                    ],
+                    "sentpos": "11/33",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "manual construction",
+                    "wcount": "2",
+                    "relup": "68"
+                },
+                {
+                    "sentpos": "11/34",
+                    "ttype": "NOUN",
+                    "tname": "construction",
+                    "wcount": "1",
+                    "reldown": "67"
+                },
+                {
+                    "sentpos": [
+                        "13/8",
+                        "21/6"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "variety",
+                    "osn": "varieti",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "13/10",
+                    "ttype": "NOUN",
+                    "tname": "way",
+                    "osn": "way",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "13/16",
+                        "20/20"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "philosophy",
+                    "osn": "philosophi",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "mani",
+                        "centuri"
+                    ],
+                    "sentpos": "13/18",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "many century",
+                    "wcount": "2",
+                    "relup": "73"
+                },
+                {
+                    "sentpos": "13/19",
+                    "ttype": "NOUN",
+                    "tname": "century",
+                    "wcount": "1",
+                    "reldown": "72"
+                },
+                {
+                    "sentpos": "14/2",
+                    "ttype": "NOUN",
+                    "tname": "contrast",
+                    "osn": "contrast",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "14/5",
+                        "19/10"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "notion",
+                    "osn": "notion",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "comput",
+                        "scienc"
+                    ],
+                    "sentpos": [
+                        "14/12",
+                        "20/24"
+                    ],
+                    "ttype": "NOUN_NOUN",
+                    "tname": "computer science",
+                    "wcount": "2",
+                    "relup": [
+                        "77",
+                        "10"
+                    ]
+                },
+                {
+                    "sentpos": [
+                        "14/13",
+                        "20/25"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "science",
+                    "wcount": "1",
+                    "reldown": "76"
+                },
+                {
+                    "sentpos": "14/28",
+                    "ttype": "NOUN",
+                    "tname": "detail",
+                    "osn": "detail",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "14/31",
+                    "ttype": "NOUN",
+                    "tname": "definition",
+                    "osn": "definit",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "16/2",
+                    "ttype": "NOUN",
+                    "tname": "intention",
+                    "osn": "intent",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "16/5",
+                        "19/5"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "essay",
+                    "osn": "essay",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "16/10",
+                    "ttype": "NOUN",
+                    "tname": "overview",
+                    "osn": "overview",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "differ",
+                        "method"
+                    ],
+                    "sentpos": "16/12",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "different method",
+                    "wcount": "2",
+                    "relup": "64"
+                },
+                {
+                    "osn": [
+                        "ontolog",
+                        "-",
+                        "like",
+                        "structur"
+                    ],
+                    "sentpos": "16/18",
+                    "ttype": "NOUN_PUNCT_ADJ_NOUN",
+                    "tname": "ontology - like structure",
+                    "wcount": "4"
+                },
+                {
+                    "osn": [
+                        "unstructur",
+                        "text"
+                    ],
+                    "sentpos": "16/23",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "unstructured text",
+                    "wcount": "2",
+                    "relup": "29"
+                },
+                {
+                    "osn": [
+                        "other",
+                        "sourc"
+                    ],
+                    "sentpos": [
+                        "17/4",
+                        "18/8"
+                    ],
+                    "ttype": "ADJ_NOUN",
+                    "tname": "other source",
+                    "wcount": "2",
+                    "relup": "87"
+                },
+                {
+                    "sentpos": [
+                        "17/5",
+                        "18/9"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "source",
+                    "wcount": "1",
+                    "reldown": "86"
+                },
+                {
+                    "sentpos": "17/7",
+                    "ttype": "NOUN",
+                    "tname": "issue",
+                    "osn": "issu",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "descript",
+                        "languag"
+                    ],
+                    "sentpos": "17/9",
+                    "ttype": "NOUN_NOUN",
+                    "tname": "description language",
+                    "wcount": "2",
+                    "relup": [
+                        "12",
+                        "90"
+                    ]
+                },
+                {
+                    "sentpos": "17/9",
+                    "ttype": "NOUN",
+                    "tname": "description",
+                    "wcount": "1",
+                    "reldown": "89"
+                },
+                {
+                    "osn": [
+                        "ontolog",
+                        "editor"
+                    ],
+                    "sentpos": "17/12",
+                    "ttype": "NOUN_NOUN",
+                    "tname": "ontology editor",
+                    "wcount": "2",
+                    "relup": [
+                        "92",
+                        "4"
+                    ]
+                },
+                {
+                    "sentpos": "17/13",
+                    "ttype": "NOUN",
+                    "tname": "editor",
+                    "wcount": "1",
+                    "reldown": "91"
+                },
+                {
+                    "osn": [
+                        "ontolog",
+                        "merg"
+                    ],
+                    "sentpos": "17/15",
+                    "ttype": "NOUN_NOUN",
+                    "tname": "ontology merging",
+                    "wcount": "2",
+                    "relup": [
+                        "94",
+                        "4"
+                    ]
+                },
+                {
+                    "sentpos": "17/16",
+                    "ttype": "NOUN",
+                    "tname": "merging",
+                    "wcount": "1",
+                    "reldown": "93"
+                },
+                {
+                    "sentpos": "17/22",
+                    "ttype": "NOUN",
+                    "tname": "scope",
+                    "osn": "scope",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "17/25",
+                    "ttype": "NOUN",
+                    "tname": "article",
+                    "osn": "articl",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "18/1",
+                        "18/34"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "survey",
+                    "osn": "survey",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "18/14",
+                    "ttype": "PROPN",
+                    "tname": "ding",
+                    "osn": "ding",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "18/16",
+                    "ttype": "PROPN",
+                    "tname": "foo",
+                    "osn": "foo",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "18/44",
+                    "ttype": "NOUN",
+                    "tname": "reader",
+                    "osn": "reader",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "18/48",
+                    "ttype": "PROPN",
+                    "tname": "omelayenko",
+                    "osn": "omelayenko",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "19/2",
+                    "ttype": "NOUN",
+                    "tname": "goal",
+                    "osn": "goal",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "19/28",
+                    "ttype": "NOUN",
+                    "tname": "correspondence",
+                    "osn": "correspond",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": "19/30",
+                    "ttype": "NOUN",
+                    "tname": "difference",
+                    "osn": "differ",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "it",
+                        "usag"
+                    ],
+                    "sentpos": "19/32",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "-PRON- usage",
+                    "wcount": "2",
+                    "relup": "106"
+                },
+                {
+                    "sentpos": [
+                        "19/33",
+                        "20/9"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "usage",
+                    "wcount": "1",
+                    "reldown": "105"
+                },
+                {
+                    "sentpos": "20/3",
+                    "ttype": "NOUN",
+                    "tname": "remainder",
+                    "osn": "remaind",
+                    "wcount": "1"
+                },
+                {
+                    "sentpos": [
+                        "20/6",
+                        "21/2",
+                        "22/12"
+                    ],
+                    "ttype": "NOUN",
+                    "tname": "section",
+                    "osn": "section",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "differ",
+                        "type"
+                    ],
+                    "sentpos": "20/28",
+                    "ttype": "ADJ_NOUN",
+                    "tname": "different type",
+                    "wcount": "2",
+                    "relup": "110"
+                },
+                {
+                    "sentpos": "20/29",
+                    "ttype": "NOUN",
+                    "tname": "type",
+                    "wcount": "1",
+                    "reldown": "109"
+                },
+                {
+                    "sentpos": "22/6",
+                    "ttype": "NOUN",
+                    "tname": "evaluation",
+                    "osn": "evalu",
+                    "wcount": "1"
+                },
+                {
+                    "osn": [
+                        "natur",
+                        "languag",
+                        "process",
+                        "pipelin"
+                    ],
+                    "sentpos": "25/10",
+                    "ttype": "ADJ_NOUN_NOUN_NOUN",
+                    "tname": "natural language processing pipeline",
+                    "wcount": "4"
+                }
+            ]
+        },
+        "sentences": {
+            "sent": [
+                "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.",
+                "Some years later, the success of Google shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up – as compared to simply uploading an HTML page.",
+                "To alleviate this acquisition bottleneck, the field of ontology learning has since emerged as an important sub-field of ontology engineering.",
+                "It is widely accepted that ontologies can facilitate text understanding and automatic processing of textual resources.",
+                "Moving from words to concepts not only mitigates data sparseness issues, but also promises appealing solutions to polysemy and homonymy by finding non-ambiguous concepts that may map to various realizations in – possibly ambiguous – words.",
+                "Numerous applications using lexical-semantic databases like WordNet (Miller, 1990) and its non-English counterparts, e.g. EuroWordNet (Vossen, 1997) or CoreNet (Choi and Bae, 2004) demonstrate the utility of semantic resources for natural language processing.",
+                "Python is a high-level programming language.",
+                "Learning semantic resources from text instead of manually creating them might be dangerous in terms of correctness, but has undeniable advantages:",
+                "Creating resources for text processing from the texts to be processed will fit the semantic component neatly and directly to them, which will never be possible with general-purpose resources.",
+                "Further, the cost per entry is greatly reduced, giving rise to much larger resources than an advocate of a manual approach could ever afford.",
+                "On the other hand, none of the methods used today are good enough for creating semantic resources of any kind in a completely unsupervised fashion, albeit automatic methods can facilitate manual construction to a large extent.",
+                "It is widely accepted that ontologies can facilitate text understanding and automatic processing of textual resources.",
+                "The term ontology is understood in a variety of ways and has been used in philosophy for many centuries.",
+                "In contrast, the notion of ontology in the field of computer science is younger – but almost used as inconsistently, when it comes to the details of the definition.",
+                "Python is a high-level programming language.",
+                "The intention of this essay is to give an overview of different methods that learn ontologies or ontology-like structures from unstructured text.",
+                "Ontology learning from other sources, issues in description languages, ontology editors, ontology merging and ontology evolving transcend the scope of this article.",
+                "Surveys on ontology learning from text and other sources can be found in Ding and Foo (2002) and Gómez-Pérez and Manzano-Macho (2003), for a survey of ontology learning from the Semantic Web perspective the reader is referred to Omelayenko (2001).",
+                "Another goal of this essay is to clarify the notion of the term ontology not by defining it once and for all, but to illustrate the correspondences and differences of its usage.",
+                "In the remainder of this section, the usage of ontology is illustrated very briefly in the field of philosophy as contrasted to computer science, where different types of ontologies can be identified.",
+                "In section 2, a variety of methods for learning ontologies from unstructured text sources are classified and explained on a conceptual level.",
+                "Section 3 deals with the evaluation of automatically generated ontologies and section 4 concludes.",
+                "Python is a high-level programming language.",
+                "Python is a high-level programming language for the natural language processing pipeline.",
+                "Python is a high-level programming language for natural language processing pipeline."
+            ]
+        }
+    }
+}
