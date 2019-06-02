@@ -5,7 +5,7 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 
 
 //  GLOBAL VARIABLES FOR THIS SCRIPT:
-var recapJSONObject,
+var resJSON,
     termsWithIndexDict = {},
     fileNamesForProjectFileListAndLocalStorage = { fileNamesArray: [] },
     treeData = [], // for bootstrap-treeview
@@ -33,11 +33,11 @@ $newProjectAndClearAll.click(function () {
 $(document).ready(function () {
     if (localStorage.getItem("recapForLastFile")) {
         console.log("Load last recapped file data");
-        recapJSONObject = JSON.parse(localStorage.getItem("recapForLastFile"));
+        resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
 
         // for known words ES 6
-        for (let element of recapJSONObject.termsintext.exporterms.term) {
-            termsWithIndexDict[element.tname] = recapJSONObject.termsintext.exporterms.term.indexOf(element);
+        for (let element of resJSON.termsintext.exporterms.term) {
+            termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
             $uploadResultList.append($('<option>', {
                 value: element.tname,
                 text: element.tname
@@ -260,8 +260,6 @@ function fetchFileToRecapService() {
 
         if (self.fetch) {
 
-            // fetch('http://icybcluster.org.ua:32145/recapservice/api/txtjson', {
-            // fetch('http://0.0.0.0/ken/api/v1.0/en/file/allterms', {
             fetch('/ken/api/v1.0/en/file/allterms', {
                 method: 'post',
                 body: form
@@ -276,7 +274,6 @@ function fetchFileToRecapService() {
                     // return response.json().then(function (result) {
                     return response.text().then(function (result) {
 
-                        // recapJSONObject = result;
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
                         console.log(JSON.stringify(resJSON));
@@ -285,17 +282,8 @@ function fetchFileToRecapService() {
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
                         // add to local storage recap of the last uploaded file
 
-                        // // add to local storage recap of this file for #projectFileList
+                        // add to local storage recap of this file for #projectFileList
                         localStorage[uploadFileName.split('\\').pop()] = JSON.stringify(resJSON);
-                        // // add to local storage recap of this file for #projectFileList
-                        // // for known words
-                        // for (let elementKnownTxtJson of result.TERMSINTEXT.EXPORTERMS[0].TERM) {
-                        //     termsWithIndexDict[elementKnownTxtJson.TNAME[0]] = result.TERMSINTEXT.EXPORTERMS[0].TERM.indexOf(elementKnownTxtJson); // for dictionary structure
-                        //     $uploadResultList.append($('<option>', {
-                        //         value: elementKnownTxtJson.TNAME[0],
-                        //         text: elementKnownTxtJson.TNAME[0] + ' (' + elementKnownTxtJson.SENTPOS.length + ')'
-                        //     }));
-                        // }
 
                         for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
                             termsWithIndexDict[elementKnownTxtJson.tname] = resJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
@@ -327,21 +315,32 @@ function forUploadResultListClickAndEnterPressEvents() {
 
     var valOfSelectedElementInUploadResultList = termsWithIndexDict[$uploadResultList.prop('value')];
 
-    //loop for inserting sentences with selected terms in textArea #textContent
-    for (let elementForUploadResultListDbClickAndEnterPress of recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM[valOfSelectedElementInUploadResultList].SENTPOS) {
-        $textContent.append('\n' + recapJSONObject.TERMSINTEXT.SENTENCES[0].SENT[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '\n');
+    // inserting sentences with selected terms in textArea #textContent
+    if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos)) {
+        for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) {
+            $textContent.append('\n' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '\n');
+        }
     }
-    //loop for inserting sentences with selected terms in textArea #textContent
 
-    //loop for inserting terms in tree #termTree
-    if (recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM[valOfSelectedElementInUploadResultList].hasOwnProperty('RELUP')) {
+    if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
+        
+        $textContent.append('\n' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '\n');
+    }
+
+    // inserting terms in tree #termTree
+    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
 
         //template structure for bootstrap-treeview
         objForTree = { text: $uploadResultList.prop('value'), nodes: [] };
 
         // add child nodes to template structure for bootstrap-treeview
-        for (let elementForTermTree of recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM[valOfSelectedElementInUploadResultList].RELUP) {
-            objForTree.nodes[recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM[valOfSelectedElementInUploadResultList].RELUP.indexOf(elementForTermTree)] = { text: recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM[elementForTermTree].TNAME[0] };
+        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
+            for (let elementForTermTree of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
+                objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: resJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
+            }
+        }
+        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
+            objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: resJSON.termsintext.exporterms.term[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown - 1].tname };
         }
 
         treeData.length = 0; //clear treeData array
@@ -349,11 +348,29 @@ function forUploadResultListClickAndEnterPressEvents() {
         treeData.push(objForTree); //add structure to array
 
         $termTree.treeview({ data: treeData }); // add array data to bootstrap-treeview and view it on page
-    } else {
-        $termTree.treeview({});
     }
-    //loop for inserting terms in tree #termTree
 
+    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
+
+        //template structure for bootstrap-treeview
+        objForTree = { text: $uploadResultList.prop('value'), nodes: [] };
+
+        // add child nodes to template structure for bootstrap-treeview
+        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
+            for (let elementForTermTree of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
+                objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: resJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
+            }
+        }
+        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
+            objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: resJSON.termsintext.exporterms.term[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup - 1].tname };
+        }
+
+        treeData.length = 0; //clear treeData array
+
+        treeData.push(objForTree); //add structure to array
+
+        $termTree.treeview({ data: treeData }); // add array data to bootstrap-treeview and view it on page
+    }
 
     // Highlight-within-textarea
     // https://github.com/lonekorean/highlight-within-textarea
@@ -372,7 +389,7 @@ function forProjectFileListClickAndEnterPressEvents() {
 
     if (localStorage.getItem($projectFileList.prop('value'))) {
 
-        recapJSONObject = JSON.parse(localStorage.getItem($projectFileList.prop('value')));
+        resJSON = JSON.parse(localStorage.getItem($projectFileList.prop('value')));
         $('option', $uploadResultList).remove();
         $('option', $uploadUnknownTerms).remove();
         $textContent.text('');
@@ -385,19 +402,11 @@ function forProjectFileListClickAndEnterPressEvents() {
         $captionOverviewButton.text(truncate($projectFileList.prop('value'), 10));
 
         // for known words ES 6
-        for (let element of recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM) {
-            termsWithIndexDict[element.TNAME[0]] = recapJSONObject.TERMSINTEXT.EXPORTERMS[0].TERM.indexOf(element);
+        for (let element of resJSON.termsintext.exporterms.term) {
+            termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
             $uploadResultList.append($('<option>', {
-                value: element.TNAME[0],
-                text: element.TNAME[0] + ' (' + element.SENTPOS.length + ')'
-            }));
-        }
-
-        // for unknown words ES 6
-        for (let element of recapJSONObject.unknownWordsArray) {
-            $uploadUnknownTerms.append($('<option>', {
-                value: element,
-                text: element
+                value: element.tname,
+                text: element.tname
             }));
         }
 
