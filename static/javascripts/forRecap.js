@@ -6,6 +6,7 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 
 //  GLOBAL VARIABLES FOR THIS SCRIPT:
 var resJSON,
+    resParceJSON,
     termsWithIndexDict = {},
     fileNamesForProjectFileListAndLocalStorage = { fileNamesArray: [] },
     treeData = [], // for bootstrap-treeview
@@ -24,7 +25,8 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $saveTerms = $('#saveTerms'),
     $saveNewTerms = $('#saveNewTerms'),
     $saveProjectFileList = $('#saveProjectFileList'),
-    $upload_button = $('#upload-button');
+    $upload_button = $('#upload-button'),
+    $sents_from_text = $('#sents_from_text');
 
 $newProjectAndClearAll.click(function () {
     ClearAllForNewProject();
@@ -158,7 +160,7 @@ $recapOverviewButton.change(function () {
 $saveTerms.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
-    // Download link
+        // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
@@ -175,7 +177,7 @@ $saveTerms.click(function () {
 $saveNewTerms.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#uploadUnknownTerms option").map(function () { return this.value; }).get().join('\n'),
-    // Download link
+        // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
@@ -192,7 +194,7 @@ $saveNewTerms.click(function () {
 $saveProjectFileList.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#projectFileList option").map(function () { return this.value; }).get().join('\n'),
-    // Download link
+        // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
@@ -205,7 +207,6 @@ $saveProjectFileList.click(function () {
     downloadLink.click();
 
 });
-
 
 /*
  The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline,
@@ -228,6 +229,7 @@ function fetchFileToRecapService() {
 
         // Show progress bar
         $("body").css("cursor", "progress");
+        $(".loader").show();
 
         //add filename to localStorage and projectFileList
         if (fileNamesForProjectFileListAndLocalStorage.fileNamesArray.length > 0) {
@@ -245,7 +247,6 @@ function fetchFileToRecapService() {
         }
         localStorage['projectFiles'] = JSON.stringify(fileNamesForProjectFileListAndLocalStorage);
         //add filename to localStorage and projectFileList
-
 
         // Hide Upload button and show tabs
         $upload_button.css('display', 'none');
@@ -268,6 +269,7 @@ function fetchFileToRecapService() {
 
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
+                        $(".loader").hide();
                         alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + response.status);
                         return;
                     }
@@ -276,7 +278,7 @@ function fetchFileToRecapService() {
 
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
-                        console.log(JSON.stringify(resJSON));
+                        // console.log(JSON.stringify(resJSON));
 
                         // add to local storage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
@@ -293,12 +295,57 @@ function fetchFileToRecapService() {
                             }));
                         }
 
+                        // add to textarea id="sents_from_text"
+                        for (let sent_element of resJSON.termsintext.sentences.sent) {
+                            $sents_from_text.append(sent_element + '\n\n')
+                        }
                         // hide progress bar
-                        $("body").css("cursor", "default");
+                        // $("body").css("cursor", "default");
+                        // $(".loader").hide();
                     });
                 })
+                // fetch to parce.xml for NER
+                .then(function (next) {
+                    return fetch('/ken/api/v1.0/en/file/parcexml', {
+                        method: 'post',
+                        body: form
+                    })
+                        .then(function (response) {
+                            return response.text().then(function (result) {
+                                dom = new DOMParser().parseFromString(result, "text/xml");
+                                resParceJSON = xmlToJson(dom);
+
+                                for (let sentElement of resParceJSON.text.sentence){
+
+                                    // console.log(JSON.stringify(sentElement));
+
+                                    if (sentElement.hasOwnProperty('ner')){
+                                        if (Array.isArray(sentElement.ner.entity)){
+                                            for (let entityElement of sentElement.ner.entity){
+                                                $uploadUnknownTerms.append($('<option>', {
+                                                    value: entityElement.entitytext,
+                                                    text: entityElement.entitytext
+                                                }));
+                                            }
+                                        };
+                                        if (Array.isArray(sentElement.ner.entity) == false){
+                                            $uploadUnknownTerms.append($('<option>', {
+                                                value: sentElement.ner.entity.entitytext,
+                                                text: sentElement.ner.entity.entitytext
+                                            }));
+                                        }
+                                    }
+                                }
+
+                                $("body").css("cursor", "default");
+                                $(".loader").hide();
+                            });
+                        })
+                })
+                // fetch to parce.xml for NER
                 .catch(function (error) {
                     $("body").css("cursor", "default");
+                    $(".loader").hide();
                     alert('Виникла помилка на стороні серевера.' + '\n' + 'Помилка: ' + error + '\n' + ' Cпробуйте ще раз.');
                 });
 
@@ -323,7 +370,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     }
 
     if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
-        
+
         $textContent.append('\n' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '\n');
     }
 
@@ -381,6 +428,12 @@ function forUploadResultListClickAndEnterPressEvents() {
         return regex;
     }
     $textContent.highlightWithinTextarea(onInput);
+
+    // visualize noun chunk / term
+    let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
+        container: '#displacy'
+    });
+    displacy.parse($uploadResultList.prop('value'));
 }
 
 function forProjectFileListClickAndEnterPressEvents() {
@@ -428,6 +481,7 @@ function ClearAllForNewProject() {
     localStorage.clear();
     $('input').val('');
     $termTree.treeview({});
+    $("#displacy").empty();
     location.reload();
 }
 

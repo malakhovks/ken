@@ -10,13 +10,13 @@
 **ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ### Table of Contents
-- **[About ken project](#about-en)**
+- **[Features](#features-en)**
 - **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**
 - **[Building and running under Windows](#building-running-windows)**
 - **[Essential Docker CLI commands](#docker-cli-commands)**
 
-<a name="about-en"></a>
-## About `ken` project
+<a name="features-en"></a>
+## Features
 
 **ken** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
@@ -153,7 +153,7 @@ pip install -r requirements.txt
 **ken** (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів
 
 ### Зміст
-- **[Призначення](#about-ua)**
+- **[Призначення та функції](#features-ua)**
 - **[Системні вимоги](#system-requirements-ua)**
 - **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
 - **[Компіляція, збірка та розгортання сервісу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
@@ -165,8 +165,8 @@ pip install -r requirements.txt
 
 -------
 
-<a name="about-ua"></a>
-## Призначення
+<a name="features-ua"></a>
+## Призначення та функції
 
 Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) призначений для виділення термінів з англомовних природномовних текстів з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 

@@ -1,8 +1,3 @@
-/**
- * Created by Щуров Олександр on 30.10.2016.
- */
-
-
 /*
 
  Saving Selections
@@ -30,7 +25,7 @@ var $uploadResultList = $("#uploadResultList"),
     tableHeight,
     defaultTableColCount;
 
-//RESIZE_TABLE_AND SELECT-BLOCK______________________________________________________________________/ Shchurov 30/10/16
+//RESIZE_TABLE_AND SELECT-BLOCK______________________________________________________________________
 
 
 document.onload = assignBlockHeight();
@@ -118,7 +113,7 @@ function tableCreate() {
     }
 }
 
-//ADD_COL_TO_TABLE___________________________________________________________________________________/ Shchurov 11/11/16
+//ADD_COL_TO_TABLE___________________________________________________________________________________/
 $('#addColsToTable').click(function () {
     ++defaultTableColCount;
     localStorage['defaultTableColCount'] = defaultTableColCount;
@@ -126,7 +121,7 @@ $('#addColsToTable').click(function () {
     tableCreate();
 });
 
-//DEL_COL_IN_TABLE___________________________________________________________________________________/ Shchurov 11/11/16
+//DEL_COL_IN_TABLE___________________________________________________________________________________/
 $('#removeColsFromTable').click(function () {
     if (defaultTableColCount != 1) {
         --defaultTableColCount;
@@ -136,7 +131,7 @@ $('#removeColsFromTable').click(function () {
     }
 });
 
-//ADD_ROW_TO_TABLE___________________________________________________________________________________/ Shchurov 11/11/16
+//ADD_ROW_TO_TABLE___________________________________________________________________________________/
 $('#addRowsToTable').click(function () {
     ++tableHeight;
     localStorage['tableHeight'] = tableHeight;
@@ -144,7 +139,7 @@ $('#addRowsToTable').click(function () {
     tableCreate();
 });
 
-//DEL_COL_IN_TABLE___________________________________________________________________________________/ Shchurov 11/11/16
+//DEL_COL_IN_TABLE___________________________________________________________________________________/
 $('#removeRowsfromTable').click(function () {
     if (tableHeight != 1) {
         --tableHeight;
@@ -154,7 +149,7 @@ $('#removeRowsfromTable').click(function () {
     }
 });
 
-//CLEAR_TABLE___________________________________________________________________________________________________________
+//CLEAR_TABLE_______________________________________________________________________________________/
 $('#clear-table').click(function () {
 
     // clear localStorage for table cells
@@ -171,7 +166,7 @@ $('#clear-table').click(function () {
     location.reload();
 });
 
-// RESIZE TABLE INPUT WIDTH_____________________________________________________________________________________________
+// RESIZE TABLE INPUT WIDTH_______________________________________________________________________________________________/
 function resizable(el, factor) {
     var int = Number(factor) || 7.7;
     // if (el.value == '') {
