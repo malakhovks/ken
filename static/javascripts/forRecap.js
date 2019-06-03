@@ -434,6 +434,10 @@ function forUploadResultListClickAndEnterPressEvents() {
         $termTree.treeview({ data: treeData }); // add array data to bootstrap-treeview and view it on page
     }
 
+    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup') == false && resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') == false){
+        $termTree.treeview({});
+    }
+
     // Highlight-within-textarea
     // https://github.com/lonekorean/highlight-within-textarea
 
