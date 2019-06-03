@@ -1015,7 +1015,6 @@ def get_dep_parse():
     rec = json.loads(request.get_data(as_text=True))
     doc = NLP_EN(rec['text'])
     r_t = displacy.parse_deps(doc)
-    print (json.dumps(r_t))
     return Response(json.dumps(r_t), mimetype='text/plain')
 
 """

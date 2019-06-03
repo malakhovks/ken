@@ -392,6 +392,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     }
     $textContent.highlightWithinTextarea(onInput);
 
+    // visualize noun chunk / term
     let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
         container: '#displacy'
     });
