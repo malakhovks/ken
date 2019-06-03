@@ -355,6 +355,11 @@ function fetchFileToRecapService() {
                 .catch(function (error) {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
+                    iziToast.warning({
+                        title: 'Помилка',
+                        message: 'Виникла помилка на стороні серевера',
+                        position: 'bottomLeft'
+                    });
                     alert('Виникла помилка на стороні серевера.' + '\n' + 'Помилка: ' + error + '\n' + ' Cпробуйте ще раз.');
                 });
 
