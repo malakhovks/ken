@@ -19,7 +19,7 @@ Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 import sys, os, tempfile
 
 # for displacy
-import json, ast
+import json
 
 # load libraries for NLP pipeline
 import spacy
