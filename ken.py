@@ -18,6 +18,9 @@ Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 # load tempfile for temporary dir creation
 import sys, os, tempfile
 
+# for displacy
+import json, ast
+
 # load libraries for NLP pipeline
 import spacy
 # load Visualizers 
@@ -1000,12 +1003,20 @@ def get_terms_list():
 # ------------------------------------------------------------------------------------------------------
 # """
 
-@app.route('/ken/api/v1.0/en/html/sentence/depparse', methods=['GET'])
+@app.route('/ken/api/v1.0/en/html/depparse/sentence', methods=['GET'])
 def get_dependency_parse():
     # here we want to get the value of user (i.e. ?sentence=some-value)
     sentence = request.args.get('sentence')
     doc = NLP_EN(sentence)
     return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
+
+@app.route('/ken/api/v1.0/en/html/depparse/nounchunk', methods=['POST'])
+def get_dep_parse():
+    rec = json.loads(request.get_data(as_text=True))
+    doc = NLP_EN(rec['text'])
+    r_t = displacy.parse_deps(doc)
+    print (json.dumps(r_t))
+    return Response(json.dumps(r_t), mimetype='text/plain')
 
 """
 # Visualizers service

@@ -159,7 +159,7 @@ $recapOverviewButton.change(function () {
 $saveTerms.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
-    // Download link
+        // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
@@ -176,7 +176,7 @@ $saveTerms.click(function () {
 $saveNewTerms.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#uploadUnknownTerms option").map(function () { return this.value; }).get().join('\n'),
-    // Download link
+        // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
@@ -193,7 +193,7 @@ $saveNewTerms.click(function () {
 $saveProjectFileList.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#projectFileList option").map(function () { return this.value; }).get().join('\n'),
-    // Download link
+        // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
@@ -300,6 +300,7 @@ function fetchFileToRecapService() {
                         for (let sent_element of resJSON.termsintext.sentences.sent) {
                             $sents_from_text.append(sent_element + '\n\n')
                         }
+
                         // hide progress bar
                         $("body").css("cursor", "default");
                         $(".loader").hide();
@@ -332,7 +333,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     }
 
     if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
-        
+
         $textContent.append('\n' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '\n');
     }
 
@@ -390,6 +391,11 @@ function forUploadResultListClickAndEnterPressEvents() {
         return regex;
     }
     $textContent.highlightWithinTextarea(onInput);
+
+    let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
+        container: '#displacy'
+    });
+    displacy.parse($uploadResultList.prop('value'));
 }
 
 function forProjectFileListClickAndEnterPressEvents() {
@@ -437,6 +443,7 @@ function ClearAllForNewProject() {
     localStorage.clear();
     $('input').val('');
     $termTree.treeview({});
+    $( "#displacy" ).empty();
     location.reload();
 }
 

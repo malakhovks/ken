@@ -91,6 +91,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#table_tab" data-toggle="data" title="Таблиця для CONFOR">Таблиця</a></li>
             <li><a href="#text_tab" data-toggle="data" title="Текст робочого документа">Текст документа</a></li>
+            <li><a href="#depparse_tab" data-toggle="data" title="Візуалізація залежностей термінів та речень">Візуалізатор</a></li>
           </ul>
         </div>
         <div class="tab-content" id="select-block" style="display: flex; justify-content: flex-end;">
@@ -101,6 +102,9 @@
           </div>
           <div class="tab-pane fade" id="text_tab">
             <textarea id="sents_from_text" name="sents_from_text" size="16"></textarea>
+          </div>
+          <div class="tab-pane fade" id="depparse_tab">
+            <div id="displacy"></div>
           </div>
         </div>
       </div>
@@ -120,5 +124,6 @@
 <script src="./static/javascripts/forRecap.js"></script>
 <script src="./static/javascripts/tableForRecap.js"></script>
 <script src="./static/javascripts/dragAndDrop.js"></script>
+<script src="./static/javascripts/displacy.js"></script>
 
 </html>
