@@ -347,6 +347,7 @@ function fetchFileToRecapService() {
                                 iziToast.success({
                                     title: 'OK',
                                     message: 'Обробка файлу виконана',
+                                    position: 'bottomLeft'
                                 });
                             });
                         })
