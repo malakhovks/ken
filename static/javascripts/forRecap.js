@@ -6,6 +6,7 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 
 //  GLOBAL VARIABLES FOR THIS SCRIPT:
 var resJSON,
+    resParceJSON,
     termsWithIndexDict = {},
     fileNamesForProjectFileListAndLocalStorage = { fileNamesArray: [] },
     treeData = [], // for bootstrap-treeview
@@ -300,37 +301,28 @@ function fetchFileToRecapService() {
                         for (let sent_element of resJSON.termsintext.sentences.sent) {
                             $sents_from_text.append(sent_element + '\n\n')
                         }
-
-                        // // fetch to parce.xml for NER
-                        // fetch('/ken/api/v1.0/en/file/parcexml', {
-                        //     method: 'post',
-                        //     body: form
-                        // })
-                        // .then(function (response) {
-
-                        //     if (response.status == 503) {
-                        //         $("body").css("cursor", "default");
-                        //         $(".loader").hide();
-                        //         alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + response.status);
-                        //         return;
-                        //     }
-                        //     // return response.json().then(function (result) {
-                        //     return response.text().then(function (result) {
-        
-                        //         dom = new DOMParser().parseFromString(result, "text/xml");
-                        //         resJSON = xmlToJson(dom);
-                        //         console.log(JSON.stringify(resJSON));
-                        //     });
-                        // })
-
-                        // // fetch to parce.xml for NER
-
-
                         // hide progress bar
-                        $("body").css("cursor", "default");
-                        $(".loader").hide();
+                        // $("body").css("cursor", "default");
+                        // $(".loader").hide();
                     });
                 })
+                // fetch to parce.xml for NER
+                .then(function (next) {
+                    return fetch('/ken/api/v1.0/en/file/parcexml', {
+                        method: 'post',
+                        body: form
+                    })
+                        .then(function (response) {
+                            return response.text().then(function (result) {
+                                dom = new DOMParser().parseFromString(result, "text/xml");
+                                resParceJSON = xmlToJson(dom);
+                                console.log(JSON.stringify(resParceJSON));
+                                $("body").css("cursor", "default");
+                                $(".loader").hide();
+                            });
+                        })
+                })
+                // fetch to parce.xml for NER
                 .catch(function (error) {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
@@ -469,7 +461,7 @@ function ClearAllForNewProject() {
     localStorage.clear();
     $('input').val('');
     $termTree.treeview({});
-    $( "#displacy" ).empty();
+    $("#displacy").empty();
     location.reload();
 }
 
