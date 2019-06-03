@@ -314,7 +314,29 @@ function fetchFileToRecapService() {
                             return response.text().then(function (result) {
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 resParceJSON = xmlToJson(dom);
-                                console.log(JSON.stringify(resParceJSON));
+
+                                for (let sentElement of resParceJSON.text.sentence){
+
+                                    // console.log(JSON.stringify(sentElement));
+
+                                    if (sentElement.hasOwnProperty('ner')){
+                                        if (Array.isArray(sentElement.ner.entity)){
+                                            for (let entityElement of sentElement.ner.entity){
+                                                $uploadUnknownTerms.append($('<option>', {
+                                                    value: entityElement.entitytext,
+                                                    text: entityElement.entitytext
+                                                }));
+                                            }
+                                        };
+                                        if (Array.isArray(sentElement.ner.entity) == false){
+                                            $uploadUnknownTerms.append($('<option>', {
+                                                value: sentElement.ner.entity.entitytext,
+                                                text: sentElement.ner.entity.entitytext
+                                            }));
+                                        }
+                                    }
+                                }
+
                                 $("body").css("cursor", "default");
                                 $(".loader").hide();
                             });
