@@ -163,7 +163,14 @@ $('#clear-table').click(function () {
     localStorage.removeItem('defaultTableColCount');
     localStorage.removeItem('tableHeight');
 
-    location.reload();
+    iziToast.info({
+        title: 'Таблицю',
+        message: 'скинуто',
+        position: 'bottomLeft'
+    });
+
+    // location.reload();
+
 });
 
 // RESIZE TABLE INPUT WIDTH_______________________________________________________________________________________________/

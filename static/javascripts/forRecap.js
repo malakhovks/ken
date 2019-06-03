@@ -230,6 +230,11 @@ function fetchFileToRecapService() {
         // Show progress bar
         $("body").css("cursor", "progress");
         $(".loader").show();
+        iziToast.info({
+            title: 'Аналіз файлу',
+            message: $recapOverviewButton.val().split('\\').pop(),
+            position: 'bottomLeft'
+        });
 
         //add filename to localStorage and projectFileList
         if (fileNamesForProjectFileListAndLocalStorage.fileNamesArray.length > 0) {
@@ -339,6 +344,10 @@ function fetchFileToRecapService() {
 
                                 $("body").css("cursor", "default");
                                 $(".loader").hide();
+                                iziToast.success({
+                                    title: 'OK',
+                                    message: 'Обробка файлу виконана',
+                                });
                             });
                         })
                 })
