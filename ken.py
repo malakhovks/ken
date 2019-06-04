@@ -1010,12 +1010,22 @@ def get_dependency_parse():
     doc = NLP_EN(sentence)
     return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
 
+# Noun chunks "base noun phrases" deps visualization
 @app.route('/ken/api/v1.0/en/html/depparse/nounchunk', methods=['POST'])
 def get_dep_parse():
     rec = json.loads(request.get_data(as_text=True))
     doc = NLP_EN(rec['text'])
     r_t = displacy.parse_deps(doc)
     return Response(json.dumps(r_t), mimetype='text/plain')
+
+# NER in text visualization
+@app.route('/ken/api/v1.0/en/html/ner', methods=['POST'])
+def get_ner():
+    doc = NLP_EN(request.get_data(as_text=True))
+    colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
+    options = {"colors": colors}
+    html = displacy.render(doc, style="ent", options=options)
+    return Response(html, mimetype='text/html')
 
 """
 # Visualizers service
