@@ -59,6 +59,7 @@ $(document).ready(function () {
     // $("#displacy-papa").append('<div><center><p><a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">Visualizing the dependency parse annotations</a></p></center></div>');
     $("#displacy").hide();
     $("#displacy-ner").hide();
+    $("#displacy-label").center();
 });
 
 // extract terms from text button #recapUploadButton click event
@@ -361,7 +362,8 @@ function fetchFileToRecapService() {
                             return response.text().then(function (result) {
                                 // htmlWithNER = new DOMParser().parseFromString(result, "text/html");
                                 annotation = '<center><p><a target="_blank" href="https://spacy.io/api/annotation#named-entities">Named Entity Recognition annotations</a></p></center>'
-                                $('#displacy-ner').append(annotation + result);
+                                // $('#displacy-ner').html(annotation + result);
+                                $('#displacy-ner').html(result);
                                 $("body").css("cursor", "default");
                                 $(".loader").hide();
                                 iziToast.success({
@@ -593,10 +595,18 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
     if ($("#new_term_tab").is(".tab-pane.active")) {
         $("#displacy").hide();
         $("#displacy-ner").show();
+        $("#displacy-label").html('<a target="_blank" href="https://spacy.io/api/annotation#named-entities">Розпізнавання іменованих сутностей (анотації)</a>');
+        $("#displacy-label").show();
     }
     if ($("#term_tab").is(".tab-pane.active")) {
         $("#displacy").show();
         $("#displacy-ner").hide();
+        $("#displacy-label").html('<a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">Візуалізація аналізу залежностей (анотації)</a>');
+        $("#displacy-label").show();
     }
-
+    if ($("#text_tab").is(".tab-pane.active")) {
+        $("#displacy").hide();
+        $("#displacy-ner").hide();
+        $("#displacy-label").hide();
+    }
   });
