@@ -15,8 +15,10 @@ doc = nlp(u"After the vision of the Semantic Web was broadcasted at the turn of 
 # print ('----------------------------------------------------------------------')
 # print(html)
 print ('----------------------------------------------------------------------')
+
 colors = {"ORG": "linear-gradient(90deg, #aa9cfc, #fc9ce7)"}
 options = {"ents": ["ORG"], "colors": colors}
-# svg = displacy.render(doc, style="ent", options=options)
-svg = displacy.render(doc, style="ent")
+
+svg = displacy.render(doc, style="ent", options=options)
+
 print svg
