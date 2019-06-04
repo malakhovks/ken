@@ -475,15 +475,12 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 ## Опис служб (веб-сервісів) мережевого засобу `ken` (konspekt English) доступних розробнику
 
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
-```
-/ken/api/v1.0/en/file/parcexml
-```
-```
-/ken/api/v1.0/en/file/allterms
-```
-```
-/ken/api/v1.0/en/html/sentence/depparse
-```
+| Позначення |Служба|Кінцева точка API|
+| :--------: | :---------------------: | :--------- |
+|    **S1**    |                |/ken/api/v1.0/en/file/allterms|
+| **S2** |                 |/ken/api/v1.0/en/file/parcexml|
+| **S3** |  |/ken/api/v1.0/en/html/depparse/nounchunk|
+|  | ||
 
 ## Опис вхідних даних
 ```
