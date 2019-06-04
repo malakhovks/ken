@@ -92,7 +92,8 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#table_tab" data-toggle="data" title="Таблиця для CONFOR">Таблиця</a></li>
             <li><a href="#text_tab" data-toggle="data" title="Текст робочого документа">Текст документа</a></li>
-            <li><a href="#depparse_tab" data-toggle="data" title="Візуалізація залежностей термінів та речень">Візуалізатор</a></li>
+            <li><a href="#depparse_tab" data-toggle="data"
+                title="Візуалізація залежностей для термінів">Візуалізатор</a></li>
           </ul>
         </div>
         <div class="tab-content" id="select-block" style="display: flex; justify-content: flex-end;">
@@ -105,7 +106,12 @@
             <textarea id="sents_from_text" name="sents_from_text" size="16"></textarea>
           </div>
           <div class="tab-pane fade" id="depparse_tab">
-            <div id="displacy"></div>
+            <div id="displacy-ner">
+              <!-- https://spacy.io/api/annotation#named-entities -->
+            </div>
+            <div id="displacy">
+              <!-- Visualizing the dependency parse -->
+            </div>
           </div>
         </div>
       </div>

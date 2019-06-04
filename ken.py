@@ -1021,10 +1021,12 @@ def get_dep_parse():
 # NER in text visualization
 @app.route('/ken/api/v1.0/en/html/ner', methods=['POST'])
 def get_ner():
-    doc = NLP_EN(request.get_data(as_text=True))
-    colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
-    options = {"colors": colors}
-    html = displacy.render(doc, style="ent", options=options)
+    req_data_JSON = json.loads(request.get_data(as_text=True))
+    doc = NLP_EN(' '.join(e for e in req_data_JSON))
+    # colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
+    # options = {"colors": colors}
+    # html = displacy.render(doc, style="ent", options=options)
+    html = displacy.render(doc, style="ent")
     return Response(html, mimetype='text/html')
 
 """
