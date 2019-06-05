@@ -56,6 +56,10 @@ $(document).ready(function () {
             }));
         }
     }
+    // $("#displacy-papa").append('<div><center><p><a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">Visualizing the dependency parse annotations</a></p></center></div>');
+    $("#displacy").hide();
+    $("#displacy-ner").hide();
+    $("#displacy-label").center();
 });
 
 // extract terms from text button #recapUploadButton click event
@@ -284,6 +288,7 @@ function fetchFileToRecapService() {
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
                         // console.log(JSON.stringify(resJSON));
+                        // console.log(JSON.stringify(Object.values(resJSON.termsintext.sentences.sent)))
 
                         // add to local storage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
@@ -341,7 +346,24 @@ function fetchFileToRecapService() {
                                         }
                                     }
                                 }
+                            });
+                        })
+                })
+                // fetch to /ken/api/v1.0/en/html/ner for NER
+                .then(function (next) {
 
+                    sentencesData = JSON.stringify(Object.values(resJSON.termsintext.sentences.sent));
+                    console.log(sentencesData);
+                    return fetch('/ken/api/v1.0/en/html/ner', {
+                        method: 'post',
+                        body: sentencesData
+                    })
+                        .then(function (response) {
+                            return response.text().then(function (result) {
+                                // htmlWithNER = new DOMParser().parseFromString(result, "text/html");
+                                annotation = '<center><p><a target="_blank" href="https://spacy.io/api/annotation#named-entities">Named Entity Recognition annotations</a></p></center>'
+                                // $('#displacy-ner').html(annotation + result);
+                                $('#displacy-ner').html(result);
                                 $("body").css("cursor", "default");
                                 $(".loader").hide();
                                 iziToast.success({
@@ -352,7 +374,6 @@ function fetchFileToRecapService() {
                             });
                         })
                 })
-                // fetch to parce.xml for NER
                 .catch(function (error) {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
@@ -501,6 +522,7 @@ function ClearAllForNewProject() {
     $('input').val('');
     $termTree.treeview({});
     $("#displacy").empty();
+    $("#displacy-ner").empty();
     location.reload();
 }
 
@@ -563,3 +585,28 @@ $('.nav-tabs a').click(function (e) {
     e.preventDefault();
     $(this).tab('show')
 });
+
+$('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
+
+    // if ($(e.target).attr("href") == '#new_term_tab'){
+    //     alert('target');
+    // }
+
+    if ($("#new_term_tab").is(".tab-pane.active")) {
+        $("#displacy").hide();
+        $("#displacy-ner").show();
+        $("#displacy-label").html('<center>Візуалізація іменованих сутностей <a target="_blank" href="https://spacy.io/api/annotation#named-entities">(список анотацій)</a></center>');
+        $("#displacy-label").show();
+    }
+    if ($("#term_tab").is(".tab-pane.active")) {
+        $("#displacy").show();
+        $("#displacy-ner").hide();
+        $("#displacy-label").html('<center>Візуалізація залежностей термінів <a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">(список анотацій)</a></center>');
+        $("#displacy-label").show();
+    }
+    if ($("#text_tab").is(".tab-pane.active")) {
+        $("#displacy").hide();
+        $("#displacy-ner").hide();
+        $("#displacy-label").hide();
+    }
+  });

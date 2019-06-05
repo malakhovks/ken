@@ -346,6 +346,21 @@ select {
 #displacy {
 	overflow: auto;
 }
+
+#displacy-ner {
+	overflow: auto;
+}
+
+#displacy-label {
+	position: sticky;
+	top: 0px;
+	background:white;
+}
+
+#depparse_tab {
+	overflow: auto;
+	display: block;
+}
 /*displacy_________________________________________________________________________________________________________*/
 
 /*FOOTER______________________________________________________________________________________________________________*/
