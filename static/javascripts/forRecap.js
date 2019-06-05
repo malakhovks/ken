@@ -595,13 +595,13 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
     if ($("#new_term_tab").is(".tab-pane.active")) {
         $("#displacy").hide();
         $("#displacy-ner").show();
-        $("#displacy-label").html('<center><a target="_blank" href="https://spacy.io/api/annotation#named-entities">Розпізнавання іменованих сутностей (анотації)</a></center>');
+        $("#displacy-label").html('<center>Візуалізація іменованих сутностей <a target="_blank" href="https://spacy.io/api/annotation#named-entities">(список анотацій)</a></center>');
         $("#displacy-label").show();
     }
     if ($("#term_tab").is(".tab-pane.active")) {
         $("#displacy").show();
         $("#displacy-ner").hide();
-        $("#displacy-label").html('<center><a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">Візуалізація аналізу залежностей (анотації)</a></center>');
+        $("#displacy-label").html('<center>Візуалізація залежностей термінів <a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">(список анотацій)</a></center>');
         $("#displacy-label").show();
     }
     if ($("#text_tab").is(".tab-pane.active")) {

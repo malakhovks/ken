@@ -477,10 +477,12 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
 | Позначення |Служба|Кінцева точка API|
 | :--------: | :---------------------: | :--------- |
-|    **S1**    |                |/ken/api/v1.0/en/file/allterms|
-| **S2** |                 |/ken/api/v1.0/en/file/parcexml|
-| **S3** |  |/ken/api/v1.0/en/html/depparse/nounchunk|
-|  | ||
+|    **S1**    | формування спеціалізованої `xml`-структури тексту *allterms.xml* |/ken/api/v1.0/en/file/allterms|
+| **S2** | формування спеціалізованої `xml`-структури тексту *parce.xml* |/ken/api/v1.0/en/file/parcexml|
+| **S3** | візуалізації залежностей термінів |/ken/api/v1.0/en/html/depparse/nounchunk|
+| **S4** | візуалізації іменованих сутностей тексту |/ken/api/v1.0/en/html/ner|
+| **S4** | візуалізації синтаксичних залежностей речення |/ken/api/v1.0/en/html/depparse/sentence|
+| **S5** | графічного інтерфейсу користувача |/|
 
 ## Опис вхідних даних
 ```
