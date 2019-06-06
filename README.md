@@ -481,12 +481,12 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
 | Позначення |Служба|Кінцева точка API|Метод http-запиту|
 | :--------: | :---------------------: | :--------- | :--------: |
-|    **S1**    | формування спеціалізованої `xml`-структури тексту *allterms.xml* |host[:port]/ken/api/v1.0/en/file/allterms|POST|
-| **S2** | формування спеціалізованої `xml`-структури тексту *parce.xml* |host[:port]/ken/api/v1.0/en/file/parcexml|POST|
-| **S3** | візуалізації залежностей термінів |host[:port]/ken/api/v1.0/en/html/depparse/nounchunk|POST|
-| **S4** | візуалізації іменованих сутностей тексту |host[:port]/ken/api/v1.0/en/html/ner|POST|
-| **S4** | візуалізації синтаксичних залежностей речення |/ken/api/v1.0/en/html/depparse/sentence|GET|
-| **S5** | графічного інтерфейсу користувача |host[:port]/|GET|
+|    **S1**    | формування спеціалізованої `xml`-структури тексту allterms.xml |`host[:port]/ken/api/v1.0/en/file/allterms`|POST|
+| **S2** | формування спеціалізованої `xml`-структури тексту parce.xml |`host[:port]/ken/api/v1.0/en/file/parcexml`|POST|
+| **S3** | візуалізації залежностей термінів |`host[:port]/ken/api/v1.0/en/html/depparse/nounchunk`|POST|
+| **S4** | візуалізації іменованих сутностей тексту |`host[:port]/ken/api/v1.0/en/html/ner`|POST|
+| **S4** | візуалізації синтаксичних залежностей речення |`/ken/api/v1.0/en/html/depparse/sentence`|GET|
+| **S5** | графічного інтерфейсу користувача |`host[:port]/`|GET|
 
 ##### **S1** - служба формування спеціалізованої `xml`-структури тексту *allterms.xml*
 
