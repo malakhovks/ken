@@ -480,16 +480,14 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
 
-
-
 | Позначення |Служба|Кінцева точка API|Метод http-запиту|
 | :--------: | :---------------------: | :--------- | :--------: |
 |    **S1**    | формування спеціалізованої `xml`-структури тексту *allterms.xml* |`host[:port]/ken/api/v1.0/en/file/allterms`|POST|
 | **S2** | формування спеціалізованої `xml`-структури тексту *parce.xml* |`host[:port]/ken/api/v1.0/en/file/parcexml`|POST|
 | **S3** | візуалізації залежностей термінів |`host[:port]/ken/api/v1.0/en/html/depparse/nounchunk`|POST|
 | **S4** | візуалізації іменованих сутностей тексту |`host[:port]/ken/api/v1.0/en/html/ner`|POST|
-| **S4** | візуалізації синтаксичних залежностей речення |`/ken/api/v1.0/en/html/depparse/sentence`|GET|
-| **S5** | графічного інтерфейсу користувача |`host[:port]/`|GET|
+| **S5** | візуалізації синтаксичних залежностей речення |`/ken/api/v1.0/en/html/depparse/sentence`|GET|
+| **S6** | графічного інтерфейсу користувача |`host[:port]/`|GET|
 
 ##### **S1** - служба формування спеціалізованої `xml`-структури тексту *allterms.xml*
 
@@ -524,7 +522,7 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/allterms', {
 
 ##### Опис вихідних даних
 
-Вихідними даними є спеціалізована `xml`-структури тексту.
+Вихідними даними є спеціалізована `xml`-структура тексту `allterms.xml`.
 
 `xml`-Схема вихідних даних:
 
@@ -585,6 +583,72 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/allterms', {
 Вхідними даними можуть бути файли форматів `.txt`, `.docx`, `.pdf`.
 
 Використовуючи метод `http`-запиту `POST` можна відправити тільки один файл (доступних форматів) для опрацювання службою формування спеціалізованої `xml`-структури тексту.
+
+Приклад `POST` запиту до кінцевої точки служби **S2** на мові програмування `JavaScript` з використанням [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
+
+```javascript
+# Детальний опис Fetch API за посиланням https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+# Файли можна завантажувати за допомогою елемента вводу HTML <input type = "file" />, FormData() та fetch().
+var formData = new FormData();
+var fileField = document.querySelector('input[type="file"]');
+
+# https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
+# formData.append(name, value);
+formData.append('file', fileField.files[0]);
+
+fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
+                method: 'post',
+                body: formData
+            })
+.then(response => response.text())
+.catch(error => console.error('Error:', error))
+.then(response => console.log('Success:', response));
+```
+
+Процес формування спеціалізованої `xml`-структури тексту може зайняти деякий час (в залежності від обсягу тексту), але в загальному випадку вихідні дані формуються миттєво.
+
+##### Опис вихідних даних
+
+Вихідними даними є спеціалізована `xml`-структура тексту `parce.xml`.
+
+`xml`-Схема вихідних даних:
+
+```xml
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="text">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sentence" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="word"/>
+                    <xs:element type="xs:string" name="osnova"/>
+                    <xs:element type="xs:string" name="lemma"/>
+                    <xs:element type="xs:string" name="kflex"/>
+                    <xs:element type="xs:string" name="flex"/>
+                    <xs:element type="xs:byte" name="number"/>
+                    <xs:element type="xs:short" name="pos"/>
+                    <xs:element type="xs:byte" name="group_n"/>
+                    <xs:element type="xs:string" name="speech"/>
+                    <xs:element type="xs:byte" name="relate"/>
+                    <xs:element type="xs:string" name="rel_type"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:byte" name="sentnumber"/>
+              <xs:element type="xs:string" name="sent"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+```
 
 <a name="deployment-ua"></a>
 
