@@ -56,10 +56,17 @@ $(document).ready(function () {
             }));
         }
     }
-    // $("#displacy-papa").append('<div><center><p><a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">Visualizing the dependency parse annotations</a></p></center></div>');
+
     $("#displacy").hide();
     $("#displacy-ner").hide();
-    $("#displacy-label").center();
+    // $("#displacy-label").center();
+
+    iziToast.info({
+        title: 'Вітаємо!',
+        message: 'Оберіть файл для аналізу',
+        position: 'bottomLeft'
+    });
+
 });
 
 // extract terms from text button #recapUploadButton click event
@@ -279,6 +286,11 @@ function fetchFileToRecapService() {
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
                         $(".loader").hide();
+                        iziToast.warning({
+                            title: 'Сервіс зайнятий, спробуйте ще раз.',
+                            message: 'Статус: ' + response.status,
+                            position: 'bottomLeft'
+                        });
                         alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + response.status);
                         return;
                     }
