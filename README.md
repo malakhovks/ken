@@ -484,8 +484,8 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 | Позначення |Служба|Кінцева точка API|Метод http-запиту|
 | :--------: | :---------------------: | :--------- | :--------: |
-|    **S1**    | формування спеціалізованої `xml`-структури тексту allterms.xml |`host[:port]/ken/api/v1.0/en/file/allterms`|POST|
-| **S2** | формування спеціалізованої `xml`-структури тексту parce.xml |`host[:port]/ken/api/v1.0/en/file/parcexml`|POST|
+|    **S1**    | формування спеціалізованої `xml`-структури тексту *allterms.xml* |`host[:port]/ken/api/v1.0/en/file/allterms`|POST|
+| **S2** | формування спеціалізованої `xml`-структури тексту *parce.xml* |`host[:port]/ken/api/v1.0/en/file/parcexml`|POST|
 | **S3** | візуалізації залежностей термінів |`host[:port]/ken/api/v1.0/en/html/depparse/nounchunk`|POST|
 | **S4** | візуалізації іменованих сутностей тексту |`host[:port]/ken/api/v1.0/en/html/ner`|POST|
 | **S4** | візуалізації синтаксичних залежностей речення |`/ken/api/v1.0/en/html/depparse/sentence`|GET|
@@ -502,7 +502,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 Приклад `POST` запиту до кінцевої точки служби **S1** на мові програмування `JavaScript` з використанням [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
 
 ```javascript
-# Детальний опис Fetch API за посыланням https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+# Детальний опис Fetch API за посиланням https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
 # Файли можна завантажувати за допомогою елемента вводу HTML <input type = "file" />, FormData() та fetch().
 var formData = new FormData();
