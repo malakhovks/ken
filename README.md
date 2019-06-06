@@ -159,8 +159,6 @@ pip install -r requirements.txt
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
-- **[Опис вхідних даних](#about-input-data-ua)**
-- **[Опис вихідних даних](#about-output-data-ua)**
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
 
 -------
@@ -182,6 +180,7 @@ pip install -r requirements.txt
 - екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - формування спеціалізованої `xml`-структури тексту.
 
+-------
 
 <a name="system-requirements-ua"></a>
 ## Системні вимоги
@@ -189,6 +188,7 @@ pip install -r requirements.txt
 - **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
 - **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
 
+-------
 
 <a name="unix-deployment-ua"></a>
 ## Компіляція, збірка та розгортання мережевого засобу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
@@ -311,6 +311,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 - `--restart on-failure` - автоматичний перезапуск невдалих контейнерів. Перезапускає контейнер, якщо він вийде з ладу через помилку, яка виявляється як ненульовий код виходу;
 - `--restart always` - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба `Docker` перезапускається або сам контейнер перезапускається вручну.
 
+-------
 
 <a name="virtualbox-deployment-ua"></a>
 ## Компіляція, збірка та розгортання мережевого засобу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
@@ -460,6 +461,8 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 - `--restart on-failure` - автоматичний перезапуск невдалих контейнерів. Перезапускає контейнер, якщо він вийде з ладу через помилку, яка виявляється як ненульовий код виходу;
 - `--restart always` - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба `Docker` перезапускається або сам контейнер перезапускається вручну.
 
+-------
+
 <a name="windows-deployment-ua"></a>
 ## Компіляція, збірка та розгортання мережевого засобу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 7 та вище
 
@@ -469,32 +472,116 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 ##### Системні вимоги
 
+-------
 
 <a name="api-ua"></a>
 
 ## Опис служб (веб-сервісів) мережевого засобу `ken` (konspekt English) доступних розробнику
 
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
-| Позначення |Служба|Кінцева точка API|
-| :--------: | :---------------------: | :--------- |
-|    **S1**    | формування спеціалізованої `xml`-структури тексту *allterms.xml* |/ken/api/v1.0/en/file/allterms|
-| **S2** | формування спеціалізованої `xml`-структури тексту *parce.xml* |/ken/api/v1.0/en/file/parcexml|
-| **S3** | візуалізації залежностей термінів |/ken/api/v1.0/en/html/depparse/nounchunk|
-| **S4** | візуалізації іменованих сутностей тексту |/ken/api/v1.0/en/html/ner|
-| **S4** | візуалізації синтаксичних залежностей речення |/ken/api/v1.0/en/html/depparse/sentence|
-| **S5** | графічного інтерфейсу користувача |/|
+| Позначення |Служба|Кінцева точка API|Метод http-запиту|
+| :--------: | :---------------------: | :--------- | :--------: |
+|    **S1**    | формування спеціалізованої `xml`-структури тексту *allterms.xml* |host[:port]/ken/api/v1.0/en/file/allterms|POST|
+| **S2** | формування спеціалізованої `xml`-структури тексту *parce.xml* |host[:port]/ken/api/v1.0/en/file/parcexml|POST|
+| **S3** | візуалізації залежностей термінів |host[:port]/ken/api/v1.0/en/html/depparse/nounchunk|POST|
+| **S4** | візуалізації іменованих сутностей тексту |host[:port]/ken/api/v1.0/en/html/ner|POST|
+| **S4** | візуалізації синтаксичних залежностей речення |/ken/api/v1.0/en/html/depparse/sentence|GET|
+| **S5** | графічного інтерфейсу користувача |host[:port]/|GET|
 
-## Опис вхідних даних
+##### **S1** - служба формування спеціалізованої `xml`-структури тексту *allterms.xml*
+
+##### Опис вхідних даних
+
+Вхідними даними можуть бути файли форматів `.txt`, `.docx`, `.pdf`, які містять текстові дані англійською мовою.
+
+Використовуючи метод `http`-запиту `POST` можна відправити тільки один файл (доступних форматів) для опрацювання службою формування спеціалізованої `xml`-структури тексту.
+
+Приклад `POST` запиту до кінцевої точки служби **S1** на мові програмування `JavaScript` з використанням [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
+
+```javascript
+# Детальний опис Fetch API за посыланням https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+# Файли можна завантажувати за допомогою елемента вводу HTML <input type = "file" />, FormData() та fetch().
+var formData = new FormData();
+var fileField = document.querySelector('input[type="file"]');
+
+# https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
+# formData.append(name, value);
+formData.append('file', fileField.files[0]);
+
+fetch("file", 'host[:port]/ken/api/v1.0/en/file/allterms', {
+                method: 'post',
+                body: formData
+            })
+.then(response => response.text())
+.catch(error => console.error('Error:', error))
+.then(response => console.log('Success:', response));
 ```
+Процес формування спеціалізованої `xml`-структури тексту може зайняти деякий час (в залежності від обсягу тексту), але в загальному випадку вихідні дані формуються миттєво.
 
+##### Опис вихідних даних
+
+Вихідними даними є спеціалізована `xml`-структури тексту.
+
+`xml`-Схема вихідних даних:
+
+```xml
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="termsintext">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="filepath"/>
+        <xs:element name="exporterms">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="term" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="ttype"/>
+                    <xs:element type="xs:string" name="tname"/>
+                    <xs:element type="xs:byte" name="wcount"/>
+                    <xs:element type="xs:string" name="osn" maxOccurs="unbounded" minOccurs="0"/>
+                    <xs:element type="xs:string" name="sentpos" maxOccurs="unbounded" minOccurs="0"/>
+                    <xs:element type="xs:short" name="relup" maxOccurs="unbounded" minOccurs="0"/>
+                    <xs:element type="xs:short" name="reldown" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="sentences">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="sent" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
 ```
+Елемент `exporterms` містить послідовність елементів `term`, що описує терміни та їх параметри з опрацьованого тексту.
 
-<a name="about-output-data-ua"></a>
+Параметри термінів описуються наступними елементами:
 
-## Опис вихідних даних
-```
+- елемент `ttype` - позначення слова в тексті певної частиною мови згідно з [Universal Dependencies scheme](https://spacy.io/api/annotation);
+- елемент `tname` - лема терміну (для багатослівних термінів - це правильна форма);
+- елемент `wcount` - кількість слів в терміні;
+- елемент `osn` - основа для кожного слова з терміну;
+- елемент `sentpos` - позиція терміну в тексті, подається у вигляді строки формату `2/10` (в даному випадку означає, що термін знаходиться у 2-му реченні на 10 позиції;
+- елементи `relup` та `reldown` - відображають зв'язки до інших термінів;
+- елементи `sentences` - містить масив елементів `sent`, який містить речення з тексту. Порядок речень в елементі `sentences` відповідаю порядку речень у вхідному тексті.
 
-```
+
+##### **S2** - служба формування спеціалізованої `xml`-структури тексту *parce.xml*
+
+##### Опис вхідних даних
+
+Вхідними даними можуть бути файли форматів `.txt`, `.docx`, `.pdf`.
+
+Використовуючи метод `http`-запиту `POST` можна відправити тільки один файл (доступних форматів) для опрацювання службою формування спеціалізованої `xml`-структури тексту.
 
 <a name="deployment-ua"></a>
 
