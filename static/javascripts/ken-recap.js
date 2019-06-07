@@ -477,14 +477,20 @@ function forUploadResultListClickAndEnterPressEvents() {
     // Highlight-within-textarea
     // https://github.com/lonekorean/highlight-within-textarea
 
+    // function onInput(input) {
+    //     //return /\d+/g; // highlight all digits
+    //     var regex = new RegExp($uploadResultList.prop('value').substring(0, 4), 'gi');
+    //     return regex;
+    // }
+    // $textContent.highlightWithinTextarea(onInput);
+
     function onInput(input) {
-        //return /\d+/g; // highlight all digits
-        var regex = new RegExp($uploadResultList.prop('value').substring(0, 4), 'gi');
+        var regex = new RegExp('\\b(\\w*' + $uploadResultList.prop('value').substring(0, 4) + '\\w*)\\b', 'gi');
         return regex;
     }
     $textContent.highlightWithinTextarea(onInput);
 
-/*      function multiSearchOr(text, searchWord) {
+/*     function multiSearchOr(text, searchWord) {
         var regex = RegExp('\\b(\\w*' + searchWord + '\\w*)\\b', 'ig');
         let m;
         let foundWords = [];
@@ -501,8 +507,7 @@ function forUploadResultListClickAndEnterPressEvents() {
             });
         }
         return foundWords[0];
-    }
-    console.log(multiSearchOr('hello world! fgfg dfgdf  world', 'worl'));  */
+    } */
 
 
     // visualize noun chunk / term
