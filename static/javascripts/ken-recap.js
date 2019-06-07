@@ -337,20 +337,20 @@ function fetchFileToRecapService() {
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 resParceJSON = xmlToJson(dom);
 
-                                for (let sentElement of resParceJSON.text.sentence){
+                                for (let sentElement of resParceJSON.text.sentence) {
 
                                     // console.log(JSON.stringify(sentElement));
 
-                                    if (sentElement.hasOwnProperty('ner')){
-                                        if (Array.isArray(sentElement.ner.entity)){
-                                            for (let entityElement of sentElement.ner.entity){
+                                    if (sentElement.hasOwnProperty('ner')) {
+                                        if (Array.isArray(sentElement.ner.entity)) {
+                                            for (let entityElement of sentElement.ner.entity) {
                                                 $uploadUnknownTerms.append($('<option>', {
                                                     value: entityElement.entitytext,
                                                     text: entityElement.entitytext
                                                 }));
                                             }
                                         };
-                                        if (Array.isArray(sentElement.ner.entity) == false){
+                                        if (Array.isArray(sentElement.ner.entity) == false) {
                                             $uploadUnknownTerms.append($('<option>', {
                                                 value: sentElement.ner.entity.entitytext,
                                                 text: sentElement.ner.entity.entitytext
@@ -470,7 +470,7 @@ function forUploadResultListClickAndEnterPressEvents() {
         $termTree.treeview({ data: treeData }); // add array data to bootstrap-treeview and view it on page
     }
 
-    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup') == false && resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') == false){
+    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup') == false && resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') == false) {
         $termTree.treeview({});
     }
 
@@ -644,4 +644,4 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         $("#displacy-ner").hide();
         $("#displacy-label").hide();
     }
-  });
+});
