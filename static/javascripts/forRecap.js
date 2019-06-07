@@ -595,6 +595,26 @@ function xmlToJson(xml) {
     return obj;
 }
 
+function getLanguage(ofText) {
+    let text = 'https://translate.yandex.net/api/v1.5/tr.json/detect?hint=ru,en&key=trnsl.1.1.20160517T143002Z.e9fc37c7a484c5f4.8cba036cc3eb084c401f3766ed5b2b389b6dc9fc&text=' + ofText;
+    if (self.fetch) {
+        fetch(text, {
+            method: 'post'
+        })
+            .then(function (response) {
+                return response.json().then(function (result) {
+                    // langField.innerHTML = result.lang;
+                    console.log(result.lang);
+                })
+            })
+            .catch(function (error) {
+                alert('Виникла помилка на стороні серевера.' + '\n' + 'Помилка: ' + error + '\n' + ' Cпробуйте ще раз.');
+            });
+    } else {
+        alert('Ваш браузер застарів. Встановіть актуальну версію Google Chrome');
+    }
+}
+
 // CHANGE TABS
 $('.nav-tabs a').click(function (e) {
     e.preventDefault();
