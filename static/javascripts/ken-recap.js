@@ -484,6 +484,24 @@ function forUploadResultListClickAndEnterPressEvents() {
     }
     $textContent.highlightWithinTextarea(onInput);
 
+/*     function multiSearchOr(text, searchWord) {
+        var regex = RegExp('\\b(\\w*' + searchWord + '\\w*)\\b', 'ig');
+        let m;
+        while ((m = regex.exec(text)) !== null) {
+            // This is necessary to avoid infinite loops with zero-width matches
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+
+            // The result can be accessed through the `m`-variable.
+            m.forEach((match, groupIndex) => {
+                console.log(match);
+            });
+        }
+    }
+    multiSearchOr('hello world! fgfg dfgdf  world', 'fg'); */
+
+
     // visualize noun chunk / term
     let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
         container: '#displacy'
