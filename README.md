@@ -155,11 +155,13 @@ pip install -r requirements.txt
 ### Зміст
 - **[Призначення та функції](#features-ua)**
 - **[Системні вимоги](#system-requirements-ua)**
+- **[Архітектура мережевого засобу ken (konspekt English)](#architecture-ua)**
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
+- **[Корисні посилання](#references-ua)**
 
 -------
 
@@ -187,6 +189,13 @@ pip install -r requirements.txt
 
 - **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
 - **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
+
+-------
+
+<a name="architecture-ua"></a>
+## Архітектура мережевого засобу ken (konspekt English)
+
+*Розділ в розробці.*
 
 -------
 
@@ -243,10 +252,11 @@ git clone --depth=1 --branch=tag_name repo_url
 ```bash
 git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
-
+<!---
 **Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
 *Настанови цього етапу в розробці.*
+-->
 
 2. Перехід в діректорію програми `ken`:
 ```bash
@@ -650,6 +660,8 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 </xs:schema>
 ```
 
+-------
+
 <a name="deployment-ua"></a>
 
 ## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
@@ -657,3 +669,30 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 
 <!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
 
+<a name="references-ua"></a>
+
+-------
+
+## Корисні посилання
+
+*Розділ в розробці.*
+
+##### Платформа Docker для створення, розгортання і запуску додатків на прикладі Python Flask application
+
+- [Що таке Docker і як використовувати його з Python](https://codeguida.com/post/1837)
+- [Developing a Flask API in a Docker container with uWSGI and NGINX](https://link.medium.com/tvOhhWV84W)
+- [Running Flask in production with Docker](https://link.medium.com/cOVc4h5SiX)
+- [Flask application in a production-ready container](https://netdevops.me/2017/flask-application-in-a-production-ready-container/)
+- [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04)
+- [Building a slim uWSGI Docker image](https://bradleyzhou.com/posts/building-slim-uwsgi-docker-image)
+- [Running Windows app headless in docker](https://link.medium.com/2Wg3XVX15W)
+- [Запуск приложения на Flask с помощью uwsgi + nginx в Debian 7](http://debian-help.ru/web-servers/zapusk-prilozheniya-na-flask-s-pomoschyu-uwsgi-nginx/)
+- [Ускоряем Nginx за 5 минут](https://habr.com/ru/post/198982/)
+- [Top 10 Docker CLI commands you can’t live without](https://link.medium.com/HCI5XwmFRW)
+- [NGINX Tuning For Best Performance](https://github.com/denji/nginx-tuning)
+
+##### Система черг для Python Flask application - uWSGI Spooler
+
+- [Background jobs with Flask](https://link.medium.com/DwcCkjzAkX)
+- [The uWSGI Spooler](https://habr.com/ru/company/selectel/blog/326956/)
+- [Using Celery With Flask](https://blog.miguelgrinberg.com/post/using-celery-with-flask)
