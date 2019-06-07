@@ -161,6 +161,7 @@ pip install -r requirements.txt
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
+- **[Корисні посилання](#references-ua)**
 
 -------
 
@@ -658,6 +659,8 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 </xs:schema>
 ```
 
+-------
+
 <a name="deployment-ua"></a>
 
 ## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
@@ -665,3 +668,10 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 
 <!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
 
+<a name="references-ua"></a>
+
+-------
+
+## Корисні посилання
+
+*Розділ в розробці.*
