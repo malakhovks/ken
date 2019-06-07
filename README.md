@@ -676,3 +676,23 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 ## Корисні посилання
 
 *Розділ в розробці.*
+
+##### Платформа Docker для створення, розгортання і запуску додатків на прикладі Python Flask application
+
+- [Що таке Docker і як використовувати його з Python](https://codeguida.com/post/1837)
+- [Developing a Flask API in a Docker container with uWSGI and NGINX](https://link.medium.com/tvOhhWV84W)
+- [Running Flask in production with Docker](https://link.medium.com/cOVc4h5SiX)
+- [Flask application in a production-ready container](https://netdevops.me/2017/flask-application-in-a-production-ready-container/)
+- [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04)
+- [Building a slim uWSGI Docker image](https://bradleyzhou.com/posts/building-slim-uwsgi-docker-image)
+- [Running Windows app headless in docker](https://link.medium.com/2Wg3XVX15W)
+- [Запуск приложения на Flask с помощью uwsgi + nginx в Debian 7](http://debian-help.ru/web-servers/zapusk-prilozheniya-na-flask-s-pomoschyu-uwsgi-nginx/)
+- [Ускоряем Nginx за 5 минут](https://habr.com/ru/post/198982/)
+- [Top 10 Docker CLI commands you can’t live without](https://link.medium.com/HCI5XwmFRW)
+- [NGINX Tuning For Best Performance](https://github.com/denji/nginx-tuning)
+
+##### Система черг для Python Flask application - uWSGI Spooler
+
+- [Background jobs with Flask](https://link.medium.com/DwcCkjzAkX)
+- [The uWSGI Spooler](https://habr.com/ru/company/selectel/blog/326956/)
+- [Using Celery With Flask](https://blog.miguelgrinberg.com/post/using-celery-with-flask)
