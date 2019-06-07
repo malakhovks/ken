@@ -391,14 +391,17 @@ function fetchFileToRecapService() {
                     $(".loader").hide();
                     iziToast.warning({
                         title: 'Помилка',
-                        message: 'Виникла помилка на стороні серевера',
+                        message: 'Виникла помилка на стороні серевера ' + error,
                         position: 'bottomLeft'
                     });
-                    alert('Виникла помилка на стороні серевера.' + '\n' + 'Помилка: ' + error + '\n' + ' Cпробуйте ще раз.');
                 });
 
         } else {
-            alert('Ваш браузер застарів. Встановіть актуальну версію Google Chrome');
+            iziToast.warning({
+                title: 'Ваш браузер застарів.',
+                message: 'Встановіть актуальну версію Google Chrome.',
+                position: 'bottomLeft'
+            });
         }
     }
 }
