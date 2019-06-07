@@ -484,9 +484,10 @@ function forUploadResultListClickAndEnterPressEvents() {
     }
     $textContent.highlightWithinTextarea(onInput);
 
-/*     function multiSearchOr(text, searchWord) {
+/*      function multiSearchOr(text, searchWord) {
         var regex = RegExp('\\b(\\w*' + searchWord + '\\w*)\\b', 'ig');
         let m;
+        let foundWords = [];
         while ((m = regex.exec(text)) !== null) {
             // This is necessary to avoid infinite loops with zero-width matches
             if (m.index === regex.lastIndex) {
@@ -495,11 +496,13 @@ function forUploadResultListClickAndEnterPressEvents() {
 
             // The result can be accessed through the `m`-variable.
             m.forEach((match, groupIndex) => {
-                console.log(match);
+                // console.log(match);
+                foundWords.push(match)
             });
         }
+        return foundWords[0];
     }
-    multiSearchOr('hello world! fgfg dfgdf  world', 'fg'); */
+    console.log(multiSearchOr('hello world! fgfg dfgdf  world', 'worl'));  */
 
 
     // visualize noun chunk / term
