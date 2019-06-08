@@ -798,8 +798,6 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 
 ## Корисні посилання
 
-*Розділ доповнюється.*
-
 #### Платформа Docker для створення, розгортання і запуску додатків на прикладі Python Flask application
 
 - [Що таке Docker і як використовувати його з Python](https://codeguida.com/post/1837)
@@ -819,3 +817,5 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 - [Background jobs with Flask](https://link.medium.com/DwcCkjzAkX)
 - [The uWSGI Spooler](https://habr.com/ru/company/selectel/blog/326956/)
 - [Using Celery With Flask](https://blog.miguelgrinberg.com/post/using-celery-with-flask)
+
+*Розділ доповнюється.*
