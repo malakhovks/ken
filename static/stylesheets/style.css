@@ -304,8 +304,8 @@ select {
   .middle,
   .inner {
 	border: 3px solid transparent;
-	border-top-color: #fc2f70;
-	border-right-color: #fc2f70;
+	border-top-color: #8BC34A;
+	border-right-color: #8BC34A;
 	border-radius: 50%;
 	position: absolute;
 	top: 50%;
