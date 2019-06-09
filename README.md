@@ -375,6 +375,9 @@ git clone --depth=1 --branch=tag_name repo_url
 ```bash
 git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
+
+**Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
+
 <!---
 **Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
@@ -527,9 +530,13 @@ git clone --depth=1 --branch=tag_name repo_url
 git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
 ```
 
+**Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
+
+<!--
 **Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
 *Настанови цього етапу в розробці.*
+-->
 
 4. Перехід в діректорію програми `ken`:
 ```bash
