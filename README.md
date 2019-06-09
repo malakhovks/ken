@@ -799,14 +799,14 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 
 <!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
 
+-------
+
 <a name="references-ua"></a>
 
--------
 
 ## Корисні посилання
 
 #### Платформа Docker для створення, розгортання і запуску додатків на прикладі Python Flask application
-
 - [Що таке Docker і як використовувати його з Python](https://codeguida.com/post/1837)
 - [Developing a Flask API in a Docker container with uWSGI and NGINX](https://link.medium.com/tvOhhWV84W)
 - [Running Flask in production with Docker](https://link.medium.com/cOVc4h5SiX)
@@ -818,11 +818,23 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 - [Ускоряем Nginx за 5 минут](https://habr.com/ru/post/198982/)
 - [Top 10 Docker CLI commands you can’t live without](https://link.medium.com/HCI5XwmFRW)
 - [NGINX Tuning For Best Performance](https://github.com/denji/nginx-tuning)
+- [Docker in Alpine Linux](https://wiki.alpinelinux.org/wiki/Docker)
+- [Docker-compose: идеальное рабочее окружение](https://habr.com/ru/post/346086/)
+- [Docker для начинающего разработчика](https://medium.com/p/docker-for-beginners-a2c9c73e7d3d)
 
 #### Система черг для Python Flask application - uWSGI Spooler
 
 - [Background jobs with Flask](https://link.medium.com/DwcCkjzAkX)
 - [The uWSGI Spooler](https://habr.com/ru/company/selectel/blog/326956/)
 - [Using Celery With Flask](https://blog.miguelgrinberg.com/post/using-celery-with-flask)
+
+#### Розгортання додатків Python Flask application на Windows Server (IIS) з використанням FastCGI
+
+- [Deploying Python web app (Flask) in Windows Server (IIS) using FastCGI](https://link.medium.com/jIuYBWegnX)
+- [Windows Server 2019 — Server Core vs. Desktop Experience (GUI) Explained & Compared. Re: Datacenter, Standard, Essentials & Hyper-V Server](https://link.medium.com/cNqHTYd0gX)
+
+#### Тестування
+
+- [Навантажувальне тестування з утилітою Apache Bench](https://medium.com/p/7-tips-for-heavy-load-testing-with-apache-bench-b1127916b7b6)
 
 *Розділ доповнюється.*
