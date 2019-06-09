@@ -274,12 +274,6 @@ def parcexml_Generator():
             # default sentence normalization + spaCy doc init
             doc = NLP_EN(text_normalized)
 
-            # TODO Remove debug log in production release
-            print('''
-            sentences\t{num_sent}
-            '''.format(
-                num_sent=len(list(doc.sents)),))
-            
             """
             # create the <parce.xml> file structure
             """
@@ -401,11 +395,8 @@ def parcexml_Generator():
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
 
-            # TODO Remove debug log in production release
-            print ET.tostring(root_element, encoding='utf8', method='xml')
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
-            print "Unexpected error:", sys.exc_info()
             return abort(500)
     file.close()
     return abort(400)
