@@ -62,6 +62,13 @@ You can run the image `ken_image` now with command:
 docker run --name ken -d -p 80:80 ken_image
 ```
 
+or
+
+```bash
+docker run --restart always --name ken -d -p 80:80 ken_image
+```
+
+
 (to see the console output, attach to the container; to detach press Ctrl+C):
 ```bash
 docker attach ken
@@ -146,7 +153,7 @@ docker pull malakhovks/ken
 3. Run image in container
 
 ```bash
-docker run --restart always --name ken -d malakhovks/ken 
+docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
 -------
