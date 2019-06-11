@@ -393,7 +393,7 @@ git clone https://username1:token@github.com/username/repo_name.git
 **Приклад:**
 
 ```bash
-git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 **Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
@@ -408,7 +408,7 @@ git clone --depth=1 --branch=tag_name repo_url
 
 **Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
 **Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
@@ -547,7 +547,7 @@ git clone https://username1:token@github.com/username/repo_name.git
 **Приклад:**
 
 ```bash
-git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 **Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
@@ -562,7 +562,7 @@ git clone --depth=1 --branch=tag_name repo_url
 
 **Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
 **Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
