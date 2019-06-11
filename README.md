@@ -32,6 +32,8 @@
 - shallow parsing (extraction of `base noun phrases`, `noun chunks`). Check links to learn more about this proccess: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - generation an xml-structure of the text.
 
+-------
+
 <a name="building-running-linux"></a>
 ## Building and running under UNIX (Linux/MacOS) with Docker
 
@@ -90,6 +92,8 @@ Some useful options when running container:
 * `--restart always` with `docker run` always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted.
 * `--restart unless-stopped` with `docker run` similar to `always`, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts.
 
+-------
+
 <a name="building-running-windows"></a> 
 ## Building and running under Windows
 
@@ -122,6 +126,30 @@ Install `requirements.txt`:
 ```bash
 pip install -r requirements.txt
 ```
+
+-------
+
+## Get ready image from dockerhub registry
+
+1. Login
+
+```bash
+docker login
+```
+
+2. Pull image from dockerhub
+
+```bash
+docker pull malakhovks/ken
+```
+
+3. Run image in container
+
+```bash
+docker run --restart always --name ken -d malakhovks/ken 
+```
+
+-------
 
 <a name="docker-cli-commands"></a>
 ## Essential Docker CLI commands
