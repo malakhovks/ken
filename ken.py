@@ -389,7 +389,6 @@ def parcexml_Generator():
 
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
-
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except:
             return abort(500)

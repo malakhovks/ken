@@ -63,7 +63,7 @@ $(document).ready(function () {
 
     iziToast.info({
         title: 'Вітаємо!',
-        message: 'Оберіть файл для аналізу',
+        message: 'Оберіть файл для аналізу (pdf, txt, docx)',
         position: 'bottomLeft'
     });
 

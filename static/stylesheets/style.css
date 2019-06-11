@@ -179,6 +179,7 @@ select {
 #sents_from_text {
 	height: 100%;
 	width: 100%;
+	border-color: #8BC34A;
 }
 
 /*BUTTON BLOCK*/
@@ -303,8 +304,8 @@ select {
   .middle,
   .inner {
 	border: 3px solid transparent;
-	border-top-color: #fc2f70;
-	border-right-color: #fc2f70;
+	border-top-color: #8BC34A;
+	border-right-color: #8BC34A;
 	border-radius: 50%;
 	position: absolute;
 	top: 50%;
@@ -362,6 +363,10 @@ select {
 	display: block;
 }
 /*displacy_________________________________________________________________________________________________________*/
+
+/* .nav-tabs {
+    border-bottom: 1px solid #8BC34A;
+} */
 
 /*FOOTER______________________________________________________________________________________________________________*/
 
