@@ -62,6 +62,13 @@ You can run the image `ken_image` now with command:
 docker run --name ken -d -p 80:80 ken_image
 ```
 
+or
+
+```bash
+docker run --restart always --name ken -d -p 80:80 ken_image
+```
+
+
 (to see the console output, attach to the container; to detach press Ctrl+C):
 ```bash
 docker attach ken
@@ -146,7 +153,7 @@ docker pull malakhovks/ken
 3. Run image in container
 
 ```bash
-docker run --restart always --name ken -d malakhovks/ken 
+docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
 -------
@@ -386,7 +393,7 @@ git clone https://username1:token@github.com/username/repo_name.git
 **Приклад:**
 
 ```bash
-git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 **Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
@@ -401,7 +408,7 @@ git clone --depth=1 --branch=tag_name repo_url
 
 **Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
 **Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
@@ -540,7 +547,7 @@ git clone https://username1:token@github.com/username/repo_name.git
 **Приклад:**
 
 ```bash
-git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 **Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
@@ -555,7 +562,7 @@ git clone --depth=1 --branch=tag_name repo_url
 
 **Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815d@github.com/malakhovks/ken.git
+git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
 **Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.

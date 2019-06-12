@@ -1,0 +1,739 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<link rel="shortcut icon" type="image/png" href="./static/images/favicon.png"/>
+<title>Допомога</title></head>
+<body><h1>ken (konspekt English)</h1>
+<h3>Choose your language / Оберіть мову</h3>
+<ul>
+<li><strong><a href='#toc-ua'>Українська</a></strong></li>
+<li><strong><a href='#toc-en'>English</a></strong></li>
+
+</ul>
+<hr />
+<p><a name="toc-en"></a>
+<strong>ken</strong> (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.</p>
+<h3>Table of Contents</h3>
+<ul>
+<li><strong><a href='#features-en'>Features</a></strong></li>
+<li><strong><a href='#building-running-linux'>Building and running under UNIX (Linux/MacOS) with Docker</a></strong></li>
+<li><strong><a href='#building-running-windows'>Building and running under Windows</a></strong></li>
+<li><strong><a href='#docker-cli-commands'>Essential Docker CLI commands</a></strong></li>
+
+</ul>
+<p><a name="features-en"></a></p>
+<h2>Features</h2>
+<p><strong>ken</strong> (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using <a href='https://spacy.io/'>spaCy</a> - an open source library for advanced natural language processing.</p>
+<p><strong>ken</strong> (konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:</p>
+<ul>
+<li>extracting text data from e-documents (<code>pdf</code>, <code>docx</code>, <code>txt</code>);</li>
+<li>text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;</li>
+<li>spell checking and automatic correction;</li>
+<li>split text into sentences/words;</li>
+<li>part-of-speech tagging;</li>
+<li>lemmatization of words;</li>
+<li>stemming of words;</li>
+<li>shallow parsing (extraction of <code>base noun phrases</code>, <code>noun chunks</code>). Check links to learn more about this proccess: <a href='https://spacy.io/usage/linguistic-features#dependency-parse'>spaCy dependency-parse</a> та <a href='https://en.wikipedia.org/wiki/Noun_phrase'>Wikipedia Noun phrase</a>;</li>
+<li>generation an xml-structure of the text.</li>
+
+</ul>
+<hr />
+<p><a name="building-running-linux"></a></p>
+<h2>Building and running under UNIX (Linux/MacOS) with Docker</h2>
+<p>Clone from git repository:</p>
+<pre><code class='language-shell' lang='shell'>git clone https://username:token@github.com/username/repo_name.git
+</code></pre>
+<p>Or clone from the specific branch/tag of git repository:</p>
+<pre><code class='language-shell' lang='shell'>git clone --depth=1 --branch=&lt;tag_name&gt; &lt;repo_url&gt;
+git clone --depth=1 --branch=develop https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+</code></pre>
+<p>Checkout the branch you want to use:</p>
+<pre><code class='language-shell' lang='shell'>git checkout &lt;branch_name&gt;
+</code></pre>
+<p>Build an image from a Dockerfile (It creates an image named <code>ken_image</code>):</p>
+<pre><code class='language-shell' lang='shell'>docker build . -t ken_image
+</code></pre>
+<p>You can run the image <code>ken_image</code> now with command:</p>
+<pre><code class='language-shell' lang='shell'>docker run --name ken -d -p 80:80 ken_image
+</code></pre>
+<p>or</p>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 ken_image
+</code></pre>
+<p>(to see the console output, attach to the container; to detach press Ctrl+C):</p>
+<pre><code class='language-shell' lang='shell'>docker attach ken
+</code></pre>
+<p>(to stop the container):</p>
+<pre><code class='language-shell' lang='shell'>docker stop ken
+</code></pre>
+<p>(to start the container again):</p>
+<pre><code class='language-shell' lang='shell'>docker start ken
+</code></pre>
+<p>(to remove the container; needs to be stopped):</p>
+<pre><code class='language-shell' lang='shell'>docker rm ken
+</code></pre>
+<p>Some useful options when running container:</p>
+<ul>
+<li><code>--name</code> gives the container a name that can be found in docker ps output</li>
+<li><code>-p</code> instructs to publish port 80. Second <code>80</code> after semicolons tells what port nginx inside the container listens on</li>
+<li><code>-d</code> runs container detached from terminal. Logs then can be viewed by issuing <code>docker logs</code> command</li>
+<li><code>-t</code> allocate a pseudo TTY, so you see the console output</li>
+<li><code>--restart on-failure</code> with <code>docker run</code> automatic restart of failed containers. Restart the container if it exits due to an error, which manifests as a non-zero exit code.</li>
+<li><code>--restart always</code> with <code>docker run</code> always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted.</li>
+<li><code>--restart unless-stopped</code> with <code>docker run</code> similar to <code>always</code>, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts.</li>
+
+</ul>
+<hr />
+<p><a name="building-running-windows"></a> </p>
+<h2>Building and running under Windows</h2>
+<p>Install latest <code>Python 2.7.x</code>:</p>
+<pre><code class='language-http' lang='http'>https://www.python.org/downloads/windows/
+</code></pre>
+<p>Update <code>setuptools</code>:</p>
+<pre><code class='language-shell' lang='shell'>pip install -U setuptools
+</code></pre>
+<p>Update <code>pip</code>:</p>
+<pre><code class='language-shell' lang='shell'>python -m pip install --upgrade pip
+</code></pre>
+<p>Install <code>Visual C++ compiler</code>:
+<a href='https://wiki.python.org/moin/WindowsCompilers'>Install corresponding visual c++ compiler</a> and make sure it match with your python version.</p>
+<figure><table>
+<thead>
+<tr><th style='text-align:center;' >Visual C++</th><th style='text-align:center;' >CPython</th></tr></thead>
+<tbody><tr><td style='text-align:center;' >14.0</td><td style='text-align:center;' >3.5, 3.6</td></tr><tr><td style='text-align:center;' >10.0</td><td style='text-align:center;' >3.3, 3.4</td></tr><tr><td style='text-align:center;' >9.0</td><td style='text-align:center;' >2.6, 2.7, 3.0, 3.1, 3.2</td></tr></tbody>
+</table></figure>
+<p>If <code>connection error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed</code> then:</p>
+<pre><code class='language-shell' lang='shell'>pip install --trusted-host pypi.python.org linkchecker
+</code></pre>
+<p>Install <code>requirements.txt</code>:</p>
+<pre><code class='language-shell' lang='shell'>pip install -r requirements.txt
+</code></pre>
+<hr />
+<h2>Get ready image from dockerhub registry</h2>
+<ol start='' >
+<li>Login</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker login
+</code></pre>
+<ol start='2' >
+<li>Pull image from dockerhub</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker pull malakhovks/ken
+</code></pre>
+<ol start='3' >
+<li>Run image in container</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
+</code></pre>
+<hr />
+<p><a name="docker-cli-commands"></a></p>
+<h2>Essential Docker CLI commands</h2>
+<p><a href='https://www.docker.com/'>Docker</a> is a great tool for building <a href='https://pivotal.io/microservices'>microservices</a>, allowing you to create <a href='https://www.docker.com/what-docker'>cloud-based</a> applications and <a href='https://www.docker.com/what-docker'>systems</a>. To make the most of it via your terminal, here is a run down of the top 10 Docker commands for your terminal.</p>
+<blockquote><p>A container is launched by running an image. An <strong>image</strong> is an executable package that includes everything needed to run an application–the code, a runtime, libraries, environment variables, and configuration files.</p>
+</blockquote>
+<blockquote><p>A <strong>container</strong> is a runtime instance of an image–what the image becomes in memory when executed (that is, an image with state, or a user process). You can see a list of your running containers with the command, <code>*docker ps*</code>, just as you would in Linux. — from <a href='https://docs.docker.com/get-started/#docker-concepts'>Docker Concepts</a></p>
+</blockquote>
+<ol start='' >
+<li><a href='https://docs.docker.com/engine/reference/commandline/ps/'>docker ps</a> — Lists running containers. Some useful flags include: <code>-a</code> / <code>-all</code> for all containers (default shows just running) and <code>—-quiet</code> /<code>-q</code> to list just their ids (useful for when you want to get all the containers).</li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/pull/'>docker pull</a> — Most of your images will be created on top of a base image from the <a href='https://hub.docker.com/'>Docker Hub</a> registry. <a href='https://hub.docker.com/'>Docker Hub</a> contains many pre-built images that you can <code>pull</code> and try without needing to define and configure your own. To download a particular image, or set of images (i.e., a repository), use <code>docker pull</code>.</li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/build/'>docker build</a> — The <code>docker build</code> command builds Docker images from a Dockerfile and a “context”. A build’s context is the set of files located in the specified <code>PATH</code> or <code>URL</code>. Use the <code>-t</code> flag to label the image, for example <code>docker build -t my_container .</code> with the <code>.</code> at the end signalling to build using the currently directory.</li>
+<li><a href='https://docs.docker.com/engine/reference/run/'>docker run</a> — Run a docker container based on an image, you can follow this on with other commands, such as <code>-it bash</code> to then run bash from within the container. <em>Also see</em> <a href='https://medium.com/the-code-review/top-10-docker-run-command-options-you-cant-live-without-a-reference-d256834e86c1'><em>Top 10 options for docker run — a quick reference guide for the CLI command</em></a><em>.</em> <code>docker run my_image -it bash</code></li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/logs/'>docker logs </a>— Use this command to display the logs of a container, you must specify a container and can use flags, such as <code>--follow</code> to follow the output in the logs of using the program. <code>docker logs --follow my_container</code></li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/volume_ls/'>docker volume ls</a> — This lists the <a href='https://docs.docker.com/storage/volumes/'>volumes</a>, which are the preferred mechanism for persisting data generated by and used by Docker containers.</li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/rm/'>docker rm</a> — Removes one or more containers: <code>docker rm my_container</code>. Remove all containers: <code>docker rm $(docker ps -a -q)</code></li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/rmi/'>docker rmi </a>— Removes one or more images: <code>docker rmi my_image</code>. Remove all images: <code>docker rmi $(docker images -q)</code></li>
+<li><a href='https://docs.docker.com/engine/reference/commandline/stop/'>docker stop</a> — Stops one or more containers. <code>docker stop my_container</code>stops one container, while <code>docker stop $(docker ps -a -q)</code> stops all running containers. A more direct way is to use <code>docker kill my_container</code>, which does not attempt to shut down the process gracefully first.</li>
+<li>Use them together, for example to clean up all your docker images and containers:</li>
+
+</ol>
+<ul>
+<li>kill all running containers with <code>docker kill $(docker ps -q)</code></li>
+<li>delete all stopped containers with <code>docker rm $(docker ps -a -q)</code></li>
+<li>delete all images with <code>docker rmi $(docker images -q)</code></li>
+
+</ul>
+<hr />
+<p><a name="toc-ua"></a>
+<strong>ken</strong> (konspekt English) - мережевий засіб виділення термінів з англомовних природномовних текстів</p>
+<h3>Зміст</h3>
+<ul>
+<li><strong><a href='#features-ua'>Призначення та функції</a></strong></li>
+<li><strong><a href='#system-requirements-ua'>Системні вимоги</a></strong></li>
+<li><strong><a href='#docker-ua'>Інструментарій для управління ізольованими Linux-контейнерами Docker</a></strong></li>
+<li><strong><a href='#architecture-ua'>Архітектура мережевого засобу ken (konspekt English)</a></strong></li>
+<li><strong><a href='#unix-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux</a></strong></li>
+<li><strong><a href='#virtualbox-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox</a></strong></li>
+<li><strong><a href='#windows-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище</a></strong></li>
+<li><strong><a href='#api-ua'>Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику</a></strong></li>
+<li><strong><a href='#deployment-ua'>Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)</a></strong></li>
+<li><strong><a href='#references-ua'>Корисні посилання</a></strong></li>
+
+</ul>
+<hr />
+<p><a name="features-ua"></a></p>
+<h2>Призначення та функції</h2>
+<p>Мережевий засіб (у вигляді веб-сервісу з API) <strong>ken</strong> (konspekt English) призначений для виділення термінів з англомовних природномовних текстів з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - <a href='https://spacy.io/'>spaCy</a>.</p>
+<p>Мережевий засіб (у вигляді веб-сервісу з API) <strong>ken</strong> (konspekt English) охоплює всі найважливіші етапи обробки природної мови, а саме:</p>
+<ul>
+<li>екстракт тексту з документів форматів <code>pdf</code>, <code>docx</code>, <code>txt</code>;</li>
+<li>базова нормалізація текстів - так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстракту тексту з документів <code>pdf</code>, <code>docx</code>, <code>txt</code>);</li>
+<li>перевірка орфографії тексту та автоматичне виправлення помилок;</li>
+<li>базова сегментація тексту на речення;</li>
+<li>розмічування частин мови (англ. part-of-speech tagging) для кожного речення тексту (поверхневий синтаксичний аналіз);</li>
+<li>лематизація слів (приведення до словарної форми слова) на рівні речення;</li>
+<li>стемінг (англ. stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;</li>
+<li>екстракт термінів (так званих <code>base noun phrases</code>, <code>noun chunks</code>), більше детально процес екстракту термінів описано за посиланнями: <a href='https://spacy.io/usage/linguistic-features#dependency-parse'>spaCy dependency-parse</a> та <a href='https://en.wikipedia.org/wiki/Noun_phrase'>Wikipedia Noun phrase</a>;</li>
+<li>формування спеціалізованої <code>xml</code>-структури тексту.</li>
+
+</ul>
+<hr />
+<p><a name="system-requirements-ua"></a></p>
+<h2>Системні вимоги</h2>
+<ul>
+<li><strong><a href='#system-requirements-1'>Для компіляції, збірки та розгортання мережевого засобу <code>ken</code> (з приватного репозиторію) в середовищі <code>UNIX</code>-подібних операційних систем <code>Linux</code></a></strong><br></li>
+<li><strong><a href='#system-requirements-2'>Для компіляції, збірки та розгортання мережевого засобу <code>ken</code> (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем <code>VirtualBox</code></a></strong><br></li>
+
+</ul>
+<hr />
+<p><a name="docker-ua"></a></p>
+<h2>Інструментарій для управління ізольованими Linux-контейнерами Docker</h2>
+<p><a href='https://www.docker.com/'>Docker</a> — інструмент з відкритим сирцевим кодом, який автоматизує розгортання застосунку у середовищах, що підтримують контейнеризацію. Docker допомагає викладати код швидше, швидше тестувати, швидше викладати додатки і зменшити час між написанням і запуском коду. Docker робить це за допомогою легкої платформи контейнерної віртуалізації, використовуючи процеси і утиліти, які допомагають керувати і викладати програми. У своєму ядрі docker дозволяє запускати практично будь-який додаток, безпечно ізольований в контейнері. Безпечна ізоляція дозволяє запускати на одному хості багато контейнерів одночасно.</p>
+<p><strong>Переваги Docker:</strong></p>
+<ul>
+<li>пришвидшення процесу розробки;</li>
+<li>зручна інкапсуляція застосунку;</li>
+<li>однакова поведінка на локальній машині, а також dev/staging/production серверах;</li>
+<li>простий і чіткий моніторинг;</li>
+<li>зручність масштабування.</li>
+
+</ul>
+<h4>Термінологія Docker-інструментарію</h4>
+<ul>
+<li>Контейнер <code>(Container)</code> — запущений екземпляр, що інкапсулює необхідне ПЗ. Контейнери завжди створюються з образу і можуть надавати порти та дисковий простір для взаємодії з іншими контейнерами чи/та зовнішнім ПЗ. Контейнери можна з легкістю знищити/видалити та створити знову. Контейнери не зберігають стан.</li>
+<li>Образ <code>(Image)</code> — базовий елемент кожного контейнеру. При створенні образу кожен крок кешується і може бути використаний повторно (копіювання під час запису). Час на збірку залежить від самого образу. З іншого боку: контейнери можна одразу запустити з образу.</li>
+<li>Порт <code>(Port)</code> — TCP/UDP порт у своєму звичному розумінні. Для спрощення припустимо, що порти можуть бути відкриті для зовнішнього ПЗ (доступні з хостової ОС) або підключатися до інших контейнерів (тобто доступні лише з цих контейнерів та невидимі для іншого ПЗ).</li>
+<li><code>Volume</code> можна вважати спільною текою. Volume ініціалізується при створенні контейнеру і призначений для збереження даних, незалежно від життєвого циклу контейнера.</li>
+<li><code>Registry</code> (Сховище) — сервер, що зберігає образи Docker. Ми можемо порівняти його з Github: витягуєте образ зі сховища, щоб розгорнути його локально, а потім відправляєте локально зібрані образи до віддаленого сховища.</li>
+<li><a href='https://hub.docker.com/explore/'>Docker Hub</a> — сховище з веб-інтерфейсом від Docker Inc. Зберігає багато Docker-образів з різним ПЗ. Docker Hub — джерело «офіційних» образів Docker, створених їх командою або у співпраці з іншими компаніями (але це не обов’язково образи від офіційних виробників ПЗ). Якщо ви зареєстровані, можна переглянути перелік потенційних вразливостей таких образів. Доступні платні та безкоштовні облікові записи. Для безкоштовного облікового запису можна створювати один приватний образ та безліч публічних.</li>
+<li><a href='https://hub.docker.com/search/?q=&type=image'>Docker Store</a> — сервіс дуже подібний на Docker Hub. Це майданчик з рейтингами, відгуками тощо.</li>
+
+</ul>
+<h4>Архітектура Docker</h4>
+<p>Docker складається з двох головних компонентів:</p>
+<ul>
+<li>Docker: платформа віртуалізації з відкритим кодом;</li>
+<li>Docker Hub: платформа-як-сервіс для поширення і управління docker
+контейнерами.</li>
+
+</ul>
+<p>Docker використовує архітектуру клієнт-сервер. Docker клієнт спілкується з демоном Docker, який бере на себе створення, запуск, розподіл контейнерів. Обидва, клієнт і сервер можуть працювати на одній системі, також можна підключити клієнт до віддаленого демона docker. Клієнт і сервер спілкуються через сокет або через RESTful API.</p>
+<p>Користувач не взаємодіє з сервером на пряму, а використовує для цього клієнт. Docker- клієнт - головний інтерфейс до Docker системи. Він отримує команди від користувача і взаємодіє з docker-демоном.</p>
+<p>Щоб розуміти, з чого складається docker, потрібно знати про три його компоненти:</p>
+<ul>
+<li>образи (images);</li>
+<li>реєстр (registries) контейнери;</li>
+
+</ul>
+<p>Docker-образ - це read-only шаблон. Наприклад, образ може містити операційну систему Ubuntu з Apache і додатком на ній. Образи використовуються для створення контейнерів. Docker дозволяє легко створювати нові образи, оновлювати існуючі, або можна завантажити образи створені іншими людьми. Образи - це компонента збірки docker-а.
+Docker-реєстр зберігає образи. Є публічні і приватні реєстри, з яких можна скачати або завантажити образи. Публічний Docker-реєстр - це Docker Hub. Там зберігається величезна колекція образів. Образи можуть бути створені вами або можна використовувати образи створені іншими користувачами. Реєстри - це компонента поширення.</p>
+<p>Контейнери схожі на директорії. У контейнерах міститься все, що потрібно для роботи програми. Кожен контейнер створюється з образу. Контейнери можуть бути створені, запущені, зупинені, перенесені або видалені. Кожен контейнер ізольований і є безпечною платформою для додатка. Контейнери - це компонента роботи. Виходячи з цих трьох компонентів в Docker можна:</p>
+<ul>
+<li>створювати образи, в яких знаходяться додатки;</li>
+<li>створювати контейнери з образів, для запуску додатків;</li>
+<li>розповсюдженню через Docker Hub або інший реєстр образів.</li>
+
+</ul>
+<h4>Принцип роботи Docker</h4>
+<p>Отже образ - це read-only шаблон, з якого створюється контейнер. Кожен образ складається з набору рівнів. Docker використовує union file system для поєднання цих рівнів в один образ. Union file system дозволяє файлам і директоріями з різних файлових систем (різних гілок) прозоро накладатися, створюючи когерентну файлову систему.</p>
+<p>Одна з причин, по якій docker легкий - це використання таких рівнів. Коли змінюється образ, наприклад, проходить оновлення додатку, створюється новий рівень. Так, без заміни всього образу або його перезібрання, як вам можливо доведеться зробити з віртуальною машиною, тільки рівень додається або оновлюється. І вам не потрібно роздавати весь новий образ, публікується тільки оновлення, що дозволяє поширювати образи простіше і швидше.</p>
+<p>В основі кожного образу знаходиться базовий образ. Наприклад, ubuntu, базовий образ <a href='https://www.ubuntu.com/download/server'>Ubuntu</a>, або fedora, базовий образ дистрибутива <a href='https://getfedora.org/'>Fedora</a>. Так само можна використовувати готові образи як базу для створення нових образів. Наприклад, образ apache можна використовувати як базовий образ для веб- додатків. Docker зазвичай бере образи з реєстру <a href='https://hub.docker.com'>Docker Hub</a>.</p>
+<p>Docker образи можуть створитися з цих базових образів, кроки опису для створення цих образів називаються інструкціями. Кожна інструкція створює новий образ або рівень. Інструкціями будуть наступні дії:</p>
+<ul>
+<li>запуск команди;</li>
+<li>додавання файлу або директорії;</li>
+<li>створення змінної оточення;</li>
+<li>вказівки що запускати коли запускається контейнер цього способу.</li>
+
+</ul>
+<p>Ці інструкції зберігаються в файлі Dockerfile. Docker зчитує цей Dockerfile, коли збирається образ, виконує ці інструкції, і повертає кінцевий образ.</p>
+<p>Реєстр - це сховище docker образів. Після створення образу ви можете опублікувати його на публічному реєстрі Docker Hub або на вашому особистому реєстрі. За допомогою docker клієнта ви можете шукати вже опубліковані образи і завантажувати їх на машину з docker для створення контейнерів.</p>
+<p>Docker Hub надає публічні і приватні сховища образів. Пошук і скачування образів з публічних сховищ доступний для всіх. Вміст приватних сховищ не попадає в результат пошуку. І тільки ви і ваші користувачі можуть отримувати ці образи і створювати з них контейнери.</p>
+<h4>Принцип роботи контейнера</h4>
+<p>Контейнер складається з операційної системи, призначених для користувача файлів і метаданих. Відомо, що кожен контейнер створюється з образу. Цей образ говорить docker-у, що знаходиться в контейнері, який процес запустити, коли запускається контейнер та інші конфігураційні дані. Docker образ доступний тільки для читання. Коли docker запускає контейнер, він створює рівень для читання / запису зверху образу (використовуючи union file system, як було зазначено раніше), в якому може бути запущено додаток.</p>
+<p>Або за допомогою програми docker, або за допомогою RESTful API, docker клієнт говорить docker-демону запустити контейнер.</p>
+<pre><code class='language-shell' lang='shell'>$ sudo docker run -i -t ubuntu /bin/bash
+</code></pre>
+<p>Давайте розберемося з цією командою. Клієнт запускається за допомогою команди docker, з опцією run, яка говорить, що буде запущений новий контейнер. Мінімальними вимогами для запуску контейнера є такі атрибути:</p>
+<ul>
+<li>який образ використовувати для створення контейнера. У нашому випадку ubuntu;</li>
+<li>команду яку ви хочете запустити коли контейнер буде запущений. У нашому випадку /bin/bash.</li>
+
+</ul>
+<p>Після запуску цієї команди Docker, по порядку, робить наступне:</p>
+<ul>
+<li>завантажує образ ubuntu: docker перевіряє наявність образу ubuntu на локальній машині, і якщо його немає - то викачує його з Docker Hub. Якщо ж образ є, то використовує його для створення контейнера;</li>
+<li>створює контейнер: коли образ отриманий, docker використовує його для
+створення контейнера;</li>
+<li>ініціалізує файлову систему і монтує read-only рівень: контейнер
+створений в файлової системі і read-only рівень доданий образ;</li>
+<li>ініціалізує мережу / міст: створює мережевий інтерфейс, який дозволяє
+docker-у спілкуватися хост машиною;</li>
+<li>установка IP адреси: знаходить і задає адресу;</li>
+<li>запускає вказаний процес: запускає програму;</li>
+<li>обробляє та видає вихід додатку: підключається і залоговує стандартний
+вхід, вихід і потік помилок додатку, щоб можна було відслідковувати як працює програма.</li>
+
+</ul>
+<p>Тепер у вас є робочий контейнер. Ви можете управляти своїм
+контейнером, взаємодіяти з вашим додатком. Коли вирішите зупинити додаток, видаліть контейнер.</p>
+<h4>Технології, використані у Docker</h4>
+<p>Докер написаний на мові Go і використовує деякі можливості ядра Linux, щоб реалізувати наведений вище функціонал.</p>
+<p>Docker використовує технологію namespaces для організації ізольованих робочих просторів, які називаються контейнерами. Коли запускається контейнер, docker створює набір просторів імен для даного контейнера. Це створює ізольований рівень, кожен контейнер запущений в своєму просторі імен, і не має доступ до зовнішньої системи.</p>
+<p>Список деяких просторів імен, які використовує docker:</p>
+<ul>
+<li><code>pid</code>: для ізоляції процесу;</li>
+<li><code>net</code>: для управління мережевими інтерфейсами;</li>
+<li><code>ipc</code>: для управління IPC ресурсами. (ICP: InterProccess Communication);</li>
+<li><code>mnt</code>: для управління точками монтування;</li>
+<li><code>utc</code>: для ізолювання ядра і контролю генерації версій (UTC: Unix
+timesharing system).</li>
+
+</ul>
+<p>Control groups (контрольні групи). Docker також використовує технологію cgroups або контрольні групи. Ключ до роботи додатка в ізоляції, надання додатку тільки тих ресурсів, які йому потрібно. Це гарантує, що контейнери будуть добре співіснувати. Контрольні групи дозволяють розділяти доступні ресурси заліза і якщо необхідно, встановлювати межі і обмеження. Наприклад, обмежити можливу кількість пам&#39;яті, що використовується контейнером.</p>
+<p>Union File Sysem або UnionFS - це файлова система, яка працює створюючи рівні, що робить її дуже легкою і швидкою. Docker використовує UnionFS для створення блоків, з яких будується контейнер. Docker може використовувати кілька варіантів UnionFS включаючи: AUFS, btrfs, vfs і DeviceMapper.</p>
+<p>Docker поєднує ці компоненти в обгортку, яку ми називаємо форматом контейнера. Формат, який використовується за умовчанням, називається libcontainer. Так само docker підтримує традиційний формат контейнерів в Linux з допомогою LXC. В майбутньому Docker можливо буде підтримувати інші формати контейнерів. Наприклад, інтегруючись з BSD Jails або Solaris Zones.</p>
+<hr />
+<p><a name="architecture-ua"></a></p>
+<h2>Архітектура мережевого засобу ken (konspekt English)</h2>
+<p><em>Розділ в розробці.</em></p>
+<hr />
+<p><a name="unix-deployment-ua"></a></p>
+<h2>Компіляція, збірка та розгортання мережевого засобу <code>ken</code> (<a href='https://github.com/malakhovks/ken'>з приватного репозиторію</a>) в середовищі <a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібних операційних систем <code>Linux</code></h2>
+<p><a name="system-requirements-1"></a></p>
+<h4>Системні вимоги</h4>
+<ul>
+<li>мінімальні апаратні ресурси: <code>x86-64</code> сумісний процесор з тактовою частотою 1 ГГц; оперативна пам&#39;ять: 512 Мб; Місце на жорсткому диску: 2,5 Гб;</li>
+<li><a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібна операційна система <code>Linux</code>: <a href='https://www.ubuntu.com/download/server'>Ubuntu Server 18.04 LTS x86-64</a> або новіша; <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a> або новіша;</li>
+<li><a href='https://git-scm.com/'>Git</a> розподілена система керування версіями файлів та спільної роботи;</li>
+<li><a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux</code>-контейнерами;</li>
+<li>обліковий запис <a href='https://github.com'>GitHub</a> та ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a>;</li>
+<li>швидкісне підключення до мережі Інтернет.</li>
+
+</ul>
+<h4>Компіляція, збірка та розгортання мережевого засобу ken в середовищі <a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібних операційних систем <code>Linux</code> складається з наступних етапів:</h4>
+<ol start='' >
+<li>Клонування початкового коду програми <code>ken</code> з <a href='https://github.com/malakhovks/ken'>приватного <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a>. Цей етап можна виконати використовуючи особистий маркер доступу <code>token</code> до <a href='https://github.com/malakhovks/ken'>приватного репозиторію</a> <a href='https://github.com'>GitHub</a> або використовуючи ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a> до <a href='https://github.com/malakhovks/ken'>приватного репозиторію</a> <a href='https://github.com'>GitHub</a>.</li>
+
+</ol>
+<p><strong>Клонування початкового коду програми <code>ken</code>  з <a href='https://github.com/malakhovks/ken'>приватного  <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a> використовуючи особистий маркер доступу <code>token</code>:</strong></p>
+<pre><code class='language-shell' lang='shell'>git clone https://username1:token@github.com/username/repo_name.git
+</code></pre>
+<p>де:</p>
+<p><code>username1</code> - Ваше ім&#39;я користувача <a href='https://github.com'>GitHub</a>;</p>
+<p><code>token</code> - Personal access tokens - особистий маркер доступу до <a href='https://github.com/malakhovks/ken'>приватного репозиторію</a> <a href='https://github.com'>GitHub</a>;</p>
+<p><code>username1</code> - Ваше ім&#39;я користувача <a href='https://github.com'>GitHub</a>;</p>
+<p><code>github.com/username/repo_name.git</code> - адреса приватного git-репозиторію сервісу <a href='https://github.com'>GitHub</a>, тобто <code>github.com/malakhovks/ken.git</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+</code></pre>
+<p><strong>Або</strong> клонувати початковий код програми <code>ken</code> з <a href='https://github.com/malakhovks/ken'>приватного <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a> <strong>з конкретної гілки/тега</strong>  використовуючи наступну команду:</p>
+<pre><code class='language-shell' lang='shell'>git clone --depth=1 --branch=tag_name repo_url
+</code></pre>
+<p>де:</p>
+<p><code>tag_name</code> - ім&#39;я гілки/тега;</p>
+<p><code>repo_url</code> - https-адреса приватного репозиторія з параметрами авторизації.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+</code></pre>
+<p><strong>Або</strong> отримати реліз у вигляді архіву (початковий код програми <code>ken</code>) у розробника, розпакувати його та перейти до наступного етапу.</p>
+<p>&lt;!---
+<strong>Клонування початкового коду програми <code>ken</code> з <a href='https://github.com/malakhovks/ken'>приватного <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a> використовуючи ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a>:</strong></p>
+<p><em>Настанови цього етапу в розробці.</em>
+--&gt;</p>
+<ol start='2' >
+<li>Перехід в діректорію програми <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>cd ken
+</code></pre>
+<ol start='3' >
+<li>Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою <code>git checkout</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>git checkout branch_name
+</code></pre>
+<p>де:</p>
+<p><code>&lt;branch_name&gt;</code> - ім&#39;я гілки;</p>
+<p><code>git</code>-репозиторій програми ken має дві основні гілки: <code>develop</code> та <code>master</code>.</p>
+<p>Гілка <code>master</code> містить стабільний початковий код програми <code>ken</code>.</p>
+<p>Гілка <code>develop</code> містить робочий початковий код програми <code>ken</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>git checkout master
+</code></pre>
+<ol start='4' >
+<li>Створення ізольованого застосунку <a href='https://uk.wikipedia.org/wiki/Docker'>Docker</a>, так званого <code>docker image</code> з файлу <code>Dockerfile</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker build . -t imagename
+</code></pre>
+<p>де:</p>
+<p> <code>imagename</code> - ім&#39;я ізольованого застосунку <code>docker image</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>docker build . -t ken_image
+</code></pre>
+<p>Створення ізольованого застосунку <code>ken_image</code> може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+Повна документація по командам <code>Docker</code> доступна за посиланням <a href='https://docs.docker.com'>Docker documentation</a>.</p>
+<ol start='5' >
+<li>Запуск створеного ізольованого застосунку <code>ken_image</code> в контейнері <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 ken_image 
+</code></pre>
+<p>Команда <code>docker run</code> з параметром <code>--restart always</code> дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.</p>
+<h4>Основні команди керування <a href='https://docs.docker.com'>Docker</a>-контейнером:</h4>
+<ul>
+<li><code>docker attach ken</code> - побачити вихід конслолі контейнера <code>ken</code>;</li>
+<li><code>docker stop ken</code> - зупинити контейнер <code>ken</code>;</li>
+<li><code>docker start ken</code> - відновити роботу (старт) контейнера <code>ken</code>;</li>
+<li><code>docker rm ken</code> - видалення контейнера <code>ken</code> (перед видаленням контейнера, його потрібно зупинити);</li>
+
+</ul>
+<h4>Деякі корисні параметри для запуску <a href='https://docs.docker.com'>Docker</a>-контейнера:</h4>
+<ul>
+<li><code>--name</code> - дає контейнеру ім&#39;я, яке можна знайти у виводі команди <code>docker ps</code>;</li>
+<li><code>-p 80:80</code> - публікує порт 80. Другий номер 80 після двокрапки повідомляє, який порт сервер <code>nginx</code> слухає всередині контейнера;</li>
+<li><code>-d</code> - запускає контейнер, від&#39;єднаний від терміналу. Потім журнали можна переглядати за допомогою команди журналів <a href='https://docs.docker.com'>Docker</a> <code>docker logs</code>;</li>
+<li><code>-t</code> - щоб бачити консольний вихід <a href='https://docs.docker.com'>Docker</a>-контейнера;</li>
+<li><code>--restart on-failure</code> - автоматичний перезапуск невдалих контейнерів. Перезапускає контейнер, якщо він вийде з ладу через помилку, яка виявляється як ненульовий код виходу;</li>
+<li><code>--restart always</code> - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба <code>Docker</code> перезапускається або сам контейнер перезапускається вручну.</li>
+
+</ul>
+<hr />
+<p><a name="virtualbox-deployment-ua"></a></p>
+<h2>Компіляція, збірка та розгортання мережевого засобу <code>ken</code> (<a href='https://github.com/malakhovks/ken'>з приватного репозиторію</a>) в середовищі програми віртуалізації для операційних систем <a href='https://uk.wikipedia.org/wiki/VirtualBox'>VirtualBox</a></h2>
+<p><a name="system-requirements-2"></a></p>
+<h4>Системні вимоги</h4>
+<ul>
+<li>мінімальні апаратні ресурси: <code>x86-64</code> сумісний процесор з тактовою частотою 2 ГГц; оперативна пам&#39;ять: 4 Гб; Місце на жорсткому диску: 20 Гб;</li>
+<li>x86-64 сумісна <a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібна операційна система <code>Linux</code>; x86-64 сумісна операційна система <code>Microsoft Windows 7 Service Pack 1</code> або новіша;</li>
+<li><a href='https://www.virtualbox.org/'>VirtualBox</a> програма віртуалізації для операційних систем версії <code>VirtualBox 6.0.8</code> або новіша;</li>
+<li>Віртуальна машина з операійною системою <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a> або новіша, яка включає наступне встановлене програмне забезпечення: <a href='https://git-scm.com/'>Git</a> розподілена система керування версіями файлів та спільної роботи; <a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux</code>-контейнерами;</li>
+<li>обліковий запис <a href='https://github.com'>GitHub</a> та ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a>;</li>
+<li>швидкісне підключення до мережі Інтернет;</li>
+
+</ul>
+<p>Віртуальна машина - модель обчислювальної машини, створеної шляхом віртуалізації обчислювальних ресурсів: процесора, оперативної пам&#39;яті, пристроїв зберігання та вводу і виводу інформації.
+Віртуальна машина на відміну від програми емуляції конкретного пристрою забезпечує повну емуляцію фізичної машини чи середовища виконання (для програми).</p>
+<p><strong>VirtualBox</strong> - програма для створення віртуальних машин, що належить Oracle Corporation. Ця програма є в вільному доступі та підтримується основними операційними системами <em>Linux, FreeBSD, Mac OS X, OS/2 Warp, Microsoft Windows</em>, які підтримують роботу гостьових операційних систем FreeBSD, Linux, OpenBSD, OS/2 Warp, Windows і Solaris.</p>
+<h4>Ключові можливості</h4>
+<ul>
+<li>кроссплатформовість;</li>
+<li>модульність;</li>
+<li>жива міграція;</li>
+<li>підтримка USB 2.0, коли пристрої хост-машини стають доступними для гостьових ОС (лише в пропрієтарній версії);</li>
+<li>підтримка 64-бітних гостьових систем[2] (починаючи з версії 2.0), навіть на 32-бітних хост-системах[3] (починаючи з версії 2.1, для цього потрібна підтримка технології віртуалізації процесором);</li>
+<li>підтримка SMP на стороні гостьової системи (починаючи з версії 3.0, для цього потрібна підтримка технології віртуалізації процесором);</li>
+<li>вбудований RDP-сервер, а також підтримка клієнтських USB-пристроїв поверх протоколу RDP (лише в пропрієтарній версії);</li>
+<li>експериментальна підтримка апаратного 3D-прискорення (OpenGL, DirectX 8/9 (з використанням коду wine) (лише в 32-бітних Windows XP и Vista)), для гостьових DOS / Windows 3.x / 95 / 98 / ME підтримка апаратного 3D-прискорення не передбачена;</li>
+<li>підтримка образів жостких дисків VMDK (VMware) и VHD (Microsoft Virtual PC), включаючи snapshots (починаючи з версії 2.1[4]);</li>
+<li>підтримка iSCSI (лише в пропрієтарній версії);</li>
+<li>підтримка віртуалізації аудіопристроїв (емуляція AC97 або SoundBlaster 16 на вибір);</li>
+<li>підтримка різноманітних видів мережевої взаємодії (NAT, Host Networking via Bridged, Internal);</li>
+<li>підтримка ланцюжка збережених станів віртуальної машини (snapshots), до яких можна повернутися з будь-якого стану гостьової системи;</li>
+<li>підтримка Shared Folders для простого обміну файлами між хостовою та гостьовою системами (для гостьових систем Windows 2000 і новіше, Linux та Solaris);</li>
+<li>підтримка інтеграції робочих столів (seamless mode) хостової та гостьової ОС;</li>
+<li>є можливість вибору мови інтерфейса (підтримується і україномовний інтерфейс).</li>
+
+</ul>
+<h4>Компіляція, збірка та розгортання мережевого засобу <code>ken</code> (<a href='https://github.com/malakhovks/ken'>з приватного репозиторію</a>) в середовищі програми віртуалізації для операційних систем <a href='https://uk.wikipedia.org/wiki/VirtualBox'>VirtualBox</a> складається з наступних етапів:</h4>
+<ol start='' >
+<li>Створення віртуальної машини з операійною системою <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a> або новішою, згідно настановам користувача наведених на офіційному сайті <a href='https://www.virtualbox.org/wiki/Documentation'><code>wiki</code>-документації VirtualBox</a> або використовуючи відео-туторіали: <a href='https://youtu.be/1G4nmUUk2kI'>Download, Install &amp; Configure Alpine linux - Tutorial</a>; <a href='https://youtu.be/1_bsycXrFcI'>Alpine Linux 3.6.2 Installation + XFCE Desktop Environment on Oracle VirtualBox</a>.
+Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс <code>ken</code>.</li>
+<li>Встановлення <a href='https://git-scm.com/'>Git</a> та <a href='https://docs.docker.com'>Docker CE</a> в середовиші віртуальної машини з операційною системою <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a> згідно настановам користувача наведених на офіційному сайті <a href='https://wiki.alpinelinux.org/wiki/Main_Page'><code>wiki</code>-документації wiki.alpinelinux.org</a>.</li>
+<li>Клонування початкового коду програми <code>ken</code> з <a href='https://github.com/malakhovks/ken'>приватного <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a>. Цей етап можна виконати використовуючи особистий маркер доступу <code>token</code> до <a href='https://github.com/malakhovks/ken'>приватного репозиторію</a> <a href='https://github.com'>GitHub</a> або використовуючи ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a> до <a href='https://github.com/malakhovks/ken'>приватного репозиторію</a> <a href='https://github.com'>GitHub</a>. </li>
+
+</ol>
+<p><strong>Клонування початкового коду програми <code>ken</code>  з <a href='https://github.com/malakhovks/ken'>приватного  <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a> використовуючи особистий маркер доступу <code>token</code>:</strong></p>
+<pre><code class='language-shell' lang='shell'>git clone https://username1:token@github.com/username/repo_name.git
+</code></pre>
+<p>де:</p>
+<p><code>username1</code> - Ваше ім&#39;я користувача <a href='https://github.com'>GitHub</a>;</p>
+<p><code>token</code> - Personal access tokens - особистий маркер доступу до <a href='https://github.com/malakhovks/ken'>приватного репозиторію</a> <a href='https://github.com'>GitHub</a>;</p>
+<p><code>username1</code> - Ваше ім&#39;я користувача <a href='https://github.com'>GitHub</a>;</p>
+<p><code>github.com/username/repo_name.git</code> - адреса приватного git-репозиторію сервісу <a href='https://github.com'>GitHub</a>, тобто <code>github.com/malakhovks/ken.git</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+</code></pre>
+<p><strong>Або</strong> клонувати початковий код програми <code>ken</code> з <a href='https://github.com/malakhovks/ken'>приватного <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a> <strong>з конкретної гілки/тега</strong>  використовуючи наступну команду:</p>
+<pre><code class='language-shell' lang='shell'>git clone --depth=1 --branch=tag_name repo_url
+</code></pre>
+<p>де:</p>
+<p><code>tag_name</code> - ім&#39;я гілки/тега;</p>
+<p><code>repo_url</code> - https-адреса приватного репозиторія з параметрами авторизації.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+</code></pre>
+<p><strong>Або</strong> отримати реліз у вигляді архіву (початковий код програми <code>ken</code>) у розробника, розпакувати його та перейти до наступного етапу.</p>
+<p>&lt;!--
+<strong>Клонування початкового коду програми <code>ken</code> з <a href='https://github.com/malakhovks/ken'>приватного <code>git</code>-репозиторію</a> сервісу <a href='https://github.com'>GitHub</a> використовуючи ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a>:</strong></p>
+<p><em>Настанови цього етапу в розробці.</em>
+--&gt;</p>
+<ol start='4' >
+<li>Перехід в діректорію програми <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>cd ken
+</code></pre>
+<ol start='5' >
+<li>Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою <code>git checkout</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>git checkout branch_name
+</code></pre>
+<p>де:</p>
+<p><code>&lt;branch_name&gt;</code> - ім&#39;я гілки;</p>
+<p><code>git</code>-репозиторій програми ken має дві основні гілки: <code>develop</code> та <code>master</code>.</p>
+<p>Гілка <code>master</code> містить стабільний початковий код програми <code>ken</code>.</p>
+<p>Гілка <code>develop</code> містить робочий початковий код програми <code>ken</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>git checkout master
+</code></pre>
+<ol start='6' >
+<li>Створення ізольованого застосунку <a href='https://uk.wikipedia.org/wiki/Docker'>Docker</a>, так званого <code>docker image</code> з файлу <code>Dockerfile</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker build . -t imagename
+</code></pre>
+<p>де:</p>
+<p> <code>imagename</code> - ім&#39;я ізольованого застосунку <code>docker image</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>docker build . -t ken_image
+</code></pre>
+<p>Створення ізольованого застосунку <code>ken_image</code> може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+Повна документація по командам <code>Docker</code> доступна за посиланням <a href='https://docs.docker.com'>Docker documentation</a>.</p>
+<ol start='7' >
+<li>Запуск створеного ізольованого застосунку <code>ken_image</code> в контейнері <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 ken_image 
+</code></pre>
+<p>Команда <code>docker run</code> з параметром <code>--restart always</code> дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.</p>
+<h4>Основні команди керування <a href='https://docs.docker.com'>Docker</a>-контейнером:</h4>
+<ul>
+<li><code>docker attach ken</code> - побачити вихід конслолі контейнера <code>ken</code>;</li>
+<li><code>docker stop ken</code> - зупинити контейнер <code>ken</code>;</li>
+<li><code>docker start ken</code> - відновити роботу (старт) контейнера <code>ken</code>;</li>
+<li><code>docker rm ken</code> - видалення контейнера <code>ken</code> (перед видаленням контейнера, його потрібно зупинити);</li>
+
+</ul>
+<h4>Деякі корисні параметри для запуску <a href='https://docs.docker.com'>Docker</a>-контейнера:</h4>
+<ul>
+<li><code>--name</code> - дає контейнеру ім&#39;я, яке можна знайти у виводі команди <code>docker ps</code>;</li>
+<li><code>-p 80:80</code> - публікує порт 80. Другий номер 80 після двокрапки повідомляє, який порт сервер <code>nginx</code> слухає всередині контейнера;</li>
+<li><code>-d</code> - запускає контейнер, від&#39;єднаний від терміналу. Потім журнали можна переглядати за допомогою команди журналів <a href='https://docs.docker.com'>Docker</a> <code>docker logs</code>;</li>
+<li><code>-t</code> - щоб бачити консольний вихід <a href='https://docs.docker.com'>Docker</a>-контейнера;</li>
+<li><code>--restart on-failure</code> - автоматичний перезапуск невдалих контейнерів. Перезапускає контейнер, якщо він вийде з ладу через помилку, яка виявляється як ненульовий код виходу;</li>
+<li><code>--restart always</code> - завжди перезапускає контейнер, якщо він зупиняється. Якщо контейнер зупинено вручну, він перезапускається лише тоді, коли служба <code>Docker</code> перезапускається або сам контейнер перезапускається вручну.</li>
+
+</ul>
+<hr />
+<p><a name="windows-deployment-ua"></a></p>
+<h2>Компіляція, збірка та розгортання мережевого засобу ken (<a href='https://github.com/malakhovks/ken'>з приватного репозиторію</a>) в середовищі операційної системй Windows 7 та вище</h2>
+<p><em>Настанови цього етапу в розробці.</em></p>
+<p><a name="system-requirements-3"></a></p>
+<h4>Системні вимоги</h4>
+<hr />
+<p><a name="api-ua"></a></p>
+<h2>Опис служб (веб-сервісів) мережевого засобу <code>ken</code> (konspekt English) доступних розробнику</h2>
+<p>Розробнику доступні наступні служби через кінцеві точки API (API endpoints):</p>
+<figure><table>
+<thead>
+<tr><th style='text-align:center;' >Позначення</th><th style='text-align:center;' >Служба</th><th style='text-align:left;' >Кінцева точка API</th><th style='text-align:center;' >Метод http-запиту</th></tr></thead>
+<tbody><tr><td style='text-align:center;' ><strong>S1</strong></td><td style='text-align:center;' >формування спеціалізованої <code>xml</code>-структури тексту <em>allterms.xml</em></td><td style='text-align:left;' ><code>host[:port]/ken/api/v1.0/en/file/allterms</code></td><td style='text-align:center;' >POST</td></tr><tr><td style='text-align:center;' ><strong>S2</strong></td><td style='text-align:center;' >формування спеціалізованої <code>xml</code>-структури тексту <em>parce.xml</em></td><td style='text-align:left;' ><code>host[:port]/ken/api/v1.0/en/file/parcexml</code></td><td style='text-align:center;' >POST</td></tr><tr><td style='text-align:center;' ><strong>S3</strong></td><td style='text-align:center;' >візуалізації залежностей термінів</td><td style='text-align:left;' ><code>host[:port]/ken/api/v1.0/en/html/depparse/nounchunk</code></td><td style='text-align:center;' >POST</td></tr><tr><td style='text-align:center;' ><strong>S4</strong></td><td style='text-align:center;' >візуалізації іменованих сутностей тексту</td><td style='text-align:left;' ><code>host[:port]/ken/api/v1.0/en/html/ner</code></td><td style='text-align:center;' >POST</td></tr><tr><td style='text-align:center;' ><strong>S5</strong></td><td style='text-align:center;' >візуалізації синтаксичних залежностей речення</td><td style='text-align:left;' ><code>/ken/api/v1.0/en/html/depparse/sentence</code></td><td style='text-align:center;' >GET</td></tr><tr><td style='text-align:center;' ><strong>S6</strong></td><td style='text-align:center;' >графічного інтерфейсу користувача</td><td style='text-align:left;' ><code>host[:port]/</code></td><td style='text-align:center;' >GET</td></tr></tbody>
+</table></figure>
+<h4><strong>S1</strong> - служба формування спеціалізованої <code>xml</code>-структури тексту <em>allterms.xml</em></h4>
+<h5>Опис вхідних даних</h5>
+<p>Вхідними даними можуть бути файли форматів <code>.txt</code>, <code>.docx</code>, <code>.pdf</code>, які містять текстові дані англійською мовою.</p>
+<p>Використовуючи метод <code>http</code>-запиту <code>POST</code> можна відправити тільки один файл (доступних форматів) для опрацювання службою формування спеціалізованої <code>xml</code>-структури тексту.</p>
+<p>Приклад <code>POST</code> запиту до кінцевої точки служби <strong>S1</strong> на мові програмування <code>JavaScript</code> з використанням <a href='https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API'>Fetch API</a>:</p>
+<pre><code class='language-javascript' lang='javascript'># Детальний опис Fetch API за посиланням https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+# Файли можна завантажувати за допомогою елемента вводу HTML &lt;input type = &quot;file&quot; /&gt;, FormData() та fetch().
+var formData = new FormData();
+var fileField = document.querySelector(&#39;input[type=&quot;file&quot;]&#39;);
+
+# https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
+# formData.append(name, value);
+formData.append(&#39;file&#39;, fileField.files[0]);
+
+fetch(&quot;file&quot;, &#39;host[:port]/ken/api/v1.0/en/file/allterms&#39;, {
+                method: &#39;post&#39;,
+                body: formData
+            })
+.then(response =&gt; response.text())
+.catch(error =&gt; console.error(&#39;Error:&#39;, error))
+.then(response =&gt; console.log(&#39;Success:&#39;, response));
+</code></pre>
+<p>Процес формування спеціалізованої <code>xml</code>-структури тексту може зайняти деякий час (в залежності від обсягу тексту), але в загальному випадку вихідні дані формуються миттєво.</p>
+<h5>Опис вихідних даних</h5>
+<p>Вихідними даними є спеціалізована <code>xml</code>-структура тексту <code>allterms.xml</code>.</p>
+<p><code>xml</code>-Схема вихідних даних:</p>
+<pre><code class='language-xml' lang='xml'>&lt;xs:schema attributeFormDefault=&quot;unqualified&quot; elementFormDefault=&quot;qualified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+  &lt;xs:element name=&quot;termsintext&quot;&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element type=&quot;xs:string&quot; name=&quot;filepath&quot;/&gt;
+        &lt;xs:element name=&quot;exporterms&quot;&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name=&quot;term&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:sequence&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;ttype&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;tname&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:byte&quot; name=&quot;wcount&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;osn&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;sentpos&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:short&quot; name=&quot;relup&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:short&quot; name=&quot;reldown&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+                  &lt;/xs:sequence&gt;
+                &lt;/xs:complexType&gt;
+              &lt;/xs:element&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name=&quot;sentences&quot;&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element type=&quot;xs:string&quot; name=&quot;sent&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;
+</code></pre>
+<p>Елемент <code>exporterms</code> містить послідовність елементів <code>term</code>, що описує терміни та їх параметри з опрацьованого тексту.</p>
+<p>Параметри термінів описуються наступними елементами:</p>
+<ul>
+<li>елемент <code>ttype</code> - позначення слова в тексті певної частиною мови згідно з <a href='https://spacy.io/api/annotation'>Universal Dependencies scheme</a>;</li>
+<li>елемент <code>tname</code> - лема терміну (для багатослівних термінів - це правильна форма);</li>
+<li>елемент <code>wcount</code> - кількість слів в терміні;</li>
+<li>елемент <code>osn</code> - основа для кожного слова з терміну;</li>
+<li>елемент <code>sentpos</code> - позиція терміну в тексті, подається у вигляді строки формату <code>2/10</code> (в даному випадку означає, що термін знаходиться у 2-му реченні на 10 позиції;</li>
+<li>елементи <code>relup</code> та <code>reldown</code> - відображають зв&#39;язки до інших термінів;</li>
+<li>елементи <code>sentences</code> - містить масив елементів <code>sent</code>, який містить речення з тексту. Порядок речень в елементі <code>sentences</code> відповідаю порядку речень у вхідному тексті.</li>
+
+</ul>
+<h4><strong>S2</strong> - служба формування спеціалізованої <code>xml</code>-структури тексту <em>parce.xml</em></h4>
+<h5>Опис вхідних даних</h5>
+<p>Вхідними даними можуть бути файли форматів <code>.txt</code>, <code>.docx</code>, <code>.pdf</code>.</p>
+<p>Використовуючи метод <code>http</code>-запиту <code>POST</code> можна відправити тільки один файл (доступних форматів) для опрацювання службою формування спеціалізованої <code>xml</code>-структури тексту.</p>
+<p>Приклад <code>POST</code> запиту до кінцевої точки служби <strong>S2</strong> на мові програмування <code>JavaScript</code> з використанням <a href='https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API'>Fetch API</a>:</p>
+<pre><code class='language-javascript' lang='javascript'># Детальний опис Fetch API за посиланням https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+# Файли можна завантажувати за допомогою елемента вводу HTML &lt;input type = &quot;file&quot; /&gt;, FormData() та fetch().
+var formData = new FormData();
+var fileField = document.querySelector(&#39;input[type=&quot;file&quot;]&#39;);
+
+# https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
+# formData.append(name, value);
+formData.append(&#39;file&#39;, fileField.files[0]);
+
+fetch(&quot;file&quot;, &#39;host[:port]/ken/api/v1.0/en/file/parcexml&#39;, {
+                method: &#39;post&#39;,
+                body: formData
+            })
+.then(response =&gt; response.text())
+.catch(error =&gt; console.error(&#39;Error:&#39;, error))
+.then(response =&gt; console.log(&#39;Success:&#39;, response));
+</code></pre>
+<p>Процес формування спеціалізованої <code>xml</code>-структури тексту може зайняти деякий час (в залежності від обсягу тексту), але в загальному випадку вихідні дані формуються миттєво.</p>
+<h5>Опис вихідних даних</h5>
+<p>Вихідними даними є спеціалізована <code>xml</code>-структура тексту <code>parce.xml</code>.</p>
+<p><code>xml</code>-Схема вихідних даних:</p>
+<pre><code class='language-xml' lang='xml'>&lt;xs:schema attributeFormDefault=&quot;unqualified&quot; elementFormDefault=&quot;qualified&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+  &lt;xs:element name=&quot;text&quot;&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name=&quot;sentence&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name=&quot;item&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:sequence&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;word&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;osnova&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;lemma&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;kflex&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;flex&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:byte&quot; name=&quot;number&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:short&quot; name=&quot;pos&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:byte&quot; name=&quot;group_n&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;speech&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:byte&quot; name=&quot;relate&quot;/&gt;
+                    &lt;xs:element type=&quot;xs:string&quot; name=&quot;rel_type&quot;/&gt;
+                  &lt;/xs:sequence&gt;
+                &lt;/xs:complexType&gt;
+              &lt;/xs:element&gt;
+              &lt;xs:element type=&quot;xs:byte&quot; name=&quot;sentnumber&quot;/&gt;
+              &lt;xs:element type=&quot;xs:string&quot; name=&quot;sent&quot;/&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;
+</code></pre>
+<hr />
+<p><a name="deployment-ua"></a></p>
+<h2>Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) <strong>ken</strong> (konspekt English)</h2>
+<p><em>Настанови цього етапу в розробці</em></p>
+<!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
+<hr />
+<p><a name="references-ua"></a></p>
+<h2>Корисні посилання</h2>
+<h4>Платформа Docker для створення, розгортання і запуску додатків на прикладі Python Flask application</h4>
+<ul>
+<li><a href='https://codeguida.com/post/1837'>Що таке Docker і як використовувати його з Python</a></li>
+<li><a href='https://link.medium.com/tvOhhWV84W'>Developing a Flask API in a Docker container with uWSGI and NGINX</a></li>
+<li><a href='https://link.medium.com/cOVc4h5SiX'>Running Flask in production with Docker</a></li>
+<li><a href='https://netdevops.me/2017/flask-application-in-a-production-ready-container/'>Flask application in a production-ready container</a></li>
+<li><a href='https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04'>How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 18.04</a></li>
+<li><a href='https://bradleyzhou.com/posts/building-slim-uwsgi-docker-image'>Building a slim uWSGI Docker image</a></li>
+<li><a href='https://link.medium.com/2Wg3XVX15W'>Running Windows app headless in docker</a></li>
+<li><a href='http://debian-help.ru/web-servers/zapusk-prilozheniya-na-flask-s-pomoschyu-uwsgi-nginx/'>Запуск приложения на Flask с помощью uwsgi + nginx в Debian 7</a></li>
+<li><a href='https://habr.com/ru/post/198982/'>Ускоряем Nginx за 5 минут</a></li>
+<li><a href='https://link.medium.com/HCI5XwmFRW'>Top 10 Docker CLI commands you can’t live without</a></li>
+<li><a href='https://github.com/denji/nginx-tuning'>NGINX Tuning For Best Performance</a></li>
+<li><a href='https://wiki.alpinelinux.org/wiki/Docker'>Docker in Alpine Linux</a></li>
+<li><a href='https://habr.com/ru/post/346086/'>Docker-compose: идеальное рабочее окружение</a></li>
+<li><a href='https://medium.com/p/docker-for-beginners-a2c9c73e7d3d'>Docker для начинающего разработчика</a></li>
+
+</ul>
+<h4>Система черг для Python Flask application - uWSGI Spooler</h4>
+<ul>
+<li><a href='https://link.medium.com/DwcCkjzAkX'>Background jobs with Flask</a></li>
+<li><a href='https://habr.com/ru/company/selectel/blog/326956/'>The uWSGI Spooler</a></li>
+<li><a href='https://blog.miguelgrinberg.com/post/using-celery-with-flask'>Using Celery With Flask</a></li>
+
+</ul>
+<h4>Розгортання додатків Python Flask application на Windows Server (IIS) з використанням FastCGI</h4>
+<ul>
+<li><a href='https://link.medium.com/jIuYBWegnX'>Deploying Python web app (Flask) in Windows Server (IIS) using FastCGI</a></li>
+<li><a href='https://link.medium.com/cNqHTYd0gX'>Windows Server 2019 — Server Core vs. Desktop Experience (GUI) Explained &amp; Compared. Re: Datacenter, Standard, Essentials &amp; Hyper-V Server</a></li>
+
+</ul>
+<h4>Тестування</h4>
+<ul>
+<li><a href='https://medium.com/p/7-tips-for-heavy-load-testing-with-apache-bench-b1127916b7b6'>Навантажувальне тестування з утилітою Apache Bench</a></li>
+
+</ul>
+<p><em>Розділ доповнюється.</em></p>
+</body>
+</html>
