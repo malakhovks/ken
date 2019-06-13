@@ -255,6 +255,18 @@ function export_table_to_csv(html, filename) {
     download_csv(csv.join("\n"), filename);
 } */
 
+function getFormattedTime() {
+    var today = new Date();
+    var y = today.getFullYear();
+    // JavaScript months are 0-based.
+    var m = today.getMonth() + 1;
+    var d = today.getDate();
+    var h = today.getHours();
+    var mi = today.getMinutes();
+    var s = today.getSeconds();
+    return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s;
+}
+
 function save_table_to_csv(html, filename) {
     var csv = [];
     var rows = document.querySelectorAll("table tr");
@@ -282,6 +294,6 @@ function save_table_to_csv(html, filename) {
 $('#saveTable').click(function () {
     var html = document.querySelector("table").outerHTML;
     // export_table_to_csv(html, "table.csv");
-    save_table_to_csv(html, "table.csv");
+    save_table_to_csv(html, "table-for-confor-" + getFormattedTime() + ".csv");
 });
 //SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
