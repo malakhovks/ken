@@ -190,7 +190,7 @@ function resizable(el, factor) {
 
 
 //SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
-function download_csv(csv, filename) {
+/* function download_csv(csv, filename) {
     //var csvFile;
     var downloadLink;
 
@@ -253,9 +253,35 @@ function export_table_to_csv(html, filename) {
 
     // Download CSV
     download_csv(csv.join("\n"), filename);
+} */
+
+function save_table_to_csv(html, filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (let element of rows) {
+        var row = [], cols = element.querySelectorAll("input");
+        for (let element of cols) {
+            row.push(element.value);
+        }
+        csv.push(row.join(";"));
+    }
+    // Download link
+    downloadLink = document.createElement("a");
+    // Make sure that the link is not displayed
+    downloadLink.style.display = "none";
+    // Add the link to your DOM
+    document.body.appendChild(downloadLink);
+    let blob = new Blob([csv.join("\n")], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = filename;
+    downloadLink.click();
 }
 
 $('#saveTable').click(function () {
     var html = document.querySelector("table").outerHTML;
-    export_table_to_csv(html, "table.csv");
+    // export_table_to_csv(html, "table.csv");
+    save_table_to_csv(html, "table.csv");
 });
+//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
