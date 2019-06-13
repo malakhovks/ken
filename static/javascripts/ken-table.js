@@ -1,21 +1,3 @@
-/*
-
- Saving Selections
-
- jQuery doesn't cache elements for you. If you've made a selection that you might need to make again,
- you should save the selection in a variable rather than making the selection repeatedly.
-
- 1| var divs = $( "div" );
-
- Once the selection is stored in a variable, you can call jQuery methods on the variable just
- like you would have called them on the original selection.
-
- A selection only fetches the elements that are on the page at the time the selection is made.
- If elements are added to the page later, you'll have to repeat the selection or otherwise add them to the selection
- stored in the variable. Stored selections don't magically update when the DOM changes.
-
- */
-
 var $uploadResultList = $("#uploadResultList"),
     $uploadUnknownTerms = $('#uploadUnknownTerms'),
     $projectFileList = $('#projectFileList'),
