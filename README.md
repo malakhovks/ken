@@ -364,9 +364,9 @@ Docker поєднує ці компоненти в обгортку, яку ми
 #### Системні вимоги
 
 - мінімальні апаратні ресурси: `x86-64` сумісний процесор з тактовою частотою 1 ГГц; оперативна пам'ять: 512 Мб; Місце на жорсткому диску: 2,5 Гб;
-- [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`: [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) або новіша; [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новіша;
+- [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux` (при тестуванні компіляція, збірки та розгортання мережевого засобу `ken` використовувались дистрибутиви [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) та [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/));
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
-- [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
+- [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
 - обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
 - швидкісне підключення до мережі Інтернет.
 
@@ -493,7 +493,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 - мінімальні апаратні ресурси: `x86-64` сумісний процесор з тактовою частотою 2 ГГц; оперативна пам'ять: 4 Гб; Місце на жорсткому диску: 20 Гб;
 - x86-64 сумісна [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`; x86-64 сумісна операційна система `Microsoft Windows 7 Service Pack 1` або новіша;
 - [VirtualBox](https://www.virtualbox.org/) програма віртуалізації для операційних систем версії `VirtualBox 6.0.8` або новіша;
-- Віртуальна машина з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новіша, яка включає наступне встановлене програмне забезпечення: [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи; [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux`-контейнерами;
+- Віртуальна машина з [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібною операційною системою `Linux` (при тестуванні компіляція, збірки та розгортання мережевого засобу `ken` використовувались дистрибутиви [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) та [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/)), яка включає наступне встановлене програмне забезпечення: [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи; [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
 - обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
 - швидкісне підключення до мережі Інтернет;
 
