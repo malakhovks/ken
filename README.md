@@ -194,7 +194,8 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 - **[Архітектура мережевого засобу ken (konspekt English)](#architecture-ua)**
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
-- **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище](#windows-deployment-ua)**
+- **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище](#windows-deployment-ua)**
+- **[Розгортання мережевого засобу ken з готового docker-образа](#docker-image-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
 - **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
 - **[Корисні посилання](#references-ua)**
@@ -225,6 +226,7 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 
 - **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
 - **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
+- **[Для розгортання мережевого засобу `ken` з готового docker-образа](#system-requirements-4)**<br>
 
 -------
 
@@ -646,6 +648,85 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 <a name="system-requirements-3"></a>
 
 #### Системні вимоги
+
+-------
+
+<a name="docker-image-deployment-ua"></a>
+
+## Розгортання мережевого засобу ken з готового docker-образа
+
+
+<a name="system-requirements-4"></a>
+
+#### Системні вимоги
+
+- [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
+- [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
+- при варіанті отримання docker-образа з сервісу [Docker Hub](https://hub.docker.com/): обліковий запис [Docker Hub](https://hub.docker.com/), швидкісне підключення до мережі Інтернет та доступ до [Docker Hub](https://hub.docker.com/)-репозиторію мережевого засобу ken.
+
+#### Розгортання мережевого засобу ken з готового docker-образа (при використанні сервісу [Docker Hub](https://hub.docker.com/)) складається з наступних етапів:
+
+1. Підключити обліковий запис [Docker Hub](https://hub.docker.com/):
+
+```bash
+docker login
+```
+
+2. Отримати docker-образ з сервісу [Docker Hub](https://hub.docker.com/) (ця операція можлива при наявності доступу до репозиторія malakhovks/ken):
+
+```bash
+docker pull malakhovks/ken
+```
+
+3. Запуск отриманого docker-образа malakhovks/ken в контейнері `ken`:
+
+```bash
+docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
+```
+
+#### Розгортання мережевого засобу ken з готового docker-образа (з використання вже отриманого docker-образа мережевого засобу ken) складається з наступних етапів:
+
+1. Отримати docker-образ мережевого засобу ken у вигляді файлу типу tar archive та загрузити його командою [load](https://docs.docker.com/engine/reference/commandline/load/):
+
+```bash
+docker load < ken.tar.gz
+```
+
+2. Запуск отриманого docker-образа malakhovks/ken в контейнері `ken`:
+
+```bash
+docker run --restart always --name ken -d -p 80:80 ken-image 
+```
+
+#### Розгортання мережевого засобу ken з готового docker-образа (з використання початкого коду мережевого засобу ken) складається з наступних етапів:
+
+1. Перехід в діректорію програми `ken`:
+```bash
+cd ken
+```
+
+2. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
+
+```bash
+docker build . -t imagename
+```
+де:
+
+ `imagename` - ім'я ізольованого застосунку `docker image`.
+
+**Приклад:**
+
+```bash
+docker build . -t ken_image
+```
+Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
+
+3. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
+```bash
+docker run --restart always --name ken -d -p 80:80 ken_image 
+```
+Команда `docker run` з параметром `--restart always` дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.
 
 -------
 

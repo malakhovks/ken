@@ -1,21 +1,3 @@
-/*
-
- Saving Selections
-
- jQuery doesn't cache elements for you. If you've made a selection that you might need to make again,
- you should save the selection in a variable rather than making the selection repeatedly.
-
- 1| var divs = $( "div" );
-
- Once the selection is stored in a variable, you can call jQuery methods on the variable just
- like you would have called them on the original selection.
-
- A selection only fetches the elements that are on the page at the time the selection is made.
- If elements are added to the page later, you'll have to repeat the selection or otherwise add them to the selection
- stored in the variable. Stored selections don't magically update when the DOM changes.
-
- */
-
 var $uploadResultList = $("#uploadResultList"),
     $uploadUnknownTerms = $('#uploadUnknownTerms'),
     $projectFileList = $('#projectFileList'),
@@ -187,73 +169,6 @@ function resizable(el, factor) {
     for (var i in e) el.addEventListener(e[i], resize, false);
     resize();
 }
-
-
-//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
-/* function download_csv(csv, filename) {
-    //var csvFile;
-    var downloadLink;
-
-// Отправляю хуйню на сервак, конверчу её там в 1251, сохраняю это в файл
-// и отправляю клиенту ссылку на этот файл для скачивания
-// иначе никак
-// я ебал
-    var utf8ToWin1251ApiRequest = $.ajax({
-        url: "http://icybcluster.org.ua:32145/recapservice/api/utf8ToWin1251",
-        type: 'POST',
-        async: true,
-        crossDomain: true,
-        contentType: "application/x-www-form-urlencoded",
-        data: {
-            "query": csv
-        },
-        success: function (result) {
-
-            // Download link
-            downloadLink = document.createElement("a");
-
-            // File name
-            downloadLink.download = filename;
-
-            // We have to create a link to the file
-            downloadLink.href = result;
-
-            // Make sure that the link is not displayed
-            downloadLink.style.display = "none";
-
-            // Add the link to your DOM
-            document.body.appendChild(downloadLink);
-
-            // Lanzamos
-            downloadLink.click();
-
-        },
-        error: function (result) {
-            if (utf8ToWin1251ApiRequest.status == 503) {
-                alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + utf8ToWin1251ApiRequest.status);
-            } else {
-                alert(utf8ToWin1251ApiRequest.getAllResponseHeaders());
-                alert(utf8ToWin1251ApiRequest.status);
-            }
-        }
-    });
-}
-
-function export_table_to_csv(html, filename) {
-    var csv = [];
-    var rows = document.querySelectorAll("table tr");
-
-    for (let element of rows) {
-        var row = [], cols = element.querySelectorAll("input");
-        for (let element of cols) {
-            row.push(element.value);
-        }
-        csv.push(row.join(";"));
-    }
-
-    // Download CSV
-    download_csv(csv.join("\n"), filename);
-} */
 
 function getFormattedTime() {
     var today = new Date();
