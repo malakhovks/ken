@@ -652,9 +652,9 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 -------
 
 <a name="docker-image-deployment-ua"></a>
+
 ## Розгортання мережевого засобу ken з готового docker-образа
 
-*Настанови цього етапу в розробці.*
 
 <a name="system-requirements-4"></a>
 
