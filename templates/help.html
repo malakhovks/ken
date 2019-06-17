@@ -166,9 +166,9 @@ git clone --depth=1 --branch=develop https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa
 <li><strong><a href='#architecture-ua'>Архітектура мережевого засобу ken (konspekt English)</a></strong></li>
 <li><strong><a href='#unix-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux</a></strong></li>
 <li><strong><a href='#virtualbox-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox</a></strong></li>
-<li><strong><a href='#windows-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системй Windows 7 та вище</a></strong></li>
+<li><strong><a href='#windows-deployment-ua'>Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище</a></strong></li>
+<li><strong><a href='#docker-image-deployment-ua'>Розгортання мережевого засобу ken з готового docker-образа</a></strong></li>
 <li><strong><a href='#api-ua'>Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику</a></strong></li>
-<li><strong><a href='#deployment-ua'>Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)</a></strong></li>
 <li><strong><a href='#references-ua'>Корисні посилання</a></strong></li>
 
 </ul>
@@ -195,6 +195,7 @@ git clone --depth=1 --branch=develop https://malakhovks:ae9c2fa2d73fbbb0bd0a5ffa
 <ul>
 <li><strong><a href='#system-requirements-1'>Для компіляції, збірки та розгортання мережевого засобу <code>ken</code> (з приватного репозиторію) в середовищі <code>UNIX</code>-подібних операційних систем <code>Linux</code></a></strong><br></li>
 <li><strong><a href='#system-requirements-2'>Для компіляції, збірки та розгортання мережевого засобу <code>ken</code> (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем <code>VirtualBox</code></a></strong><br></li>
+<li><strong><a href='#system-requirements-4'>Для розгортання мережевого засобу <code>ken</code> з готового docker-образа</a></strong><br></li>
 
 </ul>
 <hr />
@@ -316,9 +317,9 @@ timesharing system).</li>
 <h4>Системні вимоги</h4>
 <ul>
 <li>мінімальні апаратні ресурси: <code>x86-64</code> сумісний процесор з тактовою частотою 1 ГГц; оперативна пам&#39;ять: 512 Мб; Місце на жорсткому диску: 2,5 Гб;</li>
-<li><a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібна операційна система <code>Linux</code>: <a href='https://www.ubuntu.com/download/server'>Ubuntu Server 18.04 LTS x86-64</a> або новіша; <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a> або новіша;</li>
+<li><a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібна операційна система <code>Linux</code> (при тестуванні компіляція, збірки та розгортання мережевого засобу <code>ken</code> використовувались дистрибутиви <a href='https://www.ubuntu.com/download/server'>Ubuntu Server 18.04 LTS x86-64</a> та <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a>);</li>
 <li><a href='https://git-scm.com/'>Git</a> розподілена система керування версіями файлів та спільної роботи;</li>
-<li><a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux</code>-контейнерами;</li>
+<li><a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux/Windows</code>-контейнерами;</li>
 <li>обліковий запис <a href='https://github.com'>GitHub</a> та ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a>;</li>
 <li>швидкісне підключення до мережі Інтернет.</li>
 
@@ -420,7 +421,7 @@ timesharing system).</li>
 <li>мінімальні апаратні ресурси: <code>x86-64</code> сумісний процесор з тактовою частотою 2 ГГц; оперативна пам&#39;ять: 4 Гб; Місце на жорсткому диску: 20 Гб;</li>
 <li>x86-64 сумісна <a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібна операційна система <code>Linux</code>; x86-64 сумісна операційна система <code>Microsoft Windows 7 Service Pack 1</code> або новіша;</li>
 <li><a href='https://www.virtualbox.org/'>VirtualBox</a> програма віртуалізації для операційних систем версії <code>VirtualBox 6.0.8</code> або новіша;</li>
-<li>Віртуальна машина з операійною системою <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a> або новіша, яка включає наступне встановлене програмне забезпечення: <a href='https://git-scm.com/'>Git</a> розподілена система керування версіями файлів та спільної роботи; <a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux</code>-контейнерами;</li>
+<li>Віртуальна машина з <a href='https://uk.wikipedia.org/wiki/UNIX'>UNIX</a>-подібною операційною системою <code>Linux</code> (при тестуванні компіляція, збірки та розгортання мережевого засобу <code>ken</code> використовувались дистрибутиви <a href='https://www.ubuntu.com/download/server'>Ubuntu Server 18.04 LTS x86-64</a> та <a href='https://alpinelinux.org/downloads/'>Alpine Linux 3.9.4 x86-64</a>), яка включає наступне встановлене програмне забезпечення: <a href='https://git-scm.com/'>Git</a> розподілена система керування версіями файлів та спільної роботи; <a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux/Windows</code>-контейнерами;</li>
 <li>обліковий запис <a href='https://github.com'>GitHub</a> та ключ розгортання <a href='https://developer.github.com/v3/guides/managing-deploy-keys/'>Deploy key</a>;</li>
 <li>швидкісне підключення до мережі Інтернет;</li>
 
@@ -545,6 +546,76 @@ timesharing system).</li>
 <p><em>Настанови цього етапу в розробці.</em></p>
 <p><a name="system-requirements-3"></a></p>
 <h4>Системні вимоги</h4>
+<hr />
+<p><a name="docker-image-deployment-ua"></a></p>
+<h2>Розгортання мережевого засобу ken з готового docker-образа</h2>
+<p><a name="system-requirements-4"></a></p>
+<h4>Системні вимоги</h4>
+<ul>
+<li><a href='https://git-scm.com/'>Git</a> розподілена система керування версіями файлів та спільної роботи;</li>
+<li><a href='https://docs.docker.com'>Docker CE</a> інструментарій для управління ізольованими <code>Linux/Windows</code>-контейнерами;</li>
+<li>при варіанті отримання docker-образа з сервісу <a href='https://hub.docker.com/'>Docker Hub</a>: обліковий запис <a href='https://hub.docker.com/'>Docker Hub</a>, швидкісне підключення до мережі Інтернет та доступ до <a href='https://hub.docker.com/'>Docker Hub</a>-репозиторію мережевого засобу ken.</li>
+
+</ul>
+<h4>Розгортання мережевого засобу ken з готового docker-образа (при використанні сервісу <a href='https://hub.docker.com/'>Docker Hub</a>) складається з наступних етапів:</h4>
+<ol start='' >
+<li>Підключити обліковий запис <a href='https://hub.docker.com/'>Docker Hub</a>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker login
+</code></pre>
+<ol start='2' >
+<li>Отримати docker-образ з сервісу <a href='https://hub.docker.com/'>Docker Hub</a> (ця операція можлива при наявності доступу до репозиторія malakhovks/ken):</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker pull malakhovks/ken
+</code></pre>
+<ol start='3' >
+<li>Запуск отриманого docker-образа malakhovks/ken в контейнері <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
+</code></pre>
+<h4>Розгортання мережевого засобу ken з готового docker-образа (з використання вже отриманого docker-образа мережевого засобу ken) складається з наступних етапів:</h4>
+<ol start='' >
+<li>Отримати docker-образ мережевого засобу ken у вигляді файлу типу tar archive та загрузити його командою <a href='https://docs.docker.com/engine/reference/commandline/load/'>load</a>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker load &lt; ken.tar.gz
+</code></pre>
+<ol start='2' >
+<li>Запуск отриманого docker-образа malakhovks/ken в контейнері <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 ken-image 
+</code></pre>
+<h4>Розгортання мережевого засобу ken з готового docker-образа (з використання початкого коду мережевого засобу ken) складається з наступних етапів:</h4>
+<ol start='' >
+<li>Перехід в діректорію програми <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>cd ken
+</code></pre>
+<ol start='2' >
+<li>Створення ізольованого застосунку <a href='https://uk.wikipedia.org/wiki/Docker'>Docker</a>, так званого <code>docker image</code> з файлу <code>Dockerfile</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker build . -t imagename
+</code></pre>
+<p>де:</p>
+<p> <code>imagename</code> - ім&#39;я ізольованого застосунку <code>docker image</code>.</p>
+<p><strong>Приклад:</strong></p>
+<pre><code class='language-shell' lang='shell'>docker build . -t ken_image
+</code></pre>
+<p>Створення ізольованого застосунку <code>ken_image</code> може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
+Повна документація по командам <code>Docker</code> доступна за посиланням <a href='https://docs.docker.com'>Docker documentation</a>.</p>
+<ol start='3' >
+<li>Запуск створеного ізольованого застосунку <code>ken_image</code> в контейнері <code>ken</code>:</li>
+
+</ol>
+<pre><code class='language-shell' lang='shell'>docker run --restart always --name ken -d -p 80:80 ken_image 
+</code></pre>
+<p>Команда <code>docker run</code> з параметром <code>--restart always</code> дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.</p>
 <hr />
 <p><a name="api-ua"></a></p>
 <h2>Опис служб (веб-сервісів) мережевого засобу <code>ken</code> (konspekt English) доступних розробнику</h2>
@@ -690,11 +761,6 @@ fetch(&quot;file&quot;, &#39;host[:port]/ken/api/v1.0/en/file/parcexml&#39;, {
   &lt;/xs:element&gt;
 &lt;/xs:schema&gt;
 </code></pre>
-<hr />
-<p><a name="deployment-ua"></a></p>
-<h2>Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) <strong>ken</strong> (konspekt English)</h2>
-<p><em>Настанови цього етапу в розробці</em></p>
-<!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
 <hr />
 <p><a name="references-ua"></a></p>
 <h2>Корисні посилання</h2>
