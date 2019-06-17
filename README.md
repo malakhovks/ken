@@ -197,7 +197,6 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище](#windows-deployment-ua)**
 - **[Розгортання мережевого засобу ken з готового docker-образа](#docker-image-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
-- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
 - **[Корисні посилання](#references-ua)**
 
 -------
@@ -905,15 +904,6 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
   </xs:element>
 </xs:schema>
 ```
-
--------
-
-<a name="deployment-ua"></a>
-
-## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
-*Настанови цього етапу в розробці*
-
-<!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
 
 -------
 
