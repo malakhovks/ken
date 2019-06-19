@@ -698,7 +698,7 @@ docker load -i C:\ken.tar.gz
 2. Запуск отриманого docker-образа malakhovks/ken в контейнері `ken`:
 
 ```bash
-docker run --restart always --name ken -d -p 80:80 ken-image 
+docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
 #### Розгортання мережевого засобу ken з готового docker-образа (з використання початкого коду мережевого засобу ken) складається з наступних етапів:
