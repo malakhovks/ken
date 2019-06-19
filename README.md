@@ -688,7 +688,11 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 1. Отримати docker-образ мережевого засобу ken у вигляді файлу типу tar archive та загрузити його командою [load](https://docs.docker.com/engine/reference/commandline/load/):
 
 ```bash
-docker load < ken.tar.gz
+docker load -i <path to image tar file>
+```
+
+```bash
+docker load -i C:\ken.tar.gz
 ```
 
 2. Запуск отриманого docker-образа malakhovks/ken в контейнері `ken`:
