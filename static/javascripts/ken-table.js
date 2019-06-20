@@ -170,6 +170,7 @@ function resizable(el, factor) {
     resize();
 }
 
+//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
 function getFormattedTime() {
     var today = new Date();
     var y = today.getFullYear();
