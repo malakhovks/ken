@@ -1,7 +1,7 @@
 FROM python:2.7-slim
 
-LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua>"
-LABEL description "KEN project (python:2.7-slim + Nginx + uWSGI + Flask)"
+LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
+LABEL description "ken (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature (python:2.7-slim + Nginx + uWSGI + Flask)"
 
 COPY . /srv/ken
 WORKDIR /srv/ken
@@ -13,7 +13,7 @@ RUN apt-get -y clean \
     && apt-get -y install build-essential \
     && mkdir -p /usr/share/man/man1 \
     && apt-get -y install openjdk-8-jdk-headless \
-    # for language_check
+    # 3to2 for language_check
     && pip install -U 3to2 \
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \ 
     && python -m textblob.download_corpora \
