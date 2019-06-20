@@ -11,9 +11,9 @@ RUN apt-get -y clean \
     && apt-get -y install nginx \
     && apt-get -y install python-dev \
     && apt-get -y install build-essential \
+    # openjdk-8-jdk-headless, 3to2, man1 for language_check
     && mkdir -p /usr/share/man/man1 \
     && apt-get -y install openjdk-8-jdk-headless \
-    # 3to2 for language_check
     && pip install -U 3to2 \
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \ 
     && python -m textblob.download_corpora \

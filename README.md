@@ -189,6 +189,7 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 
 ### Зміст
 - **[Призначення та функції](#features-ua)**
+- **[Програмні залежності](#dependencies-ua)**
 - **[Системні вимоги](#system-requirements-ua)**
 - **[Інструментарій для управління ізольованими Linux-контейнерами Docker](#docker-ua)**
 - **[Архітектура мережевого засобу ken (konspekt English)](#architecture-ua)**
@@ -217,6 +218,21 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 - стемінг (англ. stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;
 - екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - формування спеціалізованої `xml`-структури тексту.
+
+-------
+
+<a name="dependencies-ua"></a>
+## Програмні залежності
+
+- [Python 2.7.16](https://www.python.org/downloads/release/python-2716/);
+- [Flask](http://flask.pocoo.org/);
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/);
+- [spaCy](https://spacy.io/);
+- [pdfminer](https://pypi.org/project/pdfminer/);
+- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/);
+- [TextBlob](https://textblob.readthedocs.io);
+- [NLTK](https://www.nltk.org/);
+- [nginx](https://nginx.org/en/docs/);
 
 -------
 
