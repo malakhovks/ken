@@ -224,15 +224,15 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 <a name="dependencies-ua"></a>
 ## Програмні залежності
 
-- [Python 2.7.16](https://www.python.org/downloads/release/python-2716/);
-- [Flask](http://flask.pocoo.org/);
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/);
-- [spaCy](https://spacy.io/);
-- [pdfminer](https://pypi.org/project/pdfminer/);
-- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/);
-- [TextBlob](https://textblob.readthedocs.io);
-- [NLTK](https://www.nltk.org/);
-- [nginx](https://nginx.org/en/docs/);
+- [Python 2.7.16](https://www.python.org/downloads/release/python-2716/)
+- [Flask](http://flask.pocoo.org/)
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+- [spaCy](https://spacy.io/)
+- [pdfminer](https://pypi.org/project/pdfminer/)
+- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
+- [TextBlob](https://textblob.readthedocs.io)
+- [NLTK](https://www.nltk.org/)
+- [nginx](https://nginx.org/en/docs/)
 
 -------
 
