@@ -209,7 +209,6 @@ function save_table_to_csv(html, filename) {
 
 $('#saveTable').click(function () {
     var html = document.querySelector("table").outerHTML;
-    // export_table_to_csv(html, "table.csv");
     save_table_to_csv(html, "table-for-confor-" + getFormattedTime() + ".csv");
 });
 //SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
