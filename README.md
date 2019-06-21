@@ -189,6 +189,7 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 
 ### Зміст
 - **[Призначення та функції](#features-ua)**
+- **[Програмні залежності](#dependencies-ua)**
 - **[Системні вимоги](#system-requirements-ua)**
 - **[Інструментарій для управління ізольованими Linux-контейнерами Docker](#docker-ua)**
 - **[Архітектура мережевого засобу ken (konspekt English)](#architecture-ua)**
@@ -197,7 +198,6 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 - **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище](#windows-deployment-ua)**
 - **[Розгортання мережевого засобу ken з готового docker-образа](#docker-image-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
-- **[Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) ken (konspekt English)](#deployment-ua)**
 - **[Корисні посилання](#references-ua)**
 
 -------
@@ -218,6 +218,21 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 - стемінг (англ. stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;
 - екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - формування спеціалізованої `xml`-структури тексту.
+
+-------
+
+<a name="dependencies-ua"></a>
+## Програмні залежності
+
+- [Python 2.7.16](https://www.python.org/downloads/release/python-2716/)
+- [Flask](http://flask.pocoo.org/)
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+- [spaCy](https://spacy.io/)
+- [pdfminer](https://pypi.org/project/pdfminer/)
+- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
+- [TextBlob](https://textblob.readthedocs.io)
+- [NLTK](https://www.nltk.org/)
+- [nginx](https://nginx.org/en/docs/)
 
 -------
 
@@ -380,7 +395,7 @@ Docker поєднує ці компоненти в обгортку, яку ми
 **Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 
 ```bash
-git clone https://username1:token@github.com/username/repo_name.git
+$ git clone https://<username1>:<token>@github.com/username/repo_name.git
 ```
 де:
 
@@ -395,12 +410,12 @@ git clone https://username1:token@github.com/username/repo_name.git
 **Приклад:**
 
 ```bash
-git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+$ git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 **Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
 ```bash
-git clone --depth=1 --branch=tag_name repo_url
+$ git clone --depth=1 --branch=<tag_name> <repo_url>
 ```
 де:
 
@@ -410,7 +425,7 @@ git clone --depth=1 --branch=tag_name repo_url
 
 **Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+$ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
 **Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
@@ -423,16 +438,17 @@ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd
 
 2. Перехід в діректорію програми `ken`:
 ```bash
-cd ken
+$ cd ken
 ```
 
 3. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
+
 ```bash
-git checkout branch_name
+$ git checkout <branch_name>
 ```
 де:
 
-`<branch_name>` - ім'я гілки;
+`branch_name` - ім'я гілки;
 
 `git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
 
@@ -442,29 +458,29 @@ git checkout branch_name
 
 **Приклад:**
 ```bash
-git checkout master
+$ git checkout master
 ```
 
 4. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
 
 ```bash
-docker build . -t imagename
+$ docker build . -t <image name>
 ```
 де:
 
- `imagename` - ім'я ізольованого застосунку `docker image`.
+ `image name` - ім'я ізольованого застосунку `docker image`.
 
 **Приклад:**
 
 ```bash
-docker build . -t ken_image
+$ docker build . -t ken_image
 ```
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
 
 5. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
-docker run --restart always --name ken -d -p 80:80 ken_image 
+$ docker run --restart always --name ken -d -p 80:80 ken_image 
 ```
 Команда `docker run` з параметром `--restart always` дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.
 
@@ -534,7 +550,7 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 
 **Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 ```bash
-git clone https://username1:token@github.com/username/repo_name.git
+$ git clone https://<username1>:<token>@github.com/username/repo_name.git
 ```
 де:
 
@@ -542,19 +558,17 @@ git clone https://username1:token@github.com/username/repo_name.git
 
 `token` - Personal access tokens - особистий маркер доступу до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com);
 
-`username1` - Ваше ім'я користувача [GitHub](https://github.com);
-
 `github.com/username/repo_name.git` - адреса приватного git-репозиторію сервісу [GitHub](https://github.com), тобто `github.com/malakhovks/ken.git`.
 
 **Приклад:**
 
 ```bash
-git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+$ git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 **Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
 ```bash
-git clone --depth=1 --branch=tag_name repo_url
+$ git clone --depth=1 --branch=<tag_name> <repo_url>
 ```
 де:
 
@@ -564,7 +578,7 @@ git clone --depth=1 --branch=tag_name repo_url
 
 **Приклад:**
 ```bash
-git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
+$ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
 **Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
@@ -577,16 +591,16 @@ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd
 
 4. Перехід в діректорію програми `ken`:
 ```bash
-cd ken
+$ cd ken
 ```
 
 5. Перехід в гілку, яку потрібно використовувати для компіляції/збірки, командою `git checkout`:
 ```bash
-git checkout branch_name
+$ git checkout <branch_name>
 ```
 де:
 
-`<branch_name>` - ім'я гілки;
+`branch_name` - ім'я гілки;
 
 `git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
 
@@ -596,29 +610,29 @@ git checkout branch_name
 
 **Приклад:**
 ```bash
-git checkout master
+$ git checkout master
 ```
 
 6. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
 
 ```bash
-docker build . -t imagename
+$ docker build . -t <image name>
 ```
 де:
 
- `imagename` - ім'я ізольованого застосунку `docker image`.
+ `image name` - ім'я ізольованого застосунку `docker image`.
 
 **Приклад:**
 
 ```bash
-docker build . -t ken_image
+$ docker build . -t ken_image
 ```
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
 
 7. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
-docker run --restart always --name ken -d -p 80:80 ken_image 
+$ docker run --restart always --name ken -d -p 80:80 ken_image 
 ```
 Команда `docker run` з параметром `--restart always` дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.
 
@@ -669,19 +683,19 @@ docker run --restart always --name ken -d -p 80:80 ken_image
 1. Підключити обліковий запис [Docker Hub](https://hub.docker.com/):
 
 ```bash
-docker login
+$ docker login
 ```
 
 2. Отримати docker-образ з сервісу [Docker Hub](https://hub.docker.com/) (ця операція можлива при наявності доступу до репозиторія malakhovks/ken):
 
 ```bash
-docker pull malakhovks/ken
+$ docker pull malakhovks/ken
 ```
 
 3. Запуск отриманого docker-образа malakhovks/ken в контейнері `ken`:
 
 ```bash
-docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
+$ docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
 #### Розгортання мережевого засобу ken з готового docker-образа (з використання вже отриманого docker-образа мережевого засобу ken) складається з наступних етапів:
@@ -689,42 +703,48 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 1. Отримати docker-образ мережевого засобу ken у вигляді файлу типу tar archive та загрузити його командою [load](https://docs.docker.com/engine/reference/commandline/load/):
 
 ```bash
-docker load < ken.tar.gz
+$ docker load -i <path to image tar file>
+```
+
+**Приклад:**
+
+```bash
+$ docker load -i D:\ken.tar
 ```
 
 2. Запуск отриманого docker-образа malakhovks/ken в контейнері `ken`:
 
 ```bash
-docker run --restart always --name ken -d -p 80:80 ken-image 
+$ docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
 #### Розгортання мережевого засобу ken з готового docker-образа (з використання початкого коду мережевого засобу ken) складається з наступних етапів:
 
 1. Перехід в діректорію програми `ken`:
 ```bash
-cd ken
+$ cd ken
 ```
 
 2. Створення ізольованого застосунку [Docker](https://uk.wikipedia.org/wiki/Docker), так званого `docker image` з файлу `Dockerfile`:
 
 ```bash
-docker build . -t imagename
+$ docker build . -t <image name>
 ```
 де:
 
- `imagename` - ім'я ізольованого застосунку `docker image`.
+ `image name` - ім'я ізольованого застосунку `docker image`.
 
 **Приклад:**
 
 ```bash
-docker build . -t ken_image
+$ docker build . -t ken_image
 ```
 Створення ізольованого застосунку `ken_image` може зайняти тривалий час в жалежності від потужностей апаратного забезпечення.
 Повна документація по командам `Docker` доступна за посиланням [Docker documentation](https://docs.docker.com).
 
 3. Запуск створеного ізольованого застосунку `ken_image` в контейнері `ken`:
 ```bash
-docker run --restart always --name ken -d -p 80:80 ken_image 
+$ docker run --restart always --name ken -d -p 80:80 ken_image 
 ```
 Команда `docker run` з параметром `--restart always` дозволяє автоматично перезапускати при перезавантаженні операцийноъ системы, що дозволяє досягти безперебійної роботи сервісу.
 
@@ -905,15 +925,6 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
   </xs:element>
 </xs:schema>
 ```
-
--------
-
-<a name="deployment-ua"></a>
-
-## Дистрибуція мережевого засобу (у вигляді веб-сервісу з API) **ken** (konspekt English)
-*Настанови цього етапу в розробці*
-
-<!--<p style="text-align: center;">Настанови цього етапу в розробці.</p>-->
 
 -------
 
