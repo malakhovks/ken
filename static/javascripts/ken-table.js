@@ -372,7 +372,7 @@ var tableToExcel = (function () {
 
 document.getElementById("clear-table").addEventListener("click", e => {
     if (
-        confirm("This will erase all data and set default configs. Are you sure?")
+        confirm("Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням. Ви впевнені?")
     ) {
         this.resetData();
     }
