@@ -348,6 +348,32 @@ window.onclick = function (event) {
     }
 };
 
+//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
+function save_table_to_csv(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td");
+
+        for (var j = 0; j < cols.length; j++)
+            row.push(cols[j].innerText);
+        csv.push(row.join(";"));
+    }
+    // Download link
+    downloadLink = document.createElement("a");
+    // Make sure that the link is not displayed
+    downloadLink.style.display = "none";
+    // Add the link to your DOM
+    document.body.appendChild(downloadLink);
+    let blob = new Blob([csv.join("\n")], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = filename;
+    downloadLink.click();
+}
+//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
+
 var tableToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'
         , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
@@ -390,11 +416,40 @@ function getFormattedTime() {
     return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s;
 }
 
-document.getElementById("saveTable").addEventListener("click", e => {
+/* document.getElementById("saveTable").addEventListener("click", e => {
     var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
     $govno.find("th.row-header").remove();
     tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
     $govno.remove();
+}); */
+
+document.getElementById("saveTable").addEventListener("click", e => {
+    iziToast.info({
+        title: 'Зберегти таблицю в форматі: ',
+        position: 'center',
+        timeout: 10000,
+        buttons: [
+            ['<button>xls</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp',
+                    onClosing: function (instance, toast, closedBy) {
+                        var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
+                        $govno.find("th.row-header").remove();
+                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
+                        $govno.remove();
+                    }
+                }, toast);
+            }, true], // true to focus
+            ['<button>csv</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp',
+                    onClosing: function (instance, toast, closedBy) {
+                        save_table_to_csv("confor" + getFormattedTime() + ".csv");
+                    }
+                }, toast);
+            }]
+        ]
+    });
 });
 
 $('#addRowsToTable').click(function () {
@@ -412,7 +467,7 @@ $('#uploadUnknownTerms').on('mousedown', 'option', clickDragAndDrop);
 function clickDragAndDrop() {
     var termText = $(this).prop('value'); // extract text from term-list
     console.log(termText);
-// Mouse handler for table (DROP):
+    // Mouse handler for table (DROP):
     $('#table-body').on('mouseup', 'td', function () {
         if (termText != '') {
             $(this).html(termText);
@@ -420,35 +475,3 @@ function clickDragAndDrop() {
         }
     });
 }
-
-//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
-/*
-function save_table_to_csv(html, filename) {
-    var csv = [];
-    var rows = document.querySelectorAll("table tr");
-
-    for (let element of rows) {
-        var row = [], cols = element.querySelectorAll("input");
-        for (let element of cols) {
-            row.push(element.value);
-        }
-        csv.push(row.join(";"));
-    }
-    // Download link
-    downloadLink = document.createElement("a");
-    // Make sure that the link is not displayed
-    downloadLink.style.display = "none";
-    // Add the link to your DOM
-    document.body.appendChild(downloadLink);
-    let blob = new Blob([csv.join("\n")], { type: "octet/stream" }),
-        url = window.URL.createObjectURL(blob);
-    downloadLink.href = url;
-    downloadLink.download = filename;
-    downloadLink.click();
-}
-
-$('#saveTable').click(function () {
-    var html = document.querySelector("table").outerHTML;
-    save_table_to_csv(html, "table-for-confor-" + getFormattedTime() + ".csv");
-}); */
-//SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
