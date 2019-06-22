@@ -655,7 +655,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 -------
 
 <a name="windows-deployment-ua"></a>
-## Компіляція, збірка та розгортання мережевого засобу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 7 та вище
+## Компіляція, збірка та розгортання мережевого засобу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 10 та вище
 
 *Настанови цього етапу в розробці.*
 
