@@ -429,7 +429,7 @@ document.getElementById("saveTable").addEventListener("click", e => {
         position: 'center',
         timeout: 10000,
         buttons: [
-            ['<button>xls</button>', function (instance, toast) {
+            ['<button>.xls</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     onClosing: function (instance, toast, closedBy) {
@@ -439,8 +439,8 @@ document.getElementById("saveTable").addEventListener("click", e => {
                         $govno.remove();
                     }
                 }, toast);
-            }, true], // true to focus
-            ['<button>csv</button>', function (instance, toast) {
+            }],
+            ['<button>.csv</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     onClosing: function (instance, toast, closedBy) {
