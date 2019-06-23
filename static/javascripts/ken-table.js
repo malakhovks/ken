@@ -397,11 +397,32 @@ var tableToExcel = (function () {
 })();
 
 document.getElementById("clear-table").addEventListener("click", e => {
-    if (
-        confirm("Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням. Ви впевнені?")
-    ) {
-        this.resetData();
-    }
+    // if (
+    //     confirm("Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням. Ви впевнені?")
+    // ) {
+    //     this.resetData();
+    // }
+    iziToast.warning({
+        title: 'Ви впевнені?',
+        message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
+        position: 'center',
+        timeout: 10000,
+        buttons: [
+            ['<button>Так</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp',
+                    onClosing: function (instance, toast, closedBy) {
+                        this.resetData();
+                    }
+                }, toast);
+            }],
+            ['<button>Ні</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp'
+                }, toast);
+            }]
+        ]
+    });
 });
 
 function getFormattedTime() {
@@ -423,7 +444,7 @@ function getFormattedTime() {
     $govno.remove();
 }); */
 
-document.getElementById("saveTable").addEventListener("click", e => {
+document.getElementById("button-save-table").addEventListener("click", e => {
     iziToast.info({
         title: 'Зберегти таблицю в форматі: ',
         position: 'center',

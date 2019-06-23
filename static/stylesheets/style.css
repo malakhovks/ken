@@ -19,6 +19,19 @@ body {
 	transition: transform .8s;
 }
 
+/* <!-- Basic dropdown --> */
+#button-save {
+	background-color: #546E7A;
+    justify-content: center;
+    line-height: 30px;
+    width: 100%;
+    padding: 0;
+    margin: 0 5px 0 0;
+    border: none;
+    color: white;
+}
+/* <!-- Basic dropdown --> */
+
 .navbar-default .navbar-nav > li > a::before {
 	content: '';
 	position: absolute;
