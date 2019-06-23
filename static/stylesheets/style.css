@@ -265,8 +265,8 @@ select {
   .middle,
   .inner {
 	border: 3px solid transparent;
-	border-top-color: #8BC34A;
-	border-right-color: #8BC34A;
+	border-top-color: #546E7A;
+	border-right-color: #546E7A;
 	border-radius: 50%;
 	position: absolute;
 	top: 50%;
