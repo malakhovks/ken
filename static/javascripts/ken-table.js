@@ -374,6 +374,7 @@ function save_table_to_csv(filename) {
 }
 //SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
 
+//SAVE_TABLE_TO_XLS_____________________________________________________________________________________________________
 var tableToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'
         , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
@@ -396,35 +397,6 @@ var tableToExcel = (function () {
     }
 })();
 
-document.getElementById("clear-table").addEventListener("click", e => {
-    // if (
-    //     confirm("Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням. Ви впевнені?")
-    // ) {
-    //     this.resetData();
-    // }
-    iziToast.warning({
-        title: 'Ви впевнені?',
-        message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
-        position: 'center',
-        timeout: 10000,
-        buttons: [
-            ['<button>Так</button>', function (instance, toast) {
-                instance.hide({
-                    transitionOut: 'fadeOutUp',
-                    onClosing: function (instance, toast, closedBy) {
-                        this.resetData();
-                    }
-                }, toast);
-            }],
-            ['<button>Ні</button>', function (instance, toast) {
-                instance.hide({
-                    transitionOut: 'fadeOutUp'
-                }, toast);
-            }]
-        ]
-    });
-});
-
 function getFormattedTime() {
     var today = new Date();
     var y = today.getFullYear();
@@ -436,13 +408,6 @@ function getFormattedTime() {
     var s = today.getSeconds();
     return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s;
 }
-
-/* document.getElementById("saveTable").addEventListener("click", e => {
-    var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
-    $govno.find("th.row-header").remove();
-    tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
-    $govno.remove();
-}); */
 
 document.getElementById("button-save-table").addEventListener("click", e => {
     iziToast.info({
@@ -467,6 +432,36 @@ document.getElementById("button-save-table").addEventListener("click", e => {
                     onClosing: function (instance, toast, closedBy) {
                         save_table_to_csv("confor" + getFormattedTime() + ".csv");
                     }
+                }, toast);
+            }]
+        ]
+    });
+});
+//SAVE_TABLE_TO_XLS_____________________________________________________________________________________________________
+
+document.getElementById("clear-table").addEventListener("click", e => {
+    // if (
+    //     confirm("Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням. Ви впевнені?")
+    // ) {
+    //     this.resetData();
+    // }
+    iziToast.warning({
+        title: 'Ви впевнені?',
+        message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
+        position: 'center',
+        timeout: 10000,
+        buttons: [
+            ['<button>Так</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp',
+                    onClosing: function (instance, toast, closedBy) {
+                        this.resetData();
+                    }
+                }, toast);
+            }],
+            ['<button>Ні</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp'
                 }, toast);
             }]
         ]
