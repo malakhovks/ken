@@ -505,7 +505,8 @@ function forUploadResultListClickAndEnterPressEvents() {
     // $textContent.highlightWithinTextarea(onInput);
 
     function onInput(input) {
-        var regex = new RegExp('\\b(\\w*' + $uploadResultList.prop('value') + '\\w*)\\b', 'gi');
+        let term = $uploadResultList.prop('value').replace(/\s?([-])\s?/g,'-');
+        var regex = new RegExp('\\b(\\w*' + term + '\\w*)\\b', 'gi');
         return regex;
     }
     $textContent.highlightWithinTextarea(onInput);
