@@ -64,9 +64,19 @@
           <button id="newProjectAndClearAll" type="button"><i class="material-icons">create_new_folder</i>
             <div>Новий проект</div>
           </button>
-          <button id="saveTable" type="button"><i class="material-icons">save</i>
-            <div>Зберегти таблицю</div>
-          </button>
+          <!-- Basic dropdown -->
+          <div class="dropdown" id="button-save">
+            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i class="material-icons">save</i>Зберегти
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation" id="button-save-table" title="Зберегти таблицю в xls або csv"><a role="menuitem" tabindex="-1" href="#">Таблицю</a></li>
+              <!-- <li role="presentation" class="divider"></li> -->
+              <li role="presentation" id="button-save-terms" title="Зберегти терміни в файл (txt, utf-8)"><a role="menuitem" tabindex="-1" href="#">Список Терміни</a></li>
+              <li role="presentation" id="button-save-ner" title="Зберегти розпізнані іменовані сутності в файл (txt, utf-8)"><a role="menuitem" tabindex="-1" href="#">Список РІС</a></li>
+              <li role="presentation" id="button-save-project-file-list" title="Зберегти список документів проекту в файл (txt, utf-8)"><a role="menuitem" tabindex="-1" href="#">Список Файли</a></li>
+            </ul>
+          </div>
+          <!-- Basic dropdown -->
           <button id="help" type="button" onclick="window.open('/help','_blank');"><i class="material-icons">help</i>
             <div>Допомога</div>
           </button>
@@ -76,16 +86,7 @@
               src="./static/images/forTableColAdd.png" height="30" alt="" /></button>
           <button id="addRowsToTable" type="button" title="Додати новий рядок в таблицю"><img
               src="./static/images/forTableRowAdd.png" height="30" alt="" /></button>
-          <!-- <button id="saveTerms" type="button" title="Зберегти терміни в файл (txt, utf-8)"><img
-              src="./static/images/forTableSaveTerms.png" height="30" alt="" /></button>
-          <button id="saveNewTerms" type="button"
-            title="Зберегти розпізнані іменовані сутності в файл (txt, utf-8)"><img
-              src="./static/images/forTableSaveNewTerms.png" height="30" alt="" /></button>
-          <button id="saveProjectFileList" type="button"
-            title="Зберегти список документів проекту в файл (txt, utf-8)"><img
-              src="./static/images/forTableSaveFileListNames.png" height="30" alt="" /></button> -->
           <button id="clear-table" type="button" title="Очистити таблицю"><i class="material-icons">cached</i>
-            <!-- <div>Очистити таблицю</div> -->
           </button>
         </div>
         <!-- <table id="term-table"></table> -->
@@ -94,7 +95,7 @@
             <li><a href="#text_tab" data-toggle="data" title="Текст робочого документа">Текст</a></li>
             <li><a href="#depparse_tab" data-toggle="data"
                 title="Візуалізація залежностей для термінів та іменованих сутностей">Візуалізація</a></li>
-            <li class="active"><a href="#table_new" data-toggle="data" title="Говнецо">Таблиця</a></li>
+            <li class="active"><a href="#table_new" data-toggle="data" title="Таблиця для CONFOR">Таблиця</a></li>
           </ul>
         </div>
         <div class="tab-content" id="select-block" style="display: flex; justify-content: flex-end;">

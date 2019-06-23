@@ -22,14 +22,34 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $textContent = $('#text-content'),
     $termTree = $('#term-tree'),
     $captionOverviewButton = $('#caption_overview_button'),
-    $saveTerms = $('#saveTerms'),
-    $saveNewTerms = $('#saveNewTerms'),
-    $saveProjectFileList = $('#saveProjectFileList'),
+    $buttonSaveTerms = $('#button-save-terms'),
+    $buttonSaveNer = $('#button-save-ner'),
+    $buttonSaveProjectFileList = $('#button-save-project-file-list'),
     $upload_button = $('#upload-button'),
     $sents_from_text = $('#sents_from_text');
 
 $newProjectAndClearAll.click(function () {
-    ClearAllForNewProject();
+    iziToast.warning({
+        title: 'Ви впевнені?',
+        message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
+        position: 'center',
+        timeout: 10000,
+        buttons: [
+            ['<button>Так</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp',
+                    onClosing: function (instance, toast, closedBy) {
+                        ClearAllForNewProject();
+                    }
+                }, toast);
+            }],
+            ['<button>Ні</button>', function (instance, toast) {
+                instance.hide({
+                    transitionOut: 'fadeOutUp'
+                }, toast);
+            }]
+        ]
+    });
 });
 
 $(document).ready(function () {
@@ -168,7 +188,7 @@ $recapOverviewButton.change(function () {
 });
 
 
-$saveTerms.click(function () {
+$buttonSaveTerms.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
         // Download link
@@ -185,7 +205,7 @@ $saveTerms.click(function () {
 
 });
 
-$saveNewTerms.click(function () {
+$buttonSaveNer.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#uploadUnknownTerms option").map(function () { return this.value; }).get().join('\n'),
         // Download link
@@ -202,7 +222,7 @@ $saveNewTerms.click(function () {
 
 });
 
-$saveProjectFileList.click(function () {
+$buttonSaveProjectFileList.click(function () {
 
     let arrayOfValuesOfYploadResultList = $("#projectFileList option").map(function () { return this.value; }).get().join('\n'),
         // Download link
