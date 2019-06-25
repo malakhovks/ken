@@ -1,4 +1,4 @@
-# ken (konspekt English)
+# KEn (konspekt English)
 
 ### Choose your language / Оберіть мову
 - **[Українська](#toc-ua)**
@@ -7,7 +7,7 @@
 -------
 
 <a name="toc-en"></a>
-**ken** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
+**KEn** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ### Table of Contents
 - **[Features](#features-en)**
@@ -18,9 +18,9 @@
 <a name="features-en"></a>
 ## Features
 
-**ken** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
+**KEn** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
-**ken** (konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
+**KEn** (konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
 
 - extracting text data from e-documents (`pdf`, `docx`, `txt`);
 - text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
@@ -185,19 +185,19 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 -------
 
 <a name="toc-ua"></a>
-## **ken** (konspekt English) - мережевий засіб виділення термінів з природномовних текстів англійською мовою
+## **KEn** (konspekt English) - мережевий засіб виділення термінів з природномовних текстів англійською мовою
 
 ### Зміст
 - **[Призначення та функції](#features-ua)**
 - **[Програмні залежності](#dependencies-ua)**
 - **[Системні вимоги](#system-requirements-ua)**
 - **[Інструментарій для управління ізольованими Linux-контейнерами Docker](#docker-ua)**
-- **[Архітектура мережевого засобу ken (konspekt English)](#architecture-ua)**
-- **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
-- **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
-- **[Компіляція, збірка та розгортання мережевого засобу ken (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище](#windows-deployment-ua)**
-- **[Розгортання мережевого засобу ken з готового docker-образа](#docker-image-deployment-ua)**
-- **[Опис служб (веб-сервісів) мережевого засобу ken (konspekt English) доступних розробнику](#api-ua)**
+- **[Архітектура мережевого засобу KEn](#architecture-ua)**
+- **[Компіляція, збірка та розгортання мережевого засобу KEn (з приватного репозиторію) в середовищі UNIX-подібних операційних систем Linux](#unix-deployment-ua)**
+- **[Компіляція, збірка та розгортання мережевого засобу KEn (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
+- **[Компіляція, збірка та розгортання мережевого засобу KEn (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище](#windows-deployment-ua)**
+- **[Розгортання мережевого засобу KEn з готового docker-образа](#docker-image-deployment-ua)**
+- **[Опис служб (веб-сервісів) мережевого засобу KEn доступних розробнику](#api-ua)**
 - **[Корисні посилання](#references-ua)**
 
 -------
@@ -205,9 +205,9 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 <a name="features-ua"></a>
 ## Призначення та функції
 
-Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) призначений для виділення термінів з природномовних текстів англійською мовою з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
+Мережевий засіб (у вигляді веб-сервісу з API) **KEn** (konspekt English) призначений для виділення термінів з природномовних текстів англійською мовою з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 
-Мережевий засіб (у вигляді веб-сервісу з API) **ken** (konspekt English) охоплює всі найважливіші етапи обробки природної мови, а саме:
+Мережевий засіб (у вигляді веб-сервісу з API) **KEn** охоплює всі найважливіші етапи обробки природної мови, а саме:
 
 - екстракт тексту з документів форматів `pdf`, `docx`, `txt`;
 - базова нормалізація текстів - так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстракту тексту з документів `pdf`, `docx`, `txt`);
@@ -224,24 +224,24 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 <a name="dependencies-ua"></a>
 ## Програмні залежності
 
-- [Python 2.7.16](https://www.python.org/downloads/release/python-2716/)
-- [Flask](http://flask.pocoo.org/)
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
-- [spaCy](https://spacy.io/)
-- [pdfminer](https://pypi.org/project/pdfminer/)
-- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
-- [TextBlob](https://textblob.readthedocs.io)
-- [NLTK](https://www.nltk.org/)
-- [nginx](https://nginx.org/en/docs/)
+- [Python 2.7.16](https://www.python.org/downloads/release/python-2716/)– інтерпретатор та стандартні бібліотеки
+- [spaCy](https://spacy.io/) – бібліотека з відкритим вихідним кодом для передової обробки природних мов
+- [Flask](http://flask.pocoo.org/) – мікрофреймворк для веб-додатків
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/) – розширення Flask для обробки спільного використання ресурсів з різних джерел (англ. Cross-Origin Resource Sharing, CORS)
+- [pdfminer](https://pypi.org/project/pdfminer/) – інструмент для екстракту інформації з документів PDF
+- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) https://uwsgi-docs.readthedocs.io/en/latest/) – веб-сервер і сервер веб-додатків, спочатку реалізований для запуску додатків Python через протокол WSGI (і його бінарний варіант uwsgi)
+- [TextBlob](https://textblob.readthedocs.io) – бібліотека для обробки текстових даних
+- [Natural Language Toolkit NLTK](https://www.nltk.org/) – пакет бібліотек і програм для символьної і статистичної обробки природної мови
+- [nginx](https://nginx.org/en/docs/) – вільний веб-сервер і проксі-сервер
 
 -------
 
 <a name="system-requirements-ua"></a>
 ## Системні вимоги
 
-- **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
-- **[Для компіляції, збірки та розгортання мережевого засобу `ken` (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
-- **[Для розгортання мережевого засобу `ken` з готового docker-образа](#system-requirements-4)**<br>
+- **[Для компіляції, збірки та розгортання мережевого засобу `KEn` (з приватного репозиторію) в середовищі `UNIX`-подібних операційних систем `Linux`](#system-requirements-1)**<br>
+- **[Для компіляції, збірки та розгортання мережевого засобу `KEn` (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем `VirtualBox`](#system-requirements-2)**<br>
+- **[Для розгортання мережевого засобу `KEn` з готового docker-образа](#system-requirements-4)**<br>
 
 -------
 
@@ -368,31 +368,31 @@ Docker поєднує ці компоненти в обгортку, яку ми
 -------
 
 <a name="architecture-ua"></a>
-## Архітектура мережевого засобу ken (konspekt English)
+## Архітектура мережевого засобу KEn
 
 *Розділ в розробці.*
 
 -------
 
 <a name="unix-deployment-ua"></a>
-## Компіляція, збірка та розгортання мережевого засобу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
+## Компіляція, збірка та розгортання мережевого засобу `KEn` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux`
 
 <a name="system-requirements-1"></a>
 #### Системні вимоги
 
 - мінімальні апаратні ресурси: `x86-64` сумісний процесор з тактовою частотою 1 ГГц; оперативна пам'ять: 512 Мб; Місце на жорсткому диску: 2,5 Гб;
-- [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux` (при тестуванні компіляція, збірки та розгортання мережевого засобу `ken` використовувались дистрибутиви [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) та [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/));
+- [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux` (при тестуванні компіляція, збірки та розгортання мережевого засобу `KEn` використовувались дистрибутиви [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) та [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/));
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
 - [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
 - обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
 - швидкісне підключення до мережі Інтернет.
 
 
-#### Компіляція, збірка та розгортання мережевого засобу ken в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
+#### Компіляція, збірка та розгортання мережевого засобу KEn в середовищі [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібних операційних систем `Linux` складається з наступних етапів:
 
-1. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com). Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com).
+1. Клонування початкового коду програми `KEn` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com). Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com).
 
-**Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
+**Клонування початкового коду програми `KEn`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 
 ```bash
 $ git clone https://<username1>:<token>@github.com/username/repo_name.git
@@ -412,7 +412,7 @@ $ git clone https://<username1>:<token>@github.com/username/repo_name.git
 ```bash
 $ git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
-**Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
+**Або** клонувати початковий код програми `KEn` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
 ```bash
 $ git clone --depth=1 --branch=<tag_name> <repo_url>
@@ -428,15 +428,15 @@ $ git clone --depth=1 --branch=<tag_name> <repo_url>
 $ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
-**Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
+**Або** отримати реліз у вигляді архіву (початковий код програми `KEn`) у розробника, розпакувати його та перейти до наступного етапу.
 
 <!---
-**Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
+**Клонування початкового коду програми `KEn` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
 *Настанови цього етапу в розробці.*
 -->
 
-2. Перехід в діректорію програми `ken`:
+2. Перехід в діректорію `ken`:
 ```bash
 $ cd ken
 ```
@@ -450,11 +450,11 @@ $ git checkout <branch_name>
 
 `branch_name` - ім'я гілки;
 
-`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+`git`-репозиторій програми KEn має дві основні гілки: `develop` та `master`.
 
-Гілка `master` містить стабільний початковий код програми `ken`.
+Гілка `master` містить стабільний початковий код програми `KEn`.
 
-Гілка `develop` містить робочий початковий код програми `ken`.
+Гілка `develop` містить робочий початковий код програми `KEn`.
 
 **Приклад:**
 ```bash
@@ -503,7 +503,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 -------
 
 <a name="virtualbox-deployment-ua"></a>
-## Компіляція, збірка та розгортання мережевого засобу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
+## Компіляція, збірка та розгортання мережевого засобу `KEn` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox)
 
 <a name="system-requirements-2"></a>
 #### Системні вимоги
@@ -511,7 +511,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 - мінімальні апаратні ресурси: `x86-64` сумісний процесор з тактовою частотою 2 ГГц; оперативна пам'ять: 4 Гб; Місце на жорсткому диску: 20 Гб;
 - x86-64 сумісна [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібна операційна система `Linux`; x86-64 сумісна операційна система `Microsoft Windows 7 Service Pack 1` або новіша;
 - [VirtualBox](https://www.virtualbox.org/) програма віртуалізації для операційних систем версії `VirtualBox 6.0.8` або новіша;
-- Віртуальна машина з [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібною операційною системою `Linux` (при тестуванні компіляція, збірки та розгортання мережевого засобу `ken` використовувались дистрибутиви [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) та [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/)), яка включає наступне встановлене програмне забезпечення: [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи; [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
+- Віртуальна машина з [UNIX](https://uk.wikipedia.org/wiki/UNIX)-подібною операційною системою `Linux` (при тестуванні компіляція, збірки та розгортання мережевого засобу `KEn` використовувались дистрибутиви [Ubuntu Server 18.04 LTS x86-64](https://www.ubuntu.com/download/server) та [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/)), яка включає наступне встановлене програмне забезпечення: [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи; [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
 - обліковий запис [GitHub](https://github.com) та ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/);
 - швидкісне підключення до мережі Інтернет;
 
@@ -539,16 +539,16 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 - підтримка інтеграції робочих столів (seamless mode) хостової та гостьової ОС;
 - є можливість вибору мови інтерфейса (підтримується і україномовний інтерфейс).
 
-#### Компіляція, збірка та розгортання мережевого засобу `ken` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox) складається з наступних етапів:
+#### Компіляція, збірка та розгортання мережевого засобу `KEn` ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі програми віртуалізації для операційних систем [VirtualBox](https://uk.wikipedia.org/wiki/VirtualBox) складається з наступних етапів:
 
 1. Створення віртуальної машини з операійною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) або новішою, згідно настановам користувача наведених на офіційному сайті [`wiki`-документації VirtualBox](https://www.virtualbox.org/wiki/Documentation) або використовуючи відео-туторіали: [Download, Install & Configure Alpine linux - Tutorial](https://youtu.be/1G4nmUUk2kI); [Alpine Linux 3.6.2 Installation + XFCE Desktop Environment on Oracle VirtualBox](https://youtu.be/1_bsycXrFcI).
-Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс `ken`.
+Встановити апаратні ресурси для віртуальної машини згідно прогнозованого навантаження на сервіс `KEn`.
 
 2. Встановлення [Git](https://git-scm.com/) та [Docker CE](https://docs.docker.com) в середовиші віртуальної машини з операційною системою [Alpine Linux 3.9.4 x86-64](https://alpinelinux.org/downloads/) згідно настановам користувача наведених на офіційному сайті [`wiki`-документації wiki.alpinelinux.org](https://wiki.alpinelinux.org/wiki/Main_Page).
 
-3. Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com). Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com). 
+3. Клонування початкового коду програми `KEn` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com). Цей етап можна виконати використовуючи особистий маркер доступу `token` до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com) або використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/) до [приватного репозиторію](https://github.com/malakhovks/ken) [GitHub](https://github.com). 
 
-**Клонування початкового коду програми `ken`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
+**Клонування початкового коду програми `KEn`  з [приватного  `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи особистий маркер доступу `token`:**
 ```bash
 $ git clone https://<username1>:<token>@github.com/username/repo_name.git
 ```
@@ -565,7 +565,7 @@ $ git clone https://<username1>:<token>@github.com/username/repo_name.git
 ```bash
 $ git clone https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
-**Або** клонувати початковий код програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
+**Або** клонувати початковий код програми `KEn` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) **з конкретної гілки/тега**  використовуючи наступну команду:
 
 ```bash
 $ git clone --depth=1 --branch=<tag_name> <repo_url>
@@ -581,15 +581,15 @@ $ git clone --depth=1 --branch=<tag_name> <repo_url>
 $ git clone --depth=1 --branch=develop https://Velychko-Vitalii:ae9c2fa2d73fbbb0bd0a5ffa746f1df59036815c@github.com/malakhovks/ken.git
 ```
 
-**Або** отримати реліз у вигляді архіву (початковий код програми `ken`) у розробника, розпакувати його та перейти до наступного етапу.
+**Або** отримати реліз у вигляді архіву (початковий код програми `KEn`) у розробника, розпакувати його та перейти до наступного етапу.
 
 <!--
-**Клонування початкового коду програми `ken` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
+**Клонування початкового коду програми `KEn` з [приватного `git`-репозиторію](https://github.com/malakhovks/ken) сервісу [GitHub](https://github.com) використовуючи ключ розгортання [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/):**
 
 *Настанови цього етапу в розробці.*
 -->
 
-4. Перехід в діректорію програми `ken`:
+4. Перехід в діректорію `ken`:
 ```bash
 $ cd ken
 ```
@@ -602,11 +602,11 @@ $ git checkout <branch_name>
 
 `branch_name` - ім'я гілки;
 
-`git`-репозиторій програми ken має дві основні гілки: `develop` та `master`.
+`git`-репозиторій програми KEn має дві основні гілки: `develop` та `master`.
 
-Гілка `master` містить стабільний початковий код програми `ken`.
+Гілка `master` містить стабільний початковий код програми `KEn`.
 
-Гілка `develop` містить робочий початковий код програми `ken`.
+Гілка `develop` містить робочий початковий код програми `KEn`.
 
 **Приклад:**
 ```bash
@@ -655,7 +655,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 -------
 
 <a name="windows-deployment-ua"></a>
-## Компіляція, збірка та розгортання мережевого засобу ken ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 10 та вище
+## Компіляція, збірка та розгортання мережевого засобу KEn ([з приватного репозиторію](https://github.com/malakhovks/ken)) в середовищі операційної системй Windows 10 та вище
 
 *Настанови цього етапу в розробці.*
 
@@ -667,7 +667,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="docker-image-deployment-ua"></a>
 
-## Розгортання мережевого засобу ken з готового docker-образа
+## Розгортання мережевого засобу KEn з готового docker-образа
 
 
 <a name="system-requirements-4"></a>
@@ -676,9 +676,9 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 - [Git](https://git-scm.com/) розподілена система керування версіями файлів та спільної роботи;
 - [Docker CE](https://docs.docker.com) інструментарій для управління ізольованими `Linux/Windows`-контейнерами;
-- при варіанті отримання docker-образа з сервісу [Docker Hub](https://hub.docker.com/): обліковий запис [Docker Hub](https://hub.docker.com/), швидкісне підключення до мережі Інтернет та доступ до [Docker Hub](https://hub.docker.com/)-репозиторію мережевого засобу ken.
+- при варіанті отримання docker-образа з сервісу [Docker Hub](https://hub.docker.com/): обліковий запис [Docker Hub](https://hub.docker.com/), швидкісне підключення до мережі Інтернет та доступ до [Docker Hub](https://hub.docker.com/)-репозиторію мережевого засобу KEn.
 
-#### Розгортання мережевого засобу ken з готового docker-образа (при використанні сервісу [Docker Hub](https://hub.docker.com/)) складається з наступних етапів:
+#### Розгортання мережевого засобу KEn з готового docker-образа (при використанні сервісу [Docker Hub](https://hub.docker.com/)) складається з наступних етапів:
 
 1. Підключити обліковий запис [Docker Hub](https://hub.docker.com/):
 
@@ -698,9 +698,9 @@ $ docker pull malakhovks/ken
 $ docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
-#### Розгортання мережевого засобу ken з готового docker-образа (з використання вже отриманого docker-образа мережевого засобу ken) складається з наступних етапів:
+#### Розгортання мережевого засобу KEn з готового docker-образа (з використання вже отриманого docker-образа мережевого засобу KEn) складається з наступних етапів:
 
-1. Отримати docker-образ мережевого засобу ken у вигляді файлу типу tar archive та загрузити його командою [load](https://docs.docker.com/engine/reference/commandline/load/):
+1. Отримати docker-образ мережевого засобу KEn у вигляді файлу типу tar archive та загрузити його командою [load](https://docs.docker.com/engine/reference/commandline/load/):
 
 ```bash
 $ docker load -i <path to image tar file>
@@ -718,9 +718,9 @@ $ docker load -i D:\ken.tar
 $ docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
-#### Розгортання мережевого засобу ken з готового docker-образа (з використання початкого коду мережевого засобу ken) складається з наступних етапів:
+#### Розгортання мережевого засобу KEn з готового docker-образа (з використання початкого коду мережевого засобу KEn) складається з наступних етапів:
 
-1. Перехід в діректорію програми `ken`:
+1. Перехід в діректорію `ken`:
 ```bash
 $ cd ken
 ```
@@ -752,7 +752,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="api-ua"></a>
 
-## Опис служб (веб-сервісів) мережевого засобу `ken` (konspekt English) доступних розробнику
+## Опис служб (веб-сервісів) мережевого засобу `KEn` (konspekt English) доступних розробнику
 
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
 
