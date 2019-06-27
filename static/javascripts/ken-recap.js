@@ -288,7 +288,7 @@ function fetchFileToRecapService() {
         $upload_button.css('display', 'none');
         $('.tabs').css('display', 'block');
 
-        // Очистка списка терминов, поля textArea и input choose file
+        // Clear terms list,textArea, input choose file
         $recapOverviewButton.val("");
         $('option', $uploadResultList).remove();
         $('option', $uploadUnknownTerms).remove();
@@ -319,8 +319,6 @@ function fetchFileToRecapService() {
 
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
-                        // console.log(JSON.stringify(resJSON));
-                        // console.log(JSON.stringify(Object.values(resJSON.termsintext.sentences.sent)))
 
                         // add to local storage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
@@ -341,9 +339,6 @@ function fetchFileToRecapService() {
                         for (let sent_element of resJSON.termsintext.sentences.sent) {
                             $sents_from_text.append(sent_element + '\n\n')
                         }
-                        // hide progress bar
-                        // $("body").css("cursor", "default");
-                        // $(".loader").hide();
                     });
                 })
                 // fetch to parce.xml for NER
@@ -358,8 +353,6 @@ function fetchFileToRecapService() {
                                 resParceJSON = xmlToJson(dom);
 
                                 for (let sentElement of resParceJSON.text.sentence) {
-
-                                    // console.log(JSON.stringify(sentElement));
 
                                     if (sentElement.hasOwnProperty('ner')) {
                                         if (Array.isArray(sentElement.ner.entity)) {
@@ -669,10 +662,6 @@ $('.nav-tabs a').click(function (e) {
 });
 
 $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
-
-    // if ($(e.target).attr("href") == '#new_term_tab'){
-    //     alert('target');
-    // }
 
     if ($("#new_term_tab").is(".tab-pane.active")) {
         $("#displacy").hide();
