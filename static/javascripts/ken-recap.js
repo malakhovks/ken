@@ -301,7 +301,7 @@ function fetchFileToRecapService() {
                 method: 'post',
                 body: form
             })
-                .then(function (response) {
+                .then(response => {
 
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
@@ -311,18 +311,16 @@ function fetchFileToRecapService() {
                             message: 'Статус: ' + response.status,
                             position: 'bottomLeft'
                         });
-                        alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + response.status);
                         return;
                     }
-                    // return response.json().then(function (result) {
-                    return response.text().then(function (result) {
+
+                    return response.text().then(result => {
 
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
 
                         // add to local storage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
-                        // add to local storage recap of the last uploaded file
 
                         // add to local storage recap of this file for #projectFileList
                         localStorage[uploadFileName.split('\\').pop()] = JSON.stringify(resJSON);
@@ -342,13 +340,14 @@ function fetchFileToRecapService() {
                     });
                 })
                 // fetch to parce.xml for NER
-                .then(function (next) {
+                .then(next => {
                     return fetch('/ken/api/v1.0/en/file/parcexml', {
                         method: 'post',
                         body: form
                     })
-                        .then(function (response) {
-                            return response.text().then(function (result) {
+                        .then(response => {
+                            return response.text().then(result => {
+
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 resParceJSON = xmlToJson(dom);
 
@@ -375,15 +374,15 @@ function fetchFileToRecapService() {
                         })
                 })
                 // fetch to /ken/api/v1.0/en/html/ner for NER
-                .then(function (next) {
+                .then(next => {
 
                     sentencesData = JSON.stringify(Object.values(resJSON.termsintext.sentences.sent));
-                    console.log(sentencesData);
+
                     return fetch('/ken/api/v1.0/en/html/ner', {
                         method: 'post',
                         body: sentencesData
                     })
-                        .then(function (response) {
+                        .then(response => {
                             return response.text().then(function (result) {
                                 // htmlWithNER = new DOMParser().parseFromString(result, "text/html");
                                 annotation = '<center><p><a target="_blank" href="https://spacy.io/api/annotation#named-entities">Named Entity Recognition annotations</a></p></center>'
@@ -399,7 +398,7 @@ function fetchFileToRecapService() {
                             });
                         })
                 })
-                .catch(function (error) {
+                .catch(error => {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
                     iziToast.warning({
