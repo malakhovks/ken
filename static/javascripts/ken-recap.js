@@ -561,10 +561,18 @@ function forProjectFileListClickAndEnterPressEvents() {
             }));
         }
 
-        alert('Разбор файлу "' + $projectFileList.prop('value') + '" завантажено');
+        iziToast.info({
+            title: 'Разбор файлу',
+            message: $projectFileList.prop('value') + ' завантажено!',
+            position: 'bottomLeft'
+        });
 
     } else {
-        alert('Разбору файлу "' + $projectFileList.prop('value') + '" не існує');
+        iziToast.warning({
+            title: 'Разбор файлу',
+            message: $projectFileList.prop('value') + ' не існує!',
+            position: 'bottomLeft'
+        });
     }
 
 }
