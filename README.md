@@ -947,6 +947,8 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 - [Docker in Alpine Linux](https://wiki.alpinelinux.org/wiki/Docker)
 - [Docker-compose: идеальное рабочее окружение](https://habr.com/ru/post/346086/)
 - [Docker для начинающего разработчика](https://medium.com/p/docker-for-beginners-a2c9c73e7d3d)
+- [Обзор GUI-интерфейсов для управления Docker-контейнерами](https://habr.com/ru/company/flant/blog/338332/)
+- [Lazydocker — GUI для Docker прямо в терминале](https://habr.com/ru/company/flant/blog/446700/)
 
 #### Система черг для Python Flask application - uWSGI Spooler
 
