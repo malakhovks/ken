@@ -572,6 +572,14 @@ function forProjectFileListClickAndEnterPressEvents() {
             }));
         }
 
+        // add text from last recapped file to textarea id="sents_from_text"
+        // Clear textarea id="sents_from_text"
+        $sents_from_text.text('');
+        // add to textarea id="sents_from_text"
+        for (let sent_element of resJSON.termsintext.sentences.sent) {
+            $sents_from_text.append(sent_element + '\n\n')
+        }
+
         iziToast.info({
             title: 'Разбор файлу',
             message: $projectFileList.prop('value') + ' завантажено!',
