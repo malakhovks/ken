@@ -53,6 +53,7 @@ $newProjectAndClearAll.click(function () {
 });
 
 $(document).ready(function () {
+    // Load last recapped file data
     if (localStorage.getItem("recapForLastFile")) {
         console.log("Load last recapped file data");
         resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
@@ -88,7 +89,6 @@ $(document).ready(function () {
 
     $("#displacy").hide();
     $("#displacy-ner").hide();
-    // $("#displacy-label").center();
 
     iziToast.info({
         title: 'Вітаємо!',
