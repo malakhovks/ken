@@ -836,7 +836,7 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/allterms', {
 - елемент `tname` - лема терміну (для багатослівних термінів - це правильна форма);
 - елемент `wcount` - кількість слів в терміні;
 - елемент `osn` - основа для кожного слова з терміну;
-- елемент `sentpos` - позиція терміну в тексті, подається у вигляді строки формату `2/10` (в даному випадку означає, що термін знаходиться у 2-му реченні на 10 позиції;
+- елемент `sentpos` - позиція терміну в тексті, подається у вигляді строки формату `2/10` (в даному випадку означає, що термін знаходиться у 2-му реченні на 10 позиції);
 - елементи `relup` та `reldown` - відображають зв'язки до інших термінів;
 - елементи `sentences` - містить масив елементів `sent`, який містить речення з тексту. Порядок речень в елементі `sentences` відповідаю порядку речень у вхідному тексті.
 
@@ -913,6 +913,139 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
     </xs:complexType>
   </xs:element>
 </xs:schema>
+```
+
+Елемент `text` містить послідовність елементів `sentence`, що описує речення та їх параметри згідно лінгвістичної обробки опрацьованого тексту, зокрема, синтаксичний аналіз речень, граматичний аналіз речень та морфологічний аналіз речень.
+
+Параметри речень описуються наступними елементами:
+
+- елемент `sentnumber` - позиція речення в тексті, подається у вигляді строки формату `1` (в даному випадку означає, що речення знаходиться на 1 позиції в тексті);
+- елемент `sent` - містить оригінальне речення, що обробляється;
+- елемент `ner` - містить послідовність елементів `entity`, що описує розпізнані іменовані сутності:
+  -  елемент `entitytext` - лема іменованої сутності; 
+  - елемент `label` - мітка іменованої сутності, що визначає її категорію згідно [списку анотацій бібліотеки spaCy](https://spacy.io/api/annotation#named-entities);
+  - елемент `startentityposcharacter` - позиція першого символу іменованої сутності (токенізація на рівні символів), подається у вигляді строки формату `51` (в даному випадку означає, що перший символ іменованої сутності знаходиться на 51 позиції в реченні);
+  - елемент `endentityposcharacter` - позиція останнього символу іменованої сутності (токенізація на рівні символів), подається у вигляді строки формату `81` (в даному випадку означає, що останній символ іменованої сутності знаходиться на 81 позиції в реченні);
+  - елемент `startentitypostoken` - позиція першого токену (першого слова) іменованої сутності (токенізація на рівні слів), подається у вигляді строки формату `11` (в даному випадку означає, що позиція першого токену (першого слова) іменованої сутності в реченні - 11);
+  - елемент `endentitypostoken` - позиція останнього токену (останнього слова) іменованої сутності (токенізація на рівні слів), подається у вигляді строки формату `15` (в даному випадку означає, що позиція останнього токену (останнього слова) іменованої сутності в реченні - 15);
+- елемент `item` - містить набір елементів, що описуть лінгвістичні параметри слів речення:
+  -  елемент `word` - містить слово в оригінальній формі;
+  - елемент `lemma` - лема слова;
+  - елемент `number` - позиція слова (токенізація на рівні слів), подається у вигляді строки формату `1` (в даному випадку означає, що позиція слова в реченні - 1);
+  - елемент `speech` - мітка, що визначає частину мови слова, згідно списку анотацій бібліотеки Конспект;
+  - елемент `pos` - позиція першого символу слова (токенізація на рівні символів), подається у вигляді строки формату `7` (в даному випадку означає, що перший символ слова знаходиться на 7 позиції в реченні); 
+  - елемент `rel_type` - синтаксична залежність слова згідно [списку анотацій бібліотеки spaCy](https://spacy.io/api/annotation#dependency-parsing); 
+  - елемент `relate` - позиція слова (токенізація на рівні слів) до якого є синтаксична залежність, подається у вигляді строки формату `9` (в даному випадку означає, що позиція слова вреченні до якого є синтаксична залежність - 1).
+
+#### **S4** - служба візуалізації іменованих сутностей тексту
+
+##### Опис вхідних даних
+
+Вхідними даними є текстові дані (зокрема JSON-масив речень у вигляді JSON-строки) англійською мовою.
+
+Приклад вхідних даних для служба візуалізації іменованих сутностей тексту:
+
+```json
+[
+  "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.",
+  "Some years later, the success of Google shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up – as compared to simply uploading an HTML page.",
+  "To alleviate this acquisition bottleneck, the field of ontology learning has since emerged as an important sub-field of ontology engineering.",
+  "It is widely accepted that ontologies can facilitate text understanding and automatic processing of textual resources.",
+  "Moving from words to concepts not only mitigates data sparseness issues, but also promises appealing solutions to polysemy and homonymy by finding non-ambiguous concepts that may map to various realizations in – possibly ambiguous – words.",
+  "Numerous applications using lexical-semantic databases like WordNet (Miller, 1990) and its non-English counterparts, e.g. EuroWordNet (Vossen, 1997) or CoreNet (Choi and Bae, 2004) demonstrate the utility of semantic resources for natural language processing.",
+  "Python is a high-level programming language."
+]
+```
+
+Приклад `POST` запиту до кінцевої точки служби **S4** на мові програмування `JavaScript` з використанням `jQuery`:
+
+```JavaScript
+jQuery.ajax({
+    url: "host[:port]/ken/api/v1.0/en/html/ner",
+    type: "POST",
+    headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+    },
+    processData: false,
+    data: "[
+  \"After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.\",
+  \"Some years later, the success of Google shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up – as compared to simply uploading an HTML page.\",
+  \"To alleviate this acquisition bottleneck, the field of ontology learning has since emerged as an important sub-field of ontology engineering.\",
+  \"It is widely accepted that ontologies can facilitate text understanding and automatic processing of textual resources.\",
+  \"Moving from words to concepts not only mitigates data sparseness issues, but also promises appealing solutions to polysemy and homonymy by finding non-ambiguous concepts that may map to various realizations in – possibly ambiguous – words.\",
+  \"Numerous applications using lexical-semantic databases like WordNet (Miller, 1990) and its non-English counterparts, e.g. EuroWordNet (Vossen, 1997) or CoreNet (Choi and Bae, 2004) demonstrate the utility of semantic resources for natural language processing.\",
+  \"Python is a high-level programming language.\"
+]",
+})
+.done(function(data, textStatus, jqXHR) {
+    console.log("HTTP Request Succeeded: " + jqXHR.status);
+    console.log(data);
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("HTTP Request Failed");
+})
+.always(function() {
+    /* ... */
+});
+
+```
+
+##### Опис вихідних даних
+
+Вихідними даними є спеціалізована `HTML`-структура тексту:
+
+```html
+<div class="entities" style="line-height: 2.5">After the vision of the Semantic Web was broadcasted at 
+<mark class="entity" style="background: #bfe1d9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    the turn of the millennium
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">DATE</span>
+</mark>
+, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way. 
+<mark class="entity" style="background: #bfe1d9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    Some years later
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">DATE</span>
+</mark>
+, the success of 
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    Google
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+ shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up – as compared to simply uploading an HTML page. To alleviate this acquisition bottleneck, the field of ontology learning has since emerged as an important sub-field of ontology engineering. It is widely accepted that ontologies can facilitate text understanding and automatic processing of textual resources. Moving from words to concepts not only mitigates data sparseness issues, but also promises appealing solutions to polysemy and homonymy by finding non-ambiguous concepts that may map to various realizations in – possibly ambiguous – words. Numerous applications using lexical-semantic databases like 
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    WordNet
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+ (
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    Miller
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+, 
+<mark class="entity" style="background: #bfe1d9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    1990
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">DATE</span>
+</mark>
+) and its non-
+<mark class="entity" style="background: #c887fb; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    English
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">NORP</span>
+</mark>
+ counterparts, e.g. EuroWordNet (Vossen, 
+<mark class="entity" style="background: #bfe1d9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    1997
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">DATE</span>
+</mark>
+) or 
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    CoreNet
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+ (Choi and Bae, 
+<mark class="entity" style="background: #bfe1d9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone">
+    2004
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem">DATE</span>
+</mark>
+) demonstrate the utility of semantic resources for natural language processing. Python is a high-level programming language.</div>
 ```
 
 -------
