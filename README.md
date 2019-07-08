@@ -196,7 +196,7 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 - **[Компіляція, збірка та розгортання мережевого засобу KEn (з приватного репозиторію) в середовищі програми віртуалізації для операційних систем VirtualBox](#virtualbox-deployment-ua)**
 <!--- - **[Компіляція, збірка та розгортання мережевого засобу KEn (з приватного репозиторію) в середовищі операційної системи Windows 10 та вище](#windows-deployment-ua)**
 --->
-- **[Розгортання мережевого засобу KEn з готового docker-образа](#docker-image-deployment-ua)**
+- **[Розгортання мережевого засобу KEn з готового docker-образа (в середовищі операційних систем Linux та Windows)](#docker-image-deployment-ua)**
 - **[Опис служб (веб-сервісів) мережевого засобу KEn доступних розробнику](#api-ua)**
 - **[Корисні посилання](#references-ua)**
 
@@ -656,7 +656,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="docker-image-deployment-ua"></a>
 
-## Розгортання мережевого засобу KEn з готового docker-образа
+## Розгортання мережевого засобу KEn з готового docker-образа (в середовищі операційних систем Linux та Windows)
 
 
 <a name="system-requirements-4"></a>
