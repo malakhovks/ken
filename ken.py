@@ -1034,19 +1034,7 @@ def get_ner():
 # ------------------------------------------------------------------------------------------------------
 TODO - in pdf
 TODO 2 files, comparable
-
-
-
-TODO exception handling in a good way
-
 TODO Languagetool in a separate container for spelling correction
-
-TODO in production on Windows
-
-
-Done in production on Linux with uWSGI, Nginx, Docker
-Done Handling NER in terms
-
 # ------------------------------------------------------------------------------------------------------
 """
 
