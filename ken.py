@@ -548,7 +548,7 @@ def get_terms_list():
                     if len(doc_for_tokens) == 2:
 
                         '''
-                        # extract one-word terms from 2-words statements (excluding articles DET)
+                        # Extract one-word terms from 2-words statements (excluding articles DET)
                         '''
                         if doc_for_tokens[0].pos_ in ['DET', 'PUNCT']:
 
@@ -666,7 +666,6 @@ def get_terms_list():
 
 
                             # If two-word term not exists in two_word_terms_help_list
-                            # if chunk.lower_ not in two_word_terms_help_list:
                             if chunk.lemma_ not in two_word_terms_help_list:
 
                                 # update two_word_terms_help_list with the new two-word term
@@ -1015,19 +1014,7 @@ def get_ner():
 # ------------------------------------------------------------------------------------------------------
 TODO - in pdf
 TODO 2 files, comparable
-
-
-
-TODO exception handling in a good way
-
 TODO Languagetool in a separate container for spelling correction
-
-TODO in production on Windows
-
-
-Done in production on Linux with uWSGI, Nginx, Docker
-Done Handling NER in terms
-
 # ------------------------------------------------------------------------------------------------------
 """
 

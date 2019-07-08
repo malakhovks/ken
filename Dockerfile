@@ -1,7 +1,7 @@
 FROM python:2.7-slim
 
 LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
-LABEL description "ken (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature (python:2.7-slim + Nginx + uWSGI + Flask)"
+LABEL description "KEn (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature (python:2.7-slim + Nginx + uWSGI + Flask)"
 
 COPY . /srv/ken
 WORKDIR /srv/ken

@@ -53,6 +53,7 @@ $newProjectAndClearAll.click(function () {
 });
 
 $(document).ready(function () {
+    // Load last recapped file data
     if (localStorage.getItem("recapForLastFile")) {
         console.log("Load last recapped file data");
         resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
@@ -65,6 +66,15 @@ $(document).ready(function () {
                 text: element.tname
             }));
         }
+
+        // add text from last recapped file to textarea id="sents_from_text"
+        // Clear textarea id="sents_from_text"
+        $sents_from_text.text('');
+        // add to textarea id="sents_from_text"
+        for (let sent_element of resJSON.termsintext.sentences.sent) {
+            $sents_from_text.append(sent_element + '\n\n')
+        }
+
     }
 
     if (localStorage.getItem("projectFiles")) {
@@ -79,7 +89,6 @@ $(document).ready(function () {
 
     $("#displacy").hide();
     $("#displacy-ner").hide();
-    // $("#displacy-label").center();
 
     iziToast.info({
         title: 'Вітаємо!',
@@ -288,7 +297,7 @@ function fetchFileToRecapService() {
         $upload_button.css('display', 'none');
         $('.tabs').css('display', 'block');
 
-        // Очистка списка терминов, поля textArea и input choose file
+        // Clear terms list,textArea, input choose file
         $recapOverviewButton.val("");
         $('option', $uploadResultList).remove();
         $('option', $uploadUnknownTerms).remove();
@@ -301,7 +310,7 @@ function fetchFileToRecapService() {
                 method: 'post',
                 body: form
             })
-                .then(function (response) {
+                .then(response => {
 
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
@@ -311,20 +320,16 @@ function fetchFileToRecapService() {
                             message: 'Статус: ' + response.status,
                             position: 'bottomLeft'
                         });
-                        alert('Сервіс зайнятий, спробуйте ще раз.' + '\n' + 'Статус: ' + response.status);
                         return;
                     }
-                    // return response.json().then(function (result) {
-                    return response.text().then(function (result) {
+
+                    return response.text().then(result => {
 
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
-                        // console.log(JSON.stringify(resJSON));
-                        // console.log(JSON.stringify(Object.values(resJSON.termsintext.sentences.sent)))
 
                         // add to local storage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
-                        // add to local storage recap of the last uploaded file
 
                         // add to local storage recap of this file for #projectFileList
                         localStorage[uploadFileName.split('\\').pop()] = JSON.stringify(resJSON);
@@ -337,29 +342,27 @@ function fetchFileToRecapService() {
                             }));
                         }
 
+                        // Clear textarea id="sents_from_text"
+                        $sents_from_text.text('');
                         // add to textarea id="sents_from_text"
                         for (let sent_element of resJSON.termsintext.sentences.sent) {
                             $sents_from_text.append(sent_element + '\n\n')
                         }
-                        // hide progress bar
-                        // $("body").css("cursor", "default");
-                        // $(".loader").hide();
                     });
                 })
                 // fetch to parce.xml for NER
-                .then(function (next) {
+                .then(next => {
                     return fetch('/ken/api/v1.0/en/file/parcexml', {
                         method: 'post',
                         body: form
                     })
-                        .then(function (response) {
-                            return response.text().then(function (result) {
+                        .then(response => {
+                            return response.text().then(result => {
+
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 resParceJSON = xmlToJson(dom);
 
                                 for (let sentElement of resParceJSON.text.sentence) {
-
-                                    // console.log(JSON.stringify(sentElement));
 
                                     if (sentElement.hasOwnProperty('ner')) {
                                         if (Array.isArray(sentElement.ner.entity)) {
@@ -382,15 +385,15 @@ function fetchFileToRecapService() {
                         })
                 })
                 // fetch to /ken/api/v1.0/en/html/ner for NER
-                .then(function (next) {
+                .then(next => {
 
                     sentencesData = JSON.stringify(Object.values(resJSON.termsintext.sentences.sent));
-                    console.log(sentencesData);
+
                     return fetch('/ken/api/v1.0/en/html/ner', {
                         method: 'post',
                         body: sentencesData
                     })
-                        .then(function (response) {
+                        .then(response => {
                             return response.text().then(function (result) {
                                 // htmlWithNER = new DOMParser().parseFromString(result, "text/html");
                                 annotation = '<center><p><a target="_blank" href="https://spacy.io/api/annotation#named-entities">Named Entity Recognition annotations</a></p></center>'
@@ -406,7 +409,7 @@ function fetchFileToRecapService() {
                             });
                         })
                 })
-                .catch(function (error) {
+                .catch(error => {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
                     iziToast.warning({
@@ -435,8 +438,12 @@ function forUploadResultListClickAndEnterPressEvents() {
 
     // inserting sentences with selected terms in textArea #textContent
     if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos)) {
+        let sentIndex = [];
         for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) {
-            $textContent.append('\n' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '\n');
+            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
+                $textContent.append('\n' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '\n');
+                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+            }
         }
     }
 
@@ -511,26 +518,6 @@ function forUploadResultListClickAndEnterPressEvents() {
     }
     $textContent.highlightWithinTextarea(onInput);
 
-/*     function multiSearchOr(text, searchWord) {
-        var regex = RegExp('\\b(\\w*' + searchWord + '\\w*)\\b', 'ig');
-        let m;
-        let foundWords = [];
-        while ((m = regex.exec(text)) !== null) {
-            // This is necessary to avoid infinite loops with zero-width matches
-            if (m.index === regex.lastIndex) {
-                regex.lastIndex++;
-            }
-
-            // The result can be accessed through the `m`-variable.
-            m.forEach((match, groupIndex) => {
-                // console.log(match);
-                foundWords.push(match)
-            });
-        }
-        return foundWords[0];
-    } */
-
-
     // visualize noun chunk / term
     let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
         container: '#displacy'
@@ -565,10 +552,26 @@ function forProjectFileListClickAndEnterPressEvents() {
             }));
         }
 
-        alert('Разбор файлу "' + $projectFileList.prop('value') + '" завантажено');
+        // add text from last recapped file to textarea id="sents_from_text"
+        // Clear textarea id="sents_from_text"
+        $sents_from_text.text('');
+        // add to textarea id="sents_from_text"
+        for (let sent_element of resJSON.termsintext.sentences.sent) {
+            $sents_from_text.append(sent_element + '\n\n')
+        }
+
+        iziToast.info({
+            title: 'Разбор файлу',
+            message: $projectFileList.prop('value') + ' завантажено!',
+            position: 'bottomLeft'
+        });
 
     } else {
-        alert('Разбору файлу "' + $projectFileList.prop('value') + '" не існує');
+        iziToast.warning({
+            title: 'Разбор файлу',
+            message: $projectFileList.prop('value') + ' не існує!',
+            position: 'bottomLeft'
+        });
     }
 
 }
@@ -642,26 +645,6 @@ function xmlToJson(xml) {
     return obj;
 }
 
-function getLanguage(ofText) {
-    let text = 'https://translate.yandex.net/api/v1.5/tr.json/detect?hint=ru,en&key=trnsl.1.1.20160517T143002Z.e9fc37c7a484c5f4.8cba036cc3eb084c401f3766ed5b2b389b6dc9fc&text=' + ofText;
-    if (self.fetch) {
-        fetch(text, {
-            method: 'post'
-        })
-            .then(function (response) {
-                return response.json().then(function (result) {
-                    // langField.innerHTML = result.lang;
-                    console.log(result.lang);
-                })
-            })
-            .catch(function (error) {
-                alert('Виникла помилка на стороні серевера.' + '\n' + 'Помилка: ' + error + '\n' + ' Cпробуйте ще раз.');
-            });
-    } else {
-        alert('Ваш браузер застарів. Встановіть актуальну версію Google Chrome');
-    }
-}
-
 // CHANGE TABS
 $('.nav-tabs a').click(function (e) {
     e.preventDefault();
@@ -669,10 +652,6 @@ $('.nav-tabs a').click(function (e) {
 });
 
 $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
-
-    // if ($(e.target).attr("href") == '#new_term_tab'){
-    //     alert('target');
-    // }
 
     if ($("#new_term_tab").is(".tab-pane.active")) {
         $("#displacy").hide();
