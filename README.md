@@ -1,4 +1,4 @@
-# KEn (konspekt English)
+# KEn (Konspekt English)
 
 ### Choose your language / Оберіть мову
 - **[Українська](#toc-ua)**
@@ -7,7 +7,7 @@
 -------
 
 <a name="toc-ua"></a>
-## **KEn** (konspekt English) - мережевий засіб виділення термінів з природномовних текстів англійською мовою
+## **KEn** (Konspekt English) - мережевий засіб виокремлення термінів з природномовних текстів англійською мовою
 
 ### Зміст
 - **[Призначення та функції](#features-ua)**
@@ -28,18 +28,26 @@
 <a name="features-ua"></a>
 ## Призначення та функції
 
-Мережевий засіб (у вигляді веб-сервісу з API) **KEn** (konspekt English) призначений для виділення термінів з природномовних текстів англійською мовою з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
+Лінгвістично-семантичний аналіз природної мови – це процес обробки природномовних текстів англійською, російською та українською мовами та формування визначених вихідних даних:
+
+- формалізація представлення синтактико-семантичної структури речень у вигляді спеціалізованих XML- та HTML- структур;
+- автоматична екстракція/виокремлення з документів одно- та багатослівних термінів;
+- автоматична екстракція/виокремлення контекстів, у яких використовуються відповідні терміни, та представлення їх у вигляді спеціалізованих XML- та HTML- структур;
+- виокремлення заданих семантичних відношень на основі шаблонів їх описів.
+
+
+Мережевий засіб (у вигляді веб-сервісу з API) **KEn** (Konspekt English) призначений для виокремлення термінів з природномовних текстів англійською мовою з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 
 Мережевий засіб (у вигляді веб-сервісу з API) **KEn** охоплює всі найважливіші етапи обробки природної мови, а саме:
 
-- екстракт тексту з документів форматів `pdf`, `docx`, `txt`;
-- базова нормалізація текстів - так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстракту тексту з документів `pdf`, `docx`, `txt`);
+- екстракція тексту з документів форматів `pdf`, `docx`, `txt`;
+- базова нормалізація текстів - так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстракції тексту з документів `pdf`, `docx`, `txt`);
 - перевірка орфографії тексту та автоматичне виправлення помилок;
 - базова сегментація тексту на речення;
 - розмічування частин мови (англ. Part-of-Speech tagging) для кожного речення тексту (поверхневий синтаксичний аналіз);
 - лематизація слів (приведення до словарної форми слова) на рівні речення;
 - стемінг (англ. Stemming) слів (процес скорочення слова до основи шляхом відкидання допоміжних частин, таких як закінчення чи суфікс) на рівні речення;
-- екстракт термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес екстракту термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
+- виокремлення  термінів (так званих `base noun phrases`, `noun chunks`), більше детально процес виокремлення термінів описано за посиланнями: [spaCy dependency-parse](https://spacy.io/usage/linguistic-features#dependency-parse) та [Wikipedia Noun phrase](https://en.wikipedia.org/wiki/Noun_phrase);
 - формування спеціалізованих `xml`-структур тексту.
 
 -------
@@ -51,7 +59,7 @@
 - [spaCy](https://spacy.io/) – бібліотека з відкритим вихідним кодом для передової обробки природних мов
 - [Flask](http://flask.pocoo.org/) – мікрофреймворк для веб-додатків
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/) – розширення Flask для обробки спільного використання ресурсів з різних джерел (англ. Cross-Origin Resource Sharing, CORS)
-- [pdfminer](https://pypi.org/project/pdfminer/) – інструмент для екстракту інформації з документів PDF
+- [pdfminer](https://pypi.org/project/pdfminer/) – інструмент для екстракції інформації з документів PDF
 - [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) https://uwsgi-docs.readthedocs.io/en/latest/) – веб-сервер і сервер веб-додатків, спочатку реалізований для запуску додатків Python через протокол WSGI (і його бінарний варіант uwsgi)
 - [TextBlob](https://textblob.readthedocs.io) – бібліотека для обробки текстових даних
 - [Natural Language Toolkit NLTK](https://www.nltk.org/) – пакет бібліотек і програм для символьної і статистичної обробки природної мови
@@ -564,7 +572,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="api-ua"></a>
 
-## Опис служб (веб-сервісів) мережевого засобу `KEn` (konspekt English) доступних розробнику
+## Опис служб (веб-сервісів) мережевого засобу `KEn` (Konspekt English) доступних розробнику
 
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
 
@@ -916,7 +924,7 @@ jQuery.ajax({
 -------
 
 <a name="toc-en"></a>
-**KEn** (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
+**KEn** (Konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
 
 ### Table of Contents
 - **[Features](#features-en)**
@@ -927,9 +935,9 @@ jQuery.ajax({
 <a name="features-en"></a>
 ## Features
 
-**KEn** (konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
+**KEn** (Konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
-**KEn** (konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
+**KEn** (Konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
 
 - extracting text data from e-documents (`pdf`, `docx`, `txt`);
 - text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
