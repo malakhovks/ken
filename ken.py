@@ -218,7 +218,7 @@ def gethelp():
 # parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
-@app.route('/ken/api/v1.0/en/file/parcexml', methods=['POST'])
+@app.route('/ken/api/en/file/parcexml', methods=['POST'])
 def parcexml_Generator():
     # check if the post request has the file part
     if 'file' not in request.files:
@@ -412,7 +412,7 @@ def parcexml_Generator():
 # allterms.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
-@app.route('/ken/api/v1.0/en/file/allterms', methods=['POST'])
+@app.route('/ken/api/en/file/allterms', methods=['POST'])
 def get_terms_list():
     # check if the post request has the file part
     if 'file' not in request.files:
@@ -996,7 +996,7 @@ def get_terms_list():
 # ------------------------------------------------------------------------------------------------------
 # """
 
-@app.route('/ken/api/v1.0/en/html/depparse/sentence', methods=['GET'])
+@app.route('/ken/api/en/html/depparse/sentence', methods=['GET'])
 def get_dependency_parse():
     # here we want to get the value of user (i.e. ?sentence=some-value)
     sentence = request.args.get('sentence')
@@ -1004,7 +1004,7 @@ def get_dependency_parse():
     return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
 
 # Noun chunks "base noun phrases" deps visualization
-@app.route('/ken/api/v1.0/en/html/depparse/nounchunk', methods=['POST'])
+@app.route('/ken/api/en/html/depparse/nounchunk', methods=['POST'])
 def get_dep_parse():
     rec = json.loads(request.get_data(as_text=True))
     doc = NLP_EN(rec['text'])
@@ -1012,7 +1012,7 @@ def get_dep_parse():
     return Response(json.dumps(r_t), mimetype='text/plain')
 
 # NER in text visualization
-@app.route('/ken/api/v1.0/en/html/ner', methods=['POST'])
+@app.route('/ken/api/en/html/ner', methods=['POST'])
 def get_ner():
     req_data_JSON = json.loads(request.get_data(as_text=True))
     doc = NLP_EN(' '.join(e for e in req_data_JSON))

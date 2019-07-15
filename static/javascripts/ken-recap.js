@@ -306,7 +306,7 @@ function fetchFileToRecapService() {
 
         if (self.fetch) {
 
-            fetch('/ken/api/v1.0/en/file/allterms', {
+            fetch('/ken/api/en/file/allterms', {
                 method: 'post',
                 body: form
             })
@@ -352,7 +352,7 @@ function fetchFileToRecapService() {
                 })
                 // fetch to parce.xml for NER
                 .then(next => {
-                    return fetch('/ken/api/v1.0/en/file/parcexml', {
+                    return fetch('/ken/api/en/file/parcexml', {
                         method: 'post',
                         body: form
                     })
@@ -384,12 +384,12 @@ function fetchFileToRecapService() {
                             });
                         })
                 })
-                // fetch to /ken/api/v1.0/en/html/ner for NER
+                // fetch to /ken/api/en/html/ner for NER
                 .then(next => {
 
                     sentencesData = JSON.stringify(Object.values(resJSON.termsintext.sentences.sent));
 
-                    return fetch('/ken/api/v1.0/en/html/ner', {
+                    return fetch('/ken/api/en/html/ner', {
                         method: 'post',
                         body: sentencesData
                     })
@@ -519,7 +519,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     $textContent.highlightWithinTextarea(onInput);
 
     // visualize noun chunk / term
-    let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
+    let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
         container: '#displacy'
     });
     displacy.parse($uploadResultList.prop('value'));

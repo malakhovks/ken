@@ -607,11 +607,11 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 | Позначення |Служба|Кінцева точка API|Метод http-запиту|
 | :--------: | :---------------------: | :--------- | :--------: |
-|    **S1**    | формування спеціалізованої `XML`-структури тексту *allterms.xml* |`host[:port]/ken/api/v1.0/en/file/allterms`|POST|
-| **S2** | формування спеціалізованої `XML`-структури тексту *parce.xml* |`host[:port]/ken/api/v1.0/en/file/parcexml`|POST|
-| **S3** | візуалізації залежностей термінів |`host[:port]/ken/api/v1.0/en/html/depparse/nounchunk`|POST|
-| **S4** | візуалізації іменованих сутностей тексту |`host[:port]/ken/api/v1.0/en/html/ner`|POST|
-| **S5** | візуалізації синтаксичних залежностей речення |`/ken/api/v1.0/en/html/depparse/sentence`|GET|
+|    **S1**    | формування спеціалізованої `XML`-структури тексту *allterms.xml* |`host[:port]/ken/api/en/file/allterms`|POST|
+| **S2** | формування спеціалізованої `XML`-структури тексту *parce.xml* |`host[:port]/ken/api/en/file/parcexml`|POST|
+| **S3** | візуалізації залежностей термінів |`host[:port]/ken/api/en/html/depparse/nounchunk`|POST|
+| **S4** | візуалізації іменованих сутностей тексту |`host[:port]/ken/api/en/html/ner`|POST|
+| **S5** | візуалізації синтаксичних залежностей речення |`/ken/api/en/html/depparse/sentence`|GET|
 | **S6** | графічного інтерфейсу користувача |`host[:port]/`|GET|
 
 #### **S1** - служба формування спеціалізованої `XML`-структури тексту *allterms.xml*
@@ -635,7 +635,7 @@ var fileField = document.querySelector('input[type="file"]');
 # formData.append(name, value);
 formData.append('file', fileField.files[0]);
 
-fetch("file", 'host[:port]/ken/api/v1.0/en/file/allterms', {
+fetch("file", 'host[:port]/ken/api/en/file/allterms', {
                 method: 'post',
                 body: formData
             })
@@ -722,7 +722,7 @@ var fileField = document.querySelector('input[type="file"]');
 # formData.append(name, value);
 formData.append('file', fileField.files[0]);
 
-fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
+fetch("file", 'host[:port]/ken/api/en/file/parcexml', {
                 method: 'post',
                 body: formData
             })
@@ -821,7 +821,7 @@ fetch("file", 'host[:port]/ken/api/v1.0/en/file/parcexml', {
 
 ```JavaScript
 jQuery.ajax({
-    url: "host[:port]/ken/api/v1.0/en/html/ner",
+    url: "host[:port]/ken/api/en/html/ner",
     type: "POST",
     headers: {
         "Content-Type": "text/plain; charset=utf-8",
