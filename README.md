@@ -547,12 +547,24 @@ $ docker pull malakhovks/ken
 $ docker run --restart always --name ken -d -p 80:80 malakhovks/ken 
 ```
 
-#### Розгортання мережевого засобу KEn з готового docker-образа (з використання вже отриманого docker-образа мережевого засобу KEn) складається з наступних етапів:
+#### Збереження зформованого docker-образа в файл (`.tar` архів) для подальшого використання:
+
+```bash
+docker save -o <шлях до .tar файлу що буде згенеровано> <імя docker-образа>
+```
+
+**Приклад:**
+
+```bash
+docker save -o D:\ken.tar malakhovks/ken
+```
+
+#### Розгортання мережевого засобу KEn з готового docker-образа (з використання вже отриманого docker-образа у вигляді `.tar` архіву) складається з наступних етапів:
 
 1. Отримати docker-образ мережевого засобу KEn у вигляді файлу типу tar archive та загрузити його командою [load](https://docs.docker.com/engine/reference/commandline/load/):
 
 ```bash
-$ docker load -i <path to image tar file>
+$ docker load -i <шлях до файлу .tar архіву з docker-образом>
 ```
 
 **Приклад:**
