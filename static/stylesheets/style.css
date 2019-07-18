@@ -165,12 +165,25 @@ select {
 
 /*COL-3*/
 
+#table-content-block {
+	overflow: auto;
+	width:100%;
+	height: 100%;
+}
+
 #table-block {
 	display: flex;
 	flex-direction: column;
+	overflow-y: auto;
 }
 
 #sents_from_text {
+	height: 100vh;
+	width: 100vw;
+	border-color: #8BC34A;
+}
+
+#notes {
 	height: 100vh;
 	width: 100vw;
 	border-color: #8BC34A;
