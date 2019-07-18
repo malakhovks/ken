@@ -315,6 +315,7 @@ function fetchFileToRecapService() {
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
                         $(".loader").hide();
+                        $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
                         iziToast.warning({
                             title: 'Сервіс зайнятий, спробуйте ще раз.',
                             message: 'Статус: ' + response.status,
@@ -412,6 +413,7 @@ function fetchFileToRecapService() {
                 .catch(error => {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
+                    $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
                     iziToast.warning({
                         title: 'Помилка',
                         message: 'Виникла помилка на стороні серевера ' + error,
