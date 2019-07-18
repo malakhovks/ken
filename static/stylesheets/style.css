@@ -168,6 +168,7 @@ select {
 #table-block {
 	display: flex;
 	flex-direction: column;
+	overflow-y: auto;
 }
 
 #sents_from_text {
@@ -177,9 +178,9 @@ select {
 }
 
 #notes {
-    height: 100vh;
-    width: 100vw;
-    border-color: #8BC34A;
+	height: 100vh;
+	width: 100vw;
+	border-color: #8BC34A;
 }
 
 /*BUTTON BLOCK*/
