@@ -672,4 +672,32 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         $("#displacy-ner").hide();
         $("#displacy-label").hide();
     }
+    if ($("#fileList").is(".tab-pane.active")) {
+        document.getElementById("projectFileList").onmousedown = function(event) {
+            if (event.which == 3) {
+                iziToast.warning({
+                    title: 'Ви впевнені?',
+                    message: ' Видалити файл '+ $("#projectFileList option:selected").text() + ' ?',
+                    position: 'center',
+                    timeout: 10000,
+                    buttons: [
+                        ['<button>Так</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosing: function (instance, toast, closedBy) {
+                                    $('#projectFileList option:selected').remove();
+                                }
+                            }, toast);
+                        }],
+                        ['<button>Ні</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp'
+                            }, toast);
+                        }]
+                    ]
+                });
+            }
+        }
+        console.log('#fileList');
+    }
 });
