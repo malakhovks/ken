@@ -60,6 +60,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
+	/* resize: horizontal;
+	overflow: auto; */
 }
 
 .col-md-6 {
@@ -68,6 +70,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
+	/* resize: horizontal;
+	overflow: auto; */
 }
 
 /*RECAP-SERVICE_______________________________________________________________________________________________________*/
@@ -92,6 +96,7 @@ body {
 	border: 1px solid #8BC34A;
 	height: 100%;
 	overflow-y: scroll;
+	overflow-x: scroll;
 }
 
 /*COL_2*/
@@ -149,6 +154,7 @@ select {
 	font-size: 16px;
 	overflow-y: scroll;
 	border-color: #8BC34A;
+	overflow-x: scroll;
 }
 
 #select-block {

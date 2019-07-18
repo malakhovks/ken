@@ -306,7 +306,7 @@ function fetchFileToRecapService() {
 
         if (self.fetch) {
 
-            fetch('/ken/api/v1.0/en/file/allterms', {
+            fetch('/ken/api/en/file/allterms', {
                 method: 'post',
                 body: form
             })
@@ -315,6 +315,7 @@ function fetchFileToRecapService() {
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
                         $(".loader").hide();
+                        $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
                         iziToast.warning({
                             title: 'Сервіс зайнятий, спробуйте ще раз.',
                             message: 'Статус: ' + response.status,
@@ -352,7 +353,7 @@ function fetchFileToRecapService() {
                 })
                 // fetch to parce.xml for NER
                 .then(next => {
-                    return fetch('/ken/api/v1.0/en/file/parcexml', {
+                    return fetch('/ken/api/en/file/parcexml', {
                         method: 'post',
                         body: form
                     })
@@ -384,12 +385,12 @@ function fetchFileToRecapService() {
                             });
                         })
                 })
-                // fetch to /ken/api/v1.0/en/html/ner for NER
+                // fetch to /ken/api/en/html/ner for NER
                 .then(next => {
 
                     sentencesData = JSON.stringify(Object.values(resJSON.termsintext.sentences.sent));
 
-                    return fetch('/ken/api/v1.0/en/html/ner', {
+                    return fetch('/ken/api/en/html/ner', {
                         method: 'post',
                         body: sentencesData
                     })
@@ -412,6 +413,7 @@ function fetchFileToRecapService() {
                 .catch(error => {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
+                    $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
                     iziToast.warning({
                         title: 'Помилка',
                         message: 'Виникла помилка на стороні серевера ' + error,
@@ -519,7 +521,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     $textContent.highlightWithinTextarea(onInput);
 
     // visualize noun chunk / term
-    let displacy = new displaCy('/ken/api/v1.0/en/html/depparse/nounchunk', {
+    let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
         container: '#displacy'
     });
     displacy.parse($uploadResultList.prop('value'));
@@ -669,5 +671,33 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         $("#displacy").hide();
         $("#displacy-ner").hide();
         $("#displacy-label").hide();
+    }
+    if ($("#fileList").is(".tab-pane.active")) {
+        document.getElementById("projectFileList").onmousedown = function(event) {
+            if (event.which == 3) {
+                iziToast.warning({
+                    title: 'Ви впевнені?',
+                    message: ' Видалити файл '+ $("#projectFileList option:selected").text() + ' ?',
+                    position: 'center',
+                    timeout: 10000,
+                    buttons: [
+                        ['<button>Так</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosing: function (instance, toast, closedBy) {
+                                    $('#projectFileList option:selected').remove();
+                                }
+                            }, toast);
+                        }],
+                        ['<button>Ні</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp'
+                            }, toast);
+                        }]
+                    ]
+                });
+            }
+        }
+        console.log('#fileList');
     }
 });
