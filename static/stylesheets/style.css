@@ -176,6 +176,12 @@ select {
 	border-color: #8BC34A;
 }
 
+#notes {
+    height: 100vh;
+    width: 100vw;
+    border-color: #8BC34A;
+}
+
 /*BUTTON BLOCK*/
 
 .table_button_block {
