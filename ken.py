@@ -916,7 +916,7 @@ def get_terms_list():
                     if len(doc_for_tokens) == 3:
 
                         # print('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
-                        # print('--------------------')
+                        print('--------------------')
 
                     if len(doc_for_tokens) > 3:
 
