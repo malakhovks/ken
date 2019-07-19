@@ -695,7 +695,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                         }]
                     ]
                 });
-                return false;
+                return false; // cancel default context menu
         }
     }
 });
