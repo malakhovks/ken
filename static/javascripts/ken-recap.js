@@ -673,8 +673,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         $("#displacy-label").hide();
     }
     if ($("#fileList").is(".tab-pane.active")) {
-        document.getElementById("projectFileList").onmousedown = function(event) {
-            if (event.which == 3) {
+        document.getElementById("projectFileList").oncontextmenu = function(event) {
                 iziToast.warning({
                     title: 'Ви впевнені?',
                     message: ' Видалити файл '+ $("#projectFileList option:selected").text() + ' ?',
@@ -696,8 +695,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                         }]
                     ]
                 });
-            }
+                return false; // cancel default context menu
         }
-        console.log('#fileList');
     }
 });
