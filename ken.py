@@ -126,6 +126,15 @@ def text_normalization_default(raw_text):
             \n = LF (Line Feed) → Used as a new line character in Unix/Mac OS X
             \r\n = CR + LF → Used as a new line character in Windows
             """
+            """
+            \W pattern: When the LOCALE and UNICODE flags are not specified, matches any non-alphanumeric character;
+            this is equivalent to the set [^a-zA-Z0-9_]. With LOCALE, it will match any character not in the set [0-9_], and not defined as alphanumeric for the current locale.
+            If UNICODE is set, this will match anything other than [0-9_] plus characters classified as not alphanumeric in the Unicode character properties database.
+            To remove all the non-word characters, the \W pattern can be used as follows:
+            """
+            line = re.sub(r'\W', ' ', line, flags=re.I)
+            # remove ° symbol
+            line = re.sub('[°]', ' ', line)
             line = re.sub('[\n]', ' ', line)
             line = re.sub('[\r\n]', ' ', line)
             line = re.sub('[\r]', ' ', line)
