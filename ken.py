@@ -133,6 +133,8 @@ def text_normalization_default(raw_text):
             To remove all the non-word characters, the \W pattern can be used as follows:
             """
             line = re.sub(r'\W', ' ', line, flags=re.I)
+            # remove all words which contains number
+            line = re.sub(r'\w*\d\w*', ' ', line)
             # remove ° symbol
             line = re.sub('[°]', ' ', line)
             line = re.sub('[\n]', ' ', line)
