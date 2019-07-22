@@ -183,6 +183,9 @@ def get_text_from_pdf_pdfminer(pdf_path):
     resource_manager = PDFResourceManager()
     retstr = BytesIO()
     # save document layout including spaces that are only visual not a character
+    """
+    Some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text. To override this behavior the all_texts parameter needs to be set to True
+    """
     laparams = LAParams()
     setattr(laparams, 'all_texts', True)
     # save document layout including spaces that are only visual not a character
