@@ -253,7 +253,6 @@ def parcexml_Generator():
         return abort(400)
 
     if file and allowed_file(file.filename):
-        # TODO doc/docx processing
         # pdf processing
         if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
             pdf_file = secure_filename(file.filename)
