@@ -102,7 +102,7 @@ body {
 /*COL_2*/
 
 #term-tab-container {
-	display: grid;
+	display: block;
 	width: 100%;
 }
 
