@@ -426,7 +426,7 @@ function fetchFileToRecapService() {
                     $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
                     iziToast.warning({
                         title: 'Помилка',
-                        message: 'Виникла помилка на стороні серевера ' + error,
+                        message: 'Виникла помилка на стороні серевера 500',
                         position: 'bottomLeft',
                         onClosed: function () {
                             iziToast.destroy();
