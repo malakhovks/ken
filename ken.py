@@ -252,7 +252,7 @@ def parcexml_Generator():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8', errors='replace')
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -263,7 +263,7 @@ def parcexml_Generator():
                 raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
-            raw_text = file.read().decode('utf-8')
+            raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
 
         # POS UD
@@ -446,7 +446,7 @@ def get_terms_list():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8', errors='replace')
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -457,7 +457,7 @@ def get_terms_list():
                 raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
-            raw_text = file.read().decode('utf-8')
+            raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
         try:
             # spaCy doc init + default sentence normalization
