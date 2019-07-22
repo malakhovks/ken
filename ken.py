@@ -57,6 +57,7 @@ from io import BytesIO
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
+from pdfminer.layout import LAParams
 
 # load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template
@@ -181,7 +182,9 @@ def sentence_spelling(unchecked_sentence):
 def get_text_from_pdf_pdfminer(pdf_path):
     resource_manager = PDFResourceManager()
     retstr = BytesIO()
-    device = TextConverter(resource_manager, retstr)
+    # save document layout including spaces that are only visual not a character
+    laparams = LAParams()
+    device = TextConverter(resource_manager, retstr, laparams=laparams)
     page_interpreter = PDFPageInterpreter(resource_manager, device)
     with open(pdf_path, 'rb') as fh:
         for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
@@ -263,6 +266,7 @@ def parcexml_Generator():
                 raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            # decode the file as UTF-8 ignoring any errors
             raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
 
@@ -457,6 +461,7 @@ def get_terms_list():
                 raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            # decode the file as UTF-8 ignoring any errors
             raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
         try:
