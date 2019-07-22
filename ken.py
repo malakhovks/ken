@@ -35,7 +35,8 @@ from nltk.stem.snowball import SnowballStemmer
 import pickle
 import codecs
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
 
 # load libraries for string proccessing
 import re, string
@@ -419,7 +420,9 @@ def parcexml_Generator():
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
             return ET.tostring(root_element, encoding='utf8', method='xml')
-        except:
+        except Exception as e:
+            # print "Unexpected error:", sys.exc_info()
+            logging.error(e, exc_info=True)
             return abort(500)
     file.close()
     return abort(400)
@@ -1001,8 +1004,9 @@ def get_terms_list():
             root_termsintext_element.append(sentences_element)
 
             return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
-        except:
+        except Exception as e:
             # print "Unexpected error:", sys.exc_info()
+            logging.error(e, exc_info=True)
             return abort(500)
     file.close()
     return abort(400)
