@@ -35,7 +35,8 @@ from nltk.stem.snowball import SnowballStemmer
 import pickle
 import codecs
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
 
 # load libraries for string proccessing
 import re, string
@@ -57,6 +58,7 @@ from io import BytesIO
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
+from pdfminer.layout import LAParams
 
 # load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template
@@ -181,7 +183,14 @@ def sentence_spelling(unchecked_sentence):
 def get_text_from_pdf_pdfminer(pdf_path):
     resource_manager = PDFResourceManager()
     retstr = BytesIO()
-    device = TextConverter(resource_manager, retstr)
+    # save document layout including spaces that are only visual not a character
+    """
+    Some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text. To override this behavior the all_texts parameter needs to be set to True
+    """
+    laparams = LAParams()
+    setattr(laparams, 'all_texts', True)
+    # save document layout including spaces that are only visual not a character
+    device = TextConverter(resource_manager, retstr, laparams=laparams)
     page_interpreter = PDFPageInterpreter(resource_manager, device)
     with open(pdf_path, 'rb') as fh:
         for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
@@ -244,7 +253,6 @@ def parcexml_Generator():
         return abort(400)
 
     if file and allowed_file(file.filename):
-        # TODO doc/docx processing
         # pdf processing
         if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
             pdf_file = secure_filename(file.filename)
@@ -252,7 +260,7 @@ def parcexml_Generator():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8', errors='replace')
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -263,7 +271,8 @@ def parcexml_Generator():
                 raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
-            raw_text = file.read().decode('utf-8')
+            # decode the file as UTF-8 ignoring any errors
+            raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
 
         # POS UD
@@ -410,7 +419,9 @@ def parcexml_Generator():
                 # create full <parce.xml> file structure
                 root_element.append(new_sentence_element)
             return ET.tostring(root_element, encoding='utf8', method='xml')
-        except:
+        except Exception as e:
+            # print "Unexpected error:", sys.exc_info()
+            logging.error(e, exc_info=True)
             return abort(500)
     file.close()
     return abort(400)
@@ -446,7 +457,7 @@ def get_terms_list():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8')
+                raw_text = get_text_from_pdf_pdfminer(destination).decode('utf-8', errors='replace')
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -457,7 +468,8 @@ def get_terms_list():
                 raw_text = get_text_from_docx(destination)
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
-            raw_text = file.read().decode('utf-8')
+            # decode the file as UTF-8 ignoring any errors
+            raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
         try:
             # spaCy doc init + default sentence normalization
@@ -991,8 +1003,9 @@ def get_terms_list():
             root_termsintext_element.append(sentences_element)
 
             return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
-        except:
+        except Exception as e:
             # print "Unexpected error:", sys.exc_info()
+            logging.error(e, exc_info=True)
             return abort(500)
     file.close()
     return abort(400)
@@ -1037,17 +1050,6 @@ def get_ner():
 # Visualizers service
 # ------------------------------------------------------------------------------------------------------
 # """
-
-
-
-""" 
-# FEATURE LIST
-# ------------------------------------------------------------------------------------------------------
-TODO - in pdf
-TODO 2 files, comparable
-TODO Languagetool in a separate container for spelling correction
-# ------------------------------------------------------------------------------------------------------
-"""
 
 if __name__ == '__main__':
     # default port = 5000
