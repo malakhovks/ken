@@ -184,6 +184,8 @@ def get_text_from_pdf_pdfminer(pdf_path):
     retstr = BytesIO()
     # save document layout including spaces that are only visual not a character
     laparams = LAParams()
+    setattr(laparams, 'all_texts', True)
+    # save document layout including spaces that are only visual not a character
     device = TextConverter(resource_manager, retstr, laparams=laparams)
     page_interpreter = PDFPageInterpreter(resource_manager, device)
     with open(pdf_path, 'rb') as fh:
