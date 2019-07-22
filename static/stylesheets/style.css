@@ -101,6 +101,17 @@ body {
 
 /*COL_2*/
 
+#term-tab-container {
+	display: grid;
+	width: 100%;
+}
+
+#sort-select {
+	text-align: center;
+	text-align-last: center;
+	margin: 5px 0 5px 0px;
+}
+
 /*OVERVIEW BUTTON*/
 #overview-button, #upload-button {
 	position: relative;

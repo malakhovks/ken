@@ -49,7 +49,14 @@
       </div>
       <div class="tab-content" id="select-block">
         <div class="tab-pane active fade in" id="term_tab">
-          <select id="uploadResultList" name="uploadResultList"></select>
+          <div id="term-tab-container">
+              <select id="sort-select">
+                  <option value="">-- Оберіть тип сортування --</option>
+                  <option value="dog">за алфавітом</option>
+                  <option value="cat">за частотою</option>
+              </select>
+            <select id="uploadResultList" name="uploadResultList"></select>
+          </div>
         </div>
         <div class="tab-pane fade" id="new_term_tab">
           <select id="uploadUnknownTerms" name="uploadUnknownTerms"></select>
