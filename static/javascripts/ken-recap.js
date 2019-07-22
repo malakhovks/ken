@@ -270,10 +270,13 @@ function fetchFileToRecapService() {
         // Show progress bar
         $("body").css("cursor", "progress");
         $(".loader").show();
+
         iziToast.info({
-            title: 'Аналіз файлу',
+            title: 'Зачекайте! Аналіз файлу',
             message: $recapOverviewButton.val().split('\\').pop(),
-            position: 'bottomLeft'
+            position: 'bottomLeft',
+            close: false,
+            timeout: false
         });
 
         //add filename to localStorage and projectFileList
@@ -319,7 +322,10 @@ function fetchFileToRecapService() {
                         iziToast.warning({
                             title: 'Сервіс зайнятий, спробуйте ще раз.',
                             message: 'Статус: ' + response.status,
-                            position: 'bottomLeft'
+                            position: 'bottomLeft',
+                            onClosed: function () {
+                                iziToast.destroy();
+                            }
                         });
                         return;
                     }
@@ -405,7 +411,11 @@ function fetchFileToRecapService() {
                                 iziToast.success({
                                     title: 'OK',
                                     message: 'Обробка файлу виконана',
-                                    position: 'bottomLeft'
+                                    position: 'bottomLeft',
+                                    timeout: 2000,
+                                    onClosed: function () {
+                                        iziToast.destroy();
+                                    }
                                 });
                             });
                         })
@@ -417,7 +427,10 @@ function fetchFileToRecapService() {
                     iziToast.warning({
                         title: 'Помилка',
                         message: 'Виникла помилка на стороні серевера ' + error,
-                        position: 'bottomLeft'
+                        position: 'bottomLeft',
+                        onClosed: function () {
+                            iziToast.destroy();
+                        }
                     });
                 });
 
@@ -425,7 +438,10 @@ function fetchFileToRecapService() {
             iziToast.warning({
                 title: 'Ваш браузер застарів.',
                 message: 'Встановіть актуальну версію Google Chrome.',
-                position: 'bottomLeft'
+                position: 'bottomLeft',
+                onClosed: function () {
+                    iziToast.destroy();
+                }
             });
         }
     }
