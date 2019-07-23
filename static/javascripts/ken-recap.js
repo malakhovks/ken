@@ -701,7 +701,7 @@ function xmlToJson(xml) {
     return obj;
 }
 
-// CHANGE TABS
+// CHANGE TABS ---------------------------------------------------------------------------------------------------------
 $('.nav-tabs a').click(function (e) {
     e.preventDefault();
     $(this).tab('show')
@@ -753,8 +753,9 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         }
     }
 });
+// CHANGE TABS ---------------------------------------------------------------------------------------------------------
 
-// Sort terms
+// Sort terms ---------------------------------------------------------------------------------------------------------
 $sortSelect.on('change', function (e) {
     var selected = $("#uploadResultList").val();
     let sortSelectVal = $("#sort-select option:selected").val();
@@ -818,3 +819,4 @@ $sortSelect.on('change', function (e) {
         }
     }
 });
+// Sort terms ---------------------------------------------------------------------------------------------------------
