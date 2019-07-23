@@ -26,7 +26,8 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $buttonSaveNer = $('#button-save-ner'),
     $buttonSaveProjectFileList = $('#button-save-project-file-list'),
     $upload_button = $('#upload-button'),
-    $sents_from_text = $('#sents_from_text');
+    $sents_from_text = $('#sents_from_text'),
+    $sortSelect = $('#sort-select');
 
 $newProjectAndClearAll.click(function () {
     iziToast.warning({
@@ -717,7 +718,8 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
 });
 
 // Sort terms
-$('#sort-select').on('change', function (e) {
-    let selectVal = $("#sort-select option:selected").val();
+$sortSelect.on('change', function (e) {
+    let sortSelectVal = $("#sort-select option:selected").val();
     let selectText = $("#sort-select option:selected").text();
+    alert(selectText);
 });
