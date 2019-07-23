@@ -715,3 +715,9 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         }
     }
 });
+
+// Sort terms
+$('#sort-select').on('change', function (e) {
+    let selectVal = $("#sort-select option:selected").val();
+    let selectText = $("#sort-select option:selected").text();
+});
