@@ -35,8 +35,8 @@ from nltk.stem.snowball import SnowballStemmer
 import pickle
 import codecs
 import logging
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # load libraries for string proccessing
 import re, string
@@ -151,11 +151,11 @@ def text_normalization_default(raw_text):
             # remove leading and ending spaces
             line = line.strip()
             raw_text_list.append(line)
-            # TODO Remove debug log in production release
-            # print('Included line: ' + line)
+            # logging.debug('Included line: ' + line)
         else:
             # TODO Remove debug log in production release
-            print('Excluded line: ' + line)
+            # print('Excluded line: ' + line)
+            logging.debug('Excluded line: ' + line)
     # yet_raw_text = '\n'.join(raw_text_list)
     yet_raw_text = ' '.join(raw_text_list)
     return yet_raw_text
@@ -420,7 +420,6 @@ def parcexml_Generator():
                 root_element.append(new_sentence_element)
             return ET.tostring(root_element, encoding='utf8', method='xml')
         except Exception as e:
-            # print "Unexpected error:", sys.exc_info()
             logging.error(e, exc_info=True)
             return abort(500)
     file.close()
@@ -938,13 +937,13 @@ def get_terms_list():
                     '''
                     if len(doc_for_tokens) == 3:
 
-                        # print('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
-                        print('--------------------')
+                        logging.debug('three-word term lemma ---> ' + chunk.lemma_ +' POS[0]:'+ doc_for_tokens[0].pos_ + ' POS[1]:' + doc_for_tokens[1].pos_ + ' POS[2]:' + doc_for_tokens[2].pos_)
+                        logging.debug('--------------------')
 
                     if len(doc_for_tokens) > 3:
 
-                        # print('multi-word term lemma ---> ' + chunk.lemma_)
-                        # print('--------------------')
+                        logging.debug('multi-word term lemma ---> ' + chunk.lemma_)
+                        logging.debug('--------------------')
 
                         if doc_for_tokens[0].pos_ not in ['DET', 'PUNCT']:
 
@@ -1004,7 +1003,6 @@ def get_terms_list():
 
             return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
         except Exception as e:
-            # print "Unexpected error:", sys.exc_info()
             logging.error(e, exc_info=True)
             return abort(500)
     file.close()
