@@ -26,7 +26,8 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $buttonSaveNer = $('#button-save-ner'),
     $buttonSaveProjectFileList = $('#button-save-project-file-list'),
     $upload_button = $('#upload-button'),
-    $sents_from_text = $('#sents_from_text');
+    $sents_from_text = $('#sents_from_text'),
+    $sortSelect = $('#sort-select');
 
 $newProjectAndClearAll.click(function () {
     iziToast.warning({
@@ -55,16 +56,28 @@ $newProjectAndClearAll.click(function () {
 $(document).ready(function () {
     // Load last recapped file data
     if (localStorage.getItem("recapForLastFile")) {
+        // set #sort-select to order type 4
+        $sortSelect.val('4');
         console.log("Load last recapped file data");
         resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
 
         // for known words ES 6
         for (let element of resJSON.termsintext.exporterms.term) {
             termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
-            $uploadResultList.append($('<option>', {
-                value: element.tname,
-                text: element.tname
-            }));
+            if (Array.isArray(element.sentpos)) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: element.sentpos.length,
+                    title: 'Частота: ' + element.sentpos.length
+                }));
+            }
+            if (Array.isArray(element.sentpos) == false) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: 1,
+                    title: 'Частота: ' + 1
+                }));
+            }
         }
 
         // add text from last recapped file to textarea id="sents_from_text"
@@ -128,7 +141,7 @@ $uploadResultList.keydown(function (e) {
 
         if (copyCommandSupported) {
 
-            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $uploadResultList.prop('value');
+            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $("#uploadResultList option:selected").text();
 
             let $temp = $("<input>");
             $("body").append($temp);
@@ -335,6 +348,9 @@ function fetchFileToRecapService() {
                         dom = new DOMParser().parseFromString(result, "text/xml");
                         resJSON = xmlToJson(dom);
 
+                        // set #sort-select to order type 4
+                        $sortSelect.val('4');
+
                         // add to local storage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
 
@@ -343,10 +359,20 @@ function fetchFileToRecapService() {
 
                         for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
                             termsWithIndexDict[elementKnownTxtJson.tname] = resJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
-                            $uploadResultList.append($('<option>', {
-                                value: elementKnownTxtJson.tname,
-                                text: elementKnownTxtJson.tname
-                            }));
+                            if (Array.isArray(elementKnownTxtJson.sentpos)) {
+                                $uploadResultList.append($('<option>', {
+                                    text: elementKnownTxtJson.tname,
+                                    value: elementKnownTxtJson.sentpos.length,
+                                    title: 'Частота: ' + elementKnownTxtJson.sentpos.length
+                                }));
+                            }
+                            if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
+                                $uploadResultList.append($('<option>', {
+                                    text: elementKnownTxtJson.tname,
+                                    value: 1,
+                                    title: 'Частота: ' + 1
+                                }));
+                            }
                         }
 
                         // Clear textarea id="sents_from_text"
@@ -426,7 +452,7 @@ function fetchFileToRecapService() {
                     $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
                     iziToast.warning({
                         title: 'Помилка',
-                        message: 'Виникла помилка на стороні серевера ' + error,
+                        message: 'Виникла помилка на стороні серевера 500',
                         position: 'bottomLeft',
                         onClosed: function () {
                             iziToast.destroy();
@@ -452,7 +478,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     //clear textArea #textContent
     $textContent.text('');
 
-    var valOfSelectedElementInUploadResultList = termsWithIndexDict[$uploadResultList.prop('value')];
+    var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
 
     // inserting sentences with selected terms in textArea #textContent
     if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos)) {
@@ -474,7 +500,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
 
         //template structure for bootstrap-treeview
-        objForTree = { text: $uploadResultList.prop('value'), nodes: [] };
+        objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
 
         // add child nodes to template structure for bootstrap-treeview
         if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
@@ -496,7 +522,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
 
         //template structure for bootstrap-treeview
-        objForTree = { text: $uploadResultList.prop('value'), nodes: [] };
+        objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
 
         // add child nodes to template structure for bootstrap-treeview
         if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
@@ -530,7 +556,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     // $textContent.highlightWithinTextarea(onInput);
 
     function onInput(input) {
-        let term = $uploadResultList.prop('value').replace(/\s?([-])\s?/g,'-');
+        let term = $("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g,'-');
         var regex = new RegExp('\\b(\\w*' + term + '\\w*)\\b', 'gi');
         return regex;
     }
@@ -540,7 +566,7 @@ function forUploadResultListClickAndEnterPressEvents() {
     let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
         container: '#displacy'
     });
-    displacy.parse($uploadResultList.prop('value'));
+    displacy.parse($("#uploadResultList option:selected").text());
 }
 
 function forProjectFileListClickAndEnterPressEvents() {
@@ -550,6 +576,8 @@ function forProjectFileListClickAndEnterPressEvents() {
     if (localStorage.getItem($projectFileList.prop('value'))) {
 
         resJSON = JSON.parse(localStorage.getItem($projectFileList.prop('value')));
+        // add to local storage recap of the last uploaded file
+        localStorage["recapForLastFile"] = JSON.stringify(resJSON);
         $('option', $uploadResultList).remove();
         $('option', $uploadUnknownTerms).remove();
         $textContent.text('');
@@ -561,13 +589,29 @@ function forProjectFileListClickAndEnterPressEvents() {
 
         $captionOverviewButton.text(truncate($projectFileList.prop('value'), 10));
 
+        // set #sort-select to order type 4
+        $sortSelect.val('4');
         // for known words ES 6
         for (let element of resJSON.termsintext.exporterms.term) {
             termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
-            $uploadResultList.append($('<option>', {
-                value: element.tname,
-                text: element.tname
-            }));
+            // $uploadResultList.append($('<option>', {
+            //     value: element.tname,
+            //     text: element.tname
+            // }));
+            if (Array.isArray(element.sentpos)) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: element.sentpos.length,
+                    title: 'Частота: ' + element.sentpos.length
+                }));
+            }
+            if (Array.isArray(element.sentpos) == false) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: 1,
+                    title: 'Частота: ' + 1
+                }));
+            }
         }
 
         // add text from last recapped file to textarea id="sents_from_text"
@@ -663,7 +707,7 @@ function xmlToJson(xml) {
     return obj;
 }
 
-// CHANGE TABS
+// CHANGE TABS ---------------------------------------------------------------------------------------------------------
 $('.nav-tabs a').click(function (e) {
     e.preventDefault();
     $(this).tab('show')
@@ -715,3 +759,72 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         }
     }
 });
+// CHANGE TABS ---------------------------------------------------------------------------------------------------------
+
+// Sort terms ---------------------------------------------------------------------------------------------------------
+$sortSelect.on('change', function (e) {
+    var selected = $("#uploadResultList").val();
+    let sortSelectVal = $("#sort-select option:selected").val();
+    // let selectText = $("#sort-select option:selected").text();
+
+    if (sortSelectVal == 1) {
+        var my_options = $("#uploadResultList option");
+        my_options.sort(function (a, b) {
+            if (a.text > b.text) return 1;
+            else if (a.text < b.text) return -1;
+            else return 0;
+        });
+        $("#uploadResultList").empty().append(my_options);
+        $("#uploadResultList").val(selected);
+    }
+
+    if (sortSelectVal == 2) {
+        var my_options = $("#uploadResultList option");
+        my_options.sort(function (a, b) {
+            a = a.value;
+            b = b.value;
+            return a - b;
+        });
+        $("#uploadResultList").empty().append(my_options);
+        $("#uploadResultList").val(selected);
+    }
+
+    if (sortSelectVal == 3) {
+        var my_options = $("#uploadResultList option");
+        my_options.sort(function (a, b) {
+            a = a.value;
+            b = b.value;
+            return b - a;
+        });
+        $("#uploadResultList").empty().append(my_options);
+        $("#uploadResultList").val(selected);
+    }
+
+    if (sortSelectVal == 4) {
+        $("#uploadResultList").empty();
+        // Load last recapped file data
+        if (localStorage.getItem("recapForLastFile")) {
+            resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
+
+            // for known words ES 6
+            for (let element of resJSON.termsintext.exporterms.term) {
+                termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
+                if (Array.isArray(element.sentpos)) {
+                    $uploadResultList.append($('<option>', {
+                        text: element.tname,
+                        value: element.sentpos.length,
+                        title: 'Частота: ' + element.sentpos.length
+                    }));
+                }
+                if (Array.isArray(element.sentpos) == false) {
+                    $uploadResultList.append($('<option>', {
+                        text: element.tname,
+                        value: 1,
+                        title: 'Частота: ' + 1
+                    }));
+                }
+            }
+        }
+    }
+});
+// Sort terms ---------------------------------------------------------------------------------------------------------

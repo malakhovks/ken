@@ -481,8 +481,9 @@ $('#uploadResultList').on('mousedown', 'option', clickDragAndDrop);
 $('#uploadUnknownTerms').on('mousedown', 'option', clickDragAndDrop);
 
 function clickDragAndDrop() {
-    var termText = $(this).prop('value'); // extract text from term-list
-    console.log(termText);
+    var termText = $(this).text();
+    // var termText = $(this).prop('value'); // extract text from term-list
+
     // Mouse handler for table (DROP):
     $('#table-body').on('mouseup', 'td', function () {
         if (termText != '') {
