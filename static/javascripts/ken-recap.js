@@ -721,5 +721,4 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
 $sortSelect.on('change', function (e) {
     let sortSelectVal = $("#sort-select option:selected").val();
     let selectText = $("#sort-select option:selected").text();
-    alert(selectText);
 });
