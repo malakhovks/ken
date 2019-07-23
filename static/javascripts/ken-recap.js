@@ -67,13 +67,15 @@ $(document).ready(function () {
             if (Array.isArray(element.sentpos)) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
-                    value: element.sentpos.length
+                    value: element.sentpos.length,
+                    title: 'Частота: ' + element.sentpos.length
                 }));
             }
             if (Array.isArray(element.sentpos) == false) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
-                    value: 1
+                    value: 1,
+                    title: 'Частота: ' + 1
                 }));
             }
         }
@@ -360,13 +362,15 @@ function fetchFileToRecapService() {
                             if (Array.isArray(elementKnownTxtJson.sentpos)) {
                                 $uploadResultList.append($('<option>', {
                                     text: elementKnownTxtJson.tname,
-                                    value: elementKnownTxtJson.sentpos.length
+                                    value: elementKnownTxtJson.sentpos.length,
+                                    title: 'Частота: ' + elementKnownTxtJson.sentpos.length
                                 }));
                             }
                             if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
                                 $uploadResultList.append($('<option>', {
                                     text: elementKnownTxtJson.tname,
-                                    value: 1
+                                    value: 1,
+                                    title: 'Частота: ' + 1
                                 }));
                             }
                         }
@@ -597,13 +601,15 @@ function forProjectFileListClickAndEnterPressEvents() {
             if (Array.isArray(element.sentpos)) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
-                    value: element.sentpos.length
+                    value: element.sentpos.length,
+                    title: 'Частота: ' + element.sentpos.length
                 }));
             }
             if (Array.isArray(element.sentpos) == false) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
-                    value: 1
+                    value: 1,
+                    title: 'Частота: ' + 1
                 }));
             }
         }
@@ -806,13 +812,15 @@ $sortSelect.on('change', function (e) {
                 if (Array.isArray(element.sentpos)) {
                     $uploadResultList.append($('<option>', {
                         text: element.tname,
-                        value: element.sentpos.length
+                        value: element.sentpos.length,
+                        title: 'Частота: ' + element.sentpos.length
                     }));
                 }
                 if (Array.isArray(element.sentpos) == false) {
                     $uploadResultList.append($('<option>', {
                         text: element.tname,
-                        value: 1
+                        value: 1,
+                        title: 'Частота: ' + 1
                     }));
                 }
             }
