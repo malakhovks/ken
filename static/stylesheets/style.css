@@ -176,10 +176,6 @@ select {
 
 /*COL-3*/
 
-.panel {
-	height: max-content;
-}
-
 #table-content-block {
 	overflow: auto;
 	width:100%;
