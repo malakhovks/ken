@@ -35,8 +35,8 @@ from nltk.stem.snowball import SnowballStemmer
 import pickle
 import codecs
 import logging
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # load libraries for string proccessing
 import re, string
@@ -111,6 +111,7 @@ app.secret_key = os.urandom(42)
 # ------------------------------------------------------------------------------------------------------
 # """
 
+# https://habr.com/ru/post/427909/
 # Measure the Real Size of Any Python Object
 # https://goshippo.com/blog/measure-real-size-any-python-object/
 def get_size(obj, seen=None):
@@ -331,6 +332,8 @@ def parcexml_Generator():
 
             # default sentence normalization + spaCy doc init
             doc = NLP_EN(text_normalized)
+            # Measure the Size of doc Python Object
+            logging.debug("%s byte", get_size(doc))
 
             """
             # create the <parce.xml> file structure
@@ -361,6 +364,8 @@ def parcexml_Generator():
                 new_sentence_element.append(new_sent_element)
 
                 doc_for_lemmas = NLP_EN(sentence_clean)
+                # Measure the Size of doc_for_lemmas Python Object
+                logging.debug("%s byte", get_size(doc_for_lemmas))
 
                 # create amd append <ner>, <entity>
                 # NER labels description https://spacy.io/api/annotation#named-entities
@@ -507,6 +512,8 @@ def get_terms_list():
         try:
             # spaCy doc init + default sentence normalization
             doc = NLP_EN(text_normalization_default(raw_text))
+            # Measure the Size of doc Python Object
+            logging.debug("%s byte", get_size(doc))
 
             """
             # create the <allterms.xml> file structure
@@ -554,11 +561,15 @@ def get_terms_list():
 
                 # for processing specific sentence
                 doc_for_chunks = NLP_EN(sentence_clean)
+                # Measure the Size of doc_for_chunks Python Object
+                logging.debug("%s byte", get_size(doc_for_chunks))
 
                 # sentence NP shallow parsing cycle
                 for chunk in doc_for_chunks.noun_chunks:
 
                     doc_for_tokens = NLP_EN(chunk.text)
+                    # Measure the Size of doc_for_tokens Python Object
+                    logging.debug("%s byte", get_size(doc_for_tokens))
 
                     '''
                     # EXTRACT ONE-WORD TERMS ----------------------------------------------------------------------
@@ -1072,6 +1083,8 @@ def get_dep_parse():
 def get_ner():
     req_data_JSON = json.loads(request.get_data(as_text=True))
     doc = NLP_EN(' '.join(e for e in req_data_JSON))
+    # Measure the Size of doc Python Object
+    logging.debug("%s byte", get_size(doc))
     # colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
     # options = {"colors": colors}
     # html = displacy.render(doc, style="ent", options=options)
