@@ -176,6 +176,10 @@ select {
 
 /*COL-3*/
 
+.panel {
+	height: max-content;
+}
+
 #table-content-block {
 	overflow: auto;
 	width:100%;
@@ -187,10 +191,26 @@ select {
 	flex-direction: column;
 	overflow-y: auto;
 }
+ /* mark.js */
+ mark {
+	padding: 0;
+	background: transparent;
+	background: linear-gradient(to right, #f0ad4e 50%, transparent 50%);
+	background-position: right bottom;
+	background-size: 200% 100%;
+	transition: all .5s ease;
+	color: #fff;
+  }
+  
+  mark.animate {
+	background-position: left bottom;
+	color: #000;
+  }
+  /* mark.js */
 
 #sents_from_text {
-	height: 100vh;
-	width: 100vw;
+	height: auto;
+	width: auto;
 	border-color: #8BC34A;
 }
 
