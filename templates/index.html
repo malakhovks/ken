@@ -21,7 +21,12 @@
       <div class="recap_label">
         <label>Речення з обраним терміном</label>
       </div>
-      <textarea id="text-content" readonly="true"></textarea>
+      <!-- <textarea id="text-content" readonly="true"></textarea> -->
+      <div class="panel panel-default" id="text-content-panel">
+          <div class="panel-body context" id="#text-content-panel-body">
+            <p id="text-content"></p>
+          </div>
+        </div>
       <div class="recap_label">
         <label>Дерево термінів</label>
       </div>
@@ -118,7 +123,12 @@
         </div>
         <div class="tab-content" id="table-content-block" style="display: flex; justify-content: flex-end;">
           <div class="tab-pane fade" id="text_tab">
-            <textarea id="sents_from_text" name="sents_from_text" size="16"></textarea>
+            <div class="panel panel-default">
+              <div class="panel-body context">
+                <p id="sents_from_text">
+                  </p>
+              </div>
+            </div>
           </div>
           <div class="tab-pane fade" id="depparse_tab">
             <div id="displacy-label"></div>
@@ -156,6 +166,7 @@
 <script src="./static/bootstrap/js/bootstrap.min.js"></script>
 <script src="./static/javascripts/tippy.min.js"></script>
 <script src="./static/javascripts/jquery.highlight-within-textarea.js"></script>
+<script src="./static/javascripts/jquery.mark.min.js"></script>
 <script src="./static/javascripts/ken-recap.js"></script>
 <script src="./static/javascripts/ken-table.js"></script>
 <script src="./static/javascripts/displacy.js"></script>
