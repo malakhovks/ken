@@ -84,17 +84,42 @@ body {
 	background-color: #8BC34A;
 }
 
-#text-content, .hwt-container {
+#text-content-panel {
+	display: block;
+	overflow-y: scroll;
+	height: 50%;
+}
+
+#text-content-panel-body {
+	height: 50%;
+}
+
+#text-content {
+	width: 100%;
+	height: 50%;
+	margin-bottom: 5px;
+}
+
+.panel {
+	height: max-content;
+	margin-bottom: 5px;
+}
+
+.panel-body {
+    padding: 5px;
+}
+
+/* #text-content, .hwt-container {
 	width: 100%;
 	min-height: 350px;
 	margin-bottom: 5px;
 	border-color: #8BC34A;
 	resize: none;
-}
+} */
 
 #term-tree {
 	border: 1px solid #8BC34A;
-	height: 100%;
+	height: 50%;
 	overflow-y: scroll;
 	overflow-x: scroll;
 }

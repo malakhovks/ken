@@ -85,7 +85,7 @@ $(document).ready(function () {
         $sents_from_text.text('');
         // add to textarea id="sents_from_text"
         for (let sent_element of resJSON.termsintext.sentences.sent) {
-            $sents_from_text.append('<p>' + sent_element + '</p>')
+            $sents_from_text.append('<p>' + sent_element + '</p><br>')
         }
 
     }
@@ -379,7 +379,7 @@ function fetchFileToRecapService() {
                         $sents_from_text.text('');
                         // add to textarea id="sents_from_text"
                         for (let sent_element of resJSON.termsintext.sentences.sent) {
-                            $sents_from_text.append('<p>' + sent_element + '</p>')
+                            $sents_from_text.append('<p>' + sent_element + '</p><br>')
                         }
                     });
                 })
@@ -486,7 +486,7 @@ function forUploadResultListClickAndEnterPressEvents() {
         let sentsForMark = [];
         for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) {
             if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                $textContent.append('\n' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '\n');
+                $textContent.append('<p>' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
                 sentsForMark.push(resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
                 sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
             }
@@ -496,7 +496,7 @@ function forUploadResultListClickAndEnterPressEvents() {
 
     if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
 
-        $textContent.append('\n' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '\n');
+        $textContent.append('<p>' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '<p><br>');
 
         mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1]);
     }
@@ -553,12 +553,14 @@ function forUploadResultListClickAndEnterPressEvents() {
     // Highlight-within-textarea
     // https://github.com/lonekorean/highlight-within-textarea
 
-    function onInput(input) {
+/*     function onInput(input) {
         let term = $("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g,'-');
         var regex = new RegExp('\\b(\\w*' + term + '\\w*)\\b', 'gi');
         return regex;
     }
-    $textContent.highlightWithinTextarea(onInput);
+    $textContent.highlightWithinTextarea(onInput); */
+
+    markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g,'-'));
 
     // visualize noun chunk / term
     let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
@@ -617,7 +619,7 @@ function forProjectFileListClickAndEnterPressEvents() {
         $sents_from_text.text('');
         // add to textarea id="sents_from_text"
         for (let sent_element of resJSON.termsintext.sentences.sent) {
-            $sents_from_text.append('<p>' + sent_element + '</p>')
+            $sents_from_text.append('<p>' + sent_element + '</p><br>')
         }
 
         iziToast.info({
@@ -844,6 +846,25 @@ function mark(text) {
     $("#sents_from_text").unmark({
         done: function () {
             $("#sents_from_text").mark(text, options);
+        }
+    });
+}
+
+function markTerms(term) {
+    // Determine selected options for mark.js
+    var options = {
+        "each": function (element) {
+            setTimeout(function () {
+                $(element).addClass("animate");
+            }, 250);
+        },
+        "separateWordSearch": false,
+        "accuracy": "partially",
+        "diacritics": true
+    };
+    $("#text-content").unmark({
+        done: function () {
+            $("#text-content").mark(term, options);
         }
     });
 }
