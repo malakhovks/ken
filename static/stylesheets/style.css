@@ -109,14 +109,6 @@ body {
     padding: 5px;
 }
 
-/* #text-content, .hwt-container {
-	width: 100%;
-	min-height: 350px;
-	margin-bottom: 5px;
-	border-color: #8BC34A;
-	resize: none;
-} */
-
 #term-tree {
 	border: 1px solid #8BC34A;
 	height: 50%;
