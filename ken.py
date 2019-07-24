@@ -110,6 +110,7 @@ app.secret_key = os.urandom(42)
 # DEBUG functions
 # ------------------------------------------------------------------------------------------------------
 # """
+
 # Measure the Real Size of Any Python Object
 # https://goshippo.com/blog/measure-real-size-any-python-object/
 def get_size(obj, seen=None):
