@@ -859,7 +859,7 @@ function markTerms(term) {
             }, 250);
         },
         "separateWordSearch": false,
-        "accuracy": "partially",
+        "accuracy": "complementary",
         "diacritics": true
     };
     $("#text-content").unmark({
