@@ -35,6 +35,7 @@ from nltk.stem.snowball import SnowballStemmer
 import pickle
 import codecs
 import logging
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
@@ -107,6 +108,41 @@ app.secret_key = os.urandom(42)
 
 """
 # ------------------------------------------------------------------------------------------------------
+# DEBUG functions
+# ------------------------------------------------------------------------------------------------------
+# """
+
+# https://habr.com/ru/post/427909/
+# Measure the Real Size of Any Python Object
+# https://goshippo.com/blog/measure-real-size-any-python-object/
+def get_size(obj, seen=None):
+    """Recursively finds size of objects"""
+    size = sys.getsizeof(obj)
+    if seen is None:
+        seen = set()
+    obj_id = id(obj)
+    if obj_id in seen:
+        return 0
+    # Important mark as seen *before* entering recursion to gracefully handle
+    # self-referential objects
+    seen.add(obj_id)
+    if isinstance(obj, dict):
+        size += sum([get_size(v, seen) for v in obj.values()])
+        size += sum([get_size(k, seen) for k in obj.keys()])
+    elif hasattr(obj, '__dict__'):
+        size += get_size(obj.__dict__, seen)
+    elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):
+        size += sum([get_size(i, seen) for i in obj])
+    return size
+
+"""
+# ------------------------------------------------------------------------------------------------------
+# DEBUG functions
+# ------------------------------------------------------------------------------------------------------
+# """
+"""
+
+# ------------------------------------------------------------------------------------------------------
 # secondary functions
 # ------------------------------------------------------------------------------------------------------
 # """
@@ -134,7 +170,9 @@ def text_normalization_default(raw_text):
             If UNICODE is set, this will match anything other than [0-9_] plus characters classified as not alphanumeric in the Unicode character properties database.
             To remove all the non-word characters, the \W pattern can be used as follows:
             """
-            line = re.sub(r'\W', ' ', line, flags=re.I)
+            # line = re.sub(r'\W', ' ', line, flags=re.I)
+            # remove all non-words except punctuation
+            # line = re.sub('[^\w.,;!?-]', ' ', line)
             # remove all words which contains number
             line = re.sub(r'\w*\d\w*', ' ', line)
             # remove ° symbol
@@ -297,6 +335,8 @@ def parcexml_Generator():
 
             # default sentence normalization + spaCy doc init
             doc = NLP_EN(text_normalized)
+            # Measure the Size of doc Python Object
+            logging.info("%s byte", get_size(doc))
 
             """
             # create the <parce.xml> file structure
@@ -327,6 +367,8 @@ def parcexml_Generator():
                 new_sentence_element.append(new_sent_element)
 
                 doc_for_lemmas = NLP_EN(sentence_clean)
+                # Measure the Size of doc_for_lemmas Python Object
+                logging.info("%s byte", get_size(doc_for_lemmas))
 
                 # create amd append <ner>, <entity>
                 # NER labels description https://spacy.io/api/annotation#named-entities
@@ -473,6 +515,8 @@ def get_terms_list():
         try:
             # spaCy doc init + default sentence normalization
             doc = NLP_EN(text_normalization_default(raw_text))
+            # Measure the Size of doc Python Object
+            logging.info("%s byte", get_size(doc))
 
             """
             # create the <allterms.xml> file structure
@@ -520,11 +564,15 @@ def get_terms_list():
 
                 # for processing specific sentence
                 doc_for_chunks = NLP_EN(sentence_clean)
+                # Measure the Size of doc_for_chunks Python Object
+                logging.info("%s byte", get_size(doc_for_chunks))
 
                 # sentence NP shallow parsing cycle
                 for chunk in doc_for_chunks.noun_chunks:
 
                     doc_for_tokens = NLP_EN(chunk.text)
+                    # Measure the Size of doc_for_tokens Python Object
+                    logging.info("%s byte", get_size(doc_for_tokens))
 
                     '''
                     # EXTRACT ONE-WORD TERMS ----------------------------------------------------------------------
@@ -1038,6 +1086,8 @@ def get_dep_parse():
 def get_ner():
     req_data_JSON = json.loads(request.get_data(as_text=True))
     doc = NLP_EN(' '.join(e for e in req_data_JSON))
+    # Measure the Size of doc Python Object
+    logging.info("%s byte", get_size(doc))
     # colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
     # options = {"colors": colors}
     # html = displacy.render(doc, style="ent", options=options)
