@@ -475,12 +475,12 @@ function fetchFileToRecapService() {
 
 function forUploadResultListClickAndEnterPressEvents() {
 
-    //clear textArea #textContent
+    //clear textArea #text-content
     $textContent.text('');
 
     var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
 
-    // inserting sentences with selected terms in textArea #textContent
+    // inserting sentences with selected terms in #text-content
     if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos)) {
         let sentIndex = [];
         let sentsForMark = [];
@@ -521,7 +521,33 @@ function forUploadResultListClickAndEnterPressEvents() {
 
         treeData.push(objForTree); //add structure to array
 
-        $termTree.treeview({ data: treeData }); // add array data to bootstrap-treeview and view it on page
+        $termTree.treeview({ data: treeData,
+            onNodeSelected: function(event, node) {
+                // inserting sentences with selected terms in #text-content
+                //clear textArea #text-content
+                $textContent.text('');
+                let selectedTermInTermTree = termsWithIndexDict[node.text];
+                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
+
+                    $textContent.append('<p>' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
+
+                    mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
+                }
+                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
+                    let sentIndex = [];
+                    let sentsForMark = [];
+                    for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
+                        if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
+                            $textContent.append('<p>' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
+                            sentsForMark.push(resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
+                            sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                        }
+                    }
+                    mark(sentsForMark);
+                }
+                markTerms(node.text);
+              }
+        }); // add array data to bootstrap-treeview and view it on page
     }
 
     if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
@@ -543,22 +569,39 @@ function forUploadResultListClickAndEnterPressEvents() {
 
         treeData.push(objForTree); //add structure to array
 
-        $termTree.treeview({ data: treeData }); // add array data to bootstrap-treeview and view it on page
+        $termTree.treeview({ data: treeData,
+            onNodeSelected: function(event, node) {
+                // inserting sentences with selected terms in #text-content
+
+                //clear textArea #textContent
+                $textContent.text('');
+                let selectedTermInTermTree = termsWithIndexDict[node.text];
+                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
+
+                    $textContent.append('<p>' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
+
+                    mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
+                }
+                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
+                    let sentIndex = [];
+                    let sentsForMark = [];
+                    for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
+                        if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
+                            $textContent.append('<p>' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
+                            sentsForMark.push(resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
+                            sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                        }
+                    }
+                    mark(sentsForMark);
+                }
+                markTerms(node.text);
+              }
+        }); // add array data to bootstrap-treeview and view it on page
     }
 
     if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup') == false && resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') == false) {
         $termTree.treeview({});
     }
-
-    // Highlight-within-textarea
-    // https://github.com/lonekorean/highlight-within-textarea
-
-/*     function onInput(input) {
-        let term = $("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g,'-');
-        var regex = new RegExp('\\b(\\w*' + term + '\\w*)\\b', 'gi');
-        return regex;
-    }
-    $textContent.highlightWithinTextarea(onInput); */
 
     markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g,'-'));
 
