@@ -88,6 +88,8 @@ body {
 	display: block;
 	overflow-y: scroll;
 	height: 50%;
+	border-color: #8BC34A;
+	border-radius: unset;
 }
 
 #text-content-panel-body {
