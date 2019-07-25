@@ -226,7 +226,17 @@ select {
 #sents_from_text {
 	height: auto;
 	width: auto;
-	border-color: #8BC34A;
+	/* border-color: #8BC34A; */
+}
+
+#sents-from-text-panel {
+	/* border-radius: unset;
+	border: 1px solid #8BC34A; */
+	border-color: unset;
+	border-radius: unset;
+	border: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 
 #notes {
