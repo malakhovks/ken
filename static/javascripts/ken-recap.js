@@ -501,7 +501,7 @@ function forUploadResultListClickAndEnterPressEvents() {
         mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1]);
     }
 
-    // inserting terms in tree #termTree
+    // inserting terms in tree #term-tree
     if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
 
         //template structure for bootstrap-treeview
@@ -524,7 +524,7 @@ function forUploadResultListClickAndEnterPressEvents() {
         $termTree.treeview({ data: treeData,
             onNodeSelected: function(event, node) {
                 // inserting sentences with selected terms in #text-content
-                //clear textArea #text-content
+                //clear #text-content
                 $textContent.text('');
                 let selectedTermInTermTree = termsWithIndexDict[node.text];
                 if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
@@ -573,7 +573,7 @@ function forUploadResultListClickAndEnterPressEvents() {
             onNodeSelected: function(event, node) {
                 // inserting sentences with selected terms in #text-content
 
-                //clear textArea #textContent
+                //clear #text-content
                 $textContent.text('');
                 let selectedTermInTermTree = termsWithIndexDict[node.text];
                 if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
