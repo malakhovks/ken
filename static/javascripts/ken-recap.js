@@ -331,7 +331,7 @@ function fetchFileToRecapService() {
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
                         $(".loader").hide();
-                        $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
+                        $("#projectFileList option[value='" + $recapOverviewButton.val().split('\\').pop() + "']").remove();
                         iziToast.warning({
                             title: 'Сервіс зайнятий, спробуйте ще раз.',
                             message: 'Статус: ' + response.status,
@@ -449,7 +449,7 @@ function fetchFileToRecapService() {
                 .catch(error => {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
-                    $("#projectFileList option[value='"+$recapOverviewButton.val().split('\\').pop()+"']").remove();
+                    $("#projectFileList option[value='" + $recapOverviewButton.val().split('\\').pop() + "']").remove();
                     iziToast.warning({
                         title: 'Помилка',
                         message: 'Виникла помилка на стороні серевера 500',
@@ -521,8 +521,9 @@ function forUploadResultListClickAndEnterPressEvents() {
 
         treeData.push(objForTree); //add structure to array
 
-        $termTree.treeview({ data: treeData,
-            onNodeSelected: function(event, node) {
+        $termTree.treeview({
+            data: treeData,
+            onNodeSelected: function (event, node) {
                 // inserting sentences with selected terms in #text-content
                 //clear #text-content
                 $textContent.text('');
@@ -546,7 +547,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                     mark(sentsForMark);
                 }
                 markTerms(node.text);
-              }
+            }
         }); // add array data to bootstrap-treeview and view it on page
     }
 
@@ -569,8 +570,9 @@ function forUploadResultListClickAndEnterPressEvents() {
 
         treeData.push(objForTree); //add structure to array
 
-        $termTree.treeview({ data: treeData,
-            onNodeSelected: function(event, node) {
+        $termTree.treeview({
+            data: treeData,
+            onNodeSelected: function (event, node) {
                 // inserting sentences with selected terms in #text-content
 
                 //clear #text-content
@@ -595,7 +597,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                     mark(sentsForMark);
                 }
                 markTerms(node.text);
-              }
+            }
         }); // add array data to bootstrap-treeview and view it on page
     }
 
@@ -603,7 +605,7 @@ function forUploadResultListClickAndEnterPressEvents() {
         $termTree.treeview({});
     }
 
-    markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g,'-'));
+    markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
 
     // visualize noun chunk / term
     let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
@@ -776,29 +778,29 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         $("#displacy-label").hide();
     }
     if ($("#fileList").is(".tab-pane.active")) {
-        document.getElementById("projectFileList").oncontextmenu = function(event) {
-                iziToast.warning({
-                    title: 'Ви впевнені?',
-                    message: ' Видалити файл '+ $("#projectFileList option:selected").text() + ' ?',
-                    position: 'center',
-                    timeout: 10000,
-                    buttons: [
-                        ['<button>Так</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
-                                    $('#projectFileList option:selected').remove();
-                                }
-                            }, toast);
-                        }],
-                        ['<button>Ні</button>', function (instance, toast) {
-                            instance.hide({
-                                transitionOut: 'fadeOutUp'
-                            }, toast);
-                        }]
-                    ]
-                });
-                return false; // cancel default context menu
+        document.getElementById("projectFileList").oncontextmenu = function (event) {
+            iziToast.warning({
+                title: 'Ви впевнені?',
+                message: ' Видалити файл ' + $("#projectFileList option:selected").text() + ' ?',
+                position: 'center',
+                timeout: 10000,
+                buttons: [
+                    ['<button>Так</button>', function (instance, toast) {
+                        instance.hide({
+                            transitionOut: 'fadeOutUp',
+                            onClosing: function (instance, toast, closedBy) {
+                                $('#projectFileList option:selected').remove();
+                            }
+                        }, toast);
+                    }],
+                    ['<button>Ні</button>', function (instance, toast) {
+                        instance.hide({
+                            transitionOut: 'fadeOutUp'
+                        }, toast);
+                    }]
+                ]
+            });
+            return false; // cancel default context menu
         }
     }
 });
