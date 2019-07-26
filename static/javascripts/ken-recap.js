@@ -300,6 +300,7 @@ function fetchFileToRecapService() {
                 text: truncate($recapOverviewButton.val().split('\\').pop(), 10)
             }));
         } else {
+            // console.log(Date.now() + '-' + $recapOverviewButton.val().split('\\').pop());
             fileNamesForProjectFileListAndLocalStorage.fileNamesArray[0] = $recapOverviewButton.val().split('\\').pop();
             $projectFileList.append($('<option>', {
                 value: $recapOverviewButton.val().split('\\').pop(),
