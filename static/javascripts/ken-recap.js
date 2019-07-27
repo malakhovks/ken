@@ -94,8 +94,9 @@ $(document).ready(function () {
         fileNamesForProjectFileListAndLocalStorage = JSON.parse(localStorage.getItem("projectFiles"));
         for (let projectFilesElement of fileNamesForProjectFileListAndLocalStorage.fileNamesArray) {
             $projectFileList.append($('<option>', {
-                value: projectFilesElement,
-                text: truncate(projectFilesElement, 10)
+                value: projectFilesElement.unique,
+                text: truncate(projectFilesElement.unique, 30),
+                title: projectFilesElement.original
             }));
         }
     }
@@ -176,6 +177,14 @@ $projectFileList.click(function () {
     forProjectFileListClickAndEnterPressEvents();
 });
 
+$projectFileList.keypress(function (event) {
+    let key = event.which;
+    if (key == keyEnter)  // the enter key code
+    {
+        forProjectFileListClickAndEnterPressEvents();
+    }
+});
+
 $projectFileList.keydown(function (e) {
     if (e.keyCode == keyC && e.ctrlKey) {
 
@@ -183,7 +192,7 @@ $projectFileList.keydown(function (e) {
 
         if (copyCommandSupported) {
 
-            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $projectFileList.prop('value');
+            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $projectFileList.prop('text');
 
             let $temp = $("<input>");
             $("body").append($temp);
@@ -198,15 +207,12 @@ $projectFileList.keydown(function (e) {
 // change p#caption_overview_button caption with filename that selected
 // and clear all elements
 $recapOverviewButton.change(function () {
-    $captionOverviewButton.text(truncate($recapOverviewButton.val().split('\\').pop(), 10));
+    $captionOverviewButton.text(truncate($recapOverviewButton.val().split('\\').pop(), 20));
     $termTree.treeview({});
     $upload_button.css('display', 'block');
     $('option', $uploadResultList).remove();
     $('option', $uploadUnknownTerms).remove();
     $textContent.text('');
-    if ($textContent.data('hwt')) {
-        $textContent.data('hwt').destroy();
-    }
 });
 
 
@@ -273,8 +279,12 @@ function fetchFileToRecapService() {
         docxExtension = '.docx',
         pdfExtension = '.pdf';
 
-    var uploadFileName = $recapOverviewButton.val(),
+    var uploadFileName = $recapOverviewButton.val().split('\\').pop(),
+        // Generate unique name for uploaded file
+        uniqueUploadFilename = Date.now() + '-' + uploadFileName,
         form = new FormData();
+
+        var originalAndUniqueFilenames = {original: uploadFileName, unique: uniqueUploadFilename};
 
     form.append("file", $recapOverviewButton[0].files[0]);
 
@@ -286,27 +296,20 @@ function fetchFileToRecapService() {
 
         iziToast.info({
             title: 'Зачекайте! Аналіз файлу',
-            message: $recapOverviewButton.val().split('\\').pop(),
+            message: uploadFileName.split('\\').pop(),
             position: 'bottomLeft',
             close: false,
             timeout: false
         });
 
-        //add filename to localStorage and projectFileList
-        if (fileNamesForProjectFileListAndLocalStorage.fileNamesArray.length > 0) {
-            fileNamesForProjectFileListAndLocalStorage.fileNamesArray[fileNamesForProjectFileListAndLocalStorage.fileNamesArray.length] = $recapOverviewButton.val().split('\\').pop();
+        fileNamesForProjectFileListAndLocalStorage.fileNamesArray.push(originalAndUniqueFilenames);
+
             $projectFileList.append($('<option>', {
-                value: $recapOverviewButton.val().split('\\').pop(),
-                text: truncate($recapOverviewButton.val().split('\\').pop(), 10)
+                value: originalAndUniqueFilenames.unique,
+                text: truncate(originalAndUniqueFilenames.unique, 30),
+                title: originalAndUniqueFilenames.original
             }));
-        } else {
-            // console.log(Date.now() + '-' + $recapOverviewButton.val().split('\\').pop());
-            fileNamesForProjectFileListAndLocalStorage.fileNamesArray[0] = $recapOverviewButton.val().split('\\').pop();
-            $projectFileList.append($('<option>', {
-                value: $recapOverviewButton.val().split('\\').pop(),
-                text: truncate($recapOverviewButton.val().split('\\').pop(), 10)
-            }));
-        }
+
         localStorage['projectFiles'] = JSON.stringify(fileNamesForProjectFileListAndLocalStorage);
         //add filename to localStorage and projectFileList
 
@@ -332,7 +335,7 @@ function fetchFileToRecapService() {
                     if (response.status == 503) {
                         $("body").css("cursor", "default");
                         $(".loader").hide();
-                        $("#projectFileList option[value='" + $recapOverviewButton.val().split('\\').pop() + "']").remove();
+                        $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
                         iziToast.warning({
                             title: 'Сервіс зайнятий, спробуйте ще раз.',
                             message: 'Статус: ' + response.status,
@@ -356,7 +359,7 @@ function fetchFileToRecapService() {
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
 
                         // add to local storage recap of this file for #projectFileList
-                        localStorage[uploadFileName.split('\\').pop()] = JSON.stringify(resJSON);
+                        localStorage[uniqueUploadFilename] = JSON.stringify(resJSON);
 
                         for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
                             termsWithIndexDict[elementKnownTxtJson.tname] = resJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
@@ -450,7 +453,7 @@ function fetchFileToRecapService() {
                 .catch(error => {
                     $("body").css("cursor", "default");
                     $(".loader").hide();
-                    $("#projectFileList option[value='" + $recapOverviewButton.val().split('\\').pop() + "']").remove();
+                    $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
                     iziToast.warning({
                         title: 'Помилка',
                         message: 'Виникла помилка на стороні серевера 500',
@@ -626,24 +629,18 @@ function forProjectFileListClickAndEnterPressEvents() {
         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
         $('option', $uploadResultList).remove();
         $('option', $uploadUnknownTerms).remove();
+        $("#displacy-ner").empty();
         $textContent.text('');
-        if ($textContent.data('hwt')) {
-            $textContent.data('hwt').destroy();
-        }
-        //$textContent.data('hwt').destroy();
         $termTree.treeview({});
 
-        $captionOverviewButton.text(truncate($projectFileList.prop('value'), 10));
+        $captionOverviewButton.text(truncate($projectFileList.find("option:selected").attr("title"), 20));
 
         // set #sort-select to order type 4
         $sortSelect.val('4');
         // for known words ES 6
         for (let element of resJSON.termsintext.exporterms.term) {
             termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
-            // $uploadResultList.append($('<option>', {
-            //     value: element.tname,
-            //     text: element.tname
-            // }));
+
             if (Array.isArray(element.sentpos)) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
@@ -688,9 +685,6 @@ function ClearAllForNewProject() {
     $('option', $uploadResultList).remove();
     $('option', $uploadUnknownTerms).remove();
     $textContent.text('');
-    if ($textContent.data('hwt')) {
-        $textContent.data('hwt').destroy();
-    }
     localStorage.clear();
     $('input').val('');
     $termTree.treeview({});
@@ -782,7 +776,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         document.getElementById("projectFileList").oncontextmenu = function (event) {
             iziToast.warning({
                 title: 'Ви впевнені?',
-                message: ' Видалити файл ' + $("#projectFileList option:selected").text() + ' ?',
+                message: ' Видалити файл ' + event.target.text + ' ?',
                 position: 'center',
                 timeout: 10000,
                 buttons: [
@@ -790,7 +784,14 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                         instance.hide({
                             transitionOut: 'fadeOutUp',
                             onClosing: function (instance, toast, closedBy) {
-                                $('#projectFileList option:selected').remove();
+                                if (localStorage.getItem("projectFiles")) {
+                                let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
+                                // let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
+                                let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != event.target.value; });
+                                localStorage.setItem("projectFiles", JSON.stringify({fileNamesArray: filtered}));
+                                // $('#projectFileList option:selected').remove();
+                                $("#projectFileList option[value='"+ event.target.value +"']").remove();
+                                }
                             }
                         }, toast);
                     }],
