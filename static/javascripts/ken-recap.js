@@ -768,7 +768,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         document.getElementById("projectFileList").oncontextmenu = function (event) {
             iziToast.warning({
                 title: 'Ви впевнені?',
-                message: ' Видалити файл ' + $("#projectFileList option:selected").text() + ' ?',
+                message: ' Видалити файл ' + event.target.text + ' ?',
                 position: 'center',
                 timeout: 10000,
                 buttons: [
@@ -778,9 +778,11 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                             onClosing: function (instance, toast, closedBy) {
                                 if (localStorage.getItem("projectFiles")) {
                                 let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
-                                let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
+                                // let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
+                                let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != event.target.value; });
                                 localStorage.setItem("projectFiles", JSON.stringify({fileNamesArray: filtered}));
-                                $('#projectFileList option:selected').remove();
+                                // $('#projectFileList option:selected').remove();
+                                $("#projectFileList option[value='"+ event.target.value +"']").remove();
                                 }
                             }
                         }, toast);
