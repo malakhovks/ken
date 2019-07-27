@@ -177,6 +177,14 @@ $projectFileList.click(function () {
     forProjectFileListClickAndEnterPressEvents();
 });
 
+$projectFileList.keypress(function (event) {
+    let key = event.which;
+    if (key == keyEnter)  // the enter key code
+    {
+        forProjectFileListClickAndEnterPressEvents();
+    }
+});
+
 $projectFileList.keydown(function (e) {
     if (e.keyCode == keyC && e.ctrlKey) {
 
@@ -199,7 +207,7 @@ $projectFileList.keydown(function (e) {
 // change p#caption_overview_button caption with filename that selected
 // and clear all elements
 $recapOverviewButton.change(function () {
-    $captionOverviewButton.text(truncate($recapOverviewButton.val().split('\\').pop(), 10));
+    $captionOverviewButton.text(truncate($recapOverviewButton.val().split('\\').pop(), 20));
     $termTree.treeview({});
     $upload_button.css('display', 'block');
     $('option', $uploadResultList).remove();
