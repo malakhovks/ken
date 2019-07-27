@@ -778,7 +778,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                             onClosing: function (instance, toast, closedBy) {
                                 if (localStorage.getItem("projectFiles")) {
                                 let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
-                                let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); }); 
+                                let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
                                 localStorage.setItem("projectFiles", JSON.stringify({fileNamesArray: filtered}));
                                 $('#projectFileList option:selected').remove();
                                 }
