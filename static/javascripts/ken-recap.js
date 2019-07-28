@@ -119,15 +119,19 @@ $('#recap-upload-button').click(function () {
 });
 
 $uploadResultList.click(function () {
-    forUploadResultListClickAndEnterPressEvents();
+    if ($uploadResultList.has('option').length > 0) {
+        forUploadResultListClickAndEnterPressEvents();
+    }
 });
 
 // event on pressing enter key on selected element of #uploadResultList
 $uploadResultList.keypress(function (event) {
-    let key = event.which;
-    if (key == keyEnter)  // the enter key code
-    {
-        forUploadResultListClickAndEnterPressEvents();
+    if ($uploadResultList.has('option').length > 0) {
+        let key = event.which;
+        if (key == keyEnter)  // the enter key code
+        {
+            forUploadResultListClickAndEnterPressEvents();
+        }
     }
 });
 
@@ -136,70 +140,80 @@ dynamically created INPUT element, variable content passed to the INPUT element 
 and use execCommand("copy") the contents of the command INPUT element is copied to the clipboard.
 INPUT element dynamically removed */
 $uploadResultList.keydown(function (e) {
-    if (e.keyCode == keyC && e.ctrlKey) {
+    if ($uploadResultList.has('option').length > 0) {
+        if (e.keyCode == keyC && e.ctrlKey) {
 
-        let copyCommandSupported = document.queryCommandSupported('copy');
+            let copyCommandSupported = document.queryCommandSupported('copy');
 
-        if (copyCommandSupported) {
+            if (copyCommandSupported) {
 
-            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $("#uploadResultList option:selected").text();
+                valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $("#uploadResultList option:selected").text();
 
-            let $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
-            document.execCommand("copy");
-            $temp.remove();
+                let $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
+                document.execCommand("copy");
+                $temp.remove();
 
+            }
         }
     }
 });
 
 $uploadUnknownTerms.keydown(function (e) {
-    if (e.keyCode == keyC && e.ctrlKey) {
+    if ($uploadUnknownTerms.has('option').length > 0) {
+        if (e.keyCode == keyC && e.ctrlKey) {
 
-        let copyCommandSupported = document.queryCommandSupported('copy');
+            let copyCommandSupported = document.queryCommandSupported('copy');
 
-        if (copyCommandSupported) {
+            if (copyCommandSupported) {
 
-            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $uploadUnknownTerms.prop('value');
+                valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $uploadUnknownTerms.prop('value');
 
-            let $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
-            document.execCommand("copy");
-            $temp.remove();
+                let $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
+                document.execCommand("copy");
+                $temp.remove();
 
+            }
         }
     }
 });
 
 $projectFileList.click(function () {
-    forProjectFileListClickAndEnterPressEvents();
-});
-
-$projectFileList.keypress(function (event) {
-    let key = event.which;
-    if (key == keyEnter)  // the enter key code
-    {
+    if ($projectFileList.has('option').length > 0) {
         forProjectFileListClickAndEnterPressEvents();
     }
 });
 
+$projectFileList.keypress(function (event) {
+    if ($projectFileList.has('option').length > 0) {
+        let key = event.which;
+        if (key == keyEnter)  // the enter key code
+        {
+            forProjectFileListClickAndEnterPressEvents();
+        }
+    }
+});
+
 $projectFileList.keydown(function (e) {
-    if (e.keyCode == keyC && e.ctrlKey) {
+    if ($projectFileList.has('option').length > 0) {
+        if (e.keyCode == keyC && e.ctrlKey) {
 
-        let copyCommandSupported = document.queryCommandSupported('copy');
+            let copyCommandSupported = document.queryCommandSupported('copy');
 
-        if (copyCommandSupported) {
+            if (copyCommandSupported) {
 
-            valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $projectFileList.prop('text');
+                valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $projectFileList.prop('text');
 
-            let $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
-            document.execCommand("copy");
-            $temp.remove();
+                let $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
+                document.execCommand("copy");
+                $temp.remove();
 
+            }
         }
     }
 });
@@ -284,7 +298,7 @@ function fetchFileToRecapService() {
         uniqueUploadFilename = Date.now() + '-' + uploadFileName,
         form = new FormData();
 
-        var originalAndUniqueFilenames = {original: uploadFileName, unique: uniqueUploadFilename};
+    var originalAndUniqueFilenames = { original: uploadFileName, unique: uniqueUploadFilename };
 
     form.append("file", $recapOverviewButton[0].files[0]);
 
@@ -304,11 +318,11 @@ function fetchFileToRecapService() {
 
         fileNamesForProjectFileListAndLocalStorage.fileNamesArray.push(originalAndUniqueFilenames);
 
-            $projectFileList.append($('<option>', {
-                value: originalAndUniqueFilenames.unique,
-                text: truncate(originalAndUniqueFilenames.unique, 30),
-                title: originalAndUniqueFilenames.original
-            }));
+        $projectFileList.append($('<option>', {
+            value: originalAndUniqueFilenames.unique,
+            text: truncate(originalAndUniqueFilenames.unique, 30),
+            title: originalAndUniqueFilenames.original
+        }));
 
         localStorage['projectFiles'] = JSON.stringify(fileNamesForProjectFileListAndLocalStorage);
         //add filename to localStorage and projectFileList
@@ -785,12 +799,12 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                             transitionOut: 'fadeOutUp',
                             onClosing: function (instance, toast, closedBy) {
                                 if (localStorage.getItem("projectFiles")) {
-                                let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
-                                // let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
-                                let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != event.target.value; });
-                                localStorage.setItem("projectFiles", JSON.stringify({fileNamesArray: filtered}));
-                                // $('#projectFileList option:selected').remove();
-                                $("#projectFileList option[value='"+ event.target.value +"']").remove();
+                                    let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
+                                    // let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
+                                    let filtered = projectFilesListLS.fileNamesArray.filter(function (el) { return el.unique != event.target.value; });
+                                    localStorage.setItem("projectFiles", JSON.stringify({ fileNamesArray: filtered }));
+                                    // $('#projectFileList option:selected').remove();
+                                    $("#projectFileList option[value='" + event.target.value + "']").remove();
                                 }
                             }
                         }, toast);
