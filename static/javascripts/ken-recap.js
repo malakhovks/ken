@@ -231,7 +231,6 @@ $recapOverviewButton.change(function () {
 
 
 $buttonSaveTerms.click(function () {
-
     let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
         // Download link
         downloadLink = document.createElement("a");
@@ -244,11 +243,9 @@ $buttonSaveTerms.click(function () {
     downloadLink.href = url;
     downloadLink.download = $captionOverviewButton.text() + '.txt';
     downloadLink.click();
-
 });
 
 $buttonSaveNer.click(function () {
-
     let arrayOfValuesOfYploadResultList = $("#uploadUnknownTerms option").map(function () { return this.value; }).get().join('\n'),
         // Download link
         downloadLink = document.createElement("a");
@@ -261,11 +258,9 @@ $buttonSaveNer.click(function () {
     downloadLink.href = url;
     downloadLink.download = $captionOverviewButton.text() + '.txt';
     downloadLink.click();
-
 });
 
 $buttonSaveProjectFileList.click(function () {
-
     let arrayOfValuesOfYploadResultList = $("#projectFileList option").map(function () { return this.value; }).get().join('\n'),
         // Download link
         downloadLink = document.createElement("a");
@@ -278,7 +273,6 @@ $buttonSaveProjectFileList.click(function () {
     downloadLink.href = url;
     downloadLink.download = 'projectFilesList.txt';
     downloadLink.click();
-
 });
 
 /*
