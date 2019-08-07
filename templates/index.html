@@ -20,10 +20,10 @@
       </div>
       <!-- <textarea id="text-content" readonly="true"></textarea> -->
       <div class="panel panel-default" id="text-content-panel">
-          <div class="panel-body context" id="text-content-panel-body">
-            <p id="text-content"></p>
-          </div>
+        <div class="panel-body context" id="text-content-panel-body">
+          <p id="text-content"></p>
         </div>
+      </div>
       <div class="recap_label">
         <label>Дерево термінів</label>
       </div>
@@ -52,13 +52,13 @@
       <div class="tab-content" id="select-block">
         <div class="tab-pane active fade in" id="term_tab">
           <div id="term-tab-container">
-              <select id="sort-select" title="Сортування виокремлених термінів з тексту">
-                  <option value="0">-- Оберіть тип сортування --</option>
-                  <option value="1">за алфавітом</option>
-                  <option value="2">за збільшенням частоти</option>
-                  <option value="3">за зменшенням частоти</option>
-                  <option value="4">за появою тексті</option>
-              </select>
+            <select id="sort-select" title="Сортування виокремлених термінів з тексту">
+              <option value="0">-- Оберіть тип сортування --</option>
+              <option value="1">за алфавітом</option>
+              <option value="2">за збільшенням частоти</option>
+              <option value="3">за зменшенням частоти</option>
+              <option value="4">за появою тексті</option>
+            </select>
             <select id="uploadResultList" name="uploadResultList"></select>
           </div>
         </div>
@@ -93,6 +93,10 @@
               <li role="presentation" id="button-save-project-file-list"
                 title="Зберегти список документів проекту в файл (txt, utf-8)"><a role="menuitem" tabindex="-1"
                   href="#">Список Файли</a></li>
+              <li role="presentation" id="button-save-allterms-xml" title="Зберегти allterms.xml"><a role="menuitem"
+                  tabindex="-1" href="#">allterms.xml</a></li>
+              <li role="presentation" id="button-save-parce-xml" title="Зберегти parce.xml"><a role="menuitem"
+                  tabindex="-1" href="#">parce.xml</a></li>
             </ul>
           </div>
           <!-- Basic dropdown -->
@@ -123,7 +127,7 @@
             <div class="panel panel-default" id="sents-from-text-panel">
               <div class="panel-body context">
                 <p id="sents_from_text">
-                  </p>
+                </p>
               </div>
             </div>
           </div>
