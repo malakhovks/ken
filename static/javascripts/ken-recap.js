@@ -25,6 +25,8 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $buttonSaveTerms = $('#button-save-terms'),
     $buttonSaveNer = $('#button-save-ner'),
     $buttonSaveProjectFileList = $('#button-save-project-file-list'),
+    $buttonSaveAlltermsXml = $('#button-save-allterms-xml'),
+    $buttonSaveParceXml = $('#button-save-parce-xml'),
     $upload_button = $('#upload-button'),
     $sents_from_text = $('#sents_from_text'),
     $sortSelect = $('#sort-select');
@@ -229,6 +231,35 @@ $recapOverviewButton.change(function () {
     $textContent.text('');
 });
 
+$buttonSaveAlltermsXml.click(function () {
+    if (localStorage.getItem("alltermsxml-for-last-file")) {
+        downloadLink = document.createElement("a");
+        // Make sure that the link is not displayed
+        downloadLink.style.display = "none";
+        // Add the link to your DOM
+        document.body.appendChild(downloadLink);
+        let blob = new Blob([localStorage.getItem("alltermsxml-for-last-file")], { type: "octet/stream" }),
+            url = window.URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'allterms.xml';
+        downloadLink.click();
+    }
+})
+
+$buttonSaveParceXml.click(function () {
+    if (localStorage.getItem("parcexml-for-last-file")) {
+        downloadLink = document.createElement("a");
+        // Make sure that the link is not displayed
+        downloadLink.style.display = "none";
+        // Add the link to your DOM
+        document.body.appendChild(downloadLink);
+        let blob = new Blob([localStorage.getItem("parcexml-for-last-file")], { type: "octet/stream" }),
+            url = window.URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'parce.xml';
+        downloadLink.click();
+    }
+})
 
 $buttonSaveTerms.click(function () {
     let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
@@ -369,6 +400,11 @@ function fetchFileToRecapService() {
                         // add to local storage recap of this file for #projectFileList
                         localStorage[uniqueUploadFilename] = JSON.stringify(resJSON);
 
+                        // add to local storage allterms.xml of the last uploaded file
+                        localStorage["alltermsxml-for-last-file"] = result;
+                        // add to local storage allterms.xml of this file for #projectFileList selection
+                        localStorage[uniqueUploadFilename + "-alltermsxml"] = result;
+
                         for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
                             termsWithIndexDict[elementKnownTxtJson.tname] = resJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
                             if (Array.isArray(elementKnownTxtJson.sentpos)) {
@@ -406,6 +442,11 @@ function fetchFileToRecapService() {
 
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 resParceJSON = xmlToJson(dom);
+
+                                // add to local storage parce.xml of the last uploaded file
+                                localStorage["parcexml-for-last-file"] = result;
+                                // add to local storage parce.xml of this file for #projectFileList selection
+                                localStorage[uniqueUploadFilename + "-parcexml"] = result;
 
                                 for (let sentElement of resParceJSON.text.sentence) {
 
@@ -631,6 +672,10 @@ function forProjectFileListClickAndEnterPressEvents() {
     console.log('fileName: ' + $projectFileList.prop('value'));
 
     if (localStorage.getItem($projectFileList.prop('value'))) {
+
+        if (localStorage.getItem($projectFileList.prop('value') + "-alltermsxml")) {
+            localStorage["alltermsxml-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-alltermsxml")
+        }
 
         resJSON = JSON.parse(localStorage.getItem($projectFileList.prop('value')));
         // add to local storage recap of the last uploaded file
