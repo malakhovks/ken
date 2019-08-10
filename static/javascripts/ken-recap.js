@@ -918,6 +918,27 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                                     let filtered = projectFilesListLS.fileNamesArray.filter(function (el) { return el.unique != event.target.value; });
                                     localStorage.setItem("projectFiles", JSON.stringify({ fileNamesArray: filtered }));
                                     $("#projectFileList option[value='" + event.target.value + "']").remove();
+
+                                    if (localStorage.getItem(event.target.value + "-alltermsxml")) {
+                                        localStorage.removeItem(event.target.value + "-alltermsxml");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value + "-parcexml")) {
+                                        localStorage.removeItem(event.target.value + "-parcexml");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value + "-parcexml-in-json")) {
+                                        localStorage.removeItem(event.target.value + "-parcexml-in-json");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value + "-ner")) {
+                                        localStorage.removeItem(event.target.value + "-ner");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value)) {
+                                        localStorage.removeItem(event.target.value);
+                                    }
+
                                 }
                             }
                         }, toast);
