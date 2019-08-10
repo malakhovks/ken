@@ -4,7 +4,7 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 };
 
 
-//  GLOBAL VARIABLES FOR THIS SCRIPT:
+// GLOBAL VARIABLES FOR THIS SCRIPT:
 var resJSON,
     resParceJSON,
     termsWithIndexDict = {},
@@ -90,6 +90,35 @@ $(document).ready(function () {
             $sents_from_text.append('<p>' + sent_element + '</p><br>')
         }
 
+    }
+
+    if (localStorage.getItem("ner-for-last-file")) {
+        $('#displacy-ner').html(localStorage.getItem("ner-for-last-file"));
+    }
+
+    // load last NER from localStorage "parcexml-in-json-for-last-file" in NER tab $uploadUnknownTerms
+    if (localStorage.getItem("parcexml-in-json-for-last-file")) {
+        parcexmlInJSON = JSON.parse(localStorage.getItem("parcexml-in-json-for-last-file"));
+        $('option', $uploadUnknownTerms).remove();
+        for (let nerElement of parcexmlInJSON.text.sentence) {
+
+            if (nerElement.hasOwnProperty('ner')) {
+                if (Array.isArray(nerElement.ner.entity)) {
+                    for (let entityElement of nerElement.ner.entity) {
+                        $uploadUnknownTerms.append($('<option>', {
+                            value: entityElement.entitytext,
+                            text: entityElement.entitytext
+                        }));
+                    }
+                };
+                if (Array.isArray(nerElement.ner.entity) == false) {
+                    $uploadUnknownTerms.append($('<option>', {
+                        value: nerElement.ner.entity.entitytext,
+                        text: nerElement.ner.entity.entitytext
+                    }));
+                }
+            }
+        }
     }
 
     if (localStorage.getItem("projectFiles")) {
@@ -349,8 +378,8 @@ function fetchFileToRecapService() {
             title: originalAndUniqueFilenames.original
         }));
 
-        localStorage['projectFiles'] = JSON.stringify(fileNamesForProjectFileListAndLocalStorage);
         //add filename to localStorage and projectFileList
+        localStorage['projectFiles'] = JSON.stringify(fileNamesForProjectFileListAndLocalStorage);
 
         // Hide Upload button and show tabs
         $upload_button.css('display', 'none');
@@ -394,15 +423,15 @@ function fetchFileToRecapService() {
                         // set #sort-select to order type 4
                         $sortSelect.val('4');
 
-                        // add to local storage recap of the last uploaded file
+                        // add to localStorage recap of the last uploaded file
                         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
 
-                        // add to local storage recap of this file for #projectFileList
+                        // add to localStorage recap of this file for #projectFileList
                         localStorage[uniqueUploadFilename] = JSON.stringify(resJSON);
 
-                        // add to local storage allterms.xml of the last uploaded file
+                        // add to localStorage allterms.xml of the last uploaded file
                         localStorage["alltermsxml-for-last-file"] = result;
-                        // add to local storage allterms.xml of this file for #projectFileList selection
+                        // add to localStorage allterms.xml of this file for #projectFileList selection
                         localStorage[uniqueUploadFilename + "-alltermsxml"] = result;
 
                         for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
@@ -443,9 +472,14 @@ function fetchFileToRecapService() {
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 resParceJSON = xmlToJson(dom);
 
-                                // add to local storage parce.xml of the last uploaded file
+                                // add to localStorage parce.xml in JSON of the last uploaded file
+                                localStorage["parcexml-in-json-for-last-file"] = JSON.stringify(resParceJSON);
+                                // add to localStorage parce.xml in JSON of the last uploaded file with unique name
+                                localStorage[uniqueUploadFilename + "-parcexml-in-json"] = JSON.stringify(resParceJSON);
+
+                                // add to localStorage parce.xml of the last uploaded file
                                 localStorage["parcexml-for-last-file"] = result;
-                                // add to local storage parce.xml of this file for #projectFileList selection
+                                // add to localStorage parce.xml of this file for #projectFileList selection
                                 localStorage[uniqueUploadFilename + "-parcexml"] = result;
 
                                 for (let sentElement of resParceJSON.text.sentence) {
@@ -481,9 +515,12 @@ function fetchFileToRecapService() {
                     })
                         .then(response => {
                             return response.text().then(function (result) {
-                                // htmlWithNER = new DOMParser().parseFromString(result, "text/html");
-                                annotation = '<center><p><a target="_blank" href="https://spacy.io/api/annotation#named-entities">Named Entity Recognition annotations</a></p></center>'
-                                // $('#displacy-ner').html(annotation + result);
+
+                                // add to localStorage NER of the last uploaded file
+                                localStorage["ner-for-last-file"] = result;
+                                // add to localStorage NER of this file for #projectFileList selection
+                                localStorage[uniqueUploadFilename + "-ner"] = result;
+
                                 $('#displacy-ner').html(result);
                                 $("body").css("cursor", "default");
                                 $(".loader").hide();
@@ -660,7 +697,7 @@ function forUploadResultListClickAndEnterPressEvents() {
 
     markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
 
-    // visualize noun chunk / term
+    // visualize noun-chunk/term
     let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
         container: '#displacy'
     });
@@ -673,16 +710,55 @@ function forProjectFileListClickAndEnterPressEvents() {
 
     if (localStorage.getItem($projectFileList.prop('value'))) {
 
+        // load last NER from localStorage "ner-for-last-file"
+        if (localStorage.getItem($projectFileList.prop('value') + "-ner")) {
+            localStorage["ner-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-ner");
+            $('#displacy-ner').html(localStorage.getItem("ner-for-last-file"));
+        } else {
+            $("#displacy-ner").empty();
+        }
+
+        // load last NER from localStorage "parcexml-in-json-for-last-file" in NER tab $uploadUnknownTerms
+        if (localStorage.getItem($projectFileList.prop('value') + "-parcexml-in-json")) {
+            localStorage["parcexml-in-json-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-parcexml-in-json");
+            parcexmlInJSON = JSON.parse(localStorage.getItem("parcexml-in-json-for-last-file"));
+
+            $('option', $uploadUnknownTerms).remove();
+
+            for (let nerElement of parcexmlInJSON.text.sentence) {
+
+                if (nerElement.hasOwnProperty('ner')) {
+                    if (Array.isArray(nerElement.ner.entity)) {
+                        for (let entityElement of nerElement.ner.entity) {
+                            $uploadUnknownTerms.append($('<option>', {
+                                value: entityElement.entitytext,
+                                text: entityElement.entitytext
+                            }));
+                        }
+                    };
+                    if (Array.isArray(nerElement.ner.entity) == false) {
+                        $uploadUnknownTerms.append($('<option>', {
+                            value: nerElement.ner.entity.entitytext,
+                            text: nerElement.ner.entity.entitytext
+                        }));
+                    }
+                }
+            }
+
+        } else {
+            $('option', $uploadUnknownTerms).remove();
+        }
+
+        // load last allterms.xml from localStorage "alltermsxml-for-last-file"
         if (localStorage.getItem($projectFileList.prop('value') + "-alltermsxml")) {
             localStorage["alltermsxml-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-alltermsxml")
         }
 
         resJSON = JSON.parse(localStorage.getItem($projectFileList.prop('value')));
-        // add to local storage recap of the last uploaded file
+
+        // add to localStorage recap of the last uploaded file
         localStorage["recapForLastFile"] = JSON.stringify(resJSON);
         $('option', $uploadResultList).remove();
-        $('option', $uploadUnknownTerms).remove();
-        $("#displacy-ner").empty();
         $textContent.text('');
         $termTree.treeview({});
 
@@ -839,11 +915,30 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                             onClosing: function (instance, toast, closedBy) {
                                 if (localStorage.getItem("projectFiles")) {
                                     let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
-                                    // let filtered = projectFilesListLS.fileNamesArray.filter(function(el) { return el.unique != $projectFileList.prop('value'); });
                                     let filtered = projectFilesListLS.fileNamesArray.filter(function (el) { return el.unique != event.target.value; });
                                     localStorage.setItem("projectFiles", JSON.stringify({ fileNamesArray: filtered }));
-                                    // $('#projectFileList option:selected').remove();
                                     $("#projectFileList option[value='" + event.target.value + "']").remove();
+
+                                    if (localStorage.getItem(event.target.value + "-alltermsxml")) {
+                                        localStorage.removeItem(event.target.value + "-alltermsxml");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value + "-parcexml")) {
+                                        localStorage.removeItem(event.target.value + "-parcexml");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value + "-parcexml-in-json")) {
+                                        localStorage.removeItem(event.target.value + "-parcexml-in-json");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value + "-ner")) {
+                                        localStorage.removeItem(event.target.value + "-ner");
+                                    }
+
+                                    if (localStorage.getItem(event.target.value)) {
+                                        localStorage.removeItem(event.target.value);
+                                    }
+
                                 }
                             }
                         }, toast);
