@@ -76,7 +76,7 @@
           <button id="newProjectAndClearAll" type="button"><i class="material-icons">create_new_folder</i>
             <div>Новий проект</div>
           </button>
-          <!-- Basic dropdown -->
+          <!-- Save dropdown -->
           <div class="dropdown" id="button-save">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
                 class="material-icons">save</i>Зберегти
@@ -84,7 +84,6 @@
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
               <li role="presentation" id="button-save-table" title="Зберегти таблицю в xls або csv"><a role="menuitem"
                   tabindex="-1" href="#">Таблицю</a></li>
-              <!-- <li role="presentation" class="divider"></li> -->
               <li role="presentation" id="button-save-terms" title="Зберегти терміни в файл (txt, utf-8)"><a
                   role="menuitem" tabindex="-1" href="#">Список Терміни</a></li>
               <li role="presentation" id="button-save-ner"
@@ -99,10 +98,23 @@
                   tabindex="-1" href="#">parce.xml</a></li>
             </ul>
           </div>
-          <!-- Basic dropdown -->
-          <button id="help" type="button" onclick="window.open('/help','_blank');"><i class="material-icons">help</i>
+          <!-- Save dropdown -->
+          <!-- <button id="help" type="button" onclick="window.open('/help','_blank');"><i class="material-icons">help</i>
             <div>Допомога</div>
-          </button>
+          </button> -->
+          <!-- Help dropdown -->
+          <div class="dropdown" id="button-dropdown-help">
+            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
+                class="material-icons">help</i>Допомога
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation" id="button-help" title="Настанова щодо експлуатування"><a role="menuitem"
+                  tabindex="-1" href="/help" target="_blank">Технична документация</a></li>
+              <li role="presentation" id="button-changelog" title="Журнал змін проекту CHANGELOG.md"><a
+                  role="menuitem" tabindex="-1" href="/changelog" target="_blank">Журнал змін</a></li>
+            </ul>
+          </div>
+          <!-- Help dropdown -->
         </div>
         <div class="table_edit_elements">
           <button id="addColsToTable" type="button" title="Додати нову колонку в таблицю"><img
