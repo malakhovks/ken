@@ -14,7 +14,7 @@ var resJSON,
     keyC = 67, // Javascript Char Code (Key Code) for "C" key
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key
 
-var $newProjectAndClearAll = $('#newProjectAndClearAll'),
+var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $recapOverviewButton = $("#recap-overview-button"),
     $uploadResultList = $('#uploadResultList'),
     $projectFileList = $('#projectFileList'),
@@ -31,7 +31,7 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $sents_from_text = $('#sents_from_text'),
     $sortSelect = $('#sort-select');
 
-$newProjectAndClearAll.click(function () {
+$buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
         title: 'Ви впевнені?',
         message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
