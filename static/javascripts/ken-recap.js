@@ -637,6 +637,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                     mark(sentsForMark);
                 }
                 markTerms(node.text);
+                copyTermTreeToTable(node.text);
             }
         }); // add array data to bootstrap-treeview and view it on page
     }
@@ -687,6 +688,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                     mark(sentsForMark);
                 }
                 markTerms(node.text);
+                copyTermTreeToTable(node.text);
             }
         }); // add array data to bootstrap-treeview and view it on page
     }
@@ -830,6 +832,16 @@ function truncate(n, len) {
     }
     filename = filename.substr(0, len) + (n.length > len ? '[...]' : '');
     return filename + '.' + ext;
+}
+
+function copyTermTreeToTable(termTreeText) {
+    // Mouse handler for table (DROP):
+    $('#table-body').on('mouseup', 'td', function () {
+        if (termTreeText != '') {
+            $(this).html(termTreeText);
+            termTreeText = '';
+        }
+    });
 }
 
 // Changes XML to JSON
