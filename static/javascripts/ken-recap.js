@@ -301,7 +301,7 @@ $buttonSaveTerms.click(function () {
     let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
         url = window.URL.createObjectURL(blob);
     downloadLink.href = url;
-    downloadLink.download = $captionOverviewButton.text() + '.txt';
+    downloadLink.download = $captionOverviewButton.text();
     downloadLink.click();
 });
 
@@ -316,7 +316,7 @@ $buttonSaveNer.click(function () {
     let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
         url = window.URL.createObjectURL(blob);
     downloadLink.href = url;
-    downloadLink.download = $captionOverviewButton.text() + '.txt';
+    downloadLink.download = $captionOverviewButton.text();
     downloadLink.click();
 });
 
