@@ -117,9 +117,19 @@
             </ul>
           </div>
           <!-- Save dropdown -->
-          <!-- <button id="help" type="button" onclick="window.open('/help','_blank');"><i class="material-icons">help</i>
-            <div>Допомога</div>
-          </button> -->
+          <!-- Open dropdown -->
+          <div class="dropdown" id="button-dropdown-open">
+            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
+                class="material-icons">cloud_upload</i>Відкрити
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation" id="button-open-allterms" title="Відкрити локальний файл allterms.xml" class="disabled"><a role="menuitem"
+                  tabindex="-1" href="#">allterms.xml</a></li>
+              <li role="presentation" id="button-open-parce" title="Відкрити локальний файл parce.xml" class="disabled"><a role="menuitem"
+                  tabindex="-1" href="#">parce.xml</a></li>
+            </ul>
+          </div>
+          <!-- Open dropdown -->
           <!-- Help dropdown -->
           <div class="dropdown" id="button-dropdown-help">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
@@ -127,7 +137,7 @@
               <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
               <li role="presentation" id="button-help" title="Настанова щодо експлуатування"><a role="menuitem"
-                  tabindex="-1" href="/help" target="_blank">Технична документация</a></li>
+                  tabindex="-1" href="/help" target="_blank">Документація</a></li>
               <li role="presentation" id="button-changelog" title="Журнал змін проекту CHANGELOG.md"><a role="menuitem"
                   tabindex="-1" href="/changelog" target="_blank">Журнал змін</a></li>
             </ul>
