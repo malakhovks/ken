@@ -31,6 +31,25 @@ var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $sents_from_text = $('#sents_from_text'),
     $sortSelect = $('#sort-select');
 
+var forProjects = { projects: [] };
+/*\
+|*|  Base64 / binary data / UTF-8 strings utilities (#3)
+|*|  https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
+\*/
+var base64EncDec = {
+    btoaUTF16: function (sString) {
+        var aUTF16CodeUnits = new Uint16Array(sString.length);
+        Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
+        return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+    },
+    atobUTF16: function (sBase64) {
+        var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
+        Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
+        return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+    }
+};
+// ------------------------------------------------------------------------------------------------------------------
+
 $buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
         title: 'Ви впевнені?',
