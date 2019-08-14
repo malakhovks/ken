@@ -14,7 +14,7 @@ var resJSON,
     keyC = 67, // Javascript Char Code (Key Code) for "C" key
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key
 
-var $newProjectAndClearAll = $('#newProjectAndClearAll'),
+var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $recapOverviewButton = $("#recap-overview-button"),
     $uploadResultList = $('#uploadResultList'),
     $projectFileList = $('#projectFileList'),
@@ -31,7 +31,7 @@ var $newProjectAndClearAll = $('#newProjectAndClearAll'),
     $sents_from_text = $('#sents_from_text'),
     $sortSelect = $('#sort-select');
 
-$newProjectAndClearAll.click(function () {
+$buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
         title: 'Ви впевнені?',
         message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
@@ -301,7 +301,7 @@ $buttonSaveTerms.click(function () {
     let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
         url = window.URL.createObjectURL(blob);
     downloadLink.href = url;
-    downloadLink.download = $captionOverviewButton.text() + '.txt';
+    downloadLink.download = $captionOverviewButton.text();
     downloadLink.click();
 });
 
@@ -316,7 +316,7 @@ $buttonSaveNer.click(function () {
     let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
         url = window.URL.createObjectURL(blob);
     downloadLink.href = url;
-    downloadLink.download = $captionOverviewButton.text() + '.txt';
+    downloadLink.download = $captionOverviewButton.text();
     downloadLink.click();
 });
 
@@ -637,6 +637,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                     mark(sentsForMark);
                 }
                 markTerms(node.text);
+                copyTermTreeToTable(node.text);
             }
         }); // add array data to bootstrap-treeview and view it on page
     }
@@ -687,6 +688,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                     mark(sentsForMark);
                 }
                 markTerms(node.text);
+                copyTermTreeToTable(node.text);
             }
         }); // add array data to bootstrap-treeview and view it on page
     }
@@ -830,6 +832,16 @@ function truncate(n, len) {
     }
     filename = filename.substr(0, len) + (n.length > len ? '[...]' : '');
     return filename + '.' + ext;
+}
+
+function copyTermTreeToTable(termTreeText) {
+    // Mouse handler for table (DROP):
+    $('#table-body').on('mouseup', 'td', function () {
+        if (termTreeText != '') {
+            $(this).html(termTreeText);
+            termTreeText = '';
+        }
+    });
 }
 
 // Changes XML to JSON

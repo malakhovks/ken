@@ -269,8 +269,12 @@ def index():
     return Response(render_template('index.html'), mimetype='text/html')
 
 @app.route('/help')
-def gethelp():  
+def getHelp():  
     return Response(render_template('help.html'), mimetype='text/html')
+
+@app.route('/changelog')
+def getChangelog():  
+    return Response(render_template('changelog.html'), mimetype='text/html')
 
 """
 # parce.xml service

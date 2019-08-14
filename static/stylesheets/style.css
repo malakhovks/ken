@@ -30,6 +30,28 @@ body {
     border: none;
     color: white;
 }
+
+#button-dropdown-help {
+	background-color: #546E7A;
+    justify-content: center;
+    line-height: 30px;
+    width: 100%;
+    padding: 0;
+    /* margin: 0 5px 0 0; */
+    border: none;
+    color: white;
+}
+
+#button-dropdown-project {
+	background-color: #546E7A;
+    justify-content: center;
+    line-height: 30px;
+    width: 100%;
+    padding: 0;
+    margin: 0 5px 0 0;
+    border: none;
+    color: white;
+}
 /* <!-- Basic dropdown --> */
 
 .navbar-default .navbar-nav > li > a::before {
