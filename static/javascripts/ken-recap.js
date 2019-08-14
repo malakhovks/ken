@@ -31,7 +31,7 @@ var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $sents_from_text = $('#sents_from_text'),
     $sortSelect = $('#sort-select');
 
-var forProjects = { projects: [] };
+var forProject = { project: [] };
 /*\
 |*|  Base64 / binary data / UTF-8 strings utilities (#3)
 |*|  https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
