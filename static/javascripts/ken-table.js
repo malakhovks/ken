@@ -440,11 +440,6 @@ document.getElementById("button-save-table").addEventListener("click", e => {
 //SAVE_TABLE_TO_XLS_____________________________________________________________________________________________________
 
 document.getElementById("clear-table").addEventListener("click", e => {
-    // if (
-    //     confirm("Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням. Ви впевнені?")
-    // ) {
-    //     this.resetData();
-    // }
     iziToast.warning({
         title: 'Ви впевнені?',
         message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
@@ -482,8 +477,6 @@ $('#uploadUnknownTerms').on('mousedown', 'option', clickDragAndDrop);
 
 function clickDragAndDrop() {
     var termText = $(this).text();
-    // var termText = $(this).prop('value'); // extract text from term-list
-
     // Mouse handler for table (DROP):
     $('#table-body').on('mouseup', 'td', function () {
         if (termText != '') {
