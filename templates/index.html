@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Конспект 2019 - v0.7.1</title>
+  <title>Конспект 2019 - v1.0.0</title>
   <meta charset="UTF-8">
   <link rel="shortcut icon" type="image/png" href="./static/images/favicon.png" />
   <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/flatly.bootstrap.css" media="screen" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="./static/stylesheets/iziToast.min.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="./static/stylesheets/tippy.css" media="screen" />
 </head>
-
+<!-- ---------------------------------------------------------------------------------------------------- -->
 <body>
   <div class="container_adapter_for_one_page_view">
     <section class="col-md-3">
@@ -80,20 +80,23 @@
               <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
               <li role="presentation" id="button-new-project" title="Розпочати новий проект"><a role="menuitem"
-                  tabindex="-1" href="#"><i
+                  tabindex="-1"><i
                   class="material-icons">create</i>Новий проект</a></li>
-              <li role="presentation" id="button-open-project" title="Відкрити проект з файлу" class="disabled"><a role="menuitem"
-                  tabindex="-1" href="#"><i
+              <li role="presentation" id="button-open-document" title="Відкрити документ (.pdf, .docx, .txt) для аналізу"><a role="menuitem"
+                  tabindex="-1"><i
+                  class="material-icons">cloud_upload</i>Відкрити документ</a></li>
+              <li role="presentation" id="button-open-project" title="Відкрити проект з файлу"><a role="menuitem"
+                tabindex="-1"><i
                   class="material-icons">unarchive</i>Відкрити проект</a></li>
-              <li role="presentation" id="button-save-project" title="Зберегти проект в файл" class="disabled"><a role="menuitem"
-                  tabindex="-1" href="#"><i
+                  <!-- <label for = "file-input-for-open-project"><div><i
+                  class="material-icons">unarchive</i>Відкрити проект<input type="file" id="file-input-for-open-project" style="display:none" accept="text/plain"/></div></label> -->
+              <li role="presentation" id="button-save-project" title="Зберегти проект в файл"><a role="menuitem"
+                  tabindex="-1"><i
                   class="material-icons">archive</i>Зберегти проект</a></li>
             </ul>
           </div>
           <!-- Project dropdown -->
-          <!-- <button id="newProjectAndClearAll" type="button"><i class="material-icons">create_new_folder</i>
-            <div>Новий проект</div>
-          </button> -->
+          <!-- ---------------------------------------------------------------------------------------------------- -->
           <!-- Save dropdown -->
           <div class="dropdown" id="button-save">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
@@ -117,9 +120,21 @@
             </ul>
           </div>
           <!-- Save dropdown -->
-          <!-- <button id="help" type="button" onclick="window.open('/help','_blank');"><i class="material-icons">help</i>
-            <div>Допомога</div>
-          </button> -->
+          <!-- ---------------------------------------------------------------------------------------------------- -->
+          <!-- Open dropdown -->
+          <!-- <div class="dropdown" id="button-dropdown-open">
+            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
+                class="material-icons">cloud_upload</i>Відкрити
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation" id="button-open-allterms" title="Відкрити локальний файл allterms.xml" class="disabled"><a role="menuitem"
+                  tabindex="-1" href="#">allterms.xml</a></li>
+              <li role="presentation" id="button-open-parce" title="Відкрити локальний файл parce.xml" class="disabled"><a role="menuitem"
+                  tabindex="-1" href="#">parce.xml</a></li>
+            </ul>
+          </div> -->
+          <!-- Open dropdown -->
+          <!-- ---------------------------------------------------------------------------------------------------- -->
           <!-- Help dropdown -->
           <div class="dropdown" id="button-dropdown-help">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
@@ -127,7 +142,7 @@
               <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
               <li role="presentation" id="button-help" title="Настанова щодо експлуатування"><a role="menuitem"
-                  tabindex="-1" href="/help" target="_blank">Технична документация</a></li>
+                  tabindex="-1" href="/help" target="_blank">Документація</a></li>
               <li role="presentation" id="button-changelog" title="Журнал змін проекту CHANGELOG.md"><a role="menuitem"
                   tabindex="-1" href="/changelog" target="_blank">Журнал змін</a></li>
             </ul>
@@ -191,10 +206,12 @@
     <div class="inner"></div>
   </div>
 </body>
-
+<!-- ---------------------------------------------------------------------------------------------------- -->
 <script src="./static/javascripts/jquery-3.4.1.min.js"></script>
 <script src="./static/javascripts/bootstrap-treeview.min.js"></script>
 <script src="./static/bootstrap/js/bootstrap.min.js"></script>
+<!-- localforge 1.7.3 -->
+<script src="./static/javascripts/localforage.min.js"></script>
 <script src="./static/javascripts/tippy.min.js"></script>
 <script src="./static/javascripts/jquery.mark.min.js"></script>
 <script src="./static/javascripts/ken-recap.js"></script>
