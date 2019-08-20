@@ -5,14 +5,18 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 
 
 // GLOBAL VARIABLES FOR THIS SCRIPT:
-var resJSON,
-    resParceJSON,
-    termsWithIndexDict = {},
-    fileNamesForProjectFileListAndLocalStorage = { fileNamesArray: [] },
+var termsWithIndexDict = {},
     treeData = [], // for bootstrap-treeview
     objForTree = {}, // for bootstrap-treeview
     keyC = 67, // Javascript Char Code (Key Code) for "C" key
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key
+
+var projectStructure = { project: { name: "", content: { documents: [] } } },
+    alltermsJSON,
+    parceJSON,
+    selectedDocument,
+    lastRecappedFileData,
+    lastProjectFiles;
 
 var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $recapOverviewButton = $("#recap-overview-button"),
@@ -29,31 +33,42 @@ var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $buttonSaveParceXml = $('#button-save-parce-xml'),
     $upload_button = $('#upload-button'),
     $sents_from_text = $('#sents_from_text'),
-    $sortSelect = $('#sort-select');
+    $sortSelect = $('#sort-select'),
+    $buttonSaveProject = $('#button-save-project');
 
-var forProject = { project: { name: "", content: { files: [] } } };
 /*\
 |*|  Base64 / binary data / UTF-8 strings utilities (#3)
 |*|  https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
 \*/
 var base64EncDec = {
-    btoaUTF16: function (sString) {
+    toBase64btoaUTF16: function (sString) {
         var aUTF16CodeUnits = new Uint16Array(sString.length);
         Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
-        return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+        // return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+        return btoa([].reduce.call(new Uint8Array(aUTF16CodeUnits.buffer), function (p, c) { return p + String.fromCharCode(c) }, ''));
     },
-    atobUTF16: function (sBase64) {
+    toStringatobUTF16: function (sBase64) {
         var sBinaryString = atob(sBase64), aBinaryView = new Uint8Array(sBinaryString.length);
         Array.prototype.forEach.call(aBinaryView, function (el, idx, arr) { arr[idx] = sBinaryString.charCodeAt(idx); });
-        return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+        // return String.fromCharCode.apply(null, new Uint16Array(aBinaryView.buffer));
+        return new Uint16Array(aBinaryView.buffer).reduce(function (data, byte) {
+            return data + String.fromCharCode(byte);
+          }, '');
     }
 };
+
+/* Increase localStorage size 10 times or more! Very easy to use and potentially much faster than native localStorage!
+https://github.com/DVLP/localStorageDB
+*/
+/* !function(){function e(t,o){return n?void(n.transaction("s").objectStore("s").get(t).onsuccess=function(e){var t=e.target.result&&e.target.result.v||null;o(t)}):void setTimeout(function(){e(t,o)},100)}var t=window.indexedDB||window.mozIndexedDB||window.webkitIndexedDB||window.msIndexedDB;if(!t)return void console.error("indexDB not supported");var n,o={k:"",v:""},r=t.open("d2",1);r.onsuccess=function(e){n=this.result},r.onerror=function(e){console.error("indexedDB request error"),console.log(e)},r.onupgradeneeded=function(e){n=null;var t=e.target.result.createObjectStore("s",{keyPath:"k"});t.transaction.oncomplete=function(e){n=e.target.db}},window.ldb={get:e,set:function(e,t){o.k=e,o.v=t,n.transaction("s","readwrite").objectStore("s").put(o)}}}(); */
+// usage:
+// ldb.set('last-project', JSON.stringify(projectStructure));
 // ------------------------------------------------------------------------------------------------------------------
 
 $buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
-        title: 'Ви впевнені?',
-        message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
+        title: 'Розпочати новий проект?',
+        message: 'Це призведе до видалення всіх даних.',
         position: 'center',
         timeout: 10000,
         buttons: [
@@ -75,96 +90,211 @@ $buttonNewProjectAndClearAll.click(function () {
 });
 
 $(document).ready(function () {
-    // Load last recapped file data
-    if (localStorage.getItem("recapForLastFile")) {
-        // set #sort-select to order type 4
-        $sortSelect.val('4');
-        console.log("Load last recapped file data");
-        resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
 
-        // for known words ES 6
-        for (let element of resJSON.termsintext.exporterms.term) {
-            termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
-            if (Array.isArray(element.sentpos)) {
-                $uploadResultList.append($('<option>', {
-                    text: element.tname,
-                    value: element.sentpos.length,
-                    title: 'Частота: ' + element.sentpos.length
-                }));
-            }
-            if (Array.isArray(element.sentpos) == false) {
-                $uploadResultList.append($('<option>', {
-                    text: element.tname,
-                    value: 1,
-                    title: 'Частота: ' + 1
-                }));
-            }
+    // Show progress bar
+    $("body").css("cursor", "progress");
+    $(".loader").show();
+
+    localforage.getItem('last-project').then(function (value) {
+        if (value == null) {
+
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
+
+            projectStructure.project.name = 'pr-' + Date.now();
+            localforage.setItem('last-project', projectStructure).then(function (value) {
+                console.log('last-project item created with value: ' + JSON.stringify(value));
+                iziToast.info({
+                    title: 'Вітаємо, розпочато новий проект!',
+                    message: 'Оберіть файл для аналізу (pdf, txt, docx)',
+                    position: 'bottomLeft'
+                });
+            }).catch(function (err) {
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                // This code runs if there were any errors
+                console.log(err);
+            });
         }
+        if (value != null) {
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
+            iziToast.info({
+                title: 'Вітаємо, завантажено проект ' + JSON.stringify(value.project.name),
+                message: 'Оберіть файл для аналізу (pdf, txt, docx)',
+                position: 'bottomLeft'
+            });
+            projectStructure = value;
+            console.log("Countinue existing project: " + JSON.stringify(value.project.name));
+            if (typeof value.project.content.documents != "undefined" && value.project.content.documents != null && value.project.content.documents.length != null && value.project.content.documents.length > 0) {
 
-        // add text from last recapped file to textarea id="sents_from_text"
-        // Clear textarea id="sents_from_text"
-        $sents_from_text.text('');
-        // add to textarea id="sents_from_text"
-        for (let sent_element of resJSON.termsintext.sentences.sent) {
-            $sents_from_text.append('<p>' + sent_element + '</p><br>')
-        }
+                lastRecappedFileData = projectStructure.project.content.documents.slice(-1)[0];
+                lastProjectFiles = projectStructure.project.content.documents;
 
-    }
-
-    if (localStorage.getItem("ner-for-last-file")) {
-        $('#displacy-ner').html(localStorage.getItem("ner-for-last-file"));
-    }
-
-    // load last NER from localStorage "parcexml-in-json-for-last-file" in NER tab $uploadUnknownTerms
-    if (localStorage.getItem("parcexml-in-json-for-last-file")) {
-        parcexmlInJSON = JSON.parse(localStorage.getItem("parcexml-in-json-for-last-file"));
-        $('option', $uploadUnknownTerms).remove();
-        for (let nerElement of parcexmlInJSON.text.sentence) {
-
-            if (nerElement.hasOwnProperty('ner')) {
-                if (Array.isArray(nerElement.ner.entity)) {
-                    for (let entityElement of nerElement.ner.entity) {
-                        $uploadUnknownTerms.append($('<option>', {
-                            value: entityElement.entitytext,
-                            text: entityElement.entitytext
+                // Load last alltermsjson --------------------------------------------------------------------------------------
+                // set #sort-select to order type 4
+                $sortSelect.val('4');
+                alltermsJSON = lastRecappedFileData.results.alltermsjson;
+                // for known words ES 6
+                for (let element of alltermsJSON.termsintext.exporterms.term) {
+                    termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+                    if (Array.isArray(element.sentpos)) {
+                        $uploadResultList.append($('<option>', {
+                            text: element.tname,
+                            value: element.sentpos.length,
+                            title: 'Частота: ' + element.sentpos.length
                         }));
                     }
-                };
-                if (Array.isArray(nerElement.ner.entity) == false) {
-                    $uploadUnknownTerms.append($('<option>', {
-                        value: nerElement.ner.entity.entitytext,
-                        text: nerElement.ner.entity.entitytext
+                    if (Array.isArray(element.sentpos) == false) {
+                        $uploadResultList.append($('<option>', {
+                            text: element.tname,
+                            value: 1,
+                            title: 'Частота: ' + 1
+                        }));
+                    }
+                }
+                // add text from last recapped file to textarea id="sents_from_text"
+                // Clear textarea id="sents_from_text"
+                $sents_from_text.text('');
+                // add to textarea id="sents_from_text"
+                for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
+                    $sents_from_text.append('<p>' + sent_element + '</p><br>')
+                }
+
+                // load last NER from parcejson in NER tab $uploadUnknownTerms
+                parceJSON = lastRecappedFileData.results.parcejson
+                $('option', $uploadUnknownTerms).remove();
+                // TODO add ckecking if nerElement is present
+                for (let nerElement of parceJSON.text.sentence) {
+
+                    if (nerElement.hasOwnProperty('ner')) {
+                        if (Array.isArray(nerElement.ner.entity)) {
+                            for (let entityElement of nerElement.ner.entity) {
+                                $uploadUnknownTerms.append($('<option>', {
+                                    value: entityElement.entitytext,
+                                    text: entityElement.entitytext
+                                }));
+                            }
+                        };
+                        if (Array.isArray(nerElement.ner.entity) == false) {
+                            $uploadUnknownTerms.append($('<option>', {
+                                value: nerElement.ner.entity.entitytext,
+                                text: nerElement.ner.entity.entitytext
+                            }));
+                        }
+                    }
+                }
+
+                // Load project files list into #projectFiles element
+                for (let projectFilesElement of lastProjectFiles) {
+                    $projectFileList.append($('<option>', {
+                        value: projectFilesElement.names.unique,
+                        text: truncate(projectFilesElement.names.unique, 30),
+                        title: projectFilesElement.names.original
                     }));
                 }
+
+                // Load NER from nerhtmlBase64 --------------------------------------------------------------------------------------
+                $('#displacy-ner').html(base64EncDec.toStringatobUTF16(lastRecappedFileData.results.nerhtmlBase64));
+
+                console.log("Loaded last recapped file with unique name: " + JSON.stringify(lastRecappedFileData.names.unique));
+            } else {
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                console.log("Existing project is empty");
             }
         }
-    }
-
-    if (localStorage.getItem("projectFiles")) {
-        fileNamesForProjectFileListAndLocalStorage = JSON.parse(localStorage.getItem("projectFiles"));
-        for (let projectFilesElement of fileNamesForProjectFileListAndLocalStorage.fileNamesArray) {
-            $projectFileList.append($('<option>', {
-                value: projectFilesElement.unique,
-                text: truncate(projectFilesElement.unique, 30),
-                title: projectFilesElement.original
-            }));
-        }
-    }
+    }).catch(function (err) {
+        // Hide progress bar
+        $("body").css("cursor", "default");
+        $(".loader").hide();
+        console.log(err);
+    });
 
     $("#displacy").hide();
     $("#displacy-ner").hide();
 
-    iziToast.info({
-        title: 'Вітаємо!',
-        message: 'Оберіть файл для аналізу (pdf, txt, docx)',
-        position: 'bottomLeft'
-    });
+});
 
+$('#button-open-document').click(function () {
+    $recapOverviewButton.trigger("click");
+});
+
+$('#button-open-project').click(function () {
+    // $('#file-input-for-open-project').trigger('click');
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.click();
+
+    input.onchange = e => {
+
+        // getting a hold of the file reference
+        var file = e.target.files[0];
+        // setting up the reader
+        var reader = new FileReader();
+
+
+        // file reading started
+        reader.addEventListener('loadstart', function () {
+            console.log('File reading started');
+            // Show progress bar
+            $("body").css("cursor", "progress");
+            $(".loader").show();
+        });
+
+        reader.addEventListener('load', function (e) {
+            localforage.clear().then(function () {
+                console.log('Database is now empty.');
+                // contents
+                var loaded_json_string = e.target.result;
+                // parse as JSON
+                var loaded_json = JSON.parse(loaded_json_string);
+                localforage.setItem('last-project', loaded_json).then(function (value) {
+                    // Hide progress bar
+                    $("body").css("cursor", "default");
+                    $(".loader").hide();
+                    localStorage.clear();
+                    location.reload();
+                }).catch(function (err) {
+                    // Hide progress bar
+                    $("body").css("cursor", "default");
+                    $(".loader").hide();
+                    console.log(err);
+                });
+            }).catch(function (err) {
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                console.log(err);
+            });
+        });
+
+        // file reading failed
+        reader.addEventListener('error', function () {
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
+            alert('Error : Failed to read file');
+        });
+        // file read progress 
+        reader.addEventListener('progress', function (e) {
+            if (e.lengthComputable == true) {
+                var percent_read = Math.floor((e.loaded / e.total) * 100);
+                console.log(percent_read + '% read');
+            }
+        });
+        // read as text file
+        reader.readAsText(file);
+    }
 });
 
 // extract terms from text button #recapUploadButton click event
 $('#recap-upload-button').click(function () {
-    //sendFileToRecapService();
     fetchFileToRecapService();
 });
 
@@ -279,33 +409,75 @@ $recapOverviewButton.change(function () {
     $textContent.text('');
 });
 
-$buttonSaveAlltermsXml.click(function () {
-    if (localStorage.getItem("alltermsxml-for-last-file")) {
+$buttonSaveProject.click(function () {
+    if (projectStructure != null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
         // Add the link to your DOM
         document.body.appendChild(downloadLink);
-        let blob = new Blob([localStorage.getItem("alltermsxml-for-last-file")], { type: "octet/stream" }),
+        // let blob = new Blob([projectStructure], { type: "octet/stream" }),
+        let blob = new Blob([JSON.stringify(projectStructure, null, 2)], { type: "application/json" }),
             url = window.URL.createObjectURL(blob);
         downloadLink.href = url;
-        downloadLink.download = 'allterms.xml';
+        downloadLink.download = projectStructure.project.name;
         downloadLink.click();
     }
 })
 
-$buttonSaveParceXml.click(function () {
-    if (localStorage.getItem("parcexml-for-last-file")) {
+$buttonSaveAlltermsXml.click(function () {
+    if (selectedDocument != null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
         // Add the link to your DOM
         document.body.appendChild(downloadLink);
-        let blob = new Blob([localStorage.getItem("parcexml-for-last-file")], { type: "octet/stream" }),
+        let blob = new Blob([base64EncDec.toStringatobUTF16(selectedDocument.results.alltermsxmlBase64)], { type: "octet/stream" }),
+            url = window.URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'allterms.xml';
+        downloadLink.click();
+    } else {
+        if (lastRecappedFileData != null) {
+            downloadLink = document.createElement("a");
+            // Make sure that the link is not displayed
+            downloadLink.style.display = "none";
+            // Add the link to your DOM
+            document.body.appendChild(downloadLink);
+            let blob = new Blob([base64EncDec.toStringatobUTF16(lastRecappedFileData.results.alltermsxmlBase64)], { type: "octet/stream" }),
+                url = window.URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = 'allterms.xml';
+            downloadLink.click();
+        }
+    }
+})
+
+$buttonSaveParceXml.click(function () {
+    if (selectedDocument != null) {
+        downloadLink = document.createElement("a");
+        // Make sure that the link is not displayed
+        downloadLink.style.display = "none";
+        // Add the link to your DOM
+        document.body.appendChild(downloadLink);
+        let blob = new Blob([base64EncDec.toStringatobUTF16(selectedDocument.results.parcexmlBase64)], { type: "octet/stream" }),
             url = window.URL.createObjectURL(blob);
         downloadLink.href = url;
         downloadLink.download = 'parce.xml';
         downloadLink.click();
+    } else {
+        if (lastRecappedFileData != null) {
+            downloadLink = document.createElement("a");
+            // Make sure that the link is not displayed
+            downloadLink.style.display = "none";
+            // Add the link to your DOM
+            document.body.appendChild(downloadLink);
+            let blob = new Blob([base64EncDec.toStringatobUTF16(lastRecappedFileData.results.parcexmlBase64)], { type: "octet/stream" }),
+                url = window.URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = 'parce.xml';
+            downloadLink.click();
+        }
     }
 })
 
@@ -371,7 +543,14 @@ function fetchFileToRecapService() {
         uniqueUploadFilename = Date.now() + '-' + uploadFileName,
         form = new FormData();
 
-    var originalAndUniqueFilenames = { original: uploadFileName, unique: uniqueUploadFilename };
+    // var originalAndUniqueFilenames = { original: uploadFileName, unique: uniqueUploadFilename };
+
+    // init content for temporary project
+    var projectContent = {names: { original: "", unique: ""}, results: { alltermsxmlBase64: "", parcexmlBase64: "", alltermsjson: "", parcejson: "", nerhtmlBase64: ""}};
+    // add file names to content for temporary project
+    projectContent.names.original = uploadFileName;
+    projectContent.names.unique = uniqueUploadFilename;
+
 
     form.append("file", $recapOverviewButton[0].files[0]);
 
@@ -382,23 +561,18 @@ function fetchFileToRecapService() {
         $(".loader").show();
 
         iziToast.info({
-            title: 'Зачекайте! Аналіз файлу',
+            title: 'Зачекайте! Аналіз документа',
             message: uploadFileName.split('\\').pop(),
             position: 'bottomLeft',
             close: false,
             timeout: false
         });
 
-        fileNamesForProjectFileListAndLocalStorage.fileNamesArray.push(originalAndUniqueFilenames);
-
         $projectFileList.append($('<option>', {
-            value: originalAndUniqueFilenames.unique,
-            text: truncate(originalAndUniqueFilenames.unique, 30),
-            title: originalAndUniqueFilenames.original
+            value: projectContent.names.unique,
+            text: truncate(projectContent.names.unique, 30),
+            title: projectContent.names.original
         }));
-
-        //add filename to localStorage and projectFileList
-        localStorage['projectFiles'] = JSON.stringify(fileNamesForProjectFileListAndLocalStorage);
 
         // Hide Upload button and show tabs
         $upload_button.css('display', 'none');
@@ -420,6 +594,7 @@ function fetchFileToRecapService() {
                 .then(response => {
 
                     if (response.status == 503) {
+                        // Hide progress bar
                         $("body").css("cursor", "default");
                         $(".loader").hide();
                         $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
@@ -437,24 +612,19 @@ function fetchFileToRecapService() {
                     return response.text().then(result => {
 
                         dom = new DOMParser().parseFromString(result, "text/xml");
-                        resJSON = xmlToJson(dom);
+                        alltermsJSON = xmlToJson(dom);
 
                         // set #sort-select to order type 4
                         $sortSelect.val('4');
 
-                        // add to localStorage recap of the last uploaded file
-                        localStorage["recapForLastFile"] = JSON.stringify(resJSON);
+                        // add allterms.xml to content for temporary project ("alltermsxmlBase64" field)
+                        projectContent.results.alltermsxmlBase64 = base64EncDec.toBase64btoaUTF16(result);
+                        // add allterms.xml in JSON to content for temporary project ("alltermsjson" field)
+                        projectContent.results.alltermsjson = alltermsJSON;
 
-                        // add to localStorage recap of this file for #projectFileList
-                        localStorage[uniqueUploadFilename] = JSON.stringify(resJSON);
 
-                        // add to localStorage allterms.xml of the last uploaded file
-                        localStorage["alltermsxml-for-last-file"] = result;
-                        // add to localStorage allterms.xml of this file for #projectFileList selection
-                        localStorage[uniqueUploadFilename + "-alltermsxml"] = result;
-
-                        for (let elementKnownTxtJson of resJSON.termsintext.exporterms.term) {
-                            termsWithIndexDict[elementKnownTxtJson.tname] = resJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
+                        for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
+                            termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
                             if (Array.isArray(elementKnownTxtJson.sentpos)) {
                                 $uploadResultList.append($('<option>', {
                                     text: elementKnownTxtJson.tname,
@@ -474,7 +644,7 @@ function fetchFileToRecapService() {
                         // Clear textarea id="sents_from_text"
                         $sents_from_text.text('');
                         // add to textarea id="sents_from_text"
-                        for (let sent_element of resJSON.termsintext.sentences.sent) {
+                        for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
                             $sents_from_text.append('<p>' + sent_element + '</p><br>')
                         }
                     });
@@ -489,19 +659,14 @@ function fetchFileToRecapService() {
                             return response.text().then(result => {
 
                                 dom = new DOMParser().parseFromString(result, "text/xml");
-                                resParceJSON = xmlToJson(dom);
+                                parceJSON = xmlToJson(dom);
 
-                                // add to localStorage parce.xml in JSON of the last uploaded file
-                                localStorage["parcexml-in-json-for-last-file"] = JSON.stringify(resParceJSON);
-                                // add to localStorage parce.xml in JSON of the last uploaded file with unique name
-                                localStorage[uniqueUploadFilename + "-parcexml-in-json"] = JSON.stringify(resParceJSON);
+                                // add parce.xml to content for temporary project ("parcexmlBase64" field)
+                                projectContent.results.parcexmlBase64 = base64EncDec.toBase64btoaUTF16(result);
+                                // add parce.xml in JSON to content for temporary project ("parcejson" field)
+                                projectContent.results.parcejson = parceJSON;
 
-                                // add to localStorage parce.xml of the last uploaded file
-                                localStorage["parcexml-for-last-file"] = result;
-                                // add to localStorage parce.xml of this file for #projectFileList selection
-                                localStorage[uniqueUploadFilename + "-parcexml"] = result;
-
-                                for (let sentElement of resParceJSON.text.sentence) {
+                                for (let sentElement of parceJSON.text.sentence) {
 
                                     if (sentElement.hasOwnProperty('ner')) {
                                         if (Array.isArray(sentElement.ner.entity)) {
@@ -526,7 +691,7 @@ function fetchFileToRecapService() {
                 // fetch to /ken/api/en/html/ner for NER
                 .then(next => {
 
-                    sentencesData = JSON.stringify(Object.values(resJSON.termsintext.sentences.sent));
+                    sentencesData = JSON.stringify(Object.values(alltermsJSON.termsintext.sentences.sent));
 
                     return fetch('/ken/api/en/html/ner', {
                         method: 'post',
@@ -535,12 +700,35 @@ function fetchFileToRecapService() {
                         .then(response => {
                             return response.text().then(function (result) {
 
-                                // add to localStorage NER of the last uploaded file
-                                localStorage["ner-for-last-file"] = result;
-                                // add to localStorage NER of this file for #projectFileList selection
-                                localStorage[uniqueUploadFilename + "-ner"] = result;
+                                // add spaCy NER html results to content for temporary project ("nerhtmlBase64" field)
+                                projectContent.results.nerhtmlBase64 = base64EncDec.toBase64btoaUTF16(result);
+
+                                // add projectContent to projectStructure content array
+                                projectStructure.project.content.documents.push(projectContent);
+                                // Update last recapped file data
+                                lastRecappedFileData = projectContent;
+                                // Update localforage "last-project"
+                                localforage.setItem('last-project', projectStructure).then(function (value) {
+                                    console.log('last-project item of database updated');
+                                }).catch(function (err) {
+                                    // Hide progress bar
+                                    $("body").css("cursor", "default");
+                                    $(".loader").hide();
+                                    console.log(err);
+                                });
+
+                                // Add last recaped data to last-selected database
+                                localforage.setItem('last-selected', projectContent).then(function (value) {
+                                    console.log('last-selected item of database updated');
+                                }).catch(function (err) {
+                                    // Hide progress bar
+                                    $("body").css("cursor", "default");
+                                    $(".loader").hide();
+                                    console.log(err);
+                                });
 
                                 $('#displacy-ner').html(result);
+                                // Hide progress bar
                                 $("body").css("cursor", "default");
                                 $(".loader").hide();
                                 iziToast.success({
@@ -556,12 +744,15 @@ function fetchFileToRecapService() {
                         })
                 })
                 .catch(error => {
+                    // Hide progress bar
                     $("body").css("cursor", "default");
                     $(".loader").hide();
                     $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
+                    console.log(error);
                     iziToast.warning({
                         title: 'Помилка',
-                        message: 'Виникла помилка на стороні серевера 500',
+                        // message: 'Виникла помилка на стороні серевера 500',
+                        message: 'Дивіться деталі в JavaScript Console',
                         position: 'bottomLeft',
                         onClosed: function () {
                             iziToast.destroy();
@@ -570,6 +761,9 @@ function fetchFileToRecapService() {
                 });
 
         } else {
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
             iziToast.warning({
                 title: 'Ваш браузер застарів.',
                 message: 'Встановіть актуальну версію Google Chrome.',
@@ -584,169 +778,185 @@ function fetchFileToRecapService() {
 
 function forUploadResultListClickAndEnterPressEvents() {
 
-    //clear textArea #text-content
-    $textContent.text('');
+    if ($("#uploadResultList option:selected").text() != "") {
+        //clear textArea #text-content
+        $textContent.text('');
 
-    var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
+        var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
 
-    // inserting sentences with selected terms in #text-content
-    if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos)) {
-        let sentIndex = [];
-        let sentsForMark = [];
-        for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) {
-            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                $textContent.append('<p>' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
-                sentsForMark.push(resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
-                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
-            }
-        }
-        mark(sentsForMark);
-    }
-
-    if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
-
-        $textContent.append('<p>' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '<p><br>');
-
-        mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1]);
-    }
-
-    // inserting terms in tree #term-tree
-    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
-
-        //template structure for bootstrap-treeview
-        objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
-
-        // add child nodes to template structure for bootstrap-treeview
-        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
-            for (let elementForTermTree of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
-                objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: resJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
-            }
-        }
-        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
-            objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: resJSON.termsintext.exporterms.term[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown - 1].tname };
-        }
-
-        treeData.length = 0; //clear treeData array
-
-        treeData.push(objForTree); //add structure to array
-
-        $termTree.treeview({
-            data: treeData,
-            onNodeSelected: function (event, node) {
-                // inserting sentences with selected terms in #text-content
-                //clear #text-content
-                $textContent.text('');
-                let selectedTermInTermTree = termsWithIndexDict[node.text];
-                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
-
-                    $textContent.append('<p>' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
-
-                    mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
+        // inserting sentences with selected terms in #text-content
+        if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos)) {
+            let sentIndex = [];
+            let sentsForMark = [];
+            for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) {
+                if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
+                    $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
+                    sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
+                    sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
                 }
-                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
-                    let sentIndex = [];
-                    let sentsForMark = [];
-                    for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
-                        if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                            $textContent.append('<p>' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
-                            sentsForMark.push(resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
-                            sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
-                        }
+            }
+            mark(sentsForMark);
+        }
+
+        if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
+
+            $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '<p><br>');
+
+            mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1]);
+        }
+
+        // inserting terms in tree #term-tree
+        if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
+
+            //template structure for bootstrap-treeview
+            objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
+
+            // add child nodes to template structure for bootstrap-treeview
+            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
+                for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
+                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
+                }
+            }
+            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
+                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown - 1].tname };
+            }
+
+            treeData.length = 0; //clear treeData array
+
+            treeData.push(objForTree); //add structure to array
+
+            $termTree.treeview({
+                data: treeData,
+                onNodeSelected: function (event, node) {
+                    // inserting sentences with selected terms in #text-content
+                    //clear #text-content
+                    $textContent.text('');
+                    let selectedTermInTermTree = termsWithIndexDict[node.text];
+                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
+
+                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
+
+                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
                     }
-                    mark(sentsForMark);
-                }
-                markTerms(node.text);
-                copyTermTreeToTable(node.text);
-            }
-        }); // add array data to bootstrap-treeview and view it on page
-    }
-
-    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
-
-        //template structure for bootstrap-treeview
-        objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
-
-        // add child nodes to template structure for bootstrap-treeview
-        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
-            for (let elementForTermTree of resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
-                objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: resJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
-            }
-        }
-        if (Array.isArray(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
-            objForTree.nodes[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: resJSON.termsintext.exporterms.term[resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup - 1].tname };
-        }
-
-        treeData.length = 0; //clear treeData array
-
-        treeData.push(objForTree); //add structure to array
-
-        $termTree.treeview({
-            data: treeData,
-            onNodeSelected: function (event, node) {
-                // inserting sentences with selected terms in #text-content
-
-                //clear #text-content
-                $textContent.text('');
-                let selectedTermInTermTree = termsWithIndexDict[node.text];
-                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
-
-                    $textContent.append('<p>' + resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
-
-                    mark(resJSON.termsintext.sentences.sent[resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
-                }
-                if (Array.isArray(resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
-                    let sentIndex = [];
-                    let sentsForMark = [];
-                    for (let elementForUploadResultListDbClickAndEnterPress of resJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
-                        if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                            $textContent.append('<p>' + resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
-                            sentsForMark.push(resJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
-                            sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
+                        let sentIndex = [];
+                        let sentsForMark = [];
+                        for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
+                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
+                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
+                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
+                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                            }
                         }
+                        mark(sentsForMark);
                     }
-                    mark(sentsForMark);
+                    markTerms(node.text);
+                    copyTermTreeToTable(node.text);
+                    // visualize noun-chunk/term
+                    let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
+                        container: '#displacy'
+                    });
+                    displacy.parse(node.text);
                 }
-                markTerms(node.text);
-                copyTermTreeToTable(node.text);
+            }); // add array data to bootstrap-treeview and view it on page
+        }
+
+        if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
+
+            //template structure for bootstrap-treeview
+            objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
+
+            // add child nodes to template structure for bootstrap-treeview
+            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
+                for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
+                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
+                }
             }
-        }); // add array data to bootstrap-treeview and view it on page
+            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
+                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup - 1].tname };
+            }
+
+            treeData.length = 0; //clear treeData array
+
+            treeData.push(objForTree); //add structure to array
+
+            $termTree.treeview({
+                data: treeData,
+                onNodeSelected: function (event, node) {
+                    // inserting sentences with selected terms in #text-content
+
+                    //clear #text-content
+                    $textContent.text('');
+                    let selectedTermInTermTree = termsWithIndexDict[node.text];
+                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
+
+                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
+
+                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
+                    }
+                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
+                        let sentIndex = [];
+                        let sentsForMark = [];
+                        for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
+                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
+                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
+                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
+                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                            }
+                        }
+                        mark(sentsForMark);
+                    }
+                    markTerms(node.text);
+                    copyTermTreeToTable(node.text);
+                    // visualize noun-chunk/term
+                    let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
+                        container: '#displacy'
+                    });
+                    displacy.parse(node.text);
+                }
+            }); // add array data to bootstrap-treeview and view it on page
+        }
+
+        if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup') == false && alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') == false) {
+            $termTree.treeview({});
+        }
+
+        markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
+
+        // visualize noun-chunk/term
+        let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
+            container: '#displacy'
+        });
+        displacy.parse($("#uploadResultList option:selected").text());
     }
 
-    if (resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup') == false && resJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') == false) {
-        $termTree.treeview({});
-    }
-
-    markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
-
-    // visualize noun-chunk/term
-    let displacy = new displaCy('/ken/api/en/html/depparse/nounchunk', {
-        container: '#displacy'
-    });
-    displacy.parse($("#uploadResultList option:selected").text());
 }
 
 function forProjectFileListClickAndEnterPressEvents() {
 
-    console.log('fileName: ' + $projectFileList.prop('value'));
+    if ($projectFileList.prop('value') == "") {
+        console.log("No selected document!");
+    }
 
-    if (localStorage.getItem($projectFileList.prop('value'))) {
+    if (projectStructure != null && $projectFileList.prop('value') != "") {
+        if (typeof projectStructure.project.content.documents != "undefined" && projectStructure.project.content.documents != null && projectStructure.project.content.documents.length != null && projectStructure.project.content.documents.length > 0) {
 
-        // load last NER from localStorage "ner-for-last-file"
-        if (localStorage.getItem($projectFileList.prop('value') + "-ner")) {
-            localStorage["ner-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-ner");
-            $('#displacy-ner').html(localStorage.getItem("ner-for-last-file"));
-        } else {
-            $("#displacy-ner").empty();
-        }
+            console.log('Selected document unique name: ' + $projectFileList.prop('value'));
+            selectedDocument = projectStructure.project.content.documents.find( document => document.names.unique === $projectFileList.prop('value') );
+            // Update data in last-selected database with selected document
+            localforage.setItem('last-selected', selectedDocument).then(function (value) {
+                console.log('last-selected item of database updated');
+            }).catch(function (err) {
+                console.log(err);
+            });
 
-        // load last NER from localStorage "parcexml-in-json-for-last-file" in NER tab $uploadUnknownTerms
-        if (localStorage.getItem($projectFileList.prop('value') + "-parcexml-in-json")) {
-            localStorage["parcexml-in-json-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-parcexml-in-json");
-            parcexmlInJSON = JSON.parse(localStorage.getItem("parcexml-in-json-for-last-file"));
-
+            $("#displacy").empty();
+            // Load NER from nerhtmlBase64 --------------------------------------------------------------------------------------
+            $('#displacy-ner').html(base64EncDec.toStringatobUTF16(selectedDocument.results.nerhtmlBase64));
+            // load NER from parcejson in NER tab $uploadUnknownTerms
             $('option', $uploadUnknownTerms).remove();
-
-            for (let nerElement of parcexmlInJSON.text.sentence) {
+            parceJSON = selectedDocument.results.parcejson;
+            for (let nerElement of parceJSON.text.sentence) {
 
                 if (nerElement.hasOwnProperty('ner')) {
                     if (Array.isArray(nerElement.ner.entity)) {
@@ -765,82 +975,71 @@ function forProjectFileListClickAndEnterPressEvents() {
                     }
                 }
             }
+            alltermsJSON = selectedDocument.results.alltermsjson;
+            $('option', $uploadResultList).remove();
+            $textContent.text('');
+            $termTree.treeview({});
+            $captionOverviewButton.text(truncate($projectFileList.find("option:selected").attr("title"), 20));
+            // set #sort-select to order type 4
+            $sortSelect.val('4');
+            // for known words ES 6
+            for (let element of alltermsJSON.termsintext.exporterms.term) {
+                termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
 
-        } else {
-            $('option', $uploadUnknownTerms).remove();
-        }
-
-        // load last allterms.xml from localStorage "alltermsxml-for-last-file"
-        if (localStorage.getItem($projectFileList.prop('value') + "-alltermsxml")) {
-            localStorage["alltermsxml-for-last-file"] = localStorage.getItem($projectFileList.prop('value') + "-alltermsxml")
-        }
-
-        resJSON = JSON.parse(localStorage.getItem($projectFileList.prop('value')));
-
-        // add to localStorage recap of the last uploaded file
-        localStorage["recapForLastFile"] = JSON.stringify(resJSON);
-        $('option', $uploadResultList).remove();
-        $textContent.text('');
-        $termTree.treeview({});
-
-        $captionOverviewButton.text(truncate($projectFileList.find("option:selected").attr("title"), 20));
-
-        // set #sort-select to order type 4
-        $sortSelect.val('4');
-        // for known words ES 6
-        for (let element of resJSON.termsintext.exporterms.term) {
-            termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
-
-            if (Array.isArray(element.sentpos)) {
-                $uploadResultList.append($('<option>', {
-                    text: element.tname,
-                    value: element.sentpos.length,
-                    title: 'Частота: ' + element.sentpos.length
-                }));
+                if (Array.isArray(element.sentpos)) {
+                    $uploadResultList.append($('<option>', {
+                        text: element.tname,
+                        value: element.sentpos.length,
+                        title: 'Частота: ' + element.sentpos.length
+                    }));
+                }
+                if (Array.isArray(element.sentpos) == false) {
+                    $uploadResultList.append($('<option>', {
+                        text: element.tname,
+                        value: 1,
+                        title: 'Частота: ' + 1
+                    }));
+                }
             }
-            if (Array.isArray(element.sentpos) == false) {
-                $uploadResultList.append($('<option>', {
-                    text: element.tname,
-                    value: 1,
-                    title: 'Частота: ' + 1
-                }));
+            // add text from selected document file to textarea id="sents_from_text"
+            // Clear textarea id="sents_from_text"
+            $sents_from_text.text('');
+            // add to textarea id="sents_from_text"
+            for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
+                $sents_from_text.append('<p>' + sent_element + '</p><br>')
             }
+
+            iziToast.info({
+                title: 'Документ ' + $projectFileList.prop('value') + ' завантажено!',
+                // message: $projectFileList.prop('value') + ' завантажено!',
+                position: 'bottomLeft'
+            });
+            console.log("Loaded data of selected document with unique name: " + $projectFileList.prop('value'));
         }
-
-        // add text from last recapped file to textarea id="sents_from_text"
-        // Clear textarea id="sents_from_text"
-        $sents_from_text.text('');
-        // add to textarea id="sents_from_text"
-        for (let sent_element of resJSON.termsintext.sentences.sent) {
-            $sents_from_text.append('<p>' + sent_element + '</p><br>')
-        }
-
-        iziToast.info({
-            title: 'Разбор файлу',
-            message: $projectFileList.prop('value') + ' завантажено!',
-            position: 'bottomLeft'
-        });
-
     } else {
+        console.log("projectStructure variable is empty!");
         iziToast.warning({
-            title: 'Разбор файлу',
-            message: $projectFileList.prop('value') + ' не існує!',
+            title: 'Оберіть документ проекту зі списку!',
             position: 'bottomLeft'
         });
     }
-
 }
 
 function ClearAllForNewProject() {
     $('option', $uploadResultList).remove();
     $('option', $uploadUnknownTerms).remove();
     $textContent.text('');
-    localStorage.clear();
     $('input').val('');
     $termTree.treeview({});
     $("#displacy").empty();
     $("#displacy-ner").empty();
-    location.reload();
+    localStorage.clear();
+    localforage.clear().then(function () {
+        console.log('Database is now empty.');
+        location.reload();
+    }).catch(function (err) {
+        console.log(err);
+    });
 }
 
 function truncate(n, len) {
@@ -934,53 +1133,41 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
     }
     if ($("#fileList").is(".tab-pane.active")) {
         document.getElementById("projectFileList").oncontextmenu = function (event) {
-            iziToast.warning({
-                title: 'Ви впевнені?',
-                message: ' Видалити файл ' + event.target.text + ' ?',
-                position: 'center',
-                timeout: 10000,
-                buttons: [
-                    ['<button>Так</button>', function (instance, toast) {
-                        instance.hide({
-                            transitionOut: 'fadeOutUp',
-                            onClosing: function (instance, toast, closedBy) {
-                                if (localStorage.getItem("projectFiles")) {
-                                    let projectFilesListLS = JSON.parse(localStorage.getItem("projectFiles"));
-                                    let filtered = projectFilesListLS.fileNamesArray.filter(function (el) { return el.unique != event.target.value; });
-                                    localStorage.setItem("projectFiles", JSON.stringify({ fileNamesArray: filtered }));
-                                    $("#projectFileList option[value='" + event.target.value + "']").remove();
+            if (event.target.text != undefined) {
+                iziToast.warning({
+                    title: 'Ви впевнені?',
+                    message: ' Видалити документ ' + event.target.text + ' ?',
+                    position: 'center',
+                    timeout: 10000,
+                    buttons: [
+                        ['<button>Так</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosing: function (instance, toast, closedBy) {
 
-                                    if (localStorage.getItem(event.target.value + "-alltermsxml")) {
-                                        localStorage.removeItem(event.target.value + "-alltermsxml");
-                                    }
-
-                                    if (localStorage.getItem(event.target.value + "-parcexml")) {
-                                        localStorage.removeItem(event.target.value + "-parcexml");
-                                    }
-
-                                    if (localStorage.getItem(event.target.value + "-parcexml-in-json")) {
-                                        localStorage.removeItem(event.target.value + "-parcexml-in-json");
-                                    }
-
-                                    if (localStorage.getItem(event.target.value + "-ner")) {
-                                        localStorage.removeItem(event.target.value + "-ner");
-                                    }
-
-                                    if (localStorage.getItem(event.target.value)) {
-                                        localStorage.removeItem(event.target.value);
+                                    if (projectStructure != null) {
+                                        let filtered = projectStructure.project.content.documents.filter(function (el) { return el.names.unique != event.target.value; });
+                                        projectStructure.project.content.documents = filtered;
+                                        localforage.setItem('last-project', projectStructure).then(function (value) {
+                                            console.log('last-project item of database updated');
+                                            $("#projectFileList option[value='" + event.target.value + "']").remove();
+                                            location.reload();
+                                        }).catch(function (err) {
+                                            console.log(err);
+                                        });
                                     }
 
                                 }
-                            }
-                        }, toast);
-                    }],
-                    ['<button>Ні</button>', function (instance, toast) {
-                        instance.hide({
-                            transitionOut: 'fadeOutUp'
-                        }, toast);
-                    }]
-                ]
-            });
+                            }, toast);
+                        }],
+                        ['<button>Ні</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp'
+                            }, toast);
+                        }]
+                    ]
+                });
+            }
             return false; // cancel default context menu
         }
     }
@@ -1028,27 +1215,22 @@ $sortSelect.on('change', function (e) {
 
     if (sortSelectVal == 4) {
         $("#uploadResultList").empty();
-        // Load last recapped file data
-        if (localStorage.getItem("recapForLastFile")) {
-            resJSON = JSON.parse(localStorage.getItem("recapForLastFile"));
-
-            // for known words ES 6
-            for (let element of resJSON.termsintext.exporterms.term) {
-                termsWithIndexDict[element.tname] = resJSON.termsintext.exporterms.term.indexOf(element);
-                if (Array.isArray(element.sentpos)) {
-                    $uploadResultList.append($('<option>', {
-                        text: element.tname,
-                        value: element.sentpos.length,
-                        title: 'Частота: ' + element.sentpos.length
-                    }));
-                }
-                if (Array.isArray(element.sentpos) == false) {
-                    $uploadResultList.append($('<option>', {
-                        text: element.tname,
-                        value: 1,
-                        title: 'Частота: ' + 1
-                    }));
-                }
+        // for known words ES 6
+        for (let element of alltermsJSON.termsintext.exporterms.term) {
+            termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+            if (Array.isArray(element.sentpos)) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: element.sentpos.length,
+                    title: 'Частота: ' + element.sentpos.length
+                }));
+            }
+            if (Array.isArray(element.sentpos) == false) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: 1,
+                    title: 'Частота: ' + 1
+                }));
             }
         }
     }
