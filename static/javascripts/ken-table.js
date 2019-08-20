@@ -441,8 +441,8 @@ document.getElementById("button-save-table").addEventListener("click", e => {
 
 document.getElementById("clear-table").addEventListener("click", e => {
     iziToast.warning({
-        title: 'Ви впевнені?',
-        message: 'Це призведе до видалення всіх даних і встановлення налаштувань за замовчуванням.',
+        title: 'Очистити таблицю?',
+        message: 'Це призведе до видалення всіх даних з таблиці.',
         position: 'center',
         timeout: 10000,
         buttons: [
