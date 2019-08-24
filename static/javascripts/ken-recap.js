@@ -75,7 +75,8 @@ $buttonNewProjectAndClearAll.click(function () {
             ['<button>Так</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
-                    onClosing: function (instance, toast, closedBy) {
+                    // onClosing: function (instance, toast, closedBy) {
+                    onClosed: function (instance, toast, closedBy) {
                         ClearAllForNewProject();
                     }
                 }, toast);
@@ -198,7 +199,7 @@ $(document).ready(function () {
                 }
 
                 // Load NER from nerhtmlBase64 --------------------------------------------------------------------------------------
-                $('#displacy-ner').html(base64EncDec.toStringatobUTF16(lastRecappedFileData.results.nerhtmlBase64));
+                $('#displacy-ner').html(LZString.decompressFromBase64(lastRecappedFileData.results.nerhtmlCompressed));
 
                 console.log("Loaded last recapped file with unique name: " + JSON.stringify(lastRecappedFileData.names.unique));
             } else {
@@ -432,7 +433,7 @@ $buttonSaveAlltermsXml.click(function () {
         downloadLink.style.display = "none";
         // Add the link to your DOM
         document.body.appendChild(downloadLink);
-        let blob = new Blob([base64EncDec.toStringatobUTF16(selectedDocument.results.alltermsxmlBase64)], { type: "octet/stream" }),
+        let blob = new Blob([LZString.decompressFromBase64(selectedDocument.results.alltermsxmlCompressed)], { type: "octet/stream" }),
             url = window.URL.createObjectURL(blob);
         downloadLink.href = url;
         downloadLink.download = 'allterms.xml';
@@ -444,7 +445,7 @@ $buttonSaveAlltermsXml.click(function () {
             downloadLink.style.display = "none";
             // Add the link to your DOM
             document.body.appendChild(downloadLink);
-            let blob = new Blob([base64EncDec.toStringatobUTF16(lastRecappedFileData.results.alltermsxmlBase64)], { type: "octet/stream" }),
+            let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed)], { type: "octet/stream" }),
                 url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
             downloadLink.download = 'allterms.xml';
@@ -460,7 +461,7 @@ $buttonSaveParceXml.click(function () {
         downloadLink.style.display = "none";
         // Add the link to your DOM
         document.body.appendChild(downloadLink);
-        let blob = new Blob([base64EncDec.toStringatobUTF16(selectedDocument.results.parcexmlBase64)], { type: "octet/stream" }),
+        let blob = new Blob([LZString.decompressFromBase64(selectedDocument.results.parcexmlCompressed)], { type: "octet/stream" }),
             url = window.URL.createObjectURL(blob);
         downloadLink.href = url;
         downloadLink.download = 'parce.xml';
@@ -472,7 +473,7 @@ $buttonSaveParceXml.click(function () {
             downloadLink.style.display = "none";
             // Add the link to your DOM
             document.body.appendChild(downloadLink);
-            let blob = new Blob([base64EncDec.toStringatobUTF16(lastRecappedFileData.results.parcexmlBase64)], { type: "octet/stream" }),
+            let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed)], { type: "octet/stream" }),
                 url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
             downloadLink.download = 'parce.xml';
@@ -546,7 +547,7 @@ function fetchFileToRecapService() {
     // var originalAndUniqueFilenames = { original: uploadFileName, unique: uniqueUploadFilename };
 
     // init content for temporary project
-    var projectContent = {names: { original: "", unique: ""}, results: { alltermsxmlBase64: "", parcexmlBase64: "", alltermsjson: "", parcejson: "", nerhtmlBase64: ""}};
+    var projectContent = {names: { original: "", unique: ""}, results: { alltermsxmlCompressed: "", parcexmlCompressed: "", alltermsjson: "", parcejson: "", nerhtmlCompressed: ""}};
     // add file names to content for temporary project
     projectContent.names.original = uploadFileName;
     projectContent.names.unique = uniqueUploadFilename;
@@ -617,11 +618,15 @@ function fetchFileToRecapService() {
                         // set #sort-select to order type 4
                         $sortSelect.val('4');
 
-                        // add allterms.xml to content for temporary project ("alltermsxmlBase64" field)
-                        projectContent.results.alltermsxmlBase64 = base64EncDec.toBase64btoaUTF16(result);
+                        // add allterms.xml to content for temporary project ("alltermsxmlCompressed" field)
+                        projectContent.results.alltermsxmlCompressed = LZString.compressToBase64(result);
                         // add allterms.xml in JSON to content for temporary project ("alltermsjson" field)
                         projectContent.results.alltermsjson = alltermsJSON;
 
+                        // var compressed = LZString.compressToBase64(result);
+                        // console.log("Size of uncompressed sample is: " + result.length);
+                        // console.log("Size of compressed sample is: " + compressed.length);
+                        // console.log("Size of compressed sample is: " + compressed);
 
                         for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
                             termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
@@ -661,8 +666,8 @@ function fetchFileToRecapService() {
                                 dom = new DOMParser().parseFromString(result, "text/xml");
                                 parceJSON = xmlToJson(dom);
 
-                                // add parce.xml to content for temporary project ("parcexmlBase64" field)
-                                projectContent.results.parcexmlBase64 = base64EncDec.toBase64btoaUTF16(result);
+                                // add parce.xml to content for temporary project ("parcexmlCompressed" field)
+                                projectContent.results.parcexmlCompressed = LZString.compressToBase64(result);
                                 // add parce.xml in JSON to content for temporary project ("parcejson" field)
                                 projectContent.results.parcejson = parceJSON;
 
@@ -700,8 +705,8 @@ function fetchFileToRecapService() {
                         .then(response => {
                             return response.text().then(function (result) {
 
-                                // add spaCy NER html results to content for temporary project ("nerhtmlBase64" field)
-                                projectContent.results.nerhtmlBase64 = base64EncDec.toBase64btoaUTF16(result);
+                                // add spaCy NER html results to content for temporary project ("nerhtmlCompressed" field)
+                                projectContent.results.nerhtmlCompressed = LZString.compressToBase64(result);
 
                                 // add projectContent to projectStructure content array
                                 projectStructure.project.content.documents.push(projectContent);
@@ -750,7 +755,7 @@ function fetchFileToRecapService() {
                     $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
                     console.log(error);
                     iziToast.warning({
-                        title: 'Помилка',
+                        title: 'Помилка!',
                         // message: 'Виникла помилка на стороні серевера 500',
                         message: 'Дивіться деталі в JavaScript Console',
                         position: 'bottomLeft',
@@ -765,8 +770,8 @@ function fetchFileToRecapService() {
             $("body").css("cursor", "default");
             $(".loader").hide();
             iziToast.warning({
-                title: 'Ваш браузер застарів.',
-                message: 'Встановіть актуальну версію Google Chrome.',
+                title: 'Помилка!',
+                message: 'Ваш браузер застарів, встановіть актуальну версію Google Chrome!',
                 position: 'bottomLeft',
                 onClosed: function () {
                     iziToast.destroy();
@@ -941,80 +946,101 @@ function forProjectFileListClickAndEnterPressEvents() {
     if (projectStructure != null && $projectFileList.prop('value') != "") {
         if (typeof projectStructure.project.content.documents != "undefined" && projectStructure.project.content.documents != null && projectStructure.project.content.documents.length != null && projectStructure.project.content.documents.length > 0) {
 
-            console.log('Selected document unique name: ' + $projectFileList.prop('value'));
-            selectedDocument = projectStructure.project.content.documents.find( document => document.names.unique === $projectFileList.prop('value') );
-            // Update data in last-selected database with selected document
-            localforage.setItem('last-selected', selectedDocument).then(function (value) {
-                console.log('last-selected item of database updated');
-            }).catch(function (err) {
-                console.log(err);
+            iziToast.warning({
+                title: 'Відкрити документ ' + $projectFileList.prop('value') + ' ?',
+                // message: 'Це призведе до видалення всіх даних.',
+                position: 'center',
+                timeout: 10000,
+                buttons: [
+                    ['<button>Так</button>', function (instance, toast) {
+                        instance.hide({
+                            transitionOut: 'fadeOutUp',
+                            // onClosing: function (instance, toast, closedBy) {
+                            onClosed: function (instance, toast, closedBy) {
+                                console.log('Selected document unique name: ' + $projectFileList.prop('value'));
+                                selectedDocument = projectStructure.project.content.documents.find(document => document.names.unique === $projectFileList.prop('value'));
+                                // Update data in last-selected database with selected document
+                                localforage.setItem('last-selected', selectedDocument).then(function (value) {
+                                    console.log('last-selected item of database updated');
+                                }).catch(function (err) {
+                                    console.log(err);
+                                });
+
+                                $("#displacy").empty();
+                                // Load NER from nerhtmlCompressed --------------------------------------------------------------------------------------
+                                $('#displacy-ner').html(LZString.decompressFromBase64(selectedDocument.results.nerhtmlCompressed));
+                                // load NER from parcejson in NER tab $uploadUnknownTerms
+                                $('option', $uploadUnknownTerms).remove();
+                                parceJSON = selectedDocument.results.parcejson;
+                                for (let nerElement of parceJSON.text.sentence) {
+
+                                    if (nerElement.hasOwnProperty('ner')) {
+                                        if (Array.isArray(nerElement.ner.entity)) {
+                                            for (let entityElement of nerElement.ner.entity) {
+                                                $uploadUnknownTerms.append($('<option>', {
+                                                    value: entityElement.entitytext,
+                                                    text: entityElement.entitytext
+                                                }));
+                                            }
+                                        };
+                                        if (Array.isArray(nerElement.ner.entity) == false) {
+                                            $uploadUnknownTerms.append($('<option>', {
+                                                value: nerElement.ner.entity.entitytext,
+                                                text: nerElement.ner.entity.entitytext
+                                            }));
+                                        }
+                                    }
+                                }
+                                alltermsJSON = selectedDocument.results.alltermsjson;
+                                $('option', $uploadResultList).remove();
+                                $textContent.text('');
+                                $termTree.treeview({});
+                                $captionOverviewButton.text(truncate($projectFileList.find("option:selected").attr("title"), 20));
+                                // set #sort-select to order type 4
+                                $sortSelect.val('4');
+                                // for known words ES 6
+                                for (let element of alltermsJSON.termsintext.exporterms.term) {
+                                    termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+
+                                    if (Array.isArray(element.sentpos)) {
+                                        $uploadResultList.append($('<option>', {
+                                            text: element.tname,
+                                            value: element.sentpos.length,
+                                            title: 'Частота: ' + element.sentpos.length
+                                        }));
+                                    }
+                                    if (Array.isArray(element.sentpos) == false) {
+                                        $uploadResultList.append($('<option>', {
+                                            text: element.tname,
+                                            value: 1,
+                                            title: 'Частота: ' + 1
+                                        }));
+                                    }
+                                }
+                                // add text from selected document file to textarea id="sents_from_text"
+                                // Clear textarea id="sents_from_text"
+                                $sents_from_text.text('');
+                                // add to textarea id="sents_from_text"
+                                for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
+                                    $sents_from_text.append('<p>' + sent_element + '</p><br>')
+                                }
+
+                                iziToast.info({
+                                    title: 'Документ ' + $projectFileList.prop('value') + ' завантажено!',
+                                    // message: $projectFileList.prop('value') + ' завантажено!',
+                                    position: 'bottomLeft'
+                                });
+                                console.log($projectFileList.prop('value') + ' item loaded from database');
+                            }
+                        }, toast);
+                    }],
+                    ['<button>Ні</button>', function (instance, toast) {
+                        instance.hide({
+                            transitionOut: 'fadeOutUp'
+                        }, toast);
+                    }]
+                ]
             });
-
-            $("#displacy").empty();
-            // Load NER from nerhtmlBase64 --------------------------------------------------------------------------------------
-            $('#displacy-ner').html(base64EncDec.toStringatobUTF16(selectedDocument.results.nerhtmlBase64));
-            // load NER from parcejson in NER tab $uploadUnknownTerms
-            $('option', $uploadUnknownTerms).remove();
-            parceJSON = selectedDocument.results.parcejson;
-            for (let nerElement of parceJSON.text.sentence) {
-
-                if (nerElement.hasOwnProperty('ner')) {
-                    if (Array.isArray(nerElement.ner.entity)) {
-                        for (let entityElement of nerElement.ner.entity) {
-                            $uploadUnknownTerms.append($('<option>', {
-                                value: entityElement.entitytext,
-                                text: entityElement.entitytext
-                            }));
-                        }
-                    };
-                    if (Array.isArray(nerElement.ner.entity) == false) {
-                        $uploadUnknownTerms.append($('<option>', {
-                            value: nerElement.ner.entity.entitytext,
-                            text: nerElement.ner.entity.entitytext
-                        }));
-                    }
-                }
-            }
-            alltermsJSON = selectedDocument.results.alltermsjson;
-            $('option', $uploadResultList).remove();
-            $textContent.text('');
-            $termTree.treeview({});
-            $captionOverviewButton.text(truncate($projectFileList.find("option:selected").attr("title"), 20));
-            // set #sort-select to order type 4
-            $sortSelect.val('4');
-            // for known words ES 6
-            for (let element of alltermsJSON.termsintext.exporterms.term) {
-                termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
-
-                if (Array.isArray(element.sentpos)) {
-                    $uploadResultList.append($('<option>', {
-                        text: element.tname,
-                        value: element.sentpos.length,
-                        title: 'Частота: ' + element.sentpos.length
-                    }));
-                }
-                if (Array.isArray(element.sentpos) == false) {
-                    $uploadResultList.append($('<option>', {
-                        text: element.tname,
-                        value: 1,
-                        title: 'Частота: ' + 1
-                    }));
-                }
-            }
-            // add text from selected document file to textarea id="sents_from_text"
-            // Clear textarea id="sents_from_text"
-            $sents_from_text.text('');
-            // add to textarea id="sents_from_text"
-            for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
-                $sents_from_text.append('<p>' + sent_element + '</p><br>')
-            }
-
-            iziToast.info({
-                title: 'Документ ' + $projectFileList.prop('value') + ' завантажено!',
-                // message: $projectFileList.prop('value') + ' завантажено!',
-                position: 'bottomLeft'
-            });
-            console.log("Loaded data of selected document with unique name: " + $projectFileList.prop('value'));
         }
     } else {
         console.log("projectStructure variable is empty!");
@@ -1135,15 +1161,16 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         document.getElementById("projectFileList").oncontextmenu = function (event) {
             if (event.target.text != undefined) {
                 iziToast.warning({
-                    title: 'Ви впевнені?',
-                    message: ' Видалити документ ' + event.target.text + ' ?',
+                    title: 'Видалити документ ' + event.target.text + ' ?',
+                    // message: ' Видалити документ ' + event.target.text + ' ?',
                     position: 'center',
                     timeout: 10000,
                     buttons: [
                         ['<button>Так</button>', function (instance, toast) {
                             instance.hide({
                                 transitionOut: 'fadeOutUp',
-                                onClosing: function (instance, toast, closedBy) {
+                                // onClosing: function (instance, toast, closedBy) {
+                                onClosed: function (instance, toast, closedBy) {
 
                                     if (projectStructure != null) {
                                         let filtered = projectStructure.project.content.documents.filter(function (el) { return el.names.unique != event.target.value; });
