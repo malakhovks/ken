@@ -985,7 +985,7 @@ def get_terms_list():
                                                                     one_term.append(new_reldown_element)
 
                     '''
-                    # extract three-word terms
+                    # EXTRACT THREE-WORD TERMS
                     '''
                     if len(doc_for_tokens) == 3:
 
