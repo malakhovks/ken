@@ -1,3 +1,12 @@
+## v1.0.2, 2019-09-__
+
+### 👍 Покращення
+
+- Змінено елемент `<title>` головної сторінки `index.html` (видалено рік):
+  ```html
+  <title>Конспект - v1.0.2</title>
+  ```
+
 ## v1.0.1, 2019-08-24
 
 ### ⚠️ Зауваження
@@ -206,25 +215,25 @@
 
 ### 🔴 Виправлення помилок
 - Виправлено помилку `UnicodeDecodeError: 'utf8' codec can't decode byte`.
-Декодовано файл як `UTF-8`, ігноруючи будь-які символи які закодовані в неправильному кодуванні
+  Декодовано файл як `UTF-8`, ігноруючи будь-які символи які закодовані в неправильному кодуванні:
 
-```python
-# decode the file as UTF-8 ignoring any errors
-raw_text = file.read().decode('utf-8', errors='replace')
-```
+  ```python
+  # decode the file as UTF-8 ignoring any errors
+  raw_text = file.read().decode('utf-8', errors='replace')
+  ```
 - Включено збереження макета документа, включаючи пробіли, які є лише візуальними, а не символами.
-Виправлено згідно: [python pdfminer converts pdf file into one chunk of string with no spaces between words](https://stackoverflow.com/questions/49457443/python-pdfminer-converts-pdf-file-into-one-chunk-of-string-with-no-spaces-betwee)
+  Виправлено згідно [python pdfminer converts pdf file into one chunk of string with no spaces between words](https://stackoverflow.com/questions/49457443/python-pdfminer-converts-pdf-file-into-one-chunk-of-string-with-no-spaces-betwee):
 
-```python
-# save document layout including spaces that are only visual not a character
-"""
-some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text.
-To override this behavior the all_texts parameter needs to be set to True
-in function def get_text_from_pdf_pdfminer(pdf_path)
-"""
-laparams = LAParams()
-setattr(laparams, 'all_texts', True)
-```
+  ```python
+  # save document layout including spaces that are only visual not a character
+  """
+  some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text.
+  To override this behavior the all_texts parameter needs to be set to True
+  in function def get_text_from_pdf_pdfminer(pdf_path)
+  """
+  laparams = LAParams()
+  setattr(laparams, 'all_texts', True)
+  ```
 - Виправлено роботу елементу `iziToast` (нотифікації про процес обробки документів).
 
 ## v0.2.8, 2019-07-20
@@ -258,10 +267,10 @@ setattr(laparams, 'all_texts', True)
 
 ### 👍 Покращення
 - Видалено тег версій з кінцевих точок API:
-було:
-`host[:port]/ken/api/**v1.0**/en/file/allterms`
-стало:
-`host[:port]/ken/api/en/file/allterms`.
+  було:
+  `host[:port]/ken/api/**v1.0**/en/file/allterms`
+  стало:
+  `host[:port]/ken/api/en/file/allterms`.
 - Додано горизонтальный скролл до елементів `id="uploadResultList"`; `#term-tree`.
 - Додано можливість видалення файлів зі списку "Файли" `id="projectFileList"` по кліку правої кнопки миші.
 - Оновлено структуру проекту.
