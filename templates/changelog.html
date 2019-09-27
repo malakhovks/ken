@@ -3,7 +3,21 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>CHANGELOG</title></head>
-<body><h2>v1.0.1, 2019-08-24</h2>
+<body><h2>v1.0.2, 2019-09-27</h2>
+<h3>⚠️ Зауваження</h3>
+<ul>
+<li>Значення параметра конфігурації <code>app.config[&#39;MAX_CONTENT_LENGTH&#39;]</code> об&#39;єкту Flask відновлено за замовчуванням (За замовчуванням об&#39;єкт Flask прийме завантаження файлів на необмежену кількість пам&#39;яті).</li>
+
+</ul>
+<h3>👍 Покращення</h3>
+<ul>
+<li><p>Змінено елемент <code>&lt;title&gt;</code> головної сторінки <code>index.html</code> (видалено рік):</p>
+<pre><code class='language-html' lang='html'>&lt;title&gt;Конспект - v1.0.2&lt;/title&gt;
+</code></pre>
+</li>
+
+</ul>
+<h2>v1.0.1, 2019-08-24</h2>
 <h3>⚠️ Зауваження</h3>
 <ul>
 <li>При оновленні <code>KEn</code> з версії <code>v1.0.0</code> (або більш ранньої) до <code>v.1.0.1</code> дані проаналізованих раніше документів будуть втрачені.</li>
@@ -257,18 +271,14 @@
 <h2>v0.3.0, 2019-07-22</h2>
 <h3>🔴 Виправлення помилок</h3>
 <ul>
-<li>Виправлено помилку <code>UnicodeDecodeError: &#39;utf8&#39; codec can&#39;t decode byte</code>.
-Декодовано файл як <code>UTF-8</code>, ігноруючи будь-які символи які закодовані в неправильному кодуванні</li>
-
-</ul>
+<li><p>Виправлено помилку <code>UnicodeDecodeError: &#39;utf8&#39; codec can&#39;t decode byte</code>.
+Декодовано файл як <code>UTF-8</code>, ігноруючи будь-які символи які закодовані в неправильному кодуванні:</p>
 <pre><code class='language-python' lang='python'># decode the file as UTF-8 ignoring any errors
 raw_text = file.read().decode(&#39;utf-8&#39;, errors=&#39;replace&#39;)
 </code></pre>
-<ul>
-<li>Включено збереження макета документа, включаючи пробіли, які є лише візуальними, а не символами.
-Виправлено згідно: <a href='https://stackoverflow.com/questions/49457443/python-pdfminer-converts-pdf-file-into-one-chunk-of-string-with-no-spaces-betwee'>python pdfminer converts pdf file into one chunk of string with no spaces between words</a></li>
-
-</ul>
+</li>
+<li><p>Включено збереження макета документа, включаючи пробіли, які є лише візуальними, а не символами.
+Виправлено згідно <a href='https://stackoverflow.com/questions/49457443/python-pdfminer-converts-pdf-file-into-one-chunk-of-string-with-no-spaces-betwee'>python pdfminer converts pdf file into one chunk of string with no spaces between words</a>:</p>
 <pre><code class='language-python' lang='python'># save document layout including spaces that are only visual not a character
 &quot;&quot;&quot;
 some pdfs mark the entire text as figure and by default PDFMiner doesn&#39;t try to perform layout analysis for figure text.
@@ -278,8 +288,9 @@ in function def get_text_from_pdf_pdfminer(pdf_path)
 laparams = LAParams()
 setattr(laparams, &#39;all_texts&#39;, True)
 </code></pre>
-<ul>
-<li>Виправлено роботу елементу <code>iziToast</code> (нотифікації про процес обробки документів).</li>
+</li>
+<li><p>Виправлено роботу елементу <code>iziToast</code> (нотифікації про процес обробки документів).</p>
+</li>
 
 </ul>
 <h2>v0.2.8, 2019-07-20</h2>
