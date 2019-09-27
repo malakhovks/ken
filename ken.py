@@ -94,7 +94,7 @@ app.response_class = XMLResponse
 Limited the maximum allowed payload to 16 megabytes.
 If a larger file is transmitted, Flask will raise an RequestEntityTooLarge exception.
 """
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+# app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 """
 Set the secret key to some random bytes. Keep this really secret!
@@ -985,7 +985,7 @@ def get_terms_list():
                                                                     one_term.append(new_reldown_element)
 
                     '''
-                    # extract three-word terms
+                    # EXTRACT THREE-WORD TERMS
                     '''
                     if len(doc_for_tokens) == 3:
 
