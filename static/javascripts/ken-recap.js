@@ -11,12 +11,13 @@ var termsWithIndexDict = {},
     keyC = 67, // Javascript Char Code (Key Code) for "C" key
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key
 
-var projectStructure = { project: { name: "", content: { documents: [] } } },
+var projectStructure = { project: { name: "", notes: "", content: { documents: [] } } },
     alltermsJSON,
     parceJSON,
     selectedDocument,
     lastRecappedFileData,
-    lastProjectFiles;
+    lastProjectFiles,
+    timeoutId; // for textarea change
 
 var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $recapOverviewButton = $("#recap-overview-button"),
@@ -34,7 +35,8 @@ var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $upload_button = $('#upload-button'),
     $sents_from_text = $('#sents_from_text'),
     $sortSelect = $('#sort-select'),
-    $buttonSaveProject = $('#button-save-project');
+    $buttonSaveProject = $('#button-save-project'),
+    $textareaNotes = $('#notes');
 
 /*\
 |*|  Base64 / binary data / UTF-8 strings utilities (#3)
@@ -92,12 +94,115 @@ $buttonNewProjectAndClearAll.click(function () {
 
 $(document).ready(function () {
 
+    // Detect device, browser and version
+    // https://medium.com/creative-technology-concepts-code/detect-device-browser-and-version-using-javascript-8b511906745
+    (function () {
+        'use strict';
+        
+        var module = {
+            options: [],
+            header: [navigator.platform, navigator.userAgent, navigator.appVersion, navigator.vendor, window.opera],
+            dataos: [
+                { name: 'Windows Phone', value: 'Windows Phone', version: 'OS' },
+                { name: 'Windows', value: 'Win', version: 'NT' },
+                { name: 'iPhone', value: 'iPhone', version: 'OS' },
+                { name: 'iPad', value: 'iPad', version: 'OS' },
+                { name: 'Kindle', value: 'Silk', version: 'Silk' },
+                { name: 'Android', value: 'Android', version: 'Android' },
+                { name: 'PlayBook', value: 'PlayBook', version: 'OS' },
+                { name: 'BlackBerry', value: 'BlackBerry', version: '/' },
+                { name: 'Macintosh', value: 'Mac', version: 'OS X' },
+                { name: 'Linux', value: 'Linux', version: 'rv' },
+                { name: 'Palm', value: 'Palm', version: 'PalmOS' }
+            ],
+            databrowser: [
+                { name: 'Chrome', value: 'Chrome', version: 'Chrome' },
+                { name: 'Firefox', value: 'Firefox', version: 'Firefox' },
+                { name: 'Safari', value: 'Safari', version: 'Version' },
+                { name: 'Internet Explorer', value: 'MSIE', version: 'MSIE' },
+                { name: 'Opera', value: 'Opera', version: 'Opera' },
+                { name: 'BlackBerry', value: 'CLDC', version: 'CLDC' },
+                { name: 'Mozilla', value: 'Mozilla', version: 'Mozilla' }
+            ],
+            init: function () {
+                var agent = this.header.join(' '),
+                    os = this.matchItem(agent, this.dataos),
+                    browser = this.matchItem(agent, this.databrowser);
+                
+                return { os: os, browser: browser };
+            },
+            matchItem: function (string, data) {
+                var i = 0,
+                    j = 0,
+                    html = '',
+                    regex,
+                    regexv,
+                    match,
+                    matches,
+                    version;
+                
+                for (i = 0; i < data.length; i += 1) {
+                    regex = new RegExp(data[i].value, 'i');
+                    match = regex.test(string);
+                    if (match) {
+                        regexv = new RegExp(data[i].version + '[- /:;]([\\d._]+)', 'i');
+                        matches = string.match(regexv);
+                        version = '';
+                        if (matches) { if (matches[1]) { matches = matches[1]; } }
+                        if (matches) {
+                            matches = matches.split(/[._]+/);
+                            for (j = 0; j < matches.length; j += 1) {
+                                if (j === 0) {
+                                    version += matches[j] + '.';
+                                } else {
+                                    version += matches[j];
+                                }
+                            }
+                        } else {
+                            version = '0';
+                        }
+                        return {
+                            name: data[i].name,
+                            version: parseFloat(version)
+                        };
+                    }
+                }
+                return { name: 'unknown', version: 0 };
+            }
+        };
+        
+        var e = module.init(),
+            debug = '';
+        
+/*
+        debug += 'os.name = ' + e.os.name + '<br/>';
+        debug += 'os.version = ' + e.os.version + '<br/>';
+        debug += 'browser.name = ' + e.browser.name + '<br/>';
+        debug += 'browser.version = ' + e.browser.version + '<br/>';
+        
+        debug += '<br/>';
+        debug += 'navigator.userAgent = ' + navigator.userAgent + '<br/>';
+        debug += 'navigator.appVersion = ' + navigator.appVersion + '<br/>';
+        debug += 'navigator.platform = ' + navigator.platform + '<br/>';
+        debug += 'navigator.vendor = ' + navigator.vendor + '<br/>';
+*/
+
+        console.log('os.name = ' + e.os.name);
+        console.log('os.version = ' + e.os.version);
+        console.log('browser.name = ' + e.browser.name);
+        console.log('browser.version = ' + e.browser.version);
+
+        if (!e.browser.name.includes('Chrome')) {
+            alert('Для коректної роботи клієнтської частини веб-застосунка `KEn`, необхідно використовувати актуальну версію браузера Google Chrome!');
+        }
+    }());
+
     // Show progress bar
     $("body").css("cursor", "progress");
     $(".loader").show();
 
     localforage.getItem('last-project').then(function (value) {
-        if (value == null) {
+        if (value === null) {
 
             // Hide progress bar
             $("body").css("cursor", "default");
@@ -105,7 +210,7 @@ $(document).ready(function () {
 
             projectStructure.project.name = 'pr-' + Date.now();
             localforage.setItem('last-project', projectStructure).then(function (value) {
-                console.log('last-project item created with value: ' + JSON.stringify(value));
+                console.log('New last-project item created with value: ' + JSON.stringify(value));
                 iziToast.info({
                     title: 'Вітаємо, розпочато новий проект!',
                     message: 'Оберіть файл для аналізу (pdf, txt, docx)',
@@ -119,7 +224,7 @@ $(document).ready(function () {
                 console.log(err);
             });
         }
-        if (value != null) {
+        if (value !== null) {
             // Hide progress bar
             $("body").css("cursor", "default");
             $(".loader").hide();
@@ -130,7 +235,12 @@ $(document).ready(function () {
             });
             projectStructure = value;
             console.log("Countinue existing project: " + JSON.stringify(value.project.name));
-            if (typeof value.project.content.documents != "undefined" && value.project.content.documents != null && value.project.content.documents.length != null && value.project.content.documents.length > 0) {
+
+            if (typeof value.project.notes != "" && value.project.notes !== null){
+                $textareaNotes.val(LZString.decompressFromBase64(value.project.notes))
+            }
+
+            if (typeof value.project.content.documents !== "undefined" && value.project.content.documents !== null && value.project.content.documents.length !== null && value.project.content.documents.length > 0) {
 
                 lastRecappedFileData = projectStructure.project.content.documents.slice(-1)[0];
                 lastProjectFiles = projectStructure.project.content.documents;
@@ -250,7 +360,7 @@ $('#button-open-project').click(function () {
 
         reader.addEventListener('load', function (e) {
             localforage.clear().then(function () {
-                console.log('Database is now empty.');
+                console.log('Database (localforage) is now empty.');
                 // contents
                 var loaded_json_string = e.target.result;
                 // parse as JSON
@@ -411,7 +521,7 @@ $recapOverviewButton.change(function () {
 });
 
 $buttonSaveProject.click(function () {
-    if (projectStructure != null) {
+    if (projectStructure !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -427,7 +537,7 @@ $buttonSaveProject.click(function () {
 })
 
 $buttonSaveAlltermsXml.click(function () {
-    if (selectedDocument != null) {
+    if (selectedDocument !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -439,7 +549,7 @@ $buttonSaveAlltermsXml.click(function () {
         downloadLink.download = 'allterms.xml';
         downloadLink.click();
     } else {
-        if (lastRecappedFileData != null) {
+        if (lastRecappedFileData !== null) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
@@ -455,7 +565,7 @@ $buttonSaveAlltermsXml.click(function () {
 })
 
 $buttonSaveParceXml.click(function () {
-    if (selectedDocument != null) {
+    if (selectedDocument !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -467,7 +577,7 @@ $buttonSaveParceXml.click(function () {
         downloadLink.download = 'parce.xml';
         downloadLink.click();
     } else {
-        if (lastRecappedFileData != null) {
+        if (lastRecappedFileData !== null) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
@@ -714,7 +824,7 @@ function fetchFileToRecapService() {
                                 lastRecappedFileData = projectContent;
                                 // Update localforage "last-project"
                                 localforage.setItem('last-project', projectStructure).then(function (value) {
-                                    console.log('last-project item of database updated');
+                                    console.log('last-project item of database (localforage) updated');
                                 }).catch(function (err) {
                                     // Hide progress bar
                                     $("body").css("cursor", "default");
@@ -724,7 +834,7 @@ function fetchFileToRecapService() {
 
                                 // Add last recaped data to last-selected database
                                 localforage.setItem('last-selected', projectContent).then(function (value) {
-                                    console.log('last-selected item of database updated');
+                                    console.log('last-selected item of database (localforage) updated');
                                 }).catch(function (err) {
                                     // Hide progress bar
                                     $("body").css("cursor", "default");
@@ -943,8 +1053,8 @@ function forProjectFileListClickAndEnterPressEvents() {
         console.log("No selected document!");
     }
 
-    if (projectStructure != null && $projectFileList.prop('value') != "") {
-        if (typeof projectStructure.project.content.documents != "undefined" && projectStructure.project.content.documents != null && projectStructure.project.content.documents.length != null && projectStructure.project.content.documents.length > 0) {
+    if (projectStructure !== null && $projectFileList.prop('value') != "") {
+        if (typeof projectStructure.project.content.documents !== "undefined" && projectStructure.project.content.documents !== null && projectStructure.project.content.documents.length !== null && projectStructure.project.content.documents.length > 0) {
 
             iziToast.warning({
                 title: 'Відкрити документ ' + $projectFileList.prop('value') + ' ?',
@@ -1055,6 +1165,7 @@ function ClearAllForNewProject() {
     $('option', $uploadResultList).remove();
     $('option', $uploadUnknownTerms).remove();
     $textContent.text('');
+    $textareaNotes.val('');
     $('input').val('');
     $termTree.treeview({});
     $("#displacy").empty();
@@ -1159,7 +1270,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
     }
     if ($("#fileList").is(".tab-pane.active")) {
         document.getElementById("projectFileList").oncontextmenu = function (event) {
-            if (event.target.text != undefined) {
+            if (event.target.text !== undefined) {
                 iziToast.warning({
                     title: 'Видалити документ ' + event.target.text + ' ?',
                     // message: ' Видалити документ ' + event.target.text + ' ?',
@@ -1172,7 +1283,7 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                                 // onClosing: function (instance, toast, closedBy) {
                                 onClosed: function (instance, toast, closedBy) {
 
-                                    if (projectStructure != null) {
+                                    if (projectStructure !== null) {
                                         let filtered = projectStructure.project.content.documents.filter(function (el) { return el.names.unique != event.target.value; });
                                         projectStructure.project.content.documents = filtered;
                                         localforage.setItem('last-project', projectStructure).then(function (value) {
@@ -1303,3 +1414,26 @@ function markTerms(term) {
     });
 }
 // mark.js ---------------------------------------------------------------------------------------------------------
+
+// the textarea sutosave -------------------------------------------------------------------------------------------
+$textareaNotes.on('input propertychange change', function() {
+    console.log('Textarea Change');
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(function() {
+        // Runs 1 second (1000 ms) after the last change    
+        saveNotesToLF();
+    }, 1000);
+});
+
+function saveNotesToLF() {
+    var d = new Date();
+    console.log('Saved #notes to the localforge! Last: ' + d.toLocaleTimeString())
+    projectStructure.project.notes = LZString.compressToBase64($textareaNotes.val());
+    // Update localforage "last-project"
+    localforage.setItem('last-project', projectStructure).then(function (value) {
+        console.log('last-project item of database updated with #notes value: ' + JSON.stringify(value.project.notes));
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+// the textarea sutosave -------------------------------------------------------------------------------------------

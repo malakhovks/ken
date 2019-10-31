@@ -3,7 +3,67 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>CHANGELOG</title></head>
-<body><h2>v1.0.2, 2019-09-27</h2>
+<body><h2>v1.0.3, 2019-10-31</h2>
+<h3>⚠️ Зауваження</h3>
+<ul>
+<li>Для коректної роботи клієнтської частини веб-застосунка <code>KEn</code>, необхідно використовувати актуальну версію браузера <code>Google Chrome</code> (70 та вище).</li>
+<li>При оновленні <code>KEn</code> з версії <code>v1.0.2</code> (або більш ранньої) до <code>v.1.0.3</code> дані проаналізованих раніше документів будуть втрачені.</li>
+<li>Змінено специфікацію <code>JSON</code>-файлу проекту:</li>
+
+</ul>
+<details><summary>Специфікація `JSON`-файлу проекту:</summary>
+<p></p></details>
+<pre><code class='language-json' lang='json'>{
+  &quot;project&quot;: {
+    &quot;name&quot;: &quot;&quot;,
+    &quot;notes&quot;: &quot;&quot;,
+    &quot;content&quot;: {
+      &quot;documents&quot;: [
+        {
+          &quot;names&quot;: {
+            &quot;original&quot;: &quot;&quot;,
+            &quot;unique&quot;: &quot;&quot;
+          },
+          &quot;results&quot;: {
+            &quot;alltermsxmlCompressed&quot;: &quot;&quot;,
+            &quot;parcexmlCompressed&quot;: &quot;&quot;,
+            &quot;alltermsjson&quot;: {},
+            &quot;parcejson&quot;: {},
+            &quot;nerhtmlCompressed&quot;: &quot;&quot;
+          }
+        },
+        {
+          &quot;names&quot;: {
+            &quot;original&quot;: &quot;&quot;,
+            &quot;unique&quot;: &quot;&quot;
+          },
+          &quot;results&quot;: {
+            &quot;alltermsxmlCompressed&quot;: &quot;&quot;,
+            &quot;parcexmlCompressed&quot;: &quot;&quot;,
+            &quot;alltermsjson&quot;: {},
+            &quot;parcejson&quot;: {},
+            &quot;nerhtmlCompressed&quot;: &quot;&quot;
+          }
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+<p></p>
+</details></p>
+<h3>👍 Покращення</h3>
+<ul>
+<li>Реалізовано функцію визначення браузера клієнта (Для коректної роботи клієнтської частини веб-застосунка <code>KEn</code>, необхідно використовувати актуальну версію браузера <code>Google Chrome</code>).</li>
+
+</ul>
+<h3>🔴 Виправлення помилок</h3>
+<ul>
+<li>Дрібні виправлення <code>JavaScript</code> на клієнті.</li>
+<li>Виправлено роботу елемента <code>#notes</code> (Блокнот), а саме додано функцію автоматичного збереження вмісту елемента <code>#notes</code> до головного <code>JSON</code>-файлу проекту в поле <code>notes</code>, та відповідно змінено його специфікацію.</li>
+
+</ul>
+<h2>v1.0.2, 2019-09-27</h2>
 <h3>⚠️ Зауваження</h3>
 <ul>
 <li>Значення параметра конфігурації <code>app.config[&#39;MAX_CONTENT_LENGTH&#39;]</code> об&#39;єкту Flask відновлено за замовчуванням (За замовчуванням об&#39;єкт Flask прийме завантаження файлів на необмежену кількість пам&#39;яті).</li>
@@ -21,10 +81,10 @@
 <h3>⚠️ Зауваження</h3>
 <ul>
 <li>При оновленні <code>KEn</code> з версії <code>v1.0.0</code> (або більш ранньої) до <code>v.1.0.1</code> дані проаналізованих раніше документів будуть втрачені.</li>
-<li>Змінено специфікацію <code>json</code>-файлу проекту:</li>
+<li>Змінено специфікацію <code>JSON</code>-файлу проекту:</li>
 
 </ul>
-<details><summary>Специфікація `json`-файлу проекту:</summary>
+<details><summary>Специфікація `JSON`-файлу проекту:</summary>
 <p></p></details>
 <pre><code class='language-json' lang='json'>{
   &quot;project&quot;: {
@@ -66,7 +126,7 @@
 </details></p>
 <h3>👍 Покращення</h3>
 <ul>
-<li>Реалізовано функції зжимання та відновлення строк з використанням програмної бібліотеки <a href='https://github.com/pieroxy/lz-string/'>LZ-based compression algorithm for JavaScript</a>, а саме поцедур <code>compressToBase64</code>/<code>decompressFromBase64</code> (що зберігають <code>allterms.xml</code> в <code>alltermsxmlCompressed</code>, та <code>parce.xml</code> в <code>parcexmlCompressed</code> (в <code>json</code>-файлі проекту)).</li>
+<li>Реалізовано функції зжимання та відновлення строк з використанням програмної бібліотеки <a href='https://github.com/pieroxy/lz-string/'>LZ-based compression algorithm for JavaScript</a>, а саме поцедур <code>compressToBase64</code>/<code>decompressFromBase64</code> (що зберігають <code>allterms.xml</code> в <code>alltermsxmlCompressed</code>, та <code>parce.xml</code> в <code>parcexmlCompressed</code> (в <code>JSON</code>-файлі проекту)).</li>
 
 </ul>
 <h3>🔴 Виправлення помилок</h3>
@@ -147,7 +207,7 @@
 
 </ul>
 </li>
-<li><p>Виправлено очищення відповідних розборів документів (<code>-parsexml</code>, <code>-alltermsxml</code> та <code>json</code>-розборів), що зберігаються в localStorage при видаленні файлів проекту зі списку Файли <code>#projectFileList</code>.</p>
+<li><p>Виправлено очищення відповідних розборів документів (<code>-parsexml</code>, <code>-alltermsxml</code> та <code>JSON</code>-розборів), що зберігаються в localStorage при видаленні файлів проекту зі списку Файли <code>#projectFileList</code>.</p>
 </li>
 <li><p>Дрібні виправлення <code>JavaScript</code> на клієнті (зокрема, елементів контейнеру <code>class=&quot;col-md-6&quot;</code>).</p>
 </li>
