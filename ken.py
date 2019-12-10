@@ -182,6 +182,8 @@ def text_normalization_default(raw_text):
             line = re.sub('[\r]', ' ', line)
             # remove tabs and insert spaces
             line = re.sub('[\t]', ' ', line)
+            # Replace multiple dots with space
+            line = re.sub('\.\.+', ' ', line)
             # remove multiple spaces
             line = re.sub('\s\s+', ' ', line)
             # remove all numbers
@@ -534,8 +536,6 @@ def get_terms_list():
             filepath_element.text = file.filename
             # create element <exporterms>
             exporterms_element = ET.Element("exporterms")
-            # sentence counter
-            sentence_index = 0
 
             # Helper list for one-word terms
             one_word_terms_help_list = []
@@ -549,9 +549,9 @@ def get_terms_list():
             '''
             # Main text parsing cycle for sentences
             '''
-            for sentence in doc.sents:
+            for sentence_index, sentence in enumerate(doc.sents):
 
-                sentence_index+=1
+                # sentence counter --> sentence_index
 
                 # default sentence normalization
                 sentence_clean = sentence_normalization_default(sentence.text)

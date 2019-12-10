@@ -374,7 +374,7 @@ function save_table_to_csv(filename) {
 }
 //SAVE_TABLE_TO_CSV_____________________________________________________________________________________________________
 
-//SAVE_TABLE_TO_XLS_____________________________________________________________________________________________________
+//SAVE_TABLE_TO_XLSX_____________________________________________________________________________________________________
 var tableToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'
         , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
@@ -415,13 +415,13 @@ document.getElementById("button-save-table").addEventListener("click", e => {
         position: 'center',
         timeout: 10000,
         buttons: [
-            ['<button>.xls</button>', function (instance, toast) {
+            ['<button>.xlsx</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     onClosing: function (instance, toast, closedBy) {
                         var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
                         $govno.find("th.row-header").remove();
-                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
+                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xlsx');
                         $govno.remove();
                     }
                 }, toast);
@@ -437,7 +437,7 @@ document.getElementById("button-save-table").addEventListener("click", e => {
         ]
     });
 });
-//SAVE_TABLE_TO_XLS_____________________________________________________________________________________________________
+//SAVE_TABLE_TO_XLSX_____________________________________________________________________________________________________
 
 document.getElementById("clear-table").addEventListener("click", e => {
     iziToast.warning({
