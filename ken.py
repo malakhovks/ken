@@ -695,12 +695,10 @@ def get_terms_list():
                                 # already exists in one_word_terms_help_list
                                 if chunk.root.lemma_ in one_word_terms_help_list:
 
-                                    relup_index = 0
-                                    reldown_index = 0
                                     sent_pos_helper = []
 
-                                    for one_term in exporterms_element.findall('term'):
-                                        relup_index+=1
+                                    for relup_index, one_term in enumerate(exporterms_element.findall('term')):
+
                                         if one_term.find('tname').text == chunk.root.lemma_:
 
                                             for sent_pos in one_term.findall('sentpos'):
@@ -727,16 +725,14 @@ def get_terms_list():
                                             if t.pos_ in ['NOUN']:
                                                 if t.lemma_ in one_word_terms_help_list:
 
-                                                    relup_index = 0
-                                                    reldown_index = 0
                                                     sent_pos_helper = []
                                                     if t.i == 0:
                                                         index_helper = chunk.start+1
                                                     else:
                                                         index_helper = chunk.start+2
 
-                                                    for one_term in exporterms_element.findall('term'):
-                                                        relup_index+=1
+                                                    for relup_index, one_term in enumerate(exporterms_element.findall('term')):
+
                                                         if one_term.find('tname').text == t.lemma_:
 
                                                             for sent_pos in one_term.findall('sentpos'):
@@ -792,12 +788,10 @@ def get_terms_list():
                                 # add relup/reldown
                                 if chunk.root.lemma_ in one_word_terms_help_list:
 
-                                    relup_index = 0
-                                    reldown_index = 0
                                     sent_pos_helper = []
 
-                                    for one_term in exporterms_element.findall('term'):
-                                        relup_index+=1
+                                    for relup_index, one_term in enumerate(exporterms_element.findall('term')):
+
                                         if one_term.find('tname').text == chunk.root.lemma_:
 
                                             for sent_pos in one_term.findall('sentpos'):
@@ -814,8 +808,8 @@ def get_terms_list():
                                                     new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+2)
                                                     one_term.append(new_sentpos_element)
 
-                                            for two_term in exporterms_element.findall('term'):
-                                                reldown_index+=1
+                                            for reldown_index, two_term in enumerate(exporterms_element.findall('term')):
+
                                                 # if two_term.find('tname').text == chunk.lower_:
                                                 if two_term.find('tname').text == chunk.lemma_:
                                                     new_relup_element = ET.Element('relup')
@@ -864,13 +858,11 @@ def get_terms_list():
                                     # append to <exporterms>
                                     exporterms_element.append(new_term_element)
 
-                                    relup_index = 0
-                                    reldown_index = 0
-                                    for one_term in exporterms_element.findall('term'):
-                                        relup_index+=1
+                                    for relup_index, one_term in enumerate(exporterms_element.findall('term')):
+
                                         if one_term.find('tname').text == chunk.root.lemma_:
-                                            for two_term in exporterms_element.findall('term'):
-                                                reldown_index+=1
+                                            for reldown_index, two_term in enumerate(exporterms_element.findall('term')):
+
                                                 # if two_term.find('tname').text == chunk.lower_:
                                                 if two_term.find('tname').text == chunk.lemma_:
                                                     new_relup_element = ET.Element('relup')
@@ -888,8 +880,6 @@ def get_terms_list():
 
                                                 if t.lemma_ in one_word_terms_help_list:
 
-                                                    relup_index = 0
-                                                    reldown_index = 0
                                                     sent_pos_helper = []
                                                     if t.i == 0:
                                                         index_helper = chunk.start+1
@@ -897,11 +887,11 @@ def get_terms_list():
                                                         index_helper = chunk.start+2
 
 
-                                                    for one_term in exporterms_element.findall('term'):
-                                                        relup_index+=1
+                                                    for relup_index, one_term in enumerate(exporterms_element.findall('term')):
+
                                                         if one_term.find('tname').text == t.lemma_:
-                                                            for two_term in exporterms_element.findall('term'):
-                                                                reldown_index+=1
+                                                            for reldown_index, two_term in enumerate(exporterms_element.findall('term')):
+
                                                                 # if two_term.find('tname').text == chunk.lower_:
                                                                 if two_term.find('tname').text == chunk.lemma_:
 
@@ -924,8 +914,6 @@ def get_terms_list():
 
                                                     # print('if t.lemma_ not in one_word_terms_help_list ----->>>>>>' + t.lemma_)
 
-                                                    relup_index = 0
-                                                    reldown_index = 0
                                                     sent_pos_helper = []
 
                                                     if t.i == 0:
@@ -961,11 +949,11 @@ def get_terms_list():
                                                     # append to <exporterms>
                                                     exporterms_element.append(new_term_element)
 
-                                                    for one_term in exporterms_element.findall('term'):
-                                                        relup_index+=1
+                                                    for relup_index, one_term in enumerate(exporterms_element.findall('term')):
+
                                                         if one_term.find('tname').text == t.lemma_:
-                                                            for two_term in exporterms_element.findall('term'):
-                                                                reldown_index+=1
+                                                            for reldown_index, two_term in enumerate(exporterms_element.findall('term')):
+
                                                                 # if two_term.find('tname').text == chunk.lower_:
                                                                 if two_term.find('tname').text == chunk.lemma_:
 
