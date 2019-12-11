@@ -904,10 +904,10 @@ function forUploadResultListClickAndEnterPressEvents() {
             let sentIndex = [];
             let sentsForMark = [];
             for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) {
-                if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                    $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
-                    sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
-                    sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))))) {
+                    $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '</p><br>');
+                    sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))]);
+                    sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
                 }
             }
             mark(sentsForMark);
@@ -915,9 +915,9 @@ function forUploadResultListClickAndEnterPressEvents() {
 
         if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
 
-            $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1] + '<p><br>');
+            $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))] + '<p><br>');
 
-            mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/")) - 1]);
+            mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))]);
         }
 
         // inserting terms in tree #term-tree
@@ -929,11 +929,11 @@ function forUploadResultListClickAndEnterPressEvents() {
             // add child nodes to template structure for bootstrap-treeview
             if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
                 for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
-                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
+                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
                 }
             }
             if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
-                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown - 1].tname };
+                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname };
             }
 
             treeData.length = 0; //clear treeData array
@@ -949,18 +949,18 @@ function forUploadResultListClickAndEnterPressEvents() {
                     let selectedTermInTermTree = termsWithIndexDict[node.text];
                     if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
 
-                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
+                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))] + '<p><br>');
 
-                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
+                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
                     }
                     if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
                         let sentIndex = [];
                         let sentsForMark = [];
                         for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
-                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
-                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
-                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))))) {
+                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '</p><br>');
+                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))]);
+                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
                             }
                         }
                         mark(sentsForMark);
@@ -984,11 +984,11 @@ function forUploadResultListClickAndEnterPressEvents() {
             // add child nodes to template structure for bootstrap-treeview
             if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
                 for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
-                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree - 1].tname };
+                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
                 }
             }
             if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
-                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup - 1].tname };
+                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname };
             }
 
             treeData.length = 0; //clear treeData array
@@ -1005,18 +1005,18 @@ function forUploadResultListClickAndEnterPressEvents() {
                     let selectedTermInTermTree = termsWithIndexDict[node.text];
                     if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
 
-                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1] + '<p><br>');
+                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))] + '<p><br>');
 
-                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/")) - 1]);
+                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
                     }
                     if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
                         let sentIndex = [];
                         let sentsForMark = [];
                         for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
-                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1))) {
-                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1] + '</p><br>');
-                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1]);
-                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/")) - 1));
+                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))))) {
+                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '</p><br>');
+                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))]);
+                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
                             }
                         }
                         mark(sentsForMark);
