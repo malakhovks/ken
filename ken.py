@@ -16,7 +16,7 @@ Warning: Don’t use encode() on bytes or decode() on Unicode objects.
 # ------------------------------------------------------------------------------------------------------
 """
 # load tempfile for temporary dir creation
-import sys, os, tempfile
+import sys, os, time, tempfile, shutil
 
 # for displacy
 import json
