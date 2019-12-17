@@ -33,7 +33,7 @@ from nltk.stem.snowball import SnowballStemmer
 
 # load misc utils
 import pickle
-import codecs
+import codecs, io
 import logging
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
@@ -66,6 +66,10 @@ from flask import Flask, jsonify, flash, request, Response, redirect, url_for, a
 # A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+
+# for spooler
+import uwsgi
+from tasks import konspekt_task_ua
 
 # load libraries for docx processing
 import zipfile
@@ -266,7 +270,101 @@ def get_text_from_docx(docx_path):
 # ------------------------------------------------------------------------------------------------------
 # """
 
+"""
+# ------------------------------------------------------------------------------------------------------
+# Spooler
+# ------------------------------------------------------------------------------------------------------
+# """
+@app.route('/kua/api/task/queued', methods=['POST'])
+def post_to_queue():
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    file = request.files['file']
+
+    # if user does not select file, browser also submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return abort(400)
+
+    if file and allowed_file(file.filename):
+        # txt processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            raw_text = file.read()
+            file.close()
+            resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text)
+            resp = resp.rpartition('/')[2]
+            return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
+        else:
+            return abort(400)
+    else:
+        return jsonify({'file': { 'filename': 'not allowed'}}), 400
+
+@app.route('/kua/api/task/status')
+def get_task_status():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': {'id': task_id, 'status': False}}), 204
+    if os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': {'id': task_id, 'status': True}}), 200
+
+@app.route('/kua/api/task/allterms/result')
+def get_allterms_result():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    tree = ET.parse('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml')
+    root = tree.getroot()
+
+    # remove allterms.xml
+    os.remove('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml')
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml'):
+        shutil.rmtree('/var/tmp/tasks/konspekt/' + task_id)
+
+    return ET.tostring(root, method='xml'), 200
+
+@app.route('/kua/api/task/parce/result')
+def get_parce_result():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml'):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    tree = ET.parse('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml')
+    root = tree.getroot()
+
+    # remove parce.xml
+    os.remove('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml')
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
+        shutil.rmtree('/var/tmp/tasks/konspekt/' + task_id)
+
+    return ET.tostring(root, method='xml'), 200
+"""
+# ------------------------------------------------------------------------------------------------------
+# Spooler
+# ------------------------------------------------------------------------------------------------------
+# """
+
+"""
+# ------------------------------------------------------------------------------------------------------
+# Web app GUI
+# ------------------------------------------------------------------------------------------------------
+# """
+
 @app.route('/')
+def index():  
+    return Response(render_template('index.html'), mimetype='text/html')
+
+@app.route('/eng')
 def index():  
     return Response(render_template('index.html'), mimetype='text/html')
 
@@ -279,11 +377,17 @@ def getChangelog():
     return Response(render_template('changelog.html'), mimetype='text/html')
 
 """
+# ------------------------------------------------------------------------------------------------------
+# Web app GUI
+# ------------------------------------------------------------------------------------------------------
+# """
+
+"""
 # parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
 @app.route('/ken/api/en/file/parcexml', methods=['POST'])
-def parcexml_Generator():
+def generate_parcexml():
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file part')
@@ -482,7 +586,7 @@ def parcexml_Generator():
 # ------------------------------------------------------------------------------------------------------
 # """
 @app.route('/ken/api/en/file/allterms', methods=['POST'])
-def get_terms_list():
+def generate_allterms():
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file part')
