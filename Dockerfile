@@ -10,7 +10,7 @@ RUN chgrp -R www-data /srv/ken/deploy/konspekt \
     && chmod -R g+w /srv/ken/deploy/konspekt \
     && chgrp -R www-data /var/tmp \
     && chmod -R g+w /var/tmp \
-    apt-get -y clean \
+    && apt-get -y clean \
     && apt-get -y update \
     && apt-get -y install wget \
     && apt-get -y install nginx \
