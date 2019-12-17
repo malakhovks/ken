@@ -88,6 +88,9 @@ NLP_EN = spacy.load('en_core_web_sm')
 # Load globally english SnowballStemmer
 ENGLISH_STEMMER = SnowballStemmer("english")
 
+__author__ = "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
+__copyright__ = "Copyright (C) 2019 Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
+
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
 
@@ -361,19 +364,19 @@ def get_parce_result():
 # """
 
 @app.route('/')
-def index():  
+def index():
     return Response(render_template('index.html'), mimetype='text/html')
 
 @app.route('/eng')
-def index():  
+def getEng():
     return Response(render_template('index.html'), mimetype='text/html')
 
 @app.route('/help')
-def getHelp():  
+def getHelp():
     return Response(render_template('help.html'), mimetype='text/html')
 
 @app.route('/changelog')
-def getChangelog():  
+def getChangelog():
     return Response(render_template('changelog.html'), mimetype='text/html')
 
 """
