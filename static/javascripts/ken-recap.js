@@ -69,12 +69,15 @@ https://github.com/DVLP/localStorageDB
 
 $buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
-        title: 'Розпочати новий проект?',
-        message: 'Це призведе до видалення всіх даних.',
+        // title: 'Розпочати новий проект?',
+        title: 'Create a new project?',
+        // message: 'Це призведе до видалення всіх даних.',
+        message: 'All data will be lost!',
         position: 'center',
         timeout: 10000,
         buttons: [
-            ['<button>Так</button>', function (instance, toast) {
+            // ['<button>Так</button>', function (instance, toast) {
+            ['<button>Ok</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     // onClosing: function (instance, toast, closedBy) {
@@ -83,7 +86,8 @@ $buttonNewProjectAndClearAll.click(function () {
                     }
                 }, toast);
             }],
-            ['<button>Ні</button>', function (instance, toast) {
+            // ['<button>Ні</button>', function (instance, toast) {
+            ['<button>Cancel</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp'
                 }, toast);
@@ -193,7 +197,8 @@ $(document).ready(function () {
         console.log('browser.version = ' + e.browser.version);
 
         if (!e.browser.name.includes('Chrome')) {
-            alert('Для коректної роботи клієнтської частини веб-застосунка `KEn`, необхідно використовувати актуальну версію браузера Google Chrome!');
+            // alert('Для коректної роботи клієнтської частини веб-застосунка `KEn`, необхідно використовувати актуальну версію браузера Google Chrome!');
+            alert('Use the most recent version of Google Chrome browser!');
         }
     }());
 
@@ -212,8 +217,10 @@ $(document).ready(function () {
             localforage.setItem('last-project', projectStructure).then(function (value) {
                 console.log('New last-project item created with value: ' + JSON.stringify(value));
                 iziToast.info({
-                    title: 'Вітаємо, розпочато новий проект!',
-                    message: 'Оберіть файл для аналізу (pdf, txt, docx)',
+                    // title: 'Вітаємо, розпочато новий проект!',
+                    title: 'Congrats, a new project has been created!',
+                    // message: 'Оберіть файл для аналізу (pdf, txt, docx)',
+                    message: 'Upload a new document (pdf, txt, docx)',
                     position: 'bottomLeft'
                 });
             }).catch(function (err) {
@@ -229,8 +236,10 @@ $(document).ready(function () {
             $("body").css("cursor", "default");
             $(".loader").hide();
             iziToast.info({
-                title: 'Вітаємо, завантажено проект ' + JSON.stringify(value.project.name),
-                message: 'Оберіть файл для аналізу (pdf, txt, docx)',
+                // title: 'Вітаємо, завантажено проект ' + JSON.stringify(value.project.name),
+                title: 'Congrats, the project ' + JSON.stringify(value.project.name) + ' has ben loaded.',
+                // message: 'Оберіть файл для аналізу (pdf, txt, docx)',
+                message: 'Upload a document (pdf, txt, docx)',
                 position: 'bottomLeft'
             });
             projectStructure = value;
@@ -256,14 +265,16 @@ $(document).ready(function () {
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
                             value: element.sentpos.length,
-                            title: 'Частота: ' + element.sentpos.length
+                            // title: 'Частота: ' + element.sentpos.length
+                            title: 'Frequency: ' + element.sentpos.length
                         }));
                     }
                     if (Array.isArray(element.sentpos) == false) {
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
                             value: 1,
-                            title: 'Частота: ' + 1
+                            // title: 'Частота: ' + 1
+                            title: 'Frequency: ' + 1
                         }));
                     }
                 }
@@ -672,7 +683,8 @@ function fetchFileToRecapService() {
         $(".loader").show();
 
         iziToast.info({
-            title: 'Зачекайте! Аналіз документа',
+            // title: 'Зачекайте! Аналіз документа',
+            title: 'Loading, please wait.',
             message: uploadFileName.split('\\').pop(),
             position: 'bottomLeft',
             close: false,
@@ -710,8 +722,9 @@ function fetchFileToRecapService() {
                         $(".loader").hide();
                         $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
                         iziToast.warning({
-                            title: 'Сервіс зайнятий, спробуйте ще раз.',
-                            message: 'Статус: ' + response.status,
+                            // title: 'Сервіс зайнятий, спробуйте ще раз.',
+                            title: 'Service Unavailable error, try again later.',
+                            message: 'Status: ' + response.status,
                             position: 'bottomLeft',
                             onClosed: function () {
                                 iziToast.destroy();
@@ -744,14 +757,16 @@ function fetchFileToRecapService() {
                                 $uploadResultList.append($('<option>', {
                                     text: elementKnownTxtJson.tname,
                                     value: elementKnownTxtJson.sentpos.length,
-                                    title: 'Частота: ' + elementKnownTxtJson.sentpos.length
+                                    // title: 'Частота: ' + elementKnownTxtJson.sentpos.length
+                                    title: 'Frequency: ' + elementKnownTxtJson.sentpos.length
                                 }));
                             }
                             if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
                                 $uploadResultList.append($('<option>', {
                                     text: elementKnownTxtJson.tname,
                                     value: 1,
-                                    title: 'Частота: ' + 1
+                                    // title: 'Частота: ' + 1
+                                    title: 'Frequency: ' + 1
                                 }));
                             }
                         }
@@ -848,7 +863,8 @@ function fetchFileToRecapService() {
                                 $(".loader").hide();
                                 iziToast.success({
                                     title: 'OK',
-                                    message: 'Обробка файлу виконана',
+                                    // message: 'Обробка файлу виконана',
+                                    message: 'Document processing completed.',
                                     position: 'bottomLeft',
                                     timeout: 2000,
                                     onClosed: function () {
@@ -865,9 +881,11 @@ function fetchFileToRecapService() {
                     $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
                     console.log(error);
                     iziToast.warning({
-                        title: 'Помилка!',
+                        // title: 'Помилка!',
+                        title: 'Internal Server Error!',
                         // message: 'Виникла помилка на стороні серевера 500',
-                        message: 'Дивіться деталі в JavaScript Console',
+                        // message: 'Дивіться деталі в JavaScript Console',
+                        message: 'Please check JavaScript Console',
                         position: 'bottomLeft',
                         onClosed: function () {
                             iziToast.destroy();
@@ -880,8 +898,9 @@ function fetchFileToRecapService() {
             $("body").css("cursor", "default");
             $(".loader").hide();
             iziToast.warning({
-                title: 'Помилка!',
-                message: 'Ваш браузер застарів, встановіть актуальну версію Google Chrome!',
+                title: 'Fetch error!',
+                // message: 'Ваш браузер застарів, встановіть актуальну версію Google Chrome!',
+                message: 'Use the most recent version of Google Chrome browser!',
                 position: 'bottomLeft',
                 onClosed: function () {
                     iziToast.destroy();
@@ -1057,12 +1076,14 @@ function forProjectFileListClickAndEnterPressEvents() {
         if (typeof projectStructure.project.content.documents !== "undefined" && projectStructure.project.content.documents !== null && projectStructure.project.content.documents.length !== null && projectStructure.project.content.documents.length > 0) {
 
             iziToast.warning({
-                title: 'Відкрити документ ' + $projectFileList.prop('value') + ' ?',
+                // title: 'Відкрити документ ' + $projectFileList.prop('value') + ' ?',
+                title: 'Are you sure to open document ' + $projectFileList.prop('value') + ' ?',
                 // message: 'Це призведе до видалення всіх даних.',
                 position: 'center',
                 timeout: 10000,
                 buttons: [
-                    ['<button>Так</button>', function (instance, toast) {
+                    // ['<button>Так</button>', function (instance, toast) {
+                    ['<button>Ok</button>', function (instance, toast) {
                         instance.hide({
                             transitionOut: 'fadeOutUp',
                             // onClosing: function (instance, toast, closedBy) {
@@ -1116,14 +1137,16 @@ function forProjectFileListClickAndEnterPressEvents() {
                                         $uploadResultList.append($('<option>', {
                                             text: element.tname,
                                             value: element.sentpos.length,
-                                            title: 'Частота: ' + element.sentpos.length
+                                            // title: 'Частота: ' + element.sentpos.length
+                                            title: 'Frequency: ' + element.sentpos.length
                                         }));
                                     }
                                     if (Array.isArray(element.sentpos) == false) {
                                         $uploadResultList.append($('<option>', {
                                             text: element.tname,
                                             value: 1,
-                                            title: 'Частота: ' + 1
+                                            // title: 'Частота: ' + 1
+                                            title: 'Frequency: ' + 1
                                         }));
                                     }
                                 }
@@ -1136,7 +1159,8 @@ function forProjectFileListClickAndEnterPressEvents() {
                                 }
 
                                 iziToast.info({
-                                    title: 'Документ ' + $projectFileList.prop('value') + ' завантажено!',
+                                    // title: 'Документ ' + $projectFileList.prop('value') + ' завантажено!',
+                                    title: 'Document ' + $projectFileList.prop('value') + ' loaded!',
                                     // message: $projectFileList.prop('value') + ' завантажено!',
                                     position: 'bottomLeft'
                                 });
@@ -1144,7 +1168,8 @@ function forProjectFileListClickAndEnterPressEvents() {
                             }
                         }, toast);
                     }],
-                    ['<button>Ні</button>', function (instance, toast) {
+                    // ['<button>Ні</button>', function (instance, toast) {
+                    ['<button>Cancel</button>', function (instance, toast) {
                         instance.hide({
                             transitionOut: 'fadeOutUp'
                         }, toast);
@@ -1155,7 +1180,8 @@ function forProjectFileListClickAndEnterPressEvents() {
     } else {
         console.log("projectStructure variable is empty!");
         iziToast.warning({
-            title: 'Оберіть документ проекту зі списку!',
+            // title: 'Оберіть документ проекту зі списку!',
+            title: 'Select project\'s document from the list!',
             position: 'bottomLeft'
         });
     }
@@ -1254,13 +1280,15 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
     if ($("#new_term_tab").is(".tab-pane.active")) {
         $("#displacy").hide();
         $("#displacy-ner").show();
-        $("#displacy-label").html('<center>Візуалізація іменованих сутностей <a target="_blank" href="https://spacy.io/api/annotation#named-entities">(список анотацій)</a></center>');
+        // $("#displacy-label").html('<center>Візуалізація іменованих сутностей <a target="_blank" href="https://spacy.io/api/annotation#named-entities">(список анотацій)</a></center>');
+        $("#displacy-label").html('<center>Visualization of the named entities <a target="_blank" href="https://spacy.io/api/annotation#named-entities">(annotation specs)</a></center>');
         $("#displacy-label").show();
     }
     if ($("#term_tab").is(".tab-pane.active")) {
         $("#displacy").show();
         $("#displacy-ner").hide();
-        $("#displacy-label").html('<center>Візуалізація залежностей термінів <a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">(список анотацій)</a></center>');
+        // $("#displacy-label").html('<center>Візуалізація залежностей термінів <a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">(список анотацій)</a></center>');
+        $("#displacy-label").html('<center>Visualization of the term dependency parsing <a target="_blank" href="https://spacy.io/api/annotation#dependency-parsing">(annotation specs)</a></center>');
         $("#displacy-label").show();
     }
     if ($("#text_tab").is(".tab-pane.active")) {
@@ -1272,12 +1300,14 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         document.getElementById("projectFileList").oncontextmenu = function (event) {
             if (event.target.text !== undefined) {
                 iziToast.warning({
-                    title: 'Видалити документ ' + event.target.text + ' ?',
+                    // title: 'Видалити документ ' + event.target.text + ' ?',
+                    title: 'Remove document ' + event.target.text + ' ?',
                     // message: ' Видалити документ ' + event.target.text + ' ?',
                     position: 'center',
                     timeout: 10000,
                     buttons: [
-                        ['<button>Так</button>', function (instance, toast) {
+                        // ['<button>Так</button>', function (instance, toast) {
+                        ['<button>Ok</button>', function (instance, toast) {
                             instance.hide({
                                 transitionOut: 'fadeOutUp',
                                 // onClosing: function (instance, toast, closedBy) {
@@ -1298,7 +1328,8 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                                 }
                             }, toast);
                         }],
-                        ['<button>Ні</button>', function (instance, toast) {
+                        // ['<button>Ні</button>', function (instance, toast) {
+                        ['<button>Cancel</button>', function (instance, toast) {
                             instance.hide({
                                 transitionOut: 'fadeOutUp'
                             }, toast);
@@ -1360,14 +1391,16 @@ $sortSelect.on('change', function (e) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
                     value: element.sentpos.length,
-                    title: 'Частота: ' + element.sentpos.length
+                    // title: 'Частота: ' + element.sentpos.length
+                    title: 'Frequency: ' + element.sentpos.length
                 }));
             }
             if (Array.isArray(element.sentpos) == false) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
                     value: 1,
-                    title: 'Частота: ' + 1
+                    // title: 'Частота: ' + 1
+                    title: 'Frequency: ' + 1
                 }));
             }
         }
