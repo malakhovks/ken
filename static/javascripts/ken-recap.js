@@ -237,7 +237,7 @@ $(document).ready(function () {
             $(".loader").hide();
             iziToast.info({
                 // title: 'Вітаємо, завантажено проект ' + JSON.stringify(value.project.name),
-                title: 'Congrats, the project ' + JSON.stringify(value.project.name) + ' has ben loaded.',
+                title: 'Congrats, the project ' + JSON.stringify(value.project.name) + ' has been loaded.',
                 // message: 'Оберіть файл для аналізу (pdf, txt, docx)',
                 message: 'Upload a document (pdf, txt, docx)',
                 position: 'bottomLeft'
