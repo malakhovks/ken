@@ -71,9 +71,9 @@ createHeaderRow = () => {
             dropDownDiv.setAttribute("class", "dropdown");
             dropDownDiv.innerHTML = `<button class="dropbtn" id="col-dropbtn-${i}">+</button>
         <div id="col-dropdown-${i}" class="dropdown-content">
-          <p class="col-insert-left">+ ліворуч</p>
-          <p class="col-insert-right">+ праворуч</p>
-          <p class="col-delete">Видалити</p>
+          <p class="col-insert-left">+ left</p>
+          <p class="col-insert-right">+ right</p>
+          <p class="col-delete">Remove</p>
         </div>`;
             th.appendChild(span);
             th.appendChild(dropDownDiv);
@@ -97,9 +97,9 @@ createTableBodyRow = rowNum => {
             dropDownDiv.setAttribute("class", "dropdown");
             dropDownDiv.innerHTML = `<button class="dropbtn" id="row-dropbtn-${rowNum}">+</button>
         <div id="row-dropdown-${rowNum}" class="dropdown-content">
-          <p class="row-insert-top">+ вище</p>
-          <p class="row-insert-bottom">+ нижче</p>
-          <p class="row-delete">Видалити</p>
+          <p class="row-insert-top">+ above</p>
+          <p class="row-insert-bottom">+ lower</p>
+          <p class="row-delete">Remove</p>
         </div>`;
             cell.appendChild(span);
             cell.appendChild(dropDownDiv);
@@ -411,7 +411,7 @@ function getFormattedTime() {
 
 document.getElementById("button-save-table").addEventListener("click", e => {
     iziToast.info({
-        title: 'Зберегти таблицю в форматі: ',
+        title: 'Save spreadsheet as: ',
         position: 'center',
         timeout: 10000,
         buttons: [
@@ -441,12 +441,12 @@ document.getElementById("button-save-table").addEventListener("click", e => {
 
 document.getElementById("clear-table").addEventListener("click", e => {
     iziToast.warning({
-        title: 'Очистити таблицю?',
-        message: 'Це призведе до видалення всіх даних з таблиці.',
+        title: 'Clear spreadsheet?',
+        message: 'All spreadsheet data will be lost!',
         position: 'center',
         timeout: 10000,
         buttons: [
-            ['<button>Так</button>', function (instance, toast) {
+            ['<button>Ok</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     onClosing: function (instance, toast, closedBy) {
@@ -454,7 +454,7 @@ document.getElementById("clear-table").addEventListener("click", e => {
                     }
                 }, toast);
             }],
-            ['<button>Ні</button>', function (instance, toast) {
+            ['<button>Cancel</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp'
                 }, toast);
