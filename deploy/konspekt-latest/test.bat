@@ -1,1 +1,0 @@
-Konspekt.exe text.txt 1 10000 
