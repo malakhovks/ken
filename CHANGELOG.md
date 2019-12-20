@@ -1,3 +1,9 @@
+## v2.0.0-beta-12, 2019-12-20
+
+### 🔴 Виправлення помилок
+
+- Виправлено помилку роботи утиліти [Xvfb](https://en.wikipedia.org/wiki/Xvfb) (Xvfb or X virtual framebuffer is a display server implementing the X11 display server protocol) та програми Konspekt.exe для української мови (версії від 03-11-2018).
+
 ## v2.0.0-beta-5, 2019-12-19
 
 ### 👍 Покращення
