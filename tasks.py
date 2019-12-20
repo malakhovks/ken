@@ -13,7 +13,9 @@ def konspekt_task_ua(args):
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
         f = io.open(path_to_1txt, 'w+', encoding='cp1251')
-        f.write(args['body'].decode('cp1251'))
+        # f.write(args['body'].decode('cp1251'))
+        # decode the file as CP1251 ignoring any errors
+        f.write(args['body'].decode('cp1251', errors='ignore'))
         f.close()
 
         # time for analyzing 10 sec
