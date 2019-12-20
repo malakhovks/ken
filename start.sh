@@ -4,7 +4,10 @@
 set -m
 
 # for konspekt:
-{ service nginx start; uwsgi --ini ./deploy/uwsgi.ini; Xvfb :1 -screen 0 1280x720x24; } &
+{ service nginx start; uwsgi --ini ./deploy/uwsgi.ini; } &
+
+Xvfb :1 -screen 0 1280x720x24 &
+
 # for konspekt-old:
 # { service nginx start; uwsgi --ini ./deploy/uwsgi.ini; } &
 
