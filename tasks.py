@@ -23,7 +23,7 @@ def konspekt_task_ua(args):
             if detector.done: break
         detector.close()
         if detector.result['encoding'] == 'UTF-8':
-            f.write(args['body'].decode('UTF-8').encode('cp1251'))
+            f.write(args['body'].decode('UTF-8', errors='ignore').encode('cp1251'))
         else:
             f.write(args['body'].decode('cp1251'))
         f.close()
