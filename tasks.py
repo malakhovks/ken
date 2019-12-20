@@ -3,6 +3,7 @@ import traceback
 import uwsgi
 from uwsgidecorators import spool
 import shutil, os, io
+from chardet.universaldetector import UniversalDetector
 
 @spool
 def konspekt_task_ua(args):
@@ -15,7 +16,16 @@ def konspekt_task_ua(args):
         f = io.open(path_to_1txt, 'w+', encoding='cp1251')
         # f.write(args['body'].decode('cp1251'))
         # decode the file as CP1251 ignoring any errors
-        f.write(args['body'].decode('cp1251', errors='ignore'))
+        # f.write(args['body'].decode('cp1251', errors='ignore'))
+        detector = UniversalDetector()
+        for line in args['body'].readlines():
+            detector.feed(line)
+            if detector.done: break
+        detector.close()
+        if detector.result['encoding'] == 'UTF-8':
+            f.write(args['body'].decode('UTF-8').encode('cp1251'))
+        else:
+            f.write(args['body'].decode('cp1251'))
         f.close()
 
         # time for analyzing 10 sec
