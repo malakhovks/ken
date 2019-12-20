@@ -18,7 +18,7 @@ def konspekt_task_ua(args):
         # decode the file as CP1251 ignoring any errors
         # f.write(args['body'].decode('cp1251', errors='ignore'))
         detector = UniversalDetector()
-        for line in args['body'].readlines():
+        for line in args['body'].splitlines(True):
             detector.feed(line)
             if detector.done: break
         detector.close()
