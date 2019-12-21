@@ -16,6 +16,15 @@ def konspekt_task_ua(args):
         f = io.open(path_to_1txt, 'w+', encoding='cp1251')
         # f.write(args['body'].decode('cp1251'))
         # decode the file as CP1251 ignoring any errors
+        """
+        errors - response when encoding fails. There are six types of error response
+        strict - default response which raises a UnicodeDecodeError exception on failure
+        ignore - ignores the unencodable unicode from the result
+        replace - replaces the unencodable unicode to a question mark ?
+        xmlcharrefreplace - inserts XML character reference instead of unencodable unicode
+        backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
+        namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
+        """
         # f.write(args['body'].decode('cp1251', errors='ignore'))
         detector = UniversalDetector()
         for line in args['body'].splitlines(True):
