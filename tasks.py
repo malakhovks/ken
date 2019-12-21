@@ -14,8 +14,6 @@ def konspekt_task_ua(args):
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
         f = io.open(path_to_1txt, 'w+', encoding='cp1251')
-        # f.write(args['body'].decode('cp1251'))
-        # decode the file as CP1251 ignoring any errors
         """
         errors - response when encoding fails. There are six types of error response
         strict - default response which raises a UnicodeDecodeError exception on failure
@@ -32,13 +30,13 @@ def konspekt_task_ua(args):
             if detector.done: break
         detector.close()
         if detector.result['encoding'] == 'utf-8':
-            print(detector.result['encoding'])
+            # print(detector.result['encoding'])
             f.write(args['body'].decode('UTF-8', errors='ignore'))
         elif detector.result['encoding'] == 'windows-1251':
-            print(detector.result['encoding'])
+            # print(detector.result['encoding'])
             f.write(args['body'].decode('cp1251', errors='ignore'))
         else:
-            print(detector.result['encoding'])
+            # print(detector.result['encoding'])
             f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         f.close()
 
