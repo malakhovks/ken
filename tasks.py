@@ -31,12 +31,14 @@ def konspekt_task_ua(args):
             detector.feed(line)
             if detector.done: break
         detector.close()
-        if detector.result['encoding'] == 'UTF-8':
-            print('UTF-8')
-            f.write(args['body'].decode('UTF-8', errors='ignore').encode('cp1251', errors='ignore'))
-        else:
-            print('cp1251')
-            f.write(args['body'].decode('cp1251', errors='ignore'))
+        print(detector.result['encoding'])
+        f.write(args['body'].decode(detector.result['encoding'], errors='ignore').encode('cp1251', errors='ignore'))
+        # if detector.result['encoding'] == 'UTF-8':
+        #     print('UTF-8')
+        #     f.write(args['body'].decode('UTF-8', errors='ignore').encode('cp1251', errors='ignore'))
+        # else:
+        #     print(detector.result['encoding'])
+        #     f.write(args['body'].decode(detector.result['encoding'], errors='ignore').encode('cp1251', errors='ignore'))
         f.close()
 
         # time for analyzing 10 sec
