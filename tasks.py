@@ -31,13 +31,13 @@ def konspekt_task_ua(args):
         detector.close()
         if detector.result['encoding'] == 'utf-8':
             print(detector.result['encoding'])
-            f.write(args['body'].decode('UTF-8', errors='ignore'), errors='ignore')
+            f.write(args['body'].decode('UTF-8', errors='ignore'))
         elif detector.result['encoding'] == 'windows-1251':
             print(detector.result['encoding'])
-            f.write(args['body'].decode('cp1251', errors='ignore'), errors='ignore')
+            f.write(args['body'].decode('cp1251', errors='ignore'))
         else:
             print(detector.result['encoding'])
-            f.write(args['body'].decode(detector.result['encoding'], errors='ignore'), errors='ignore')
+            f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         f.close()
 
         # time for analyzing 10 sec
