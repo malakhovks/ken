@@ -320,7 +320,7 @@ def post_to_queue():
             file.close()
             if os.path.isfile(destination):
                 raw_text = get_text_from_docx(destination)
-                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text.encode('utf-8', 'ignore'))
+                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text.encode('utf-8', errors='ignore'))
                 resp = resp.rpartition('/')[2]
                 return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
             else:
