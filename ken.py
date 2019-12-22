@@ -299,6 +299,19 @@ def post_to_queue():
             resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text)
             resp = resp.rpartition('/')[2]
             return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
+        # pdf processing
+        elif file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+            pdf_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),pdf_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_pdf_pdfminer(destination)
+                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text)
+                resp = resp.rpartition('/')[2]
+                return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
+            else:
+                return abort(500)
         # docx processing
         elif file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
