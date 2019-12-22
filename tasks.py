@@ -23,21 +23,21 @@ def konspekt_task_ua(args):
         backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
         namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
         """
-        # f.write(args['body'].decode('cp1251', errors='ignore'))
-        detector = UniversalDetector()
-        for line in args['body'].splitlines(True):
-            detector.feed(line)
-            if detector.done: break
-        detector.close()
-        if detector.result['encoding'] == 'utf-8':
-            # print(detector.result['encoding'])
-            f.write(args['body'].decode('UTF-8', 'ignore'))
-        elif detector.result['encoding'] == 'windows-1251':
-            # print(detector.result['encoding'])
-            f.write(args['body'].decode('cp1251', 'ignore'))
-        else:
-            # print(detector.result['encoding'])
-            f.write(args['body'].decode(detector.result['encoding'], 'ignore'))
+        f.write(args['body'].decode('cp1251', errors='ignore'))
+        # detector = UniversalDetector()
+        # for line in args['body'].splitlines(True):
+        #     detector.feed(line)
+        #     if detector.done: break
+        # detector.close()
+        # if detector.result['encoding'] == 'utf-8':
+        #     print(detector.result['encoding'])
+        #     f.write(args['body'].decode('UTF-8', errors='ignore'))
+        # elif detector.result['encoding'] == 'windows-1251':
+        #     print(detector.result['encoding'])
+        #     f.write(args['body'].decode('cp1251', errors='ignore'))
+        # else:
+        #     print(detector.result['encoding'])
+        #     f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         f.close()
 
         # time for analyzing 10 sec
