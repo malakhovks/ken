@@ -41,7 +41,7 @@ def konspekt_task_ua(args):
         f.close()
 
         # time for analyzing 10 sec
-        time.sleep(10)
+        time.sleep(60)
 
         # http://docs.python.org/2/library/shutil.html
         if not os.path.exists('/var/tmp/tasks/konspekt/' + args['spooler_task_name']):
