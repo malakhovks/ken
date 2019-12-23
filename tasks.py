@@ -17,7 +17,7 @@ def konspekt_task_ua(args):
         logging.debug('Start task execution')
 
         # data size in bytes
-        logging.debug('Data size in bytes: ' + len(args['body']))
+        logging.debug('Data size in bytes: ' + str(len(args['body'])))
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
