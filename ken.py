@@ -36,8 +36,8 @@ import pickle
 import codecs, io
 import logging
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # load libraries for string proccessing
 import re, string
