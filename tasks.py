@@ -1,15 +1,23 @@
-import time
+# load misc utils
+import time, logging
 import traceback
 import uwsgi
 from uwsgidecorators import spool
 import shutil, os, io
 from chardet.universaldetector import UniversalDetector
 
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+
 @spool
 def konspekt_task_ua(args):
     # create/overwrite file that will be analyzed by konspekt
     try:
-        # print('Start task execution')
+        logging.debug('Start task execution')
+
+        # data size in bytes
+        logging.debug('Data size in bytes: ' + len(args['body']))
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
@@ -30,18 +38,18 @@ def konspekt_task_ua(args):
             if detector.done: break
         detector.close()
         if detector.result['encoding'] == 'utf-8':
-            print(detector.result['encoding'])
+            logging.debug(detector.result['encoding'])
             f.write(args['body'].decode('UTF-8', errors='ignore'))
         elif detector.result['encoding'] == 'windows-1251':
-            print(detector.result['encoding'])
+            logging.debug(detector.result['encoding'])
             f.write(args['body'].decode('cp1251', errors='ignore'))
         else:
-            print(detector.result['encoding'])
+            logging.debug(detector.result['encoding'])
             f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         f.close()
 
         # time for analyzing 10 sec
-        time.sleep(60)
+        time.sleep(180)
 
         # http://docs.python.org/2/library/shutil.html
         if not os.path.exists('/var/tmp/tasks/konspekt/' + args['spooler_task_name']):
@@ -59,5 +67,5 @@ def konspekt_task_ua(args):
 
         return uwsgi.SPOOL_OK
     except Exception as e:
-        print(traceback.format_exc())
+        logging.error(traceback.format_exc())
         return uwsgi.SPOOL_RETRY
