@@ -7,8 +7,8 @@ import shutil, os, io
 from chardet.universaldetector import UniversalDetector
 
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 @spool
 def konspekt_task_ua(args):
@@ -17,8 +17,7 @@ def konspekt_task_ua(args):
         logging.debug('Start task execution')
 
         # data size in bytes
-        logging.debug('Data size in bytes: ' + str(len(args['body'])))
-        print('Data size in bytes: ' + str(len(args['body'])))
+        logging.error('Data size in bytes: ' + str(len(args['body'])))
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
@@ -49,8 +48,8 @@ def konspekt_task_ua(args):
             f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         f.close()
 
-        # time for analyzing 10 sec
-        time.sleep(180)
+        # time for analyzing 180 sec
+        time.sleep(120)
 
         # http://docs.python.org/2/library/shutil.html
         if not os.path.exists('/var/tmp/tasks/konspekt/' + args['spooler_task_name']):
