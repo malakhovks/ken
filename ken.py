@@ -209,22 +209,35 @@ def text_normalization_default(raw_text):
 
 # remove XML predefined entities from text
 def remove_xml_predefined_entities(raw_text):
-    raw_text_list = []
-    for line in raw_text.splitlines(True):
-        # if line contains letters
-        if re.search(r'[а-яА-Я]+', line):
-            # remove all words which contains number
-            line = re.sub(r'\w*\d\w*', ' ', line)
-            line = re.sub(r'&|>|<|_|"', ' ', line)
-            # Replace multiple dots with space
-            line = re.sub('\.\.+', ' ', line)
-            # remove multiple spaces
-            line = re.sub('\s\s+', ' ', line)
-            # remove leading and ending spaces
-            line = line.strip()
-            raw_text_list.append(line)
-    clean_raw_text_without_xml_predefined_entities = ''.join(raw_text_list)
+    # remove all words which contains number
+    raw_text = re.sub(r'\w*\d\w*', ' ', raw_text)
+    raw_text = re.sub(r'&|>|<|_|"', ' ', raw_text)
+    # Replace multiple dots with space
+    raw_text = re.sub('\.\.+', ' ', raw_text)
+    # remove multiple spaces
+    raw_text = re.sub('\s\s+', ' ', raw_text)
+    # remove leading and ending spaces
+    raw_text = raw_text.strip()
+    clean_raw_text_without_xml_predefined_entities = raw_text
     return clean_raw_text_without_xml_predefined_entities
+
+# def remove_xml_predefined_entities(raw_text):
+#     raw_text_list = []
+#     for line in raw_text.splitlines(True):
+#         # if line contains letters
+#         if re.search(r'[а-яА-Я]+', line):
+#             # remove all words which contains number
+#             line = re.sub(r'\w*\d\w*', ' ', line)
+#             line = re.sub(r'&|>|<|_|"', ' ', line)
+#             # Replace multiple dots with space
+#             line = re.sub('\.\.+', ' ', line)
+#             # remove multiple spaces
+#             line = re.sub('\s\s+', ' ', line)
+#             # remove leading and ending spaces
+#             line = line.strip()
+#             raw_text_list.append(line)
+#     clean_raw_text_without_xml_predefined_entities = ''.join(raw_text_list)
+#     return clean_raw_text_without_xml_predefined_entities
 
 # default sentence normalization
 def sentence_normalization_default(raw_sentence):
