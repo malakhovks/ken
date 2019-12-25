@@ -347,7 +347,14 @@ def get_allterms_result():
     if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
         return jsonify({'task': task_id, 'status': False}), 204
 
-    tree = ET.parse('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml')
+    parser1251 = ET.XMLParser(encoding="windows-1251")
+
+    try:
+        tree = ET.parse('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml', parser=parser1251)
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+
     root = tree.getroot()
 
     # remove allterms.xml
@@ -367,7 +374,14 @@ def get_parce_result():
     if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml'):
         return jsonify({'task': task_id, 'status': False}), 204
 
-    tree = ET.parse('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml')
+    parser1251 = ET.XMLParser(encoding="windows-1251")
+
+    try:
+        tree = ET.parse('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+
     root = tree.getroot()
 
     # remove parce.xml
