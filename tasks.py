@@ -41,10 +41,12 @@ def konspekt_task_ua(args):
         logging.error('Data size in bytes: ' + str(len(args['body'])))
 
         if len(args['body']) <= 50000:
-            time_for_analyzing = 105
-        elif len(args['body']) > 50000 and len(args['body']) < 100000:
-            time_for_analyzing = 155
-        elif len(args['body']) > 100000:
+            time_for_analyzing = 65
+        elif len(args['body']) > 50000 and len(args['body']) <= 100000:
+            time_for_analyzing = 125
+        elif len(args['body']) > 100000 and len(args['body']) <= 200000:
+            time_for_analyzing = 185
+        elif len(args['body']) > 200000:
             time_for_analyzing = 300
 
         project_dir = args['project_dir']
@@ -133,4 +135,4 @@ def konspekt_task_ua(args):
     except Exception as e:
         logging.error(traceback.format_exc())
         logging.error(repr(e))
-        return uwsgi.SPOOL_RETRY
+        return uwsgi.SPOOL_IGNORE
