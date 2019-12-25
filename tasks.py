@@ -3,7 +3,18 @@ import time, logging
 import traceback
 import uwsgi
 from uwsgidecorators import spool
-import shutil, os, io
+import shutil, os
+"""
+without `from io import open` I get:
+
+`TypeError: file() takes at most 3 arguments (4 given)`
+
+To get an encoding parameter in Python 2:
+If you only need to support Python 2.6 and 2.7 you can use io.open instead of open. io is the new io subsystem for Python 3, and it exists in Python 2,6 ans 2.7 as well. Please be aware that in Python 2.6 (as well as 3.0) it's implemented purely in python and very slow, so if you need speed in reading files, it's not a good option.
+
+If you need speed, and you need to support Python 2.6 or earlier, you can use codecs.open instead. It also has an encoding parameter, and is quite similar to io.open except it handles line-endings differently.
+"""
+from io import open
 from chardet.universaldetector import UniversalDetector
 
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -28,6 +39,13 @@ def konspekt_task_ua(args):
 
         # data size in bytes
         logging.error('Data size in bytes: ' + str(len(args['body'])))
+
+        if len(args['body']) <= 50000:
+            time_for_analyzing = 105
+        elif len(args['body']) > 50000 and len(args['body']) < 100000:
+            time_for_analyzing = 155
+        elif len(args['body']) > 100000:
+            time_for_analyzing = 300
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
@@ -93,8 +111,9 @@ def konspekt_task_ua(args):
         except IOError as e:
              logging.error(repr(e))
 
-        # time for analyzing 180 sec
-        time.sleep(120)
+        # time for analyzing 105 sec
+        # time.sleep(105)
+        time.sleep(time_for_analyzing)
 
         # http://docs.python.org/2/library/shutil.html
         if not os.path.exists('/var/tmp/tasks/konspekt/' + args['spooler_task_name']):
