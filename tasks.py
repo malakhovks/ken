@@ -3,7 +3,7 @@ import time, logging
 import traceback
 import uwsgi
 from uwsgidecorators import spool
-import shutil, os
+import shutil, os, re, string
 """
 without `from io import open` I get:
 
@@ -53,12 +53,12 @@ def konspekt_task_ua(args):
         # f = io.open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore')
         """
         errors - response when encoding fails. There are six types of error response
-        strict - default response which raises a UnicodeDecodeError exception on failure
-        ignore - ignores the unencodable unicode from the result
-        replace - replaces the unencodable unicode to a question mark ?
-        xmlcharrefreplace - inserts XML character reference instead of unencodable unicode
-        backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
-        namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
+        errors='strict' - default response which raises a UnicodeDecodeError exception on failure
+        errors='ignore' - ignores the unencodable unicode from the result
+        errors='replace' - replaces the unencodable unicode to a question mark ?
+        errors='xmlcharrefreplace' - inserts XML character reference instead of unencodable unicode
+        errors='backslashreplace' - inserts a \uNNNN espace sequence instead of unencodable unicode
+        errors='namereplace' - inserts a \N{...} escape sequence instead of unencodable unicode
         """
         # f.write(args['body'].decode('cp1251', errors='ignore'))
         # detector = UniversalDetector()
