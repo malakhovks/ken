@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  <title>Konspekt - v2.0.0-beta</title>
+  <title>Конспект - v2.0.0-beta</title>
   <meta charset="UTF-8">
   <link rel="shortcut icon" type="image/png" href="./static/images/favicon.png" />
   <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/flatly.bootstrap.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="./static/stylesheets/style-en.css" media="screen" />
-  <link rel="stylesheet" type="text/css" href="./static/stylesheets/table-en.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="./static/stylesheets/style-ua.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="./static/stylesheets/table-ua.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="./static/stylesheets/iziToast.min.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="./static/stylesheets/tippy.css" media="screen" />
 </head>
@@ -17,48 +17,47 @@
   <div class="container_adapter_for_one_page_view">
     <section class="col-md-3">
       <div class="recap_label">
-        <label>Sentences with selected term</label>
+        <label>Речення з обраним терміном</label>
       </div>
-      <!-- <textarea id="text-content" readonly="true"></textarea> -->
       <div class="panel panel-default" id="text-content-panel">
         <div class="panel-body context" id="text-content-panel-body">
           <p id="text-content"></p>
         </div>
       </div>
       <div class="recap_label">
-        <label>Term tree</label>
+        <label>Дерево термінів</label>
       </div>
       <section id="term-tree"></section>
     </section>
     <section class="col-md-3">
       <label class="text-center" id="overview-button">
         <div><i class="material-icons">file_download</i>
-          <p id="caption_overview_button">Open document</p>
+          <p id="caption_overview_button">Оберіть файл для аналізу</p>
         </div>
         <input id="recap-overview-button" type="file"
           accept="application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
       </label>
       <div class="text-center" id="upload-button">
-        <p id="caption_upload_button">Extract terms</p>
-        <input id="recap-upload-button" type="submit" value="Upload" />
+        <p id="caption_upload_button">Виокремити терміни з тексту</p>
+        <input id="recap-upload-button" type="submit" value="Завантажити" />
       </div>
       <div class="tabs">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#term_tab" data-toggle="data" title="Base noun phrases">Terms</a>
+          <li class="active"><a href="#term_tab" data-toggle="data" title="Виокремлені терміни з тексту">Терміни</a>
           </li>
-          <li><a href="#new_term_tab" data-toggle="data" title="Named Entity Recognition">NER</a></li>
-          <li><a href="#fileList" data-toggle="data" title="Project files">Documents</a></li>
+          <li><a href="#new_term_tab" data-toggle="data" title="Невизначені сутності">Невизначені</a></li>
+          <li><a href="#fileList" data-toggle="data" title="Файли проекту">Файли</a></li>
         </ul>
       </div>
       <div class="tab-content" id="select-block">
         <div class="tab-pane active fade in" id="term_tab">
           <div id="term-tab-container">
-            <select id="sort-select" title="Terms sorting">
-              <option value="0">-- Select sort --</option>
-              <option value="1">alphabetically</option>
-              <option value="2">ascending frequency sort</option>
-              <option value="3">descending frequency sort</option>
-              <option value="4">by order of appearance</option>
+            <select id="sort-select" title="Сортування виокремлених термінів з тексту">
+              <option value="0">-- Оберіть тип сортування --</option>
+              <option value="1">за алфавітом</option>
+              <option value="2">за збільшенням частоти</option>
+              <option value="3">за зменшенням частоти</option>
+              <option value="4">за появою тексті</option>
             </select>
             <select id="uploadResultList" name="uploadResultList"></select>
           </div>
@@ -77,20 +76,18 @@
           <!-- Project dropdown -->
           <div class="dropdown" id="button-dropdown-project">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
-                class="material-icons">developer_board</i>Project
+                class="material-icons">developer_board</i>Проект
               <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-              <li role="presentation" id="button-new-project" title="Create a new project from scratch"><a role="menuitem"
-                  tabindex="-1"><i class="material-icons">create</i>New project</a></li>
+              <li role="presentation" id="button-new-project" title="Розпочати новий проект"><a role="menuitem"
+                  tabindex="-1"><i class="material-icons">create</i>Новий проект</a></li>
               <li role="presentation" id="button-open-document"
-                title="Open document (.pdf, .docx, .txt)"><a role="menuitem" tabindex="-1"><i
-                    class="material-icons">cloud_upload</i>Open document</a></li>
-              <li role="presentation" id="button-open-project" title="Open project from file"><a role="menuitem"
-                  tabindex="-1"><i class="material-icons">unarchive</i>Open project</a></li>
-              <!-- <label for = "file-input-for-open-project"><div><i
-                  class="material-icons">unarchive</i>Відкрити проект<input type="file" id="file-input-for-open-project" style="display:none" accept="text/plain"/></div></label> -->
-              <li role="presentation" id="button-save-project" title="Save project to file"><a role="menuitem"
-                  tabindex="-1"><i class="material-icons">archive</i>Save project</a></li>
+                title="Відкрити документ (.pdf, .docx, .txt) для аналізу"><a role="menuitem" tabindex="-1"><i
+                    class="material-icons">cloud_upload</i>Відкрити документ</a></li>
+              <li role="presentation" id="button-open-project" title="Відкрити проект з файлу"><a role="menuitem"
+                  tabindex="-1"><i class="material-icons">unarchive</i>Відкрити проект</a></li>
+              <li role="presentation" id="button-save-project" title="Зберегти проект в файл"><a role="menuitem"
+                  tabindex="-1"><i class="material-icons">archive</i>Зберегти проект</a></li>
             </ul>
           </div>
           <!-- Project dropdown -->
@@ -98,71 +95,55 @@
           <!-- Save dropdown -->
           <div class="dropdown" id="button-save">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
-                class="material-icons">save</i>Save
+                class="material-icons">save</i>Зберегти
               <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-              <li role="presentation" id="button-save-table" title="Save spreadsheet as xlsx or csv"><a role="menuitem"
-                  tabindex="-1" href="#">Spreadsheet</a></li>
-              <li role="presentation" id="button-save-terms" title="Save terms list as txt (in utf-8)"><a
-                  role="menuitem" tabindex="-1" href="#">Terms list</a></li>
+              <li role="presentation" id="button-save-table" title="Зберегти таблицю в xls або csv"><a role="menuitem"
+                  tabindex="-1" href="#">Таблицю</a></li>
+              <li role="presentation" id="button-save-terms" title="Зберегти терміни в файл (txt, utf-8)"><a
+                  role="menuitem" tabindex="-1" href="#">Список Терміни</a></li>
               <li role="presentation" id="button-save-ner"
-                title="Save NER list as txt (utf-8)"><a role="menuitem" tabindex="-1"
-                  href="#">NER list</a></li>
+                title="Зберегти невизначені сутності в файл (txt, utf-8)"><a role="menuitem" tabindex="-1"
+                  href="#">Список Невизначені</a></li>
               <li role="presentation" id="button-save-project-file-list"
-                title="Save documents list as txt (utf-8)"><a role="menuitem" tabindex="-1"
-                  href="#">Documents list</a></li>
-              <li role="presentation" id="button-save-allterms-xml" title="Save allterms.xml"><a role="menuitem"
+                title="Зберегти список документів проекту в файл (txt, utf-8)"><a role="menuitem" tabindex="-1"
+                  href="#">Список Файли</a></li>
+              <li role="presentation" id="button-save-allterms-xml" title="Зберегти allterms.xml"><a role="menuitem"
                   tabindex="-1" href="#">allterms.xml</a></li>
-              <li role="presentation" id="button-save-parce-xml" title="Save parce.xml"><a role="menuitem"
+              <li role="presentation" id="button-save-parce-xml" title="Зберегти parce.xml"><a role="menuitem"
                   tabindex="-1" href="#">parce.xml</a></li>
             </ul>
           </div>
           <!-- Save dropdown -->
           <!-- ---------------------------------------------------------------------------------------------------- -->
-          <!-- Open dropdown -->
-          <!-- <div class="dropdown" id="button-dropdown-open">
-            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
-                class="material-icons">cloud_upload</i>Відкрити
-              <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-              <li role="presentation" id="button-open-allterms" title="Відкрити локальний файл allterms.xml" class="disabled"><a role="menuitem"
-                  tabindex="-1" href="#">allterms.xml</a></li>
-              <li role="presentation" id="button-open-parce" title="Відкрити локальний файл parce.xml" class="disabled"><a role="menuitem"
-                  tabindex="-1" href="#">parce.xml</a></li>
-            </ul>
-          </div> -->
-          <!-- Open dropdown -->
-          <!-- ---------------------------------------------------------------------------------------------------- -->
           <!-- Help dropdown -->
           <div class="dropdown" id="button-dropdown-help">
             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i
-                class="material-icons">help</i>Help
+                class="material-icons">help</i>Допомога
               <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-              <li role="presentation" id="button-help" title="Usage guide"><a role="menuitem"
-                  tabindex="-1" href="/help" target="_blank">Documentation</a></li>
-              <li role="presentation" id="button-changelog" title="CHANGELOG.md"><a role="menuitem"
-                  tabindex="-1" href="/changelog" target="_blank">Changelog</a></li>
+              <li role="presentation" id="button-help" title="Настанова щодо експлуатування"><a role="menuitem"
+                  tabindex="-1" href="/help" target="_blank">Документація</a></li>
+              <li role="presentation" id="button-changelog" title="Журнал змін проекту CHANGELOG.md"><a role="menuitem"
+                  tabindex="-1" href="/changelog" target="_blank">Журнал змін</a></li>
             </ul>
           </div>
           <!-- Help dropdown -->
         </div>
         <div class="table_edit_elements">
-          <button id="addColsToTable" type="button" title="Add a new column"><img
+          <button id="addColsToTable" type="button" title="Додати нову колонку в таблицю"><img
               src="./static/images/forTableColAdd.png" height="30" alt="" /></button>
-          <button id="addRowsToTable" type="button" title="Add a new row"><img
+          <button id="addRowsToTable" type="button" title="Додати новий рядок в таблицю"><img
               src="./static/images/forTableRowAdd.png" height="30" alt="" /></button>
-          <button id="clear-table" type="button" title="Clear spreadsheet"><i class="material-icons">cached</i>
+          <button id="clear-table" type="button" title="Очистити таблицю"><i class="material-icons">cached</i>
           </button>
         </div>
         <!-- <table id="term-table"></table> -->
         <div class="tabs">
           <ul class="nav nav-tabs">
-            <li><a href="#text_tab" data-toggle="data" title="Document text">Text</a></li>
-            <li><a href="#depparse_tab" data-toggle="data"
-                title="Visualize dependencies and entities">Visualizer</a></li>
-            <li class="active"><a href="#table_new" data-toggle="data" title="Spreadsheet for CONFOR">Spreadsheet</a></li>
-            <li><a href="#notebook_tab" data-toggle="data" title="Simple notes">Notes</a></li>
+            <li><a href="#text_tab" data-toggle="data" title="Текст робочого документа">Текст</a></li>
+            <li class="active"><a href="#table_new" data-toggle="data" title="Таблиця для CONFOR">Таблиця</a></li>
+            <li><a href="#notebook_tab" data-toggle="data" title="блокнот для нотаток">Блокнот</a></li>
           </ul>
         </div>
         <div class="tab-content" id="table-content-block" style="display: flex; justify-content: flex-end;">
@@ -171,16 +152,6 @@
               <div class="panel-body context">
                 <p id="sents_from_text">
                 </p>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="depparse_tab">
-            <div class="grid-container">
-              <div id="displacy-label"></div>
-              <div id="displacy-ner">
-              </div>
-              <div id="displacy">
-                <!-- Visualizing the dependency parse -->
               </div>
             </div>
           </div>
@@ -216,9 +187,8 @@
 <script src="./static/javascripts/lz-string.min.js"></script>
 <script src="./static/javascripts/tippy.min.js"></script>
 <script src="./static/javascripts/jquery.mark.min.js"></script>
-<script src="./static/javascripts/recap-en.js"></script>
-<script src="./static/javascripts/table-en.js"></script>
-<script src="./static/javascripts/displacy.js"></script>
+<script src="./static/javascripts/recap-ua.js"></script>
+<script src="./static/javascripts/table-ua.js"></script>
 <script src="./static/javascripts/iziToast.min.js"></script>
 
 </html>

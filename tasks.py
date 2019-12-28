@@ -38,7 +38,7 @@ def konspekt_task_ua(args):
         logging.debug('Start task execution')
 
         # data size in bytes
-        logging.error('Data size in bytes: ' + str(len(args['body'])))
+        logging.debug('Data size in bytes: ' + str(len(args['body'])))
 
         if len(args['body']) <= 50000:
             time_for_analyzing = 65
@@ -112,6 +112,7 @@ def konspekt_task_ua(args):
                     f.write(raw_text_without_xml_predefined_entities)
         except IOError as e:
              logging.error(repr(e))
+             return uwsgi.SPOOL_IGNORE
 
         # time for analyzing 105 sec
         # time.sleep(105)
@@ -127,12 +128,20 @@ def konspekt_task_ua(args):
 
         # copy file with results to unique folder with id
         # allterms.xml
-        shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'allterms.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        try:
+            shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'allterms.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        except Exception as e:
+            logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
         # parce.xml
-        shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'parce.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        try:
+            shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'parce.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        except Exception as e:
+            logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
 
         return uwsgi.SPOOL_OK
     except Exception as e:
-        logging.error(traceback.format_exc())
+        # logging.error(traceback.format_exc())
         logging.error(repr(e))
         return uwsgi.SPOOL_IGNORE
