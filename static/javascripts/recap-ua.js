@@ -69,6 +69,13 @@ $(window).resize(function () {
     }
 });
 
+$(window).on("load", function () {
+    // page is fully loaded, including all frames, objects and images
+    if ($(window).width() < 1024) {
+        alert('Set the minimum screen size to 1024x768!');
+    }
+});
+
 $(document).ready(function () {
 
     // Detect device, browser and version
@@ -267,13 +274,6 @@ $(document).ready(function () {
         console.log(err);
     });
 
-});
-
-$(window).load(function() {
-    // page is fully loaded, including all frames, objects and images
-    if ($(window).width() < 1024) {
-        alert('Встановіть мінімальний розмір екрану 1024х768!');
-    }
 });
 
 async function subscribe(url, taskID, queuedFilename) {
