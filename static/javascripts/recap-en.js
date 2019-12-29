@@ -96,6 +96,12 @@ $buttonNewProjectAndClearAll.click(function () {
     });
 });
 
+$(window).resize(function () {
+    if ($(window).width() < 1024) {
+        alert('Minimum screen size is 1024x768!');
+    }
+});
+
 $(document).ready(function () {
 
     // Detect device, browser and version
@@ -340,6 +346,13 @@ $(document).ready(function () {
     $("#displacy").hide();
     $("#displacy-ner").hide();
 
+});
+
+$(window).load(function() {
+    // page is fully loaded, including all frames, objects and images
+    if ($(window).width() < 1024) {
+        alert('Set the minimum screen size to 1024x768!');
+    }
 });
 
 $('#button-open-document').click(function () {

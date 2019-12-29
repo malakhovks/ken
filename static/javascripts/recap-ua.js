@@ -64,11 +64,8 @@ $buttonNewProjectAndClearAll.click(function () {
 });
 
 $(window).resize(function () {
-    if ($(window).width() < 960) {
-        alert('Less than 960');
-    }
-    else {
-        alert('More than 960');
+    if ($(window).width() < 1024) {
+        alert('Встановіть мінімальний розмір екрану 1024х768!');
     }
 });
 
@@ -270,6 +267,13 @@ $(document).ready(function () {
         console.log(err);
     });
 
+});
+
+$(window).load(function() {
+    // page is fully loaded, including all frames, objects and images
+    if ($(window).width() < 1024) {
+        alert('Встановіть мінімальний розмір екрану 1024х768!');
+    }
 });
 
 async function subscribe(url, taskID, queuedFilename) {
