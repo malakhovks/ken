@@ -298,3 +298,52 @@ async function subscribe(url, taskID, queuedFilename) {
         getAllterms(taskID, queuedFilename);
     }
 }
+
+// CHANGE TABS ---------------------------------------------------------------------------------------------------------
+$('.nav-tabs a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show')
+});
+
+$('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
+    if ($("#fileList").is(".tab-pane.active")) {
+        document.getElementById("projectFileList").oncontextmenu = function (event) {
+            if (event.target.text !== undefined) {
+                iziToast.warning({
+                    title: 'Видалити документ ' + event.target.text + ' ?',
+                    position: 'center',
+                    timeout: 10000,
+                    buttons: [
+                        ['<button>Так</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp',
+                                onClosed: function (instance, toast, closedBy) {
+
+                                    if (projectStructure !== null) {
+                                        let filtered = projectStructure.project.content.documents.filter(function (el) { return el.names.unique != event.target.value; });
+                                        projectStructure.project.content.documents = filtered;
+                                        localforage.setItem('last-project', projectStructure).then(function (value) {
+                                            console.log('last-project item of database updated');
+                                            $("#projectFileList option[value='" + event.target.value + "']").remove();
+                                            location.reload();
+                                        }).catch(function (err) {
+                                            console.log(err);
+                                        });
+                                    }
+
+                                }
+                            }, toast);
+                        }],
+                        ['<button>Ні</button>', function (instance, toast) {
+                            instance.hide({
+                                transitionOut: 'fadeOutUp'
+                            }, toast);
+                        }]
+                    ]
+                });
+            }
+            return false; // cancel default context menu
+        }
+    }
+});
+// CHANGE TABS ---------------------------------------------------------------------------------------------------------
