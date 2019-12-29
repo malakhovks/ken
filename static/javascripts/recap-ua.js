@@ -40,15 +40,12 @@ var $buttonNewProjectAndClearAll = $('#button-new-project'),
 
 $buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
-        // title: 'Розпочати новий проект?',
-        title: 'Create a new project?',
-        // message: 'Це призведе до видалення всіх даних.',
-        message: 'All data will be lost!',
+        title: 'Розпочати новий проект?',
+        message: 'Це призведе до видалення всіх даних.',
         position: 'center',
         timeout: 10000,
         buttons: [
-            // ['<button>Так</button>', function (instance, toast) {
-            ['<button>Ok</button>', function (instance, toast) {
+            ['<button>Так</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     // onClosing: function (instance, toast, closedBy) {
@@ -57,14 +54,22 @@ $buttonNewProjectAndClearAll.click(function () {
                     }
                 }, toast);
             }],
-            // ['<button>Ні</button>', function (instance, toast) {
-            ['<button>Cancel</button>', function (instance, toast) {
+            ['<button>Ні</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp'
                 }, toast);
             }]
         ]
     });
+});
+
+$(window).resize(function () {
+    if ($(window).width() < 960) {
+        alert('Less than 960');
+    }
+    else {
+        alert('More than 960');
+    }
 });
 
 $(document).ready(function () {
@@ -145,22 +150,9 @@ $(document).ready(function () {
                 return { name: 'unknown', version: 0 };
             }
         };
-        
+
         var e = module.init(),
             debug = '';
-        
-/*
-        debug += 'os.name = ' + e.os.name + '<br/>';
-        debug += 'os.version = ' + e.os.version + '<br/>';
-        debug += 'browser.name = ' + e.browser.name + '<br/>';
-        debug += 'browser.version = ' + e.browser.version + '<br/>';
-        
-        debug += '<br/>';
-        debug += 'navigator.userAgent = ' + navigator.userAgent + '<br/>';
-        debug += 'navigator.appVersion = ' + navigator.appVersion + '<br/>';
-        debug += 'navigator.platform = ' + navigator.platform + '<br/>';
-        debug += 'navigator.vendor = ' + navigator.vendor + '<br/>';
-*/
 
         console.log('os.name = ' + e.os.name);
         console.log('os.version = ' + e.os.version);
@@ -168,8 +160,7 @@ $(document).ready(function () {
         console.log('browser.version = ' + e.browser.version);
 
         if (!e.browser.name.includes('Chrome')) {
-            // alert('Для коректної роботи клієнтської частини веб-застосунка `KEn`, необхідно використовувати актуальну версію браузера Google Chrome!');
-            alert('Use the most recent version of Google Chrome browser!');
+            alert('Для коректної роботи веб-застосунка `Конспект`, необхідно використовувати актуальну версію браузера Google Chrome!');
         }
     }());
 
@@ -188,10 +179,8 @@ $(document).ready(function () {
             localforage.setItem('last-project', projectStructure).then(function (value) {
                 console.log('New last-project item created with value: ' + JSON.stringify(value));
                 iziToast.info({
-                    // title: 'Вітаємо, розпочато новий проект!',
-                    title: 'Congrats, a new project has been created!',
-                    // message: 'Оберіть файл для аналізу (pdf, txt, docx)',
-                    message: 'Upload a new document (pdf, txt, docx)',
+                    title: 'Вітаємо, розпочато новий проект!',
+                    message: 'Оберіть файл для аналізу (pdf, txt, docx)',
                     position: 'bottomLeft'
                 });
             }).catch(function (err) {
@@ -207,10 +196,8 @@ $(document).ready(function () {
             $("body").css("cursor", "default");
             $(".loader").hide();
             iziToast.info({
-                // title: 'Вітаємо, завантажено проект ' + JSON.stringify(value.project.name),
-                title: 'Congrats, the project ' + JSON.stringify(value.project.name) + ' has been loaded.',
-                // message: 'Оберіть файл для аналізу (pdf, txt, docx)',
-                message: 'Upload a document (pdf, txt, docx)',
+                title: 'Вітаємо, завантажено проект ' + JSON.stringify(value.project.name),
+                message: 'Оберіть файл для аналізу (pdf, txt, docx)',
                 position: 'bottomLeft'
             });
             projectStructure = value;
@@ -236,16 +223,14 @@ $(document).ready(function () {
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
                             value: element.sentpos.length,
-                            // title: 'Частота: ' + element.sentpos.length
-                            title: 'Frequency: ' + element.sentpos.length
+                            title: 'Частота: ' + element.sentpos.length
                         }));
                     }
                     if (Array.isArray(element.sentpos) == false) {
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
                             value: 1,
-                            // title: 'Частота: ' + 1
-                            title: 'Frequency: ' + 1
+                            title: 'Частота: ' + 1
                         }));
                     }
                 }
@@ -257,29 +242,9 @@ $(document).ready(function () {
                     $sents_from_text.append('<p>' + sent_element + '</p><br>')
                 }
 
-                // load last NER from parcejson in NER tab $uploadUnknownTerms
-                parceJSON = lastRecappedFileData.results.parcejson
-                $('option', $uploadUnknownTerms).remove();
-                // TODO add ckecking if nerElement is present
-                for (let nerElement of parceJSON.text.sentence) {
+                // load Unknown terms into $uploadUnknownTerms
 
-                    if (nerElement.hasOwnProperty('ner')) {
-                        if (Array.isArray(nerElement.ner.entity)) {
-                            for (let entityElement of nerElement.ner.entity) {
-                                $uploadUnknownTerms.append($('<option>', {
-                                    value: entityElement.entitytext,
-                                    text: entityElement.entitytext
-                                }));
-                            }
-                        };
-                        if (Array.isArray(nerElement.ner.entity) == false) {
-                            $uploadUnknownTerms.append($('<option>', {
-                                value: nerElement.ner.entity.entitytext,
-                                text: nerElement.ner.entity.entitytext
-                            }));
-                        }
-                    }
-                }
+                // load Unknown terms into $uploadUnknownTerms
 
                 // Load project files list into #projectFiles element
                 for (let projectFilesElement of lastProjectFiles) {
@@ -289,9 +254,6 @@ $(document).ready(function () {
                         title: projectFilesElement.names.original
                     }));
                 }
-
-                // Load NER from nerhtmlBase64 --------------------------------------------------------------------------------------
-                $('#displacy-ner').html(LZString.decompressFromBase64(lastRecappedFileData.results.nerhtmlCompressed));
 
                 console.log("Loaded last recapped file with unique name: " + JSON.stringify(lastRecappedFileData.names.unique));
             } else {
@@ -308,7 +270,27 @@ $(document).ready(function () {
         console.log(err);
     });
 
-    $("#displacy").hide();
-    $("#displacy-ner").hide();
-
 });
+
+async function subscribe(url, taskID, queuedFilename) {
+    let response = await fetch(url);
+    if (response.status == 502) {
+        // Status 502 is a connection timeout error,
+        // may happen when the connection was pending for too long,
+        // and the remote server or a proxy closed it
+        // let's reconnect
+        console.log('Task status: ' + response.status);
+        await subscribe(url, taskID, queuedFilename);
+    } else if (response.status != 200) {
+        // An error - let's show it
+        console.log('Task status: ' + response.status);
+        // Reconnect in one second
+        await new Promise(resolve => setTimeout(resolve, 7000));
+        await subscribe(url, taskID, queuedFilename);
+    } else {
+        // Get and show the message
+        let message = await response.text();
+        console.log('Task status: ' + message);
+        getAllterms(taskID, queuedFilename);
+    }
+}

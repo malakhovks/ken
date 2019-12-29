@@ -1154,5 +1154,6 @@ docker run --restart always --name ken -d -p 80:80 malakhovks/ken
 
 11. Exploring Docker container's file system: `docker exec -t -i mycontainer /bin/bash`.
 12. Copying files from Docker container to host: `docker cp <containerId>:/file/path/within/container /host/path/target`.
+13. List images: `docker image ls -a`.
 
 -------
