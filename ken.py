@@ -297,7 +297,6 @@ def post_to_queue():
             raw_text = file.read()
             file.close()
             resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text)
-            logging.error('Task accepted: ' + resp)
             resp = resp.rpartition('/')[2]
             return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
         # pdf processing
