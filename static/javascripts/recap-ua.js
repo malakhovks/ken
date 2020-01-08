@@ -299,7 +299,220 @@ async function subscribe(url, taskID, queuedFilename) {
     }
 }
 
-// CHANGE TABS ---------------------------------------------------------------------------------------------------------
+/* event on pressing Ctrl+C on selected element of #uploadResultList COPY TO CLIPBOARD
+dynamically created INPUT element, variable content passed to the INPUT element value,
+and use execCommand("copy") the contents of the command INPUT element is copied to the clipboard.
+INPUT element dynamically removed */
+$uploadResultList.keydown(function (e) {
+    if ($uploadResultList.has('option').length > 0) {
+        if (e.keyCode == keyC && e.ctrlKey) {
+
+            let copyCommandSupported = document.queryCommandSupported('copy');
+
+            if (copyCommandSupported) {
+
+                valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $("#uploadResultList option:selected").text();
+
+                let $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
+                document.execCommand("copy");
+                $temp.remove();
+
+            }
+        }
+    }
+});
+
+$uploadUnknownTerms.keydown(function (e) {
+    if ($uploadUnknownTerms.has('option').length > 0) {
+        if (e.keyCode == keyC && e.ctrlKey) {
+
+            let copyCommandSupported = document.queryCommandSupported('copy');
+
+            if (copyCommandSupported) {
+
+                valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $uploadUnknownTerms.prop('value');
+
+                let $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
+                document.execCommand("copy");
+                $temp.remove();
+
+            }
+        }
+    }
+});
+
+$projectFileList.keydown(function (e) {
+    if ($projectFileList.has('option').length > 0) {
+        if (e.keyCode == keyC && e.ctrlKey) {
+
+            let copyCommandSupported = document.queryCommandSupported('copy');
+
+            if (copyCommandSupported) {
+
+                valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue = $projectFileList.prop('text');
+
+                let $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(valueOfSelectedElementOfUploadResultListIfCtrlC.selectedElementValue).select();
+                document.execCommand("copy");
+                $temp.remove();
+
+            }
+        }
+    }
+});
+
+function ClearAllForNewProject() {
+    $('option', $uploadResultList).remove();
+    $('option', $uploadUnknownTerms).remove();
+    $textContent.text('');
+    $textareaNotes.val('');
+    $('input').val('');
+    $termTree.treeview({});
+    localStorage.clear();
+    localforage.clear().then(function () {
+        console.log('Database is now empty.');
+        location.reload();
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+
+function truncate(n, len) {
+    let ext = n.substring(n.lastIndexOf(".") + 1, n.length).toLowerCase();
+    let filename = n.replace('.' + ext, '');
+    if (filename.length <= len) {
+        return n;
+    }
+    filename = filename.substr(0, len) + (n.length > len ? '[...]' : '');
+    return filename + '.' + ext;
+}
+
+function copyTermTreeToTable(termTreeText) {
+    // Mouse handler for table (DROP):
+    $('#table-body').on('mouseup', 'td', function () {
+        if (termTreeText != '') {
+            $(this).html(termTreeText);
+            termTreeText = '';
+        }
+    });
+}
+
+// XML to JSON --------------------------------------------------------------------------------------------------------
+// Modified version from here: http://davidwalsh.name/convert-xml-json
+function xmlToJson(xml) {
+
+    // Create the return object
+    var obj = {};
+
+    if (xml.nodeType == 1) { // element
+        // do attributes
+        if (xml.attributes.length > 0) {
+            obj["@attributes"] = {};
+            for (var j = 0; j < xml.attributes.length; j++) {
+                var attribute = xml.attributes.item(j);
+                obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+            }
+        }
+    } else if (xml.nodeType == 3) { // text
+        obj = xml.nodeValue;
+    }
+
+    // do children
+    // If just one text node inside
+    if (xml.hasChildNodes() && xml.childNodes.length === 1 && xml.childNodes[0].nodeType === 3) {
+        obj = xml.childNodes[0].nodeValue;
+    }
+    else if (xml.hasChildNodes()) {
+        for (var i = 0; i < xml.childNodes.length; i++) {
+            var item = xml.childNodes.item(i);
+            var nodeName = item.nodeName;
+            if (typeof (obj[nodeName]) == "undefined") {
+                obj[nodeName] = xmlToJson(item);
+            } else {
+                if (typeof (obj[nodeName].push) == "undefined") {
+                    var old = obj[nodeName];
+                    obj[nodeName] = [];
+                    obj[nodeName].push(old);
+                }
+                obj[nodeName].push(xmlToJson(item));
+            }
+        }
+    }
+    return obj;
+}
+// XML to JSON --------------------------------------------------------------------------------------------------------
+
+// Sort terms ---------------------------------------------------------------------------------------------------------
+$sortSelect.on('change', function (e) {
+    var selected = $("#uploadResultList").val();
+    let sortSelectVal = $("#sort-select option:selected").val();
+    // let selectText = $("#sort-select option:selected").text();
+
+    if (sortSelectVal == 1) {
+        var my_options = $("#uploadResultList option");
+        my_options.sort(function (a, b) {
+            if (a.text > b.text) return 1;
+            else if (a.text < b.text) return -1;
+            else return 0;
+        });
+        $("#uploadResultList").empty().append(my_options);
+        $("#uploadResultList").val(selected);
+    }
+
+    if (sortSelectVal == 2) {
+        var my_options = $("#uploadResultList option");
+        my_options.sort(function (a, b) {
+            a = a.value;
+            b = b.value;
+            return a - b;
+        });
+        $("#uploadResultList").empty().append(my_options);
+        $("#uploadResultList").val(selected);
+    }
+
+    if (sortSelectVal == 3) {
+        var my_options = $("#uploadResultList option");
+        my_options.sort(function (a, b) {
+            a = a.value;
+            b = b.value;
+            return b - a;
+        });
+        $("#uploadResultList").empty().append(my_options);
+        $("#uploadResultList").val(selected);
+    }
+
+    if (sortSelectVal == 4) {
+        $("#uploadResultList").empty();
+        // for known words ES 6
+        for (let element of alltermsJSON.termsintext.exporterms.term) {
+            termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+            if (Array.isArray(element.sentpos)) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: element.sentpos.length,
+                    // title: 'Частота: ' + element.sentpos.length
+                    title: 'Frequency: ' + element.sentpos.length
+                }));
+            }
+            if (Array.isArray(element.sentpos) == false) {
+                $uploadResultList.append($('<option>', {
+                    text: element.tname,
+                    value: 1,
+                    // title: 'Частота: ' + 1
+                    title: 'Frequency: ' + 1
+                }));
+            }
+        }
+    }
+});
+// Sort terms ---------------------------------------------------------------------------------------------------------
+
+// CHANGE TABS --------------------------------------------------------------------------------------------------------
 $('.nav-tabs a').click(function (e) {
     e.preventDefault();
     $(this).tab('show')
@@ -346,4 +559,67 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
         }
     }
 });
-// CHANGE TABS ---------------------------------------------------------------------------------------------------------
+// CHANGE TABS --------------------------------------------------------------------------------------------------------
+
+// mark.js ------------------------------------------------------------------------------------------------------------
+function mark(text) {
+    // Determine selected options for mark.js
+    var options = {
+        "each": function (element) {
+            setTimeout(function () {
+                $(element).addClass("animate");
+            }, 250);
+        },
+        "separateWordSearch": false,
+        "accuracy": "complementary",
+        "diacritics": true
+    };
+    $("#sents_from_text").unmark({
+        done: function () {
+            $("#sents_from_text").mark(text, options);
+        }
+    });
+}
+
+function markTerms(term) {
+    // Determine selected options for mark.js
+    var options = {
+        "each": function (element) {
+            setTimeout(function () {
+                $(element).addClass("animate");
+            }, 250);
+        },
+        "separateWordSearch": false,
+        "accuracy": "complementary",
+        "diacritics": true
+    };
+    $("#text-content").unmark({
+        done: function () {
+            $("#text-content").mark(term, options);
+        }
+    });
+}
+// mark.js ------------------------------------------------------------------------------------------------------------
+
+// the textarea sutosave ----------------------------------------------------------------------------------------------
+$textareaNotes.on('input propertychange change', function() {
+    console.log('Textarea Change');
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(function() {
+        // Runs 1 second (1000 ms) after the last change    
+        saveNotesToLF();
+    }, 1000);
+});
+
+function saveNotesToLF() {
+    var d = new Date();
+    console.log('Saved #notes to the localforge! Last: ' + d.toLocaleTimeString())
+    projectStructure.project.notes = LZString.compressToBase64($textareaNotes.val());
+    // Update localforage "last-project"
+    localforage.setItem('last-project', projectStructure).then(function (value) {
+        console.log('last-project item of database updated with #notes value: ' + JSON.stringify(value.project.notes));
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+// the textarea sutosave ----------------------------------------------------------------------------------------------
