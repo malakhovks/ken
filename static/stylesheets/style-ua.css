@@ -518,3 +518,11 @@ select {
 }
 
 /*TOGGLE______________________________________________________________________________________________________________*/
+
+/*https://stackoverflow.com/questions/639815/how-to-disable-all-div-content/14973111*/
+/* A simple way to disable any DIV including its contents is to just disable mouse interaction. */
+/* Note: With this solution, you can’t interact with this element, or any children of this element, with a mouse, or on a touch device. But you can still tab to it with your keyboard. */
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
