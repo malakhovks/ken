@@ -276,6 +276,38 @@ $(document).ready(function () {
 
 });
 
+// Sending to server ------------------------------------------------------------------------------------------------------
+
+// extract terms from text #recapUploadButton click event
+$('#recap-upload-button').click(function () {
+    if (self.fetch) {
+
+        // Show progress bar
+        $("body").css("cursor", "progress");
+        $(".loader").show();
+
+        fetchFileToTaskQueuedService().then(result => {
+            console.log(JSON.stringify(result));
+            subscribe('/task/status?' + 'id=' + result.task.id, result.task.id, result.task.file);
+        });
+
+        // Hide progress bar
+        $("body").css("cursor", "default");
+        $(".loader").hide();
+
+    } else {
+        iziToast.warning({
+            title: 'Fetch error!',
+            // message: 'Ваш браузер застарів, встановіть актуальну версію Google Chrome!',
+            message: 'Use the most recent version of Google Chrome browser!',
+            position: 'bottomLeft',
+            onClosed: function () {
+                iziToast.destroy();
+            }
+        });
+    }
+});
+
 async function subscribe(url, taskID, queuedFilename) {
     let response = await fetch(url);
     if (response.status == 502) {
@@ -298,6 +330,172 @@ async function subscribe(url, taskID, queuedFilename) {
         getAllterms(taskID, queuedFilename);
     }
 }
+
+/*
+ The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline,
+ such as requests and responses. It also provides a global fetch() method that provides an easy, logical way to
+ fetch resources asynchronously across the network.
+ https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+ */
+//Sending the text file to the server with the recap service to parse
+function fetchFileToRecapService() {
+    const txtExtension = '.txt',
+        docxExtension = '.docx',
+        pdfExtension = '.pdf';
+
+    var uploadFileName = $recapOverviewButton.val().split('\\').pop(),
+        // Generate unique name for uploaded file
+        uniqueUploadFilename = Date.now() + '-' + uploadFileName,
+        form = new FormData();
+
+    // init content for temporary project
+    var projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlCompressed: "", parcexmlCompressed: "", alltermsjson: "", parcejson: "" } };
+    // add file names to content for temporary project
+    projectContent.names.original = uploadFileName;
+    projectContent.names.unique = uniqueUploadFilename;
+
+
+    form.append("file", $recapOverviewButton[0].files[0]);
+
+    if (uploadFileName.indexOf(txtExtension) != -1 || uploadFileName.indexOf(docxExtension) || uploadFileName.indexOf(pdfExtension)) {
+
+        iziToast.info({
+            title: 'Зачекайте! Аналіз документа',
+            message: uploadFileName.split('\\').pop(),
+            position: 'bottomLeft',
+            close: false,
+            timeout: 2000
+        });
+
+        $projectFileList.append($('<option>', {
+            value: projectContent.names.unique,
+            text: truncate(projectContent.names.unique, 30),
+            title: projectContent.names.original
+        }));
+
+        // Hide Upload button and show tabs
+        $upload_button.css('display', 'none');
+        $('.tabs').css('display', 'block');
+
+        // Clear terms list,textArea, input choose file
+        $recapOverviewButton.val("");
+        $('option', $uploadResultList).remove();
+        $('option', $uploadUnknownTerms).remove();
+        $textContent.text('');
+
+
+        return fetch('/task/queued', {
+            method: 'post',
+            body: form
+        }).then(response => {
+            if (!response.ok) {
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
+                iziToast.warning({
+                    title: 'Сервіс зайнятий, спробуйте ще раз.',
+                    message: 'Статус: ' + response.status,
+                    position: 'bottomLeft',
+                    onClosed: function () {
+                        iziToast.destroy();
+                    }
+                });
+                return response.status;
+            }
+            return response.json();
+        }).then(obj => {
+            return obj;
+        }).catch(error => {
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
+            $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
+            console.log(error);
+            iziToast.warning({
+                title: 'Помилка!',
+                message: 'Дивіться деталі в JavaScript Console',
+                position: 'bottomLeft',
+                onClosed: function () {
+                    iziToast.destroy();
+                }
+            });
+        })
+    }
+}
+
+function getAllterms(taskID, queuedFilename) {
+    const url = '/task/allterms/result?' + 'id=' + taskID;
+    fetch(url)
+        .then(responseXML => {
+            if (!responseXML.ok) { throw new Error(responseXML.status) }
+            return responseXML.text()
+                .then(result => {
+                    dom = new DOMParser().parseFromString(result, "text/xml");
+                    alltermsJSON = xmlToJson(dom);
+
+                    // set #sort-select to order type 4
+                    $sortSelect.val('4');
+
+                    console.log(JSON.stringify(alltermsJSON));
+
+                    // add allterms.xml to content for temporary project ("alltermsxmlCompressed" field)
+                    projectContent.results.alltermsxmlCompressed = LZString.compressToBase64(result);
+                    // add allterms.xml in JSON to content for temporary project ("alltermsjson" field)
+                    projectContent.results.alltermsjson = alltermsJSON;
+
+                    for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
+                        termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
+                        if (Array.isArray(elementKnownTxtJson.sentpos)) {
+                            $uploadResultList.append($('<option>', {
+                                text: elementKnownTxtJson.tname,
+                                value: elementKnownTxtJson.sentpos.length,
+                                // title: 'Частота: ' + elementKnownTxtJson.sentpos.length
+                                title: 'Frequency: ' + elementKnownTxtJson.sentpos.length
+                            }));
+                        }
+                        if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
+                            $uploadResultList.append($('<option>', {
+                                text: elementKnownTxtJson.tname,
+                                value: 1,
+                                // title: 'Частота: ' + 1
+                                title: 'Frequency: ' + 1
+                            }));
+                        }
+                    }
+
+                    // Clear textarea id="sents_from_text"
+                    $sents_from_text.text('');
+                    // add to textarea id="sents_from_text"
+                    for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
+                        $sents_from_text.append('<p>' + sent_element + '</p><br>')
+                    }
+
+                    iziToast.success({
+                        title: 'OK',
+                        message: 'Обробка файлу виконана',
+                        position: 'bottomLeft',
+                        timeout: 2000,
+                        onClosed: function () {
+                            iziToast.destroy();
+                        }
+                    });
+                })
+        })
+}
+
+// Sending to server ------------------------------------------------------------------------------------------------------
+
+// change p#caption_overview_button caption with filename that selected
+// and clear all elements
+$recapOverviewButton.change(function () {
+    $captionOverviewButton.text(truncate($recapOverviewButton.val().split('\\').pop(), 20));
+    $termTree.treeview({});
+    $upload_button.css('display', 'block');
+    $('option', $uploadResultList).remove();
+    $('option', $uploadUnknownTerms).remove();
+    $textContent.text('');
+});
 
 /* event on pressing Ctrl+C on selected element of #uploadResultList COPY TO CLIPBOARD
 dynamically created INPUT element, variable content passed to the INPUT element value,
