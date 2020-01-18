@@ -172,6 +172,8 @@ $(document).ready(function () {
     // Show progress bar
     $("body").css("cursor", "progress");
     $(".loader").show();
+    // Disable any DIV including its contents is to just disable mouse interaction.
+    $(".container_adapter_for_one_page_view").addClass("disabledbutton");
 
     localforage.getItem('last-project').then(function (value) {
         if (value === null) {
@@ -179,6 +181,8 @@ $(document).ready(function () {
             // Hide progress bar
             $("body").css("cursor", "default");
             $(".loader").hide();
+            // Enable any DIV including its contents.
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
 
             projectStructure.project.name = 'pr-' + Date.now();
             localforage.setItem('last-project', projectStructure).then(function (value) {
@@ -192,6 +196,8 @@ $(document).ready(function () {
                 // Hide progress bar
                 $("body").css("cursor", "default");
                 $(".loader").hide();
+                // Enable any DIV including its contents.
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
                 // This code runs if there were any errors
                 console.log(err);
             });
@@ -261,10 +267,15 @@ $(document).ready(function () {
                 }
 
                 console.log("Loaded last recapped file with unique name: " + JSON.stringify(lastRecappedFileData.names.unique));
+                
+                // Enable any DIV including its contents.
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
             } else {
                 // Hide progress bar
                 $("body").css("cursor", "default");
                 $(".loader").hide();
+                // Enable any DIV including its contents.
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
                 console.log("Existing project is empty");
             }
         }
@@ -272,6 +283,8 @@ $(document).ready(function () {
         // Hide progress bar
         $("body").css("cursor", "default");
         $(".loader").hide();
+        // Enable any DIV including its contents.
+        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
         console.log(err);
     });
 
@@ -329,11 +342,50 @@ async function subscribe(url, taskID, queuedFilename) {
 
         getAllterms(taskID, queuedFilename);
 
+        getParce(taskID, queuedFilename);
+
+        // add projectContent to projectStructure content array
+        projectStructure.project.content.documents.push(projectContent);
+        // Update last recapped file data
+        lastRecappedFileData = projectContent;
+        // Update localforage "last-project"
+        localforage.setItem('last-project', projectStructure).then(function (value) {
+            console.log('last-project item of database (localforage) updated');
+        }).catch(function (err) {
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
+            // Enable any DIV including its contents.
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            console.log(err);
+        });
+
+        // Add last recaped data to last-selected database
+        localforage.setItem('last-selected', projectContent).then(function (value) {
+            console.log('last-selected item of database (localforage) updated');
+        }).catch(function (err) {
+            // Hide progress bar
+            $("body").css("cursor", "default");
+            $(".loader").hide();
+            // Enable any DIV including its contents.
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            console.log(err);
+        });
+
         // Hide progress bar
         $("body").css("cursor", "default");
         $(".loader").hide();
         // Enable any DIV including its contents.
         $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+        iziToast.success({
+            title: 'OK',
+            message: 'Обробка файлу виконана',
+            position: 'bottomLeft',
+            timeout: 5000,
+            onClosed: function () {
+                iziToast.destroy();
+            }
+        });
     }
 }
 
@@ -370,7 +422,7 @@ function fetchFileToTaskQueuedService() {
             message: uploadFileName.split('\\').pop(),
             position: 'bottomLeft',
             close: false,
-            timeout: 2000
+            timeout: 3000
         });
 
         $projectFileList.append($('<option>', {
@@ -407,6 +459,7 @@ function fetchFileToTaskQueuedService() {
                         iziToast.destroy();
                     }
                 });
+                console.log(response.status);
                 return response.status;
             }
             return response.json();
@@ -456,16 +509,14 @@ function getAllterms(taskID, queuedFilename) {
                             $uploadResultList.append($('<option>', {
                                 text: elementKnownTxtJson.tname,
                                 value: elementKnownTxtJson.sentpos.length,
-                                // title: 'Частота: ' + elementKnownTxtJson.sentpos.length
-                                title: 'Frequency: ' + elementKnownTxtJson.sentpos.length
+                                title: 'Частота: ' + elementKnownTxtJson.sentpos.length
                             }));
                         }
                         if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
                             $uploadResultList.append($('<option>', {
                                 text: elementKnownTxtJson.tname,
                                 value: 1,
-                                // title: 'Частота: ' + 1
-                                title: 'Frequency: ' + 1
+                                title: 'Частота: ' + 1
                             }));
                         }
                     }
@@ -476,16 +527,26 @@ function getAllterms(taskID, queuedFilename) {
                     for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
                         $sents_from_text.append('<p>' + sent_element + '</p><br>')
                     }
+                })
+        })
+}
 
-                    iziToast.success({
-                        title: 'OK',
-                        message: 'Обробка файлу виконана',
-                        position: 'bottomLeft',
-                        timeout: 2000,
-                        onClosed: function () {
-                            iziToast.destroy();
-                        }
-                    });
+function getParce(taskID, queuedFilename) {
+    const url = '/kua/api/task/parce/result?' + 'id=' + taskID;
+    fetch(url)
+        .then(responseXML => {
+            if (!responseXML.ok) { throw new Error(responseXML.status) }
+            return responseXML.text()
+                .then(result => {
+                    dom = new DOMParser().parseFromString(result, "text/xml");
+                    parceJSON = xmlToJson(dom);
+
+                    console.log(JSON.stringify(parceJSON));
+
+                    // add parce.xml to content for temporary project ("parcexmlCompressed" field)
+                    projectContent.results.parcexmlCompressed = LZString.compressToBase64(result);
+                    // add parce.xml in JSON to content for temporary project ("parcejson" field)
+                    projectContent.results.parcejson = parceJSON;
                 })
         })
 }
