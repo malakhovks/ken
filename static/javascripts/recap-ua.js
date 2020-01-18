@@ -286,15 +286,13 @@ $('#recap-upload-button').click(function () {
         // Show progress bar
         $("body").css("cursor", "progress");
         $(".loader").show();
+        // Disable any DIV including its contents is to just disable mouse interaction.
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
 
         fetchFileToTaskQueuedService().then(result => {
             console.log(JSON.stringify(result));
-            subscribe('/task/status?' + 'id=' + result.task.id, result.task.id, result.task.file);
+            subscribe('/kua/api/task/status?' + 'id=' + result.task.id, result.task.id, result.task.file);
         });
-
-        // Hide progress bar
-        $("body").css("cursor", "default");
-        $(".loader").hide();
 
     } else {
         iziToast.warning({
@@ -328,7 +326,14 @@ async function subscribe(url, taskID, queuedFilename) {
         // Get and show the message
         let message = await response.text();
         console.log('Task status: ' + message);
+
         getAllterms(taskID, queuedFilename);
+
+        // Hide progress bar
+        $("body").css("cursor", "default");
+        $(".loader").hide();
+        // Enable any DIV including its contents.
+        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
     }
 }
 
@@ -339,7 +344,7 @@ async function subscribe(url, taskID, queuedFilename) {
  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
  */
 //Sending the text file to the server with the recap service to parse
-function fetchFileToRecapService() {
+function fetchFileToTaskQueuedService() {
     const txtExtension = '.txt',
         docxExtension = '.docx',
         pdfExtension = '.pdf';
@@ -385,7 +390,7 @@ function fetchFileToRecapService() {
         $textContent.text('');
 
 
-        return fetch('/task/queued', {
+        return fetch('/kua/api/task/queued', {
             method: 'post',
             body: form
         }).then(response => {
@@ -395,8 +400,8 @@ function fetchFileToRecapService() {
                 $(".loader").hide();
                 $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
                 iziToast.warning({
-                    title: 'Сервіс зайнятий, спробуйте ще раз.',
-                    message: 'Статус: ' + response.status,
+                    title: 'Помилка!',
+                    message: 'Дивіться деталі в JavaScript Console. Статус: ' + response.status,
                     position: 'bottomLeft',
                     onClosed: function () {
                         iziToast.destroy();
@@ -426,7 +431,7 @@ function fetchFileToRecapService() {
 }
 
 function getAllterms(taskID, queuedFilename) {
-    const url = '/task/allterms/result?' + 'id=' + taskID;
+    const url = '/kua/api/task/allterms/result?' + 'id=' + taskID;
     fetch(url)
         .then(responseXML => {
             if (!responseXML.ok) { throw new Error(responseXML.status) }
