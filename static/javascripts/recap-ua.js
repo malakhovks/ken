@@ -12,6 +12,7 @@ var termsWithIndexDict = {},
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key
 
 var projectStructure = { project: { name: "", notes: "", content: { documents: [] } } },
+    projectContent,
     alltermsJSON,
     parceJSON,
     selectedDocument,
@@ -349,7 +350,7 @@ function fetchFileToRecapService() {
         form = new FormData();
 
     // init content for temporary project
-    var projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlCompressed: "", parcexmlCompressed: "", alltermsjson: "", parcejson: "" } };
+    projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlCompressed: "", parcexmlCompressed: "", alltermsjson: "", parcejson: "" } };
     // add file names to content for temporary project
     projectContent.names.original = uploadFileName;
     projectContent.names.unique = uniqueUploadFilename;
