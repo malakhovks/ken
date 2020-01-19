@@ -7,7 +7,8 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 // GLOBAL VARIABLES FOR THIS SCRIPT:
 var termsWithIndexDict = {},
     treeData = [], // for bootstrap-treeview
-    objForTree = {}, // for bootstrap-treeview
+    // objForTree = {}, // for bootstrap-treeview
+    objForTree = { text: "", nodes: [] }, // template structure for bootstrap-treeview
     keyC = 67, // Javascript Char Code (Key Code) for "C" key
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key
 
@@ -288,14 +289,6 @@ $(document).ready(function () {
                 // Enable any DIV including its contents.
                 $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
                 console.log("Existing project is empty");
-                iziToast.error({
-                    title: 'Помилка!',
-                    message: 'Дивіться деталі в JavaScript Console.',
-                    position: 'bottomLeft',
-                    onClosed: function () {
-                        iziToast.destroy();
-                    }
-                });
             }
         }
     }).catch(function (err) {
@@ -367,53 +360,7 @@ async function subscribe(url, taskID, queuedFilename) {
         let message = await response.text();
         console.log('Task status: ' + message);
 
-        getAllterms(taskID, queuedFilename);
-
-        getParce(taskID, queuedFilename);
-
-        // add projectContent to projectStructure content array
-        projectStructure.project.content.documents.push(projectContent);
-        // Update last recapped file data
-        lastRecappedFileData = projectContent;
-        // Update localforage "last-project"
-        localforage.setItem('last-project', projectStructure).then(function (value) {
-            console.log('last-project item of database (localforage) updated');
-        }).catch(function (err) {
-            // Hide progress bar
-            $("body").css("cursor", "default");
-            $(".loader").hide();
-            // Enable any DIV including its contents.
-            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
-            console.log(err);
-            iziToast.error({
-                title: 'Помилка!',
-                message: 'Дивіться деталі в JavaScript Console.',
-                position: 'bottomLeft',
-                onClosed: function () {
-                    iziToast.destroy();
-                }
-            });
-        });
-
-        // Add last recaped data to last-selected database
-        localforage.setItem('last-selected', projectContent).then(function (value) {
-            console.log('last-selected item of database (localforage) updated');
-        }).catch(function (err) {
-            // Hide progress bar
-            $("body").css("cursor", "default");
-            $(".loader").hide();
-            // Enable any DIV including its contents.
-            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
-            console.log(err);
-            iziToast.error({
-                title: 'Помилка!',
-                message: 'Дивіться деталі в JavaScript Console.',
-                position: 'bottomLeft',
-                onClosed: function () {
-                    iziToast.destroy();
-                }
-            });
-        });
+        getAlltermsParce(taskID, queuedFilename);
 
         // Hide progress bar
         $("body").css("cursor", "default");
@@ -529,8 +476,9 @@ function fetchFileToTaskQueuedService() {
     }
 }
 
-function getAllterms(taskID, queuedFilename) {
+function getAlltermsParce(taskID, queuedFilename) {
     const url = '/kua/api/task/allterms/result?' + 'id=' + taskID;
+    const url2 = '/kua/api/task/parce/result?' + 'id=' + taskID;
     fetch(url)
         .then(responseXML => {
             if (!responseXML.ok) { throw new Error(responseXML.status) }
@@ -573,26 +521,67 @@ function getAllterms(taskID, queuedFilename) {
                     for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
                         $sents_from_text.append('<p>' + sent_element + '</p><br>')
                     }
-                })
-        })
-}
+                }).then(next => {
+                    fetch(url2)
+                        .then(responseXML => {
+                            if (!responseXML.ok) { throw new Error(responseXML.status) }
+                            return responseXML.text()
+                                .then(result => {
+                                    dom = new DOMParser().parseFromString(result, "text/xml");
+                                    parceJSON = xmlToJson(dom);
 
-function getParce(taskID, queuedFilename) {
-    const url = '/kua/api/task/parce/result?' + 'id=' + taskID;
-    fetch(url)
-        .then(responseXML => {
-            if (!responseXML.ok) { throw new Error(responseXML.status) }
-            return responseXML.text()
-                .then(result => {
-                    dom = new DOMParser().parseFromString(result, "text/xml");
-                    parceJSON = xmlToJson(dom);
+                                    console.log(JSON.stringify(parceJSON));
 
-                    console.log(JSON.stringify(parceJSON));
+                                    // add parce.xml to content for temporary project ("parcexmlCompressed" field)
+                                    projectContent.results.parcexmlCompressed = LZString.compressToBase64(result);
+                                    // add parce.xml in JSON to content for temporary project ("parcejson" field)
+                                    projectContent.results.parcejson = parceJSON;
 
-                    // add parce.xml to content for temporary project ("parcexmlCompressed" field)
-                    projectContent.results.parcexmlCompressed = LZString.compressToBase64(result);
-                    // add parce.xml in JSON to content for temporary project ("parcejson" field)
-                    projectContent.results.parcejson = parceJSON;
+                                    // add projectContent to projectStructure content array
+                                    projectStructure.project.content.documents.push(projectContent);
+                                    // Update last recapped file data
+                                    lastRecappedFileData = projectContent;
+                                    // Update localforage "last-project"
+                                    localforage.setItem('last-project', projectStructure).then(function (value) {
+                                        console.log('last-project item of database (localforage) updated');
+                                    }).catch(function (err) {
+                                        // Hide progress bar
+                                        $("body").css("cursor", "default");
+                                        $(".loader").hide();
+                                        // Enable any DIV including its contents.
+                                        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                                        console.log(err);
+                                        iziToast.error({
+                                            title: 'Помилка!',
+                                            message: 'Дивіться деталі в JavaScript Console.',
+                                            position: 'bottomLeft',
+                                            onClosed: function () {
+                                                iziToast.destroy();
+                                            }
+                                        });
+                                    });
+
+                                    // Add last recaped data to last-selected database
+                                    localforage.setItem('last-selected', projectContent).then(function (value) {
+                                        console.log('last-selected item of database (localforage) updated');
+                                    }).catch(function (err) {
+                                        // Hide progress bar
+                                        $("body").css("cursor", "default");
+                                        $(".loader").hide();
+                                        // Enable any DIV including its contents.
+                                        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                                        console.log(err);
+                                        iziToast.error({
+                                            title: 'Помилка!',
+                                            message: 'Дивіться деталі в JavaScript Console.',
+                                            position: 'bottomLeft',
+                                            onClosed: function () {
+                                                iziToast.destroy();
+                                            }
+                                        });
+                                    });
+                                })
+                        })
                 })
         })
 }
@@ -633,6 +622,9 @@ function forUploadResultListClickAndEnterPressEvents() {
         //clear textArea #text-content
         $textContent.text('');
 
+        objForTree.text = $("#uploadResultList option:selected").text();
+        objForTree.nodes.length = 0;
+
         var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
 
         // inserting sentences with selected terms in #text-content
@@ -656,22 +648,37 @@ function forUploadResultListClickAndEnterPressEvents() {
             mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))]);
         }
 
-        // inserting terms in tree #term-tree
-        if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
+        if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') || alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
+            // inserting terms in tree #term-tree
+            if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown')) {
 
-            //template structure for bootstrap-treeview
-            objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
-
-            // add child nodes to template structure for bootstrap-treeview
-            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
-                for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
-                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
+                // add child nodes to template structure for bootstrap-treeview
+                if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
+                    for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
+                        // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
+                        objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname });
+                    }
+                }
+                if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
+                    // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname };
+                    objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname });
                 }
             }
-            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
-                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname };
-            }
 
+            if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
+
+                // add child nodes to template structure for bootstrap-treeview
+                if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
+                    for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
+                        // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
+                        objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname });
+                    }
+                }
+                if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
+                    // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname };
+                    objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname });
+                }
+            }
             treeData.length = 0; //clear treeData array
 
             treeData.push(objForTree); //add structure to array
@@ -680,57 +687,6 @@ function forUploadResultListClickAndEnterPressEvents() {
                 data: treeData,
                 onNodeSelected: function (event, node) {
                     // inserting sentences with selected terms in #text-content
-                    //clear #text-content
-                    $textContent.text('');
-                    let selectedTermInTermTree = termsWithIndexDict[node.text];
-                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
-
-                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))] + '<p><br>');
-
-                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
-                    }
-                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
-                        let sentIndex = [];
-                        let sentsForMark = [];
-                        for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
-                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))))) {
-                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '</p><br>');
-                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))]);
-                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
-                            }
-                        }
-                        mark(sentsForMark);
-                    }
-                    markTerms(node.text);
-                    copyTermTreeToTable(node.text);
-                }
-            }); // add array data to bootstrap-treeview and view it on page
-        }
-
-        if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
-
-            //template structure for bootstrap-treeview
-            objForTree = { text: $("#uploadResultList option:selected").text(), nodes: [] };
-
-            // add child nodes to template structure for bootstrap-treeview
-            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
-                for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
-                    objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
-                }
-            }
-            if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
-                objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname };
-            }
-
-            treeData.length = 0; //clear treeData array
-
-            treeData.push(objForTree); //add structure to array
-
-            $termTree.treeview({
-                data: treeData,
-                onNodeSelected: function (event, node) {
-                    // inserting sentences with selected terms in #text-content
-
                     //clear #text-content
                     $textContent.text('');
                     let selectedTermInTermTree = termsWithIndexDict[node.text];
