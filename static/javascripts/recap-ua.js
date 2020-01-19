@@ -311,6 +311,110 @@ $(document).ready(function () {
 });
 // ----------------------------------------------------------------------------------------------------------------------
 
+// Saving ---------------------------------------------------------------------------------------------------------------
+$buttonSaveProject.click(function () {
+    if (projectStructure !== null) {
+        downloadLink = document.createElement("a");
+        // Make sure that the link is not displayed
+        downloadLink.style.display = "none";
+        // Add the link to your DOM
+        document.body.appendChild(downloadLink);
+        // let blob = new Blob([projectStructure], { type: "octet/stream" }),
+        let blob = new Blob([JSON.stringify(projectStructure, null, 2)], { type: "application/json" }),
+            url = window.URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = projectStructure.project.name;
+        downloadLink.click();
+    }
+})
+
+$buttonSaveAlltermsXml.click(function () {
+    if (selectedDocument !== null) {
+        downloadLink = document.createElement("a");
+        // Make sure that the link is not displayed
+        downloadLink.style.display = "none";
+        // Add the link to your DOM
+        document.body.appendChild(downloadLink);
+        let blob = new Blob([LZString.decompressFromBase64(selectedDocument.results.alltermsxmlCompressed)], { type: "octet/stream" }),
+            url = window.URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'allterms.xml';
+        downloadLink.click();
+    } else {
+        if (lastRecappedFileData !== null) {
+            downloadLink = document.createElement("a");
+            // Make sure that the link is not displayed
+            downloadLink.style.display = "none";
+            // Add the link to your DOM
+            document.body.appendChild(downloadLink);
+            let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed)], { type: "octet/stream" }),
+                url = window.URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = 'allterms.xml';
+            downloadLink.click();
+        }
+    }
+})
+
+$buttonSaveParceXml.click(function () {
+    if (selectedDocument !== null) {
+        downloadLink = document.createElement("a");
+        // Make sure that the link is not displayed
+        downloadLink.style.display = "none";
+        // Add the link to your DOM
+        document.body.appendChild(downloadLink);
+        let blob = new Blob([LZString.decompressFromBase64(selectedDocument.results.parcexmlCompressed)], { type: "octet/stream" }),
+            url = window.URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'parce.xml';
+        downloadLink.click();
+    } else {
+        if (lastRecappedFileData !== null) {
+            downloadLink = document.createElement("a");
+            // Make sure that the link is not displayed
+            downloadLink.style.display = "none";
+            // Add the link to your DOM
+            document.body.appendChild(downloadLink);
+            let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed)], { type: "octet/stream" }),
+                url = window.URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = 'parce.xml';
+            downloadLink.click();
+        }
+    }
+})
+
+$buttonSaveTerms.click(function () {
+    let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
+        // Download link
+        downloadLink = document.createElement("a");
+    // Make sure that the link is not displayed
+    downloadLink.style.display = "none";
+    // Add the link to your DOM
+    document.body.appendChild(downloadLink);
+    let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = $captionOverviewButton.text();
+    downloadLink.click();
+});
+
+$buttonSaveProjectFileList.click(function () {
+    let arrayOfValuesOfYploadResultList = $("#projectFileList option").map(function () { return this.value; }).get().join('\n'),
+        // Download link
+        downloadLink = document.createElement("a");
+    // Make sure that the link is not displayed
+    downloadLink.style.display = "none";
+    // Add the link to your DOM
+    document.body.appendChild(downloadLink);
+    let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = 'projectFilesList.txt';
+    downloadLink.click();
+});
+// Saving ---------------------------------------------------------------------------------------------------------------
+
 // Sending to server ------------------------------------------------------------------------------------------------------
 
 // extract terms from text #recapUploadButton click event
