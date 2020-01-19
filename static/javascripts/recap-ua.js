@@ -179,7 +179,7 @@ $(document).ready(function () {
     // Disable any DIV including its contents is to just disable mouse interaction.
     $(".container_adapter_for_one_page_view").addClass("disabledbutton");
 
-    localforage.getItem('last-project').then(function (value) {
+    localforage.getItem('ua-last-project').then(function (value) {
         if (value === null) {
 
             // Hide progress bar
@@ -189,8 +189,8 @@ $(document).ready(function () {
             $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
 
             projectStructure.project.name = 'pr-' + Date.now();
-            localforage.setItem('last-project', projectStructure).then(function (value) {
-                console.log('New last-project item created with value: ' + JSON.stringify(value));
+            localforage.setItem('ua-last-project', projectStructure).then(function (value) {
+                console.log('New ua-last-project item created with value: ' + JSON.stringify(value));
                 iziToast.info({
                     title: 'Вітаємо, розпочато новий проект!',
                     message: 'Оберіть файл для аналізу (pdf, txt, docx)',
@@ -395,7 +395,7 @@ $buttonSaveTerms.click(function () {
     let blob = new Blob([arrayOfValuesOfYploadResultList], { type: "octet/stream" }),
         url = window.URL.createObjectURL(blob);
     downloadLink.href = url;
-    downloadLink.download = $captionOverviewButton.text();
+    downloadLink.download = 'termslist.txt';
     downloadLink.click();
 });
 
@@ -646,8 +646,8 @@ function getAlltermsParce(taskID, queuedFilename) {
                                     // Update last recapped file data
                                     lastRecappedFileData = projectContent;
                                     // Update localforage "last-project"
-                                    localforage.setItem('last-project', projectStructure).then(function (value) {
-                                        console.log('last-project item of database (localforage) updated');
+                                    localforage.setItem('ua-last-project', projectStructure).then(function (value) {
+                                        console.log('ua-last-project item of database (localforage) updated');
                                     }).catch(function (err) {
                                         // Hide progress bar
                                         $("body").css("cursor", "default");
@@ -666,8 +666,8 @@ function getAlltermsParce(taskID, queuedFilename) {
                                     });
 
                                     // Add last recaped data to last-selected database
-                                    localforage.setItem('last-selected', projectContent).then(function (value) {
-                                        console.log('last-selected item of database (localforage) updated');
+                                    localforage.setItem('ua-last-selected', projectContent).then(function (value) {
+                                        console.log('ua-last-selected item of database (localforage) updated');
                                     }).catch(function (err) {
                                         // Hide progress bar
                                         $("body").css("cursor", "default");
@@ -1063,8 +1063,8 @@ $('a[data-toggle="data"]').on('shown.bs.tab', function (e) {
                                     if (projectStructure !== null) {
                                         let filtered = projectStructure.project.content.documents.filter(function (el) { return el.names.unique != event.target.value; });
                                         projectStructure.project.content.documents = filtered;
-                                        localforage.setItem('last-project', projectStructure).then(function (value) {
-                                            console.log('last-project item of database updated');
+                                        localforage.setItem('ua-last-project', projectStructure).then(function (value) {
+                                            console.log('ua-last-project item of database updated');
                                             $("#projectFileList option[value='" + event.target.value + "']").remove();
                                             location.reload();
                                         }).catch(function (err) {
@@ -1144,8 +1144,8 @@ function saveNotesToLF() {
     console.log('Saved #notes to the localforge! Last: ' + d.toLocaleTimeString())
     projectStructure.project.notes = LZString.compressToBase64($textareaNotes.val());
     // Update localforage "last-project"
-    localforage.setItem('last-project', projectStructure).then(function (value) {
-        console.log('last-project item of database updated with #notes value: ' + JSON.stringify(value.project.notes));
+    localforage.setItem('ua-last-project', projectStructure).then(function (value) {
+        console.log('ua-last-project item of database updated with #notes value: ' + JSON.stringify(value.project.notes));
     }).catch(function (err) {
         console.log(err);
         iziToast.error({
