@@ -329,7 +329,7 @@ $buttonSaveProject.click(function () {
 })
 
 $buttonSaveAlltermsXml.click(function () {
-    if (selectedDocument !== null) {
+    if (selectedDocument !== null || typeof selectedDocument !== 'undefined') {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -357,7 +357,7 @@ $buttonSaveAlltermsXml.click(function () {
 })
 
 $buttonSaveParceXml.click(function () {
-    if (selectedDocument !== null) {
+    if (selectedDocument !== null || typeof selectedDocument !== 'undefined') {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -500,8 +500,6 @@ function fetchFileToTaskQueuedService() {
         uniqueUploadFilename = Date.now() + '-' + uploadFileName,
         form = new FormData();
 
-    // init content for temporary project
-    // projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlCompressed: "", parcexmlCompressed: "", alltermsjson: "", parcejson: "" } };
     // add file names to content for temporary project
     projectContent.names.original = uploadFileName;
     projectContent.names.unique = uniqueUploadFilename;
@@ -645,7 +643,7 @@ function getAlltermsParce(taskID, queuedFilename) {
                                     projectStructure.project.content.documents.push(projectContent);
                                     // Update last recapped file data
                                     lastRecappedFileData = projectContent;
-                                    // Update localforage "last-project"
+                                    // Update localforage "ua-last-project"
                                     localforage.setItem('ua-last-project', projectStructure).then(function (value) {
                                         console.log('ua-last-project item of database (localforage) updated');
                                     }).catch(function (err) {
@@ -759,12 +757,10 @@ function forUploadResultListClickAndEnterPressEvents() {
                 // add child nodes to template structure for bootstrap-treeview
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
                     for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
-                        // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
                         objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname });
                     }
                 }
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
-                    // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname };
                     objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname });
                 }
             }
@@ -774,15 +770,14 @@ function forUploadResultListClickAndEnterPressEvents() {
                 // add child nodes to template structure for bootstrap-treeview
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
                     for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
-                        // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(elementForTermTree)] = { text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname };
                         objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname });
                     }
                 }
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
-                    // objForTree.nodes[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup.indexOf(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)] = { text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname };
                     objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname });
                 }
             }
+
             treeData.length = 0; //clear treeData array
 
             treeData.push(objForTree); //add structure to array
@@ -1131,7 +1126,7 @@ function markTerms(term) {
 
 // the textarea sutosave ----------------------------------------------------------------------------------------------
 $textareaNotes.on('input propertychange change', function() {
-    console.log('Textarea Change');
+    console.log('Textarea changed');
     clearTimeout(timeoutId);
     timeoutId = setTimeout(function() {
         // Runs 1 second (1000 ms) after the last change    
@@ -1141,9 +1136,9 @@ $textareaNotes.on('input propertychange change', function() {
 
 function saveNotesToLF() {
     var d = new Date();
-    console.log('Saved #notes to the localforge! Last: ' + d.toLocaleTimeString())
+    console.log('Saving #notes to the localforge! Last: ' + d.toLocaleTimeString())
     projectStructure.project.notes = LZString.compressToBase64($textareaNotes.val());
-    // Update localforage "last-project"
+    // Update localforage "ua-last-project"
     localforage.setItem('ua-last-project', projectStructure).then(function (value) {
         console.log('ua-last-project item of database updated with #notes value: ' + JSON.stringify(value.project.notes));
     }).catch(function (err) {
