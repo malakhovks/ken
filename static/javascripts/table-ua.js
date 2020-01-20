@@ -23,7 +23,7 @@ function assignBlockHeight() {
 
 let defaultRowCount = 40; // No of rows
 let defaultColCount = 10; // No of cols
-const SPREADSHEET_DB = "spreadsheet_db";
+const SPREADSHEET_DB = "ua_spreadsheet_db";
 
 initializeData = () => {
     // console.log("initializeData");
