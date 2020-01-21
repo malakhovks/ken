@@ -62,7 +62,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.layout import LAParams
 
 # load libraries for API proccessing
-from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template
+from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template, send_file
 # A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -338,6 +338,21 @@ def get_task_status():
         return jsonify({'task': {'id': task_id, 'status': False}}), 204
     if os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
         return jsonify({'task': {'id': task_id, 'status': True}}), 200
+
+# @app.route('/kua/api/task/allterms')
+# def get_allterms():
+#     task_id = request.args.get('id')
+#     if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+#         return jsonify({'task': task_id, 'status': False}), 204
+
+#     if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
+#         return jsonify({'task': task_id, 'status': False}), 204
+#     try:
+#         with open('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml', 'rb') as b:
+#             return send_file(b, attachment_filename='allterms.xml', mimetype='text/xml')
+#     except Exception as e:
+#         logging.error(e, exc_info=True)
+#         return abort(500)
 
 @app.route('/kua/api/task/allterms/result')
 def get_allterms_result():
