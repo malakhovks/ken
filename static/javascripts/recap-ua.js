@@ -329,7 +329,7 @@ $buttonSaveProject.click(function () {
 })
 
 $buttonSaveAlltermsXml.click(function () {
-    if (selectedDocument !== null || typeof selectedDocument !== 'undefined') {
+    if (selectedDocument) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -340,24 +340,27 @@ $buttonSaveAlltermsXml.click(function () {
         downloadLink.href = url;
         downloadLink.download = 'allterms.xml';
         downloadLink.click();
-    } else {
-        if (lastRecappedFileData !== null) {
+    } else if (lastRecappedFileData !== null) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
             // Add the link to your DOM
             document.body.appendChild(downloadLink);
-            let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed)], { type: "octet/stream" }),
+
+            let dom = new DOMParser().parseFromString(LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed), "text/xml");
+            let xmls = new XMLSerializer().serializeToString(dom);
+            let blob = new Blob([xmls], { type: "octet/stream"}),
+
+            // let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed)], { type: "octet/stream" }),
                 url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
             downloadLink.download = 'allterms.xml';
             downloadLink.click();
         }
-    }
 })
 
 $buttonSaveParceXml.click(function () {
-    if (selectedDocument !== null || typeof selectedDocument !== 'undefined') {
+    if (selectedDocument) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -368,24 +371,27 @@ $buttonSaveParceXml.click(function () {
         downloadLink.href = url;
         downloadLink.download = 'parce.xml';
         downloadLink.click();
-    } else {
-        if (lastRecappedFileData !== null) {
+    } else if (lastRecappedFileData !== null) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
             // Add the link to your DOM
             document.body.appendChild(downloadLink);
-            let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed)], { type: "octet/stream" }),
+
+            let dom = new DOMParser().parseFromString(LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed), "text/xml");
+            let xmls = new XMLSerializer().serializeToString(dom);
+            let blob = new Blob([xmls], { type: "octet/stream"}),
+
+            // let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed)], { type: "octet/stream" }),
                 url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
             downloadLink.download = 'parce.xml';
             downloadLink.click();
         }
-    }
 })
 
 $buttonSaveTerms.click(function () {
-    let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.value; }).get().join('\n'),
+    let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.text; }).get().join('\n'),
         // Download link
         downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
