@@ -339,20 +339,19 @@ def get_task_status():
     if os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
         return jsonify({'task': {'id': task_id, 'status': True}}), 200
 
-# @app.route('/kua/api/task/allterms')
-# def get_allterms():
-#     task_id = request.args.get('id')
-#     if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
-#         return jsonify({'task': task_id, 'status': False}), 204
+@app.route('/kua/api/task/allterms')
+def get_allterms_xml():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': task_id, 'status': False}), 204
 
-#     if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
-#         return jsonify({'task': task_id, 'status': False}), 204
-#     try:
-#         with open('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml', 'rb') as b:
-#             return send_file(b, attachment_filename='allterms.xml', mimetype='text/xml')
-#     except Exception as e:
-#         logging.error(e, exc_info=True)
-#         return abort(500)
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
+        return jsonify({'task': task_id, 'status': False}), 204
+    try:
+        return send_file('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml', conditional=True, mimetype='text/xml')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
 
 @app.route('/kua/api/task/allterms/result')
 def get_allterms_result():

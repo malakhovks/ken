@@ -313,19 +313,29 @@ $(document).ready(function () {
 
 // Saving ---------------------------------------------------------------------------------------------------------------
 $buttonSaveProject.click(function () {
-    if (projectStructure !== null) {
-        downloadLink = document.createElement("a");
-        // Make sure that the link is not displayed
-        downloadLink.style.display = "none";
-        // Add the link to your DOM
-        document.body.appendChild(downloadLink);
-        // let blob = new Blob([projectStructure], { type: "octet/stream" }),
-        let blob = new Blob([JSON.stringify(projectStructure, null, 2)], { type: "application/json" }),
-            url = window.URL.createObjectURL(blob);
-        downloadLink.href = url;
-        downloadLink.download = projectStructure.project.name;
-        downloadLink.click();
-    }
+    // if (projectStructure !== null) {
+    //     downloadLink = document.createElement("a");
+    //     // Make sure that the link is not displayed
+    //     downloadLink.style.display = "none";
+    //     // Add the link to your DOM
+    //     document.body.appendChild(downloadLink);
+    //     // let blob = new Blob([projectStructure], { type: "octet/stream" }),
+    //     let blob = new Blob([JSON.stringify(projectStructure, null, 2)], { type: "application/json" }),
+    //         url = window.URL.createObjectURL(blob);
+    //     downloadLink.href = url;
+    //     downloadLink.download = projectStructure.project.name;
+    //     downloadLink.click();
+    // }
+    localforage.getItem('test-blob').then((value) => {
+        if (value) {
+            url = window.URL.createObjectURL(value);
+            downloadLink.href = url;
+            downloadLink.download = 'allterms.xml';
+            downloadLink.click();
+        } else {
+            console.log('sdsd');
+        }
+    })
 })
 
 $buttonSaveAlltermsXml.click(function () {
@@ -583,8 +593,31 @@ function fetchFileToTaskQueuedService() {
         })
     }
 }
-
 function getAlltermsParce(taskID, queuedFilename) {
+    const url = '/kua/api/task/allterms?' + 'id=' + taskID
+    localforage.getItem('test-blob').then((value) => {
+        if (value) {
+            url = window.URL.createObjectURL(value);
+            downloadLink.href = url;
+            downloadLink.download = 'allterms.xml';
+            downloadLink.click();
+        } else {
+            fetch(url)
+                .then(responseFile => {
+                    if (!responseFile.ok) { throw new Error(responseFile.status) }
+                    return responseFile.blob()
+                        .then(resultBlob => {
+                            localforage.setItem('test-blob', resultBlob)
+                                .then(() => { console.log('test-blob item of database (localforage) updated'); })
+                                .catch((error) => {
+                                    console.log(error);
+                                })
+                        })
+                })
+        }
+    })
+}
+/* function getAlltermsParce(taskID, queuedFilename) {
     const url = '/kua/api/task/allterms/result?' + 'id=' + taskID;
     const url2 = '/kua/api/task/parce/result?' + 'id=' + taskID;
     fetch(url)
@@ -629,7 +662,7 @@ function getAlltermsParce(taskID, queuedFilename) {
                     for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
                         $sents_from_text.append('<p>' + sent_element + '</p><br>')
                     }
-                }).then(next => {
+                }).then(() => {
                     fetch(url2)
                         .then(responseXML => {
                             if (!responseXML.ok) { throw new Error(responseXML.status) }
@@ -692,7 +725,7 @@ function getAlltermsParce(taskID, queuedFilename) {
                         })
                 })
         })
-}
+} */
 
 // Sending to server ------------------------------------------------------------------------------------------------------
 
