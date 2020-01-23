@@ -14,10 +14,10 @@ var termsWithIndexDict = {},
 
 var projectStructure = { project: { name: "", notes: "", content: { documents: [] } } },
     // init content for temporary project
-    projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlCompressed: "", parcexmlCompressed: "", alltermsjson: "", parcejson: "" } },
+    projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlAlias: "", parcexmlAlias: "", alltermsjson: "", parcejson: "" } },
     alltermsJSON,
     parceJSON,
-    selectedDocument,
+    // selectedDocument,
     lastRecappedFileData,
     lastProjectFiles,
     timeoutId; // for textarea change
@@ -312,98 +312,86 @@ $(document).ready(function () {
 // ----------------------------------------------------------------------------------------------------------------------
 
 // Saving ---------------------------------------------------------------------------------------------------------------
-$buttonSaveProject.click(function () {
-    // if (projectStructure !== null) {
-    //     downloadLink = document.createElement("a");
-    //     // Make sure that the link is not displayed
-    //     downloadLink.style.display = "none";
-    //     // Add the link to your DOM
-    //     document.body.appendChild(downloadLink);
-    //     // let blob = new Blob([projectStructure], { type: "octet/stream" }),
-    //     let blob = new Blob([JSON.stringify(projectStructure, null, 2)], { type: "application/json" }),
-    //         url = window.URL.createObjectURL(blob);
-    //     downloadLink.href = url;
-    //     downloadLink.download = projectStructure.project.name;
-    //     downloadLink.click();
-    // }
-    localforage.getItem('test-blob').then((value) => {
-        if (value) {
-            url = window.URL.createObjectURL(value);
-            downloadLink.href = url;
-            downloadLink.download = 'allterms.xml';
-            downloadLink.click();
-        } else {
-            console.log('sdsd');
-        }
-    })
-})
-
-$buttonSaveAlltermsXml.click(function () {
-    if (selectedDocument) {
+/* $buttonSaveProject.click(function () {
+    if (projectStructure !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
         // Add the link to your DOM
         document.body.appendChild(downloadLink);
-        let blob = new Blob([LZString.decompressFromBase64(selectedDocument.results.alltermsxmlCompressed)], { type: "octet/stream" }),
+        // let blob = new Blob([projectStructure], { type: "octet/stream" }),
+        let blob = new Blob([JSON.stringify(projectStructure, null, 2)], { type: "application/json" }),
             url = window.URL.createObjectURL(blob);
         downloadLink.href = url;
-        downloadLink.download = 'allterms.xml';
+        downloadLink.download = projectStructure.project.name;
         downloadLink.click();
-    } else if (lastRecappedFileData !== null) {
-            downloadLink = document.createElement("a");
-            // Make sure that the link is not displayed
-            downloadLink.style.display = "none";
-            // Add the link to your DOM
-            document.body.appendChild(downloadLink);
+    }
+}) */
 
-            let dom = new DOMParser().parseFromString(LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed), "text/xml");
-            let xmls = new XMLSerializer().serializeToString(dom);
-            let blob = new Blob([xmls], { type: "octet/stream"}),
-
-            // let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.alltermsxmlCompressed)], { type: "octet/stream" }),
-                url = window.URL.createObjectURL(blob);
-            downloadLink.href = url;
-            downloadLink.download = 'allterms.xml';
-            downloadLink.click();
-        }
+$buttonSaveAlltermsXml.click(function () {
+    if (lastRecappedFileData) {
+        localforage.getItem(lastRecappedFileData.results.alltermsxmlAlias).then((value) => {
+            if (value) {
+                downloadLink = document.createElement("a");
+                // Make sure that the link is not displayed
+                downloadLink.style.display = "none";
+                // Add the link to your DOM
+                document.body.appendChild(downloadLink);
+                url = window.URL.createObjectURL(value);
+                downloadLink.href = url;
+                downloadLink.download = lastRecappedFileData.results.alltermsxmlAlias + '.xml';
+                downloadLink.click();
+            } else {
+                console.log(lastRecappedFileData.results.alltermsxmlAlias + ' not exist!');
+            }
+        }).catch(function (err) {
+            console.log(err);
+            iziToast.error({
+                title: 'Помилка!',
+                message: 'Дивіться деталі в JavaScript Console.',
+                position: 'bottomLeft',
+                onClosed: function () {
+                    iziToast.destroy();
+                }
+            });
+        });
+    }
 })
 
 $buttonSaveParceXml.click(function () {
-    if (selectedDocument) {
-        downloadLink = document.createElement("a");
-        // Make sure that the link is not displayed
-        downloadLink.style.display = "none";
-        // Add the link to your DOM
-        document.body.appendChild(downloadLink);
-        let blob = new Blob([LZString.decompressFromBase64(selectedDocument.results.parcexmlCompressed)], { type: "octet/stream" }),
-            url = window.URL.createObjectURL(blob);
-        downloadLink.href = url;
-        downloadLink.download = 'parce.xml';
-        downloadLink.click();
-    } else if (lastRecappedFileData !== null) {
-            downloadLink = document.createElement("a");
-            // Make sure that the link is not displayed
-            downloadLink.style.display = "none";
-            // Add the link to your DOM
-            document.body.appendChild(downloadLink);
-
-            let dom = new DOMParser().parseFromString(LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed), "text/xml");
-            let xmls = new XMLSerializer().serializeToString(dom);
-            let blob = new Blob([xmls], { type: "octet/stream"}),
-
-            // let blob = new Blob([LZString.decompressFromBase64(lastRecappedFileData.results.parcexmlCompressed)], { type: "octet/stream" }),
-                url = window.URL.createObjectURL(blob);
-            downloadLink.href = url;
-            downloadLink.download = 'parce.xml';
-            downloadLink.click();
-        }
+    if (lastRecappedFileData) {
+        localforage.getItem(lastRecappedFileData.results.parcexmlAlias).then((value) => {
+            if (value) {
+                downloadLink = document.createElement("a");
+                // Make sure that the link is not displayed
+                downloadLink.style.display = "none";
+                // Add the link to your DOM
+                document.body.appendChild(downloadLink);
+                url = window.URL.createObjectURL(value);
+                downloadLink.href = url;
+                downloadLink.download = lastRecappedFileData.results.parcexmlAlias + '.xml';
+                downloadLink.click();
+            } else {
+                console.log(lastRecappedFileData.results.parcexmlAlias + ' not exist!');
+            }
+        }).catch(function (err) {
+            console.log(err);
+            iziToast.error({
+                title: 'Помилка!',
+                message: 'Дивіться деталі в JavaScript Console.',
+                position: 'bottomLeft',
+                onClosed: function () {
+                    iziToast.destroy();
+                }
+            });
+        });
+    }
 })
 
 $buttonSaveTerms.click(function () {
     let arrayOfValuesOfYploadResultList = $("#uploadResultList option").map(function () { return this.text; }).get().join('\n'),
-        // Download link
-        downloadLink = document.createElement("a");
+    // Download link
+    downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
     // Add the link to your DOM
@@ -417,8 +405,8 @@ $buttonSaveTerms.click(function () {
 
 $buttonSaveProjectFileList.click(function () {
     let arrayOfValuesOfYploadResultList = $("#projectFileList option").map(function () { return this.value; }).get().join('\n'),
-        // Download link
-        downloadLink = document.createElement("a");
+    // Download link
+    downloadLink = document.createElement("a");
     // Make sure that the link is not displayed
     downloadLink.style.display = "none";
     // Add the link to your DOM
@@ -529,6 +517,7 @@ function fetchFileToTaskQueuedService() {
             title: 'Зачекайте! Аналіз документа.',
             message: uploadFileName.split('\\').pop(),
             position: 'bottomLeft',
+            timeout: 10000,
             close: false
         });
 
@@ -593,139 +582,145 @@ function fetchFileToTaskQueuedService() {
         })
     }
 }
+
 function getAlltermsParce(taskID, queuedFilename) {
-    const url = '/kua/api/task/allterms?' + 'id=' + taskID
-    localforage.getItem('test-blob').then((value) => {
-        if (value) {
-            url = window.URL.createObjectURL(value);
-            downloadLink.href = url;
-            downloadLink.download = 'allterms.xml';
-            downloadLink.click();
-        } else {
-            fetch(url)
+    const url = '/kua/api/task/allterms/result?' + 'id=' + taskID;
+    const url2 = '/kua/api/task/parce/result?' + 'id=' + taskID;
+    const url_allterms_binary = '/kua/api/task/allterms?' + 'id=' + taskID;
+    const url_parce_binary = '/kua/api/task/parce?' + 'id=' + taskID;
+
+    fetch(url_allterms_binary)
+        .then(responseFile => {
+            if (!responseFile.ok) { throw new Error(responseFile.status) }
+            return responseFile.blob()
+                .then(resultBlob => {
+                    localforage.setItem(projectContent.names.unique + '-blob-allterms', resultBlob)
+                        .then(() => { console.log(projectContent.names.unique + '-blob-allterms' + ' item added to database (localforage)'); })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                })
+        }).then(() => {
+            fetch(url_parce_binary)
                 .then(responseFile => {
                     if (!responseFile.ok) { throw new Error(responseFile.status) }
                     return responseFile.blob()
                         .then(resultBlob => {
-                            localforage.setItem('test-blob', resultBlob)
-                                .then(() => { console.log('test-blob item of database (localforage) updated'); })
+                            localforage.setItem(projectContent.names.unique + '-blob-parce', resultBlob)
+                                .then(() => { console.log(projectContent.names.unique + '-blob-parce' + ' item added to database (localforage)'); })
                                 .catch((error) => {
                                     console.log(error);
                                 })
                         })
                 })
-        }
-    })
-}
-/* function getAlltermsParce(taskID, queuedFilename) {
-    const url = '/kua/api/task/allterms/result?' + 'id=' + taskID;
-    const url2 = '/kua/api/task/parce/result?' + 'id=' + taskID;
-    fetch(url)
-        .then(responseXML => {
-            if (!responseXML.ok) { throw new Error(responseXML.status) }
-            return responseXML.text()
-                .then(result => {
-                    dom = new DOMParser().parseFromString(result, "text/xml");
-                    alltermsJSON = xmlToJson(dom);
+        }).then(() => {
+            fetch(url)
+                .then(responseXML => {
+                    if (!responseXML.ok) { throw new Error(responseXML.status) }
+                    return responseXML.text()
+                        .then(result => {
+                            dom = new DOMParser().parseFromString(result, "text/xml");
+                            alltermsJSON = xmlToJson(dom);
 
-                    // set #sort-select to order type 4
-                    $sortSelect.val('4');
+                            // set #sort-select to order type 4
+                            $sortSelect.val('4');
 
-                    console.log(JSON.stringify(alltermsJSON));
+                            console.log(JSON.stringify(alltermsJSON));
 
-                    // add allterms.xml to content for temporary project ("alltermsxmlCompressed" field)
-                    projectContent.results.alltermsxmlCompressed = LZString.compressToBase64(result);
-                    // add allterms.xml in JSON to content for temporary project ("alltermsjson" field)
-                    projectContent.results.alltermsjson = alltermsJSON;
+                            // add allterms.xml alias for localforage to content for temporary project
+                            projectContent.results.alltermsxmlAlias = projectContent.names.unique + '-blob-allterms';
+                            // add allterms.xml in JSON to content for temporary project ("alltermsjson" field)
+                            projectContent.results.alltermsjson = alltermsJSON;
 
-                    for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
-                        termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
-                        if (Array.isArray(elementKnownTxtJson.sentpos)) {
-                            $uploadResultList.append($('<option>', {
-                                text: elementKnownTxtJson.tname,
-                                value: elementKnownTxtJson.sentpos.length,
-                                title: 'Частота: ' + elementKnownTxtJson.sentpos.length
-                            }));
-                        }
-                        if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
-                            $uploadResultList.append($('<option>', {
-                                text: elementKnownTxtJson.tname,
-                                value: 1,
-                                title: 'Частота: ' + 1
-                            }));
-                        }
-                    }
+                            for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
+                                termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
+                                if (Array.isArray(elementKnownTxtJson.sentpos)) {
+                                    $uploadResultList.append($('<option>', {
+                                        text: elementKnownTxtJson.tname,
+                                        value: elementKnownTxtJson.sentpos.length,
+                                        title: 'Частота: ' + elementKnownTxtJson.sentpos.length
+                                    }));
+                                }
+                                if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
+                                    $uploadResultList.append($('<option>', {
+                                        text: elementKnownTxtJson.tname,
+                                        value: 1,
+                                        title: 'Частота: ' + 1
+                                    }));
+                                }
+                            }
 
-                    // Clear textarea id="sents_from_text"
-                    $sents_from_text.text('');
-                    // add to textarea id="sents_from_text"
-                    for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
-                        $sents_from_text.append('<p>' + sent_element + '</p><br>')
-                    }
-                }).then(() => {
-                    fetch(url2)
-                        .then(responseXML => {
-                            if (!responseXML.ok) { throw new Error(responseXML.status) }
-                            return responseXML.text()
-                                .then(result => {
-                                    dom = new DOMParser().parseFromString(result, "text/xml");
-                                    parceJSON = xmlToJson(dom);
+                            // Clear textarea id="sents_from_text"
+                            $sents_from_text.text('');
+                            // add to textarea id="sents_from_text"
+                            for (let sent_element of alltermsJSON.termsintext.sentences.sent) {
+                                $sents_from_text.append('<p>' + sent_element + '</p><br>')
+                            }
+                        })
+                })
+        }).then(() => {
+            fetch(url2)
+                .then(responseXML => {
+                    if (!responseXML.ok) { throw new Error(responseXML.status) }
+                    return responseXML.text()
+                        .then(result => {
+                            dom = new DOMParser().parseFromString(result, "text/xml");
+                            parceJSON = xmlToJson(dom);
 
-                                    console.log(JSON.stringify(parceJSON));
+                            console.log(JSON.stringify(parceJSON));
 
-                                    // add parce.xml to content for temporary project ("parcexmlCompressed" field)
-                                    projectContent.results.parcexmlCompressed = LZString.compressToBase64(result);
-                                    // add parce.xml in JSON to content for temporary project ("parcejson" field)
-                                    projectContent.results.parcejson = parceJSON;
+                            // add parce.xml alias for localforage to content for temporary project
+                            projectContent.results.parcexmlAlias = projectContent.names.unique + '-blob-parce';
+                            // add parce.xml in JSON to content for temporary project ("parcejson" field)
+                            projectContent.results.parcejson = parceJSON;
 
-                                    // add projectContent to projectStructure content array
-                                    projectStructure.project.content.documents.push(projectContent);
-                                    // Update last recapped file data
-                                    lastRecappedFileData = projectContent;
-                                    // Update localforage "ua-last-project"
-                                    localforage.setItem('ua-last-project', projectStructure).then(function (value) {
-                                        console.log('ua-last-project item of database (localforage) updated');
-                                    }).catch(function (err) {
-                                        // Hide progress bar
-                                        $("body").css("cursor", "default");
-                                        $(".loader").hide();
-                                        // Enable any DIV including its contents.
-                                        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
-                                        console.log(err);
-                                        iziToast.error({
-                                            title: 'Помилка!',
-                                            message: 'Дивіться деталі в JavaScript Console.',
-                                            position: 'bottomLeft',
-                                            onClosed: function () {
-                                                iziToast.destroy();
-                                            }
-                                        });
-                                    });
+                            // add projectContent to projectStructure content array
+                            projectStructure.project.content.documents.push(projectContent);
+                            // Update last recapped file data
+                            lastRecappedFileData = projectContent;
+                            // Update localforage "ua-last-project"
+                            localforage.setItem('ua-last-project', projectStructure).then(() => {
+                                console.log('ua-last-project item of database (localforage) updated');
+                            }).catch(function (err) {
+                                // Hide progress bar
+                                $("body").css("cursor", "default");
+                                $(".loader").hide();
+                                // Enable any DIV including its contents.
+                                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                                console.log(err);
+                                iziToast.error({
+                                    title: 'Помилка!',
+                                    message: 'Дивіться деталі в JavaScript Console.',
+                                    position: 'bottomLeft',
+                                    onClosed: function () {
+                                        iziToast.destroy();
+                                    }
+                                });
+                            });
 
-                                    // Add last recaped data to last-selected database
-                                    localforage.setItem('ua-last-selected', projectContent).then(function (value) {
-                                        console.log('ua-last-selected item of database (localforage) updated');
-                                    }).catch(function (err) {
-                                        // Hide progress bar
-                                        $("body").css("cursor", "default");
-                                        $(".loader").hide();
-                                        // Enable any DIV including its contents.
-                                        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
-                                        console.log(err);
-                                        iziToast.error({
-                                            title: 'Помилка!',
-                                            message: 'Дивіться деталі в JavaScript Console.',
-                                            position: 'bottomLeft',
-                                            onClosed: function () {
-                                                iziToast.destroy();
-                                            }
-                                        });
-                                    });
-                                })
+                            // Add last recaped data to last-selected database
+                            localforage.setItem('ua-last-selected', projectContent).then(() => {
+                                console.log('ua-last-selected item of database (localforage) updated');
+                            }).catch(function (err) {
+                                // Hide progress bar
+                                $("body").css("cursor", "default");
+                                $(".loader").hide();
+                                // Enable any DIV including its contents.
+                                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                                console.log(err);
+                                iziToast.error({
+                                    title: 'Помилка!',
+                                    message: 'Дивіться деталі в JavaScript Console.',
+                                    position: 'bottomLeft',
+                                    onClosed: function () {
+                                        iziToast.destroy();
+                                    }
+                                });
+                            });
                         })
                 })
         })
-} */
+}
 
 // Sending to server ------------------------------------------------------------------------------------------------------
 
