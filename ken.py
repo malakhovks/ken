@@ -62,7 +62,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.layout import LAParams
 
 # load libraries for API proccessing
-from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template, send_file
+from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template, send_file, safe_join
 # A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -347,8 +347,26 @@ def get_allterms_xml():
 
     if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
         return jsonify({'task': task_id, 'status': False}), 204
+
     try:
-        return send_file('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml', conditional=True, mimetype='text/xml')
+        safe_path = safe_join('/var/tmp/tasks/konspekt/' + task_id, 'allterms.xml')
+        return send_file(safe_path, conditional=True, mimetype='text/xml')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+
+@app.route('/kua/api/task/parce')
+def get_parce_xml():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml'):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    try:
+        safe_path = safe_join('/var/tmp/tasks/konspekt/' + task_id, 'parce.xml')
+        return send_file(safe_path, conditional=True, mimetype='text/xml')
     except Exception as e:
         logging.error(e, exc_info=True)
         return abort(500)
