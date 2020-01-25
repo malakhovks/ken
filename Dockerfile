@@ -1,6 +1,7 @@
 FROM python:2.7-slim-stretch
 
-# FROM python:2.7-slim # the most recent version of Debian
+# the most recent version of Debian
+# FROM python:2.7-slim
 
 # https://linuxhint.com/install_wine_debian_10/
 # Resolving dependencies for Debian 10 Buster

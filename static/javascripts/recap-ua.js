@@ -15,6 +15,7 @@ var termsWithIndexDict = {},
 var projectStructure = { project: { name: "", notes: "", content: { documents: [] } } },
     // init content for temporary project
     projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlAlias: "", parcexmlAlias: "", alltermsjson: "", parcejson: "" } },
+    termsOsnovaFrequency = { osnova: [], frequency:"" },
     alltermsJSON,
     parceJSON,
     // selectedDocument,
@@ -1053,16 +1054,14 @@ $sortSelect.on('change', function (e) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
                     value: element.sentpos.length,
-                    // title: 'Частота: ' + element.sentpos.length
-                    title: 'Frequency: ' + element.sentpos.length
+                    title: 'Частота: ' + element.sentpos.length
                 }));
             }
             if (Array.isArray(element.sentpos) == false) {
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
                     value: 1,
-                    // title: 'Частота: ' + 1
-                    title: 'Frequency: ' + 1
+                    title: 'Частота: ' + 1
                 }));
             }
         }
