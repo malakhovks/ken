@@ -1,4 +1,11 @@
-FROM python:2.7-slim
+FROM python:2.7-slim-stretch
+
+# FROM python:2.7-slim # the most recent version of Debian
+
+# https://linuxhint.com/install_wine_debian_10/
+# Resolving dependencies for Debian 10 Buster
+# If you are using Debian 10 Buster first you need to install  the package Libsdl2-2.0-0
+
 
 LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
 LABEL description "KEn (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature (python:2.7-slim + Nginx + uWSGI + Flask) + KUa project (python:2.7-slim + Nginx + uWSGI + Flask + wine)"

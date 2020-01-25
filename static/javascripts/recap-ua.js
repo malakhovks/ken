@@ -851,7 +851,8 @@ function forUploadResultListClickAndEnterPressEvents() {
             $termTree.treeview({});
         }
 
-        markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
+        // markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
+        markTerms($("#uploadResultList option:selected").text());
     }
 
 }
@@ -1148,7 +1149,7 @@ function markTerms(term) {
         },
         "separateWordSearch": false,
         "accuracy": "complementary",
-        "diacritics": true
+        "ignorePunctuation": [":;.,-–—‒_(){}[]!'\"+=".split("")]
     };
     $("#text-content").unmark({
         done: function () {
