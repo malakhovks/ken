@@ -421,7 +421,7 @@ document.getElementById("button-save-table").addEventListener("click", e => {
                     onClosing: function (instance, toast, closedBy) {
                         var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
                         $govno.find("th.row-header").remove();
-                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
+                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xlsx');
                         $govno.remove();
                     }
                 }, toast);
