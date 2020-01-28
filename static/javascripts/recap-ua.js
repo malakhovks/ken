@@ -15,7 +15,6 @@ var termsWithIndexDict = {},
 var projectStructure = { project: { name: "", notes: "", content: { documents: [] } } },
     // init content for temporary project
     projectContent = { names: { original: "", unique: "" }, results: { alltermsxmlAlias: "", parcexmlAlias: "", alltermsjson: "", parcejson: "" } },
-    termsOsnovaFrequency = { osnova: [], frequency:"" },
     alltermsJSON,
     parceJSON,
     // selectedDocument,
@@ -243,17 +242,22 @@ $(document).ready(function () {
                 // for known words ES 6
                 for (let element of alltermsJSON.termsintext.exporterms.term) {
                     termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+
+                    let termsOsnovaFrequency = { osnova: [], frequency: "" }
+                    termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(element.osn);
+
                     if (Array.isArray(element.sentpos)) {
+                        termsOsnovaFrequency.frequency = element.sentpos.length
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
-                            value: element.sentpos.length,
+                            value: JSON.stringify(termsOsnovaFrequency),
                             title: 'Частота: ' + element.sentpos.length
                         }));
-                    }
-                    if (Array.isArray(element.sentpos) == false) {
+                    } else {
+                        termsOsnovaFrequency.frequency = 1;
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
-                            value: 1,
+                            value: JSON.stringify(termsOsnovaFrequency),
                             title: 'Частота: ' + 1
                         }));
                     }
@@ -537,7 +541,7 @@ function fetchFileToTaskQueuedService() {
         $('option', $uploadResultList).remove();
         $('option', $uploadUnknownTerms).remove();
         $textContent.text('');
-
+        $sents_from_text.text('');
 
         return fetch('/kua/api/task/queued', {
             method: 'post',
@@ -626,7 +630,7 @@ function getAlltermsParce(taskID, queuedFilename) {
                             // set #sort-select to order type 4
                             $sortSelect.val('4');
 
-                            console.log(JSON.stringify(alltermsJSON));
+                            // console.log(JSON.stringify(alltermsJSON));
 
                             // add allterms.xml alias for localforage to content for temporary project
                             projectContent.results.alltermsxmlAlias = projectContent.names.unique + '-blob-allterms';
@@ -635,20 +639,26 @@ function getAlltermsParce(taskID, queuedFilename) {
 
                             for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
                                 termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
+
+                                let termsOsnovaFrequency = { osnova: [], frequency:"" }
+                                termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(elementKnownTxtJson.osn);
+
                                 if (Array.isArray(elementKnownTxtJson.sentpos)) {
+                                    termsOsnovaFrequency.frequency = elementKnownTxtJson.sentpos.length
                                     $uploadResultList.append($('<option>', {
                                         text: elementKnownTxtJson.tname,
-                                        value: elementKnownTxtJson.sentpos.length,
+                                        value: JSON.stringify(termsOsnovaFrequency),
                                         title: 'Частота: ' + elementKnownTxtJson.sentpos.length
                                     }));
-                                }
-                                if (Array.isArray(elementKnownTxtJson.sentpos) == false) {
+                                } else {
+                                    termsOsnovaFrequency.frequency = 1;
                                     $uploadResultList.append($('<option>', {
                                         text: elementKnownTxtJson.tname,
-                                        value: 1,
+                                        value: JSON.stringify(termsOsnovaFrequency),
                                         title: 'Частота: ' + 1
                                     }));
                                 }
+                                // console.log(JSON.stringify(termsOsnovaFrequency))
                             }
 
                             // Clear textarea id="sents_from_text"
@@ -668,7 +678,7 @@ function getAlltermsParce(taskID, queuedFilename) {
                             dom = new DOMParser().parseFromString(result, "text/xml");
                             parceJSON = xmlToJson(dom);
 
-                            console.log(JSON.stringify(parceJSON));
+                            // console.log(JSON.stringify(parceJSON));
 
                             // add parce.xml alias for localforage to content for temporary project
                             projectContent.results.parcexmlAlias = projectContent.names.unique + '-blob-parce';
@@ -734,6 +744,7 @@ $recapOverviewButton.change(function () {
     $('option', $uploadResultList).remove();
     $('option', $uploadUnknownTerms).remove();
     $textContent.text('');
+    $sents_from_text.text('');
 });
 
 $uploadResultList.click(function () {
@@ -853,7 +864,8 @@ function forUploadResultListClickAndEnterPressEvents() {
         }
 
         // markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
-        markTerms($("#uploadResultList option:selected").text());
+        // markTerms($("#uploadResultList option:selected").text());
+        markTerms(JSON.parse($("#uploadResultList option:selected").val()).osnova.join(" "));
     }
 
 }
@@ -1007,60 +1019,84 @@ function xmlToJson(xml) {
 // XML to JSON --------------------------------------------------------------------------------------------------------
 
 // Sort terms ---------------------------------------------------------------------------------------------------------
-$sortSelect.on('change', function (e) {
-    var selected = $("#uploadResultList").val();
-    let sortSelectVal = $("#sort-select option:selected").val();
-    // let selectText = $("#sort-select option:selected").text();
+$sortSelect.on('change', function () {
 
-    if (sortSelectVal == 1) {
-        var my_options = $("#uploadResultList option");
+    if (this.value == 1) {
+        let my_options = $("#uploadResultList option");
         my_options.sort(function (a, b) {
-            if (a.text > b.text) return 1;
-            else if (a.text < b.text) return -1;
-            else return 0;
+            if (a.text.toLowerCase() > b.text.toLowerCase()) return 1;
+            if (a.text.toLowerCase() < b.text.toLowerCase()) return -1;
+            return 0;
         });
-        $("#uploadResultList").empty().append(my_options);
-        $("#uploadResultList").val(selected);
+        $uploadResultList.empty();
+        $.each(my_options, (i, item) => {
+            $uploadResultList.append($('<option>', { 
+                value: item.value,
+                text: item.text,
+                title: 'Частота: ' + JSON.parse(item.value).frequency
+            }));
+        });
     }
 
-    if (sortSelectVal == 2) {
-        var my_options = $("#uploadResultList option");
+    if (this.value == 2) {
+        let my_options = $("#uploadResultList option");
         my_options.sort(function (a, b) {
-            a = a.value;
-            b = b.value;
+            // a = a.value;
+            a = JSON.parse(a.value).frequency;
+            // b = b.value;
+            b = JSON.parse(b.value).frequency;
             return a - b;
         });
-        $("#uploadResultList").empty().append(my_options);
-        $("#uploadResultList").val(selected);
+        $uploadResultList.empty();
+        $.each(my_options, (i, item) => {
+            $uploadResultList.append($('<option>', { 
+                value: item.value,
+                text: item.text,
+                title: 'Частота: ' + JSON.parse(item.value).frequency
+            }));
+        });
     }
 
-    if (sortSelectVal == 3) {
-        var my_options = $("#uploadResultList option");
+    if (this.value == 3) {
+        let my_options = $("#uploadResultList option");
         my_options.sort(function (a, b) {
-            a = a.value;
-            b = b.value;
+            // a = a.value;
+            a = JSON.parse(a.value).frequency;
+            // b = b.value;
+            b = JSON.parse(b.value).frequency;
             return b - a;
         });
-        $("#uploadResultList").empty().append(my_options);
-        $("#uploadResultList").val(selected);
+        $uploadResultList.empty();
+        $.each(my_options, (i, item) => {
+            $uploadResultList.append($('<option>', { 
+                value: item.value,
+                text: item.text,
+                title: 'Частота: ' + JSON.parse(item.value).frequency
+            }));
+        });
     }
 
-    if (sortSelectVal == 4) {
-        $("#uploadResultList").empty();
+    if (this.value == 4) {
+        $uploadResultList.empty();
         // for known words ES 6
         for (let element of alltermsJSON.termsintext.exporterms.term) {
             termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+
+            let termsOsnovaFrequency = { osnova: [], frequency: "" }
+            termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(element.osn);
+
             if (Array.isArray(element.sentpos)) {
+                termsOsnovaFrequency.frequency = element.sentpos.length
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
-                    value: element.sentpos.length,
+                    value: JSON.stringify(termsOsnovaFrequency),
                     title: 'Частота: ' + element.sentpos.length
                 }));
-            }
-            if (Array.isArray(element.sentpos) == false) {
+            } else {
+                termsOsnovaFrequency.frequency = 1;
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
-                    value: 1,
+                    value: JSON.stringify(termsOsnovaFrequency),
                     title: 'Частота: ' + 1
                 }));
             }
@@ -1146,7 +1182,7 @@ function markTerms(term) {
                 $(element).addClass("animate");
             }, 250);
         },
-        "separateWordSearch": false,
+        // "separateWordSearch": false,
         "accuracy": "complementary",
         "ignorePunctuation": [":;.,-–—‒_(){}[]!'\"+=".split("")]
     };
