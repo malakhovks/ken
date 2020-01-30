@@ -243,11 +243,12 @@ $(document).ready(function () {
                 for (let element of alltermsJSON.termsintext.exporterms.term) {
                     termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
 
-                    let termsOsnovaFrequency = { osnova: [], frequency: "" }
+                    let termsOsnovaFrequency = { osnova: [], frequency: "", tname: "" };
                     termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(element.osn);
 
                     if (Array.isArray(element.sentpos)) {
-                        termsOsnovaFrequency.frequency = element.sentpos.length
+                        termsOsnovaFrequency.frequency = element.sentpos.length;
+                        termsOsnovaFrequency.tname = element.tname;
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
                             value: JSON.stringify(termsOsnovaFrequency),
@@ -255,6 +256,7 @@ $(document).ready(function () {
                         }));
                     } else {
                         termsOsnovaFrequency.frequency = 1;
+                        termsOsnovaFrequency.tname = element.tname;
                         $uploadResultList.append($('<option>', {
                             text: element.tname,
                             value: JSON.stringify(termsOsnovaFrequency),
@@ -425,6 +427,9 @@ $buttonSaveProjectFileList.click(function () {
 // Saving ---------------------------------------------------------------------------------------------------------------
 
 // Sending to server ------------------------------------------------------------------------------------------------------
+$('#button-open-document').click(function () {
+    $recapOverviewButton.trigger("click");
+});
 
 // extract terms from text #recapUploadButton click event
 $('#recap-upload-button').click(function () {
@@ -640,11 +645,12 @@ function getAlltermsParce(taskID, queuedFilename) {
                             for (let elementKnownTxtJson of alltermsJSON.termsintext.exporterms.term) {
                                 termsWithIndexDict[elementKnownTxtJson.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(elementKnownTxtJson); // for dictionary structure
 
-                                let termsOsnovaFrequency = { osnova: [], frequency:"" }
+                                let termsOsnovaFrequency = { osnova: [], frequency:"", tname: "" };
                                 termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(elementKnownTxtJson.osn);
 
                                 if (Array.isArray(elementKnownTxtJson.sentpos)) {
-                                    termsOsnovaFrequency.frequency = elementKnownTxtJson.sentpos.length
+                                    termsOsnovaFrequency.frequency = elementKnownTxtJson.sentpos.length;
+                                    termsOsnovaFrequency.tname = elementKnownTxtJson.tname;
                                     $uploadResultList.append($('<option>', {
                                         text: elementKnownTxtJson.tname,
                                         value: JSON.stringify(termsOsnovaFrequency),
@@ -652,6 +658,7 @@ function getAlltermsParce(taskID, queuedFilename) {
                                     }));
                                 } else {
                                     termsOsnovaFrequency.frequency = 1;
+                                    termsOsnovaFrequency.tname = elementKnownTxtJson.tname;
                                     $uploadResultList.append($('<option>', {
                                         text: elementKnownTxtJson.tname,
                                         value: JSON.stringify(termsOsnovaFrequency),
@@ -771,6 +778,7 @@ function forUploadResultListClickAndEnterPressEvents() {
         $textContent.text('');
 
         objForTree.text = $("#uploadResultList option:selected").text();
+        objForTree.osnova = JSON.parse($("#uploadResultList option:selected").val()).osnova;
         objForTree.nodes.length = 0;
 
         var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
@@ -803,11 +811,11 @@ function forUploadResultListClickAndEnterPressEvents() {
                 // add child nodes to template structure for bootstrap-treeview
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown)) {
                     for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) {
-                        objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname });
+                        objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname, osnova: alltermsJSON.termsintext.exporterms.term[elementForTermTree].osn });
                     }
                 }
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown) == false) {
-                    objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname });
+                    objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].tname, osnova: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].reldown].osn });
                 }
             }
 
@@ -816,11 +824,11 @@ function forUploadResultListClickAndEnterPressEvents() {
                 // add child nodes to template structure for bootstrap-treeview
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup)) {
                     for (let elementForTermTree of alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) {
-                        objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname });
+                        objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[elementForTermTree].tname, osnova: alltermsJSON.termsintext.exporterms.term[elementForTermTree].osn });
                     }
                 }
                 if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup) == false) {
-                    objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname });
+                    objForTree.nodes.push({ text: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].tname, osnova: alltermsJSON.termsintext.exporterms.term[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].relup].osn });
                 }
             }
 
@@ -853,7 +861,8 @@ function forUploadResultListClickAndEnterPressEvents() {
                         }
                         mark(sentsForMark);
                     }
-                    markTerms(node.text);
+                    // markTerms(node.text);
+                    markTerms(node.osnova);
                     copyTermTreeToTable(node.text);
                 }
             }); // add array data to bootstrap-treeview and view it on page
@@ -1082,11 +1091,12 @@ $sortSelect.on('change', function () {
         for (let element of alltermsJSON.termsintext.exporterms.term) {
             termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
 
-            let termsOsnovaFrequency = { osnova: [], frequency: "" }
+            let termsOsnovaFrequency = { osnova: [], frequency: "", tname: "" };
             termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(element.osn);
 
             if (Array.isArray(element.sentpos)) {
-                termsOsnovaFrequency.frequency = element.sentpos.length
+                termsOsnovaFrequency.frequency = element.sentpos.length;
+                termsOsnovaFrequency.tname = element.tname;
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
                     value: JSON.stringify(termsOsnovaFrequency),
@@ -1094,6 +1104,7 @@ $sortSelect.on('change', function () {
                 }));
             } else {
                 termsOsnovaFrequency.frequency = 1;
+                termsOsnovaFrequency.tname = element.tname;
                 $uploadResultList.append($('<option>', {
                     text: element.tname,
                     value: JSON.stringify(termsOsnovaFrequency),
