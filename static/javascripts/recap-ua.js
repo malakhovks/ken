@@ -7,7 +7,6 @@ valueOfSelectedElementOfUploadResultListIfCtrlC = {
 // GLOBAL VARIABLES FOR THIS SCRIPT:
 var termsWithIndexDict = {},
     treeData = [], // for bootstrap-treeview
-    // objForTree = {}, // for bootstrap-treeview
     objForTree = { text: "", nodes: [] }, // template structure for bootstrap-treeview
     keyC = 67, // Javascript Char Code (Key Code) for "C" key
     keyEnter = 13; // Javascript Char Code (Key Code) for "Enter" key

@@ -439,13 +439,13 @@ def get_parce_result():
 def index():
     return Response(render_template('index.html'), mimetype='text/html')
 
-@app.route('/eng')
+@app.route('/en')
 def get_eng():
-    return Response(render_template('index.html'), mimetype='text/html')
+    return Response(render_template('en.html'), mimetype='text/html')
 
-@app.route('/ukr')
+@app.route('/ua')
 def get_ukr():
-    return Response(render_template('index-ua.html'), mimetype='text/html')
+    return Response(render_template('ua.html'), mimetype='text/html')
 
 @app.route('/help')
 def get_help():
