@@ -1,5 +1,7 @@
 const granimInstance = new Granim({
-    element: '#canvas-basic',
+    element: '#canvas-interactive',
+    name: 'interactive-gradient',
+    elToSetClassOn: '.canvas-interactive-wrapper',
     direction: 'left-right',
     isPausedWhenNotInView: true,
     states : {
@@ -8,8 +10,8 @@ const granimInstance = new Granim({
                 // ['#ff9966', '#ff5e62'],
                 // ['#00F260', '#0575E6'],
                 // ['#e1eec3', '#f05053']
-                ['#ffe203', '#0037ff'],
-                ['#00F260', '#0575E6'],
+                ['#fff080', '#73b2ff'],
+                ['#8cffab', '#0575E6'],
                 ['#e1eec3', '#f05053']
             ]
         }
