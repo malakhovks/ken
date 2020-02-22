@@ -508,87 +508,96 @@ function fetchFileToTaskQueuedService() {
         docxExtension = '.docx',
         pdfExtension = '.pdf';
 
-    var uploadFileName = $recapOverviewButton.val().split('\\').pop(),
-        // Generate unique name for uploaded file
-        uniqueUploadFilename = Date.now() + '-' + uploadFileName,
-        form = new FormData();
+    const fsize = $recapOverviewButton[0].files[0].size;
+    const fsizeMath = Math.round((fsize / 1024));
 
-    // add file names to content for temporary project
-    projectContent.names.original = uploadFileName;
-    projectContent.names.unique = uniqueUploadFilename;
+    if (fsizeMath > 2048) {
+        alert("Файл занадто великий, виберіть файл менше 2 Мб");
+        // alert("File too Big, please select a file less than 2mb");
+        location.reload();
+    } else {
+        var uploadFileName = $recapOverviewButton.val().split('\\').pop(),
+            // Generate unique name for uploaded file
+            uniqueUploadFilename = Date.now() + '-' + uploadFileName,
+            form = new FormData();
+
+        // add file names to content for temporary project
+        projectContent.names.original = uploadFileName;
+        projectContent.names.unique = uniqueUploadFilename;
 
 
-    form.append("file", $recapOverviewButton[0].files[0]);
+        form.append("file", $recapOverviewButton[0].files[0]);
 
-    if (uploadFileName.indexOf(txtExtension) != -1 || uploadFileName.indexOf(docxExtension) || uploadFileName.indexOf(pdfExtension)) {
+        if (uploadFileName.indexOf(txtExtension) != -1 || uploadFileName.indexOf(docxExtension) || uploadFileName.indexOf(pdfExtension)) {
 
-        iziToast.info({
-            title: 'Зачекайте! Аналіз документа.',
-            message: uploadFileName.split('\\').pop(),
-            position: 'bottomLeft',
-            timeout: 10000,
-            close: false
-        });
+            iziToast.info({
+                title: 'Зачекайте! Аналіз документа.',
+                message: uploadFileName.split('\\').pop(),
+                position: 'bottomLeft',
+                timeout: 10000,
+                close: false
+            });
 
-        $projectFileList.append($('<option>', {
-            value: projectContent.names.unique,
-            text: truncate(projectContent.names.unique, 30),
-            title: projectContent.names.original
-        }));
+            $projectFileList.append($('<option>', {
+                value: projectContent.names.unique,
+                text: truncate(projectContent.names.unique, 30),
+                title: projectContent.names.original
+            }));
 
-        // Hide Upload button and show tabs
-        $upload_button.css('display', 'none');
-        $('.tabs').css('display', 'block');
+            // Hide Upload button and show tabs
+            $upload_button.css('display', 'none');
+            $('.tabs').css('display', 'block');
 
-        // Clear terms list,textArea, input choose file
-        $recapOverviewButton.val("");
-        $('option', $uploadResultList).remove();
-        $('option', $uploadUnknownTerms).remove();
-        $textContent.text('');
-        $sents_from_text.text('');
+            // Clear terms list,textArea, input choose file
+            $recapOverviewButton.val("");
+            $('option', $uploadResultList).remove();
+            $('option', $uploadUnknownTerms).remove();
+            $textContent.text('');
+            $sents_from_text.text('');
 
-        return fetch('/kua/api/task/queued', {
-            method: 'post',
-            body: form
-        }).then(response => {
-            if (!response.ok) {
+            return fetch('/kua/api/task/queued', {
+                method: 'post',
+                body: form
+            }).then(response => {
+                if (!response.ok) {
+                    // Hide progress bar
+                    $("body").css("cursor", "default");
+                    $(".loader").hide();
+                    // Enable any DIV including its contents.
+                    $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                    $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
+                    iziToast.error({
+                        title: 'Помилка!',
+                        message: 'Дивіться деталі в JavaScript Console. Статус: ' + response.status,
+                        position: 'bottomLeft',
+                        onClosed: function () {
+                            iziToast.destroy();
+                        }
+                    });
+                    console.log(response.status);
+                    return response.status;
+                }
+                return response.json();
+            }).then(obj => {
+                return obj;
+            }).catch(error => {
                 // Hide progress bar
                 $("body").css("cursor", "default");
                 $(".loader").hide();
                 // Enable any DIV including its contents.
                 $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
                 $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
+                console.log(error);
                 iziToast.error({
                     title: 'Помилка!',
-                    message: 'Дивіться деталі в JavaScript Console. Статус: ' + response.status,
+                    message: 'Дивіться деталі в JavaScript Console',
                     position: 'bottomLeft',
                     onClosed: function () {
                         iziToast.destroy();
                     }
                 });
-                console.log(response.status);
-                return response.status;
-            }
-            return response.json();
-        }).then(obj => {
-            return obj;
-        }).catch(error => {
-            // Hide progress bar
-            $("body").css("cursor", "default");
-            $(".loader").hide();
-            // Enable any DIV including its contents.
-            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
-            $("#projectFileList option[value='" + uniqueUploadFilename + "']").remove();
-            console.log(error);
-            iziToast.error({
-                title: 'Помилка!',
-                message: 'Дивіться деталі в JavaScript Console',
-                position: 'bottomLeft',
-                onClosed: function () {
-                    iziToast.destroy();
-                }
-            });
-        })
+            })
+        }
     }
 }
 
@@ -755,7 +764,13 @@ $recapOverviewButton.change(function () {
 
 $uploadResultList.click(function () {
     if ($uploadResultList.has('option').length > 0) {
-        forUploadResultListClickAndEnterPressEvents();
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+        $("body").css("cursor", "progress");
+        setTimeout(function () {
+            forUploadResultListClickAndEnterPressEvents();
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            $("body").css("cursor", "default");
+        }, 0);
     }
 });
 
@@ -765,7 +780,13 @@ $uploadResultList.keypress(function (event) {
         let key = event.which;
         if (key == keyEnter)  // the enter key code
         {
-            forUploadResultListClickAndEnterPressEvents();
+            $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+            $("body").css("cursor", "progress");
+            setTimeout(function () {
+                forUploadResultListClickAndEnterPressEvents();
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                $("body").css("cursor", "default");
+            }, 0);
         }
     }
 });
@@ -838,31 +859,39 @@ function forUploadResultListClickAndEnterPressEvents() {
             $termTree.treeview({
                 data: treeData,
                 onNodeSelected: function (event, node) {
-                    // inserting sentences with selected terms in #text-content
-                    //clear #text-content
-                    $textContent.text('');
-                    let selectedTermInTermTree = termsWithIndexDict[node.text];
-                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
+                    $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+                    $("body").css("cursor", "progress");
+                    setTimeout(function () {
+                        // inserting sentences with selected terms in #text-content
+                        //clear #text-content
+                        $textContent.text('');
+                        let selectedTermInTermTree = termsWithIndexDict[node.text];
+                        if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) == false) {
 
-                        $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))] + '<p><br>');
+                            $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))] + '<p><br>');
 
-                        mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
-                    }
-                    if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
-                        let sentIndex = [];
-                        let sentsForMark = [];
-                        for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
-                            if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))))) {
-                                $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '</p><br>');
-                                sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))]);
-                                sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
-                            }
+                            mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
                         }
-                        mark(sentsForMark);
-                    }
-                    // markTerms(node.text);
-                    markTerms(node.osnova);
-                    copyTermTreeToTable(node.text);
+                        if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
+                            let sentIndex = [];
+                            let sentsForMark = [];
+                            for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
+                                if (!sentIndex.includes(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))))) {
+                                    $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))] + '</p><br>');
+                                    sentsForMark.push(alltermsJSON.termsintext.sentences.sent[elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))]);
+                                    sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
+                                }
+                            }
+                            mark(sentsForMark);
+                        }
+                        // markTerms(node.text);
+                        markTerms(node.osnova);
+                        copyTermTreeToTable(node.text);
+
+                        $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                        $("body").css("cursor", "default");
+
+                    }, 0);
                 }
             }); // add array data to bootstrap-treeview and view it on page
         }

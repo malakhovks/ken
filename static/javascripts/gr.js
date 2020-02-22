@@ -4,6 +4,7 @@ const granimInstance = new Granim({
     elToSetClassOn: '.canvas-interactive-wrapper',
     direction: 'left-right',
     isPausedWhenNotInView: true,
+    stateTransitionSpeed: 500,
     states : {
         "default-state": {
             gradients: [
