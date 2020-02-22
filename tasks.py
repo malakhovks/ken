@@ -41,13 +41,13 @@ def konspekt_task_ua(args):
         logging.debug('Data size in bytes: ' + str(len(args['body'])))
 
         if len(args['body']) <= 50000:
-            time_for_analyzing = 65
+            time_for_analyzing = 30
         elif len(args['body']) > 50000 and len(args['body']) <= 100000:
-            time_for_analyzing = 125
+            time_for_analyzing = 65
         elif len(args['body']) > 100000 and len(args['body']) <= 200000:
-            time_for_analyzing = 185
+            time_for_analyzing = 125
         elif len(args['body']) > 200000:
-            time_for_analyzing = 300
+            time_for_analyzing = 200
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
