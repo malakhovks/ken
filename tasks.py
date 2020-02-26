@@ -51,7 +51,10 @@ def konspekt_task_ua(args):
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
+        # write the contents of the uploaded file to a temporary file tmp.txt
+        path_to_tmptxt = os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt')
 
+        # ----------------------------------------------------------------------------------------------------------------
         # f = io.open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore')
         """
         errors - response when encoding fails. There are six types of error response
@@ -78,18 +81,10 @@ def konspekt_task_ua(args):
         #     logging.debug(detector.result['encoding'])
         #     f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         # f.close()
+        # ----------------------------------------------------------------------------------------------------------------
 
         try:
-             with open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore') as f:
-                """
-                errors - response when encoding fails. There are six types of error response
-                strict - default response which raises a UnicodeDecodeError exception on failure
-                ignore - ignores the unencodable unicode from the result
-                replace - replaces the unencodable unicode to a question mark ?
-                xmlcharrefreplace - inserts XML character reference instead of unencodable unicode
-                backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
-                namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
-                """
+             with open(path_to_tmptxt, 'w+', encoding='cp1251', errors='ignore') as f:
                 detector = UniversalDetector()
                 for line in args['body'].splitlines(True):
                     detector.feed(line)
@@ -114,8 +109,53 @@ def konspekt_task_ua(args):
              logging.error(repr(e))
              return uwsgi.SPOOL_IGNORE
 
-        # time for analyzing 105 sec
-        # time.sleep(105)
+        try:
+            shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt'), os.path.join(project_dir, 'deploy', 'konspekt', '1.txt'))
+        # If source and destination are same 
+        except shutil.SameFileError: 
+            logging.error("Source and destination represents the same file.")
+        # If there is any permission issue 
+        except PermissionError: 
+            logging.error("Permission denied.")
+        except Exception as e:
+            logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
+        # ----------------------------------------------------------------------------------------------------------------
+        # try:
+        #      with open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore') as f:
+        #         """
+        #         errors - response when encoding fails. There are six types of error response
+        #         strict - default response which raises a UnicodeDecodeError exception on failure
+        #         ignore - ignores the unencodable unicode from the result
+        #         replace - replaces the unencodable unicode to a question mark ?
+        #         xmlcharrefreplace - inserts XML character reference instead of unencodable unicode
+        #         backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
+        #         namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
+        #         """
+        #         detector = UniversalDetector()
+        #         for line in args['body'].splitlines(True):
+        #             detector.feed(line)
+        #             if detector.done: break
+        #         detector.close()
+        #         if detector.result['encoding'] == 'utf-8':
+        #             logging.debug(detector.result['encoding'])
+        #             raw_text_without_xml_predefined_entities = args['body'].decode('UTF-8', errors='ignore')
+        #             raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
+        #             f.write(raw_text_without_xml_predefined_entities)
+        #         elif detector.result['encoding'] == 'windows-1251':
+        #             logging.debug(detector.result['encoding'])
+        #             raw_text_without_xml_predefined_entities = args['body'].decode('cp1251', errors='ignore')
+        #             raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
+        #             f.write(raw_text_without_xml_predefined_entities)
+        #         else:
+        #             logging.debug(detector.result['encoding'])
+        #             raw_text_without_xml_predefined_entities = args['body'].decode(detector.result['encoding'], errors='ignore')
+        #             raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
+        #             f.write(raw_text_without_xml_predefined_entities)
+        # except IOError as e:
+        #      logging.error(repr(e))
+        #      return uwsgi.SPOOL_IGNORE
+
         time.sleep(time_for_analyzing)
 
         # http://docs.python.org/2/library/shutil.html
