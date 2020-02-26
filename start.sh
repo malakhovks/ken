@@ -18,6 +18,9 @@ set -m
 # С уважением, Виталий Величко.
 
 # cd ./deploy/konspekt && env LC_ALL=ru_RU.CP1251 DISPLAY=:1 wine Konspekt.exe 1.txt 1 10000
+
+# To suppress the Wine debug messages consider setting the environment variable WINEDEBUG=-all
+export WINEDEBUG=-all
 export DISPLAY=:1
 export LC_ALL=ru_RU.CP1251
 Xvfb :1 -screen 0 800x600x16 &
