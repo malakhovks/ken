@@ -516,6 +516,11 @@ function fetchFileToTaskQueuedService() {
         // alert("File too Big, please select a file less than 2mb");
         location.reload();
     } else {
+
+        if (fsizeMath >= 1536) {
+            alert("Аналіз файлів розміром більше за 1.5 Мб триває від 5 хвилин!");
+        }
+
         var uploadFileName = $recapOverviewButton.val().split('\\').pop(),
             // Generate unique name for uploaded file
             uniqueUploadFilename = Date.now() + '-' + uploadFileName,
@@ -760,6 +765,7 @@ $recapOverviewButton.change(function () {
     $('option', $uploadUnknownTerms).remove();
     $textContent.text('');
     $sents_from_text.text('');
+    $('.nav-tabs a[href="#table_new"]').tab('show');
 });
 
 $uploadResultList.click(function () {
@@ -797,8 +803,14 @@ function forUploadResultListClickAndEnterPressEvents() {
         //clear textArea #text-content
         $textContent.text('');
 
+        const frequency = JSON.parse($("#uploadResultList option:selected").val()).frequency;
+        if (frequency > 300) {
+            alert("Частота появи терміна в тексті перевищує 300 разів, в цьому випадку буде відключене інтерактивне підсвічування терміна!");
+        }
+
         objForTree.text = $("#uploadResultList option:selected").text();
         objForTree.osnova = JSON.parse($("#uploadResultList option:selected").val()).osnova;
+        objForTree.frequency = JSON.parse($("#uploadResultList option:selected").val()).frequency;
         objForTree.nodes.length = 0;
 
         var valOfSelectedElementInUploadResultList = termsWithIndexDict[$("#uploadResultList option:selected").text()];
@@ -814,14 +826,20 @@ function forUploadResultListClickAndEnterPressEvents() {
                     sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
                 }
             }
-            mark(sentsForMark);
+            if (frequency <= 300) {
+                mark(sentsForMark);
+            }
+            // mark(sentsForMark);
         }
 
         if (Array.isArray(alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos) == false) {
 
             $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))] + '<p><br>');
 
-            mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))]);
+            if (frequency <= 300) {
+                mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))]);
+            }
+            // mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].sentpos.indexOf("/"))]);
         }
 
         if (alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('reldown') || alltermsJSON.termsintext.exporterms.term[valOfSelectedElementInUploadResultList].hasOwnProperty('relup')) {
@@ -870,7 +888,9 @@ function forUploadResultListClickAndEnterPressEvents() {
 
                             $textContent.append('<p>' + alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))] + '<p><br>');
 
-                            mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
+                            if (node.frequency <= 300) {
+                                mark(alltermsJSON.termsintext.sentences.sent[alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.substring(0, alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.indexOf("/"))]);
+                            }
                         }
                         if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
                             let sentIndex = [];
@@ -882,10 +902,14 @@ function forUploadResultListClickAndEnterPressEvents() {
                                     sentIndex.push(parseInt(elementForUploadResultListDbClickAndEnterPress.substring(0, elementForUploadResultListDbClickAndEnterPress.indexOf("/"))));
                                 }
                             }
-                            mark(sentsForMark);
+                            if (node.frequency <= 300) {
+                                mark(sentsForMark);
+                            }
                         }
                         // markTerms(node.text);
-                        markTerms(node.osnova);
+                        if (node.frequency <= 300) {
+                            markTerms(node.osnova);
+                        }
                         copyTermTreeToTable(node.text);
 
                         $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
@@ -902,7 +926,10 @@ function forUploadResultListClickAndEnterPressEvents() {
 
         // markTerms($("#uploadResultList option:selected").text().replace(/\s?([-])\s?/g, '-'));
         // markTerms($("#uploadResultList option:selected").text());
-        markTerms(JSON.parse($("#uploadResultList option:selected").val()).osnova.join(" "));
+        if (frequency <= 300) {
+            markTerms(JSON.parse($("#uploadResultList option:selected").val()).osnova.join(" "));
+        }
+        // markTerms(JSON.parse($("#uploadResultList option:selected").val()).osnova.join(" "));
     }
 
 }
@@ -1059,87 +1086,115 @@ function xmlToJson(xml) {
 $sortSelect.on('change', function () {
 
     if (this.value == 1) {
-        let my_options = $("#uploadResultList option");
-        my_options.sort(function (a, b) {
-            if (a.text.toLowerCase() > b.text.toLowerCase()) return 1;
-            if (a.text.toLowerCase() < b.text.toLowerCase()) return -1;
-            return 0;
-        });
-        $uploadResultList.empty();
-        $.each(my_options, (i, item) => {
-            $uploadResultList.append($('<option>', { 
-                value: item.value,
-                text: item.text,
-                title: 'Частота: ' + JSON.parse(item.value).frequency
-            }));
-        });
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+        $("body").css("cursor", "progress");
+        setTimeout(function () {
+            let my_options = $("#uploadResultList option");
+            my_options.sort(function (a, b) {
+                if (a.text.toLowerCase() > b.text.toLowerCase()) return 1;
+                if (a.text.toLowerCase() < b.text.toLowerCase()) return -1;
+                return 0;
+            });
+            $uploadResultList.empty();
+            $.each(my_options, (i, item) => {
+                $uploadResultList.append($('<option>', {
+                    value: item.value,
+                    text: item.text,
+                    title: 'Частота: ' + JSON.parse(item.value).frequency
+                }));
+            });
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            $("body").css("cursor", "default");
+        }, 0);
+
     }
 
     if (this.value == 2) {
-        let my_options = $("#uploadResultList option");
-        my_options.sort(function (a, b) {
-            // a = a.value;
-            a = JSON.parse(a.value).frequency;
-            // b = b.value;
-            b = JSON.parse(b.value).frequency;
-            return a - b;
-        });
-        $uploadResultList.empty();
-        $.each(my_options, (i, item) => {
-            $uploadResultList.append($('<option>', { 
-                value: item.value,
-                text: item.text,
-                title: 'Частота: ' + JSON.parse(item.value).frequency
-            }));
-        });
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+        $("body").css("cursor", "progress");
+        setTimeout(function () {
+            let my_options = $("#uploadResultList option");
+            my_options.sort(function (a, b) {
+                // a = a.value;
+                a = JSON.parse(a.value).frequency;
+                // b = b.value;
+                b = JSON.parse(b.value).frequency;
+                return a - b;
+            });
+            $uploadResultList.empty();
+            $.each(my_options, (i, item) => {
+                $uploadResultList.append($('<option>', {
+                    value: item.value,
+                    text: item.text,
+                    title: 'Частота: ' + JSON.parse(item.value).frequency
+                }));
+            });
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            $("body").css("cursor", "default");
+        }, 0);
+
     }
 
     if (this.value == 3) {
-        let my_options = $("#uploadResultList option");
-        my_options.sort(function (a, b) {
-            // a = a.value;
-            a = JSON.parse(a.value).frequency;
-            // b = b.value;
-            b = JSON.parse(b.value).frequency;
-            return b - a;
-        });
-        $uploadResultList.empty();
-        $.each(my_options, (i, item) => {
-            $uploadResultList.append($('<option>', { 
-                value: item.value,
-                text: item.text,
-                title: 'Частота: ' + JSON.parse(item.value).frequency
-            }));
-        });
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+        $("body").css("cursor", "progress");
+        setTimeout(function () {
+            let my_options = $("#uploadResultList option");
+            my_options.sort(function (a, b) {
+                // a = a.value;
+                a = JSON.parse(a.value).frequency;
+                // b = b.value;
+                b = JSON.parse(b.value).frequency;
+                return b - a;
+            });
+            $uploadResultList.empty();
+            $.each(my_options, (i, item) => {
+                $uploadResultList.append($('<option>', {
+                    value: item.value,
+                    text: item.text,
+                    title: 'Частота: ' + JSON.parse(item.value).frequency
+                }));
+            });
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            $("body").css("cursor", "default");
+        }, 0);
+
     }
 
     if (this.value == 4) {
-        $uploadResultList.empty();
-        // for known words ES 6
-        for (let element of alltermsJSON.termsintext.exporterms.term) {
-            termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+        $("body").css("cursor", "progress");
+        setTimeout(function () {
+            $uploadResultList.empty();
+            // for known words ES 6
+            for (let element of alltermsJSON.termsintext.exporterms.term) {
+                termsWithIndexDict[element.tname] = alltermsJSON.termsintext.exporterms.term.indexOf(element);
 
-            let termsOsnovaFrequency = { osnova: [], frequency: "", tname: "" };
-            termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(element.osn);
+                let termsOsnovaFrequency = { osnova: [], frequency: "", tname: "" };
+                termsOsnovaFrequency.osnova = termsOsnovaFrequency.osnova.concat(element.osn);
 
-            if (Array.isArray(element.sentpos)) {
-                termsOsnovaFrequency.frequency = element.sentpos.length;
-                termsOsnovaFrequency.tname = element.tname;
-                $uploadResultList.append($('<option>', {
-                    text: element.tname,
-                    value: JSON.stringify(termsOsnovaFrequency),
-                    title: 'Частота: ' + element.sentpos.length
-                }));
-            } else {
-                termsOsnovaFrequency.frequency = 1;
-                termsOsnovaFrequency.tname = element.tname;
-                $uploadResultList.append($('<option>', {
-                    text: element.tname,
-                    value: JSON.stringify(termsOsnovaFrequency),
-                    title: 'Частота: ' + 1
-                }));
+                if (Array.isArray(element.sentpos)) {
+                    termsOsnovaFrequency.frequency = element.sentpos.length;
+                    termsOsnovaFrequency.tname = element.tname;
+                    $uploadResultList.append($('<option>', {
+                        text: element.tname,
+                        value: JSON.stringify(termsOsnovaFrequency),
+                        title: 'Частота: ' + element.sentpos.length
+                    }));
+                } else {
+                    termsOsnovaFrequency.frequency = 1;
+                    termsOsnovaFrequency.tname = element.tname;
+                    $uploadResultList.append($('<option>', {
+                        text: element.tname,
+                        value: JSON.stringify(termsOsnovaFrequency),
+                        title: 'Частота: ' + 1
+                    }));
+                }
             }
-        }
+            $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            $("body").css("cursor", "default");
+        }, 0);
+
     }
 });
 // Sort terms ---------------------------------------------------------------------------------------------------------
