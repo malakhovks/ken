@@ -43,11 +43,13 @@ def konspekt_task_ua(args):
         if len(args['body']) <= 50000:
             time_for_analyzing = 30
         elif len(args['body']) > 50000 and len(args['body']) <= 100000:
-            time_for_analyzing = 65
-        elif len(args['body']) > 100000 and len(args['body']) <= 200000:
-            time_for_analyzing = 125
+            time_for_analyzing = 80
+        elif len(args['body']) > 100000 and len(args['body']) <= 120000:
+            time_for_analyzing = 260
+        elif len(args['body']) > 120000 and len(args['body']) <= 200000:
+            time_for_analyzing = 280
         elif len(args['body']) > 200000:
-            time_for_analyzing = 200
+            time_for_analyzing = 420
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
@@ -110,13 +112,7 @@ def konspekt_task_ua(args):
              return uwsgi.SPOOL_IGNORE
 
         try:
-            shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt'), os.path.join(project_dir, 'deploy', 'konspekt', '1.txt'))
-        # If source and destination are same 
-        except shutil.SameFileError: 
-            logging.error("Source and destination represents the same file.")
-        # If there is any permission issue 
-        except PermissionError: 
-            logging.error("Permission denied.")
+            shutil.move(os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt'), os.path.join(project_dir, 'deploy', 'konspekt', '1.txt'))
         except Exception as e:
             logging.error(repr(e))
             return uwsgi.SPOOL_IGNORE
