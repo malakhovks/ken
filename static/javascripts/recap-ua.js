@@ -893,6 +893,7 @@ function forUploadResultListClickAndEnterPressEvents() {
                             }
                         }
                         if (Array.isArray(alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos)) {
+                            node.frequency = alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos.length;
                             let sentIndex = [];
                             let sentsForMark = [];
                             for (let elementForUploadResultListDbClickAndEnterPress of alltermsJSON.termsintext.exporterms.term[selectedTermInTermTree].sentpos) {
