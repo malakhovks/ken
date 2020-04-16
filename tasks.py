@@ -41,9 +41,9 @@ def konspekt_task_ua(args):
         logging.debug('Data size in bytes: ' + str(len(args['body'])))
 
         if len(args['body']) <= 50000:
-            time_for_analyzing = 30
+            time_for_analyzing = 25
         elif len(args['body']) > 50000 and len(args['body']) <= 100000:
-            time_for_analyzing = 80
+            time_for_analyzing = 50
         elif len(args['body']) > 100000 and len(args['body']) <= 120000:
             time_for_analyzing = 260
         elif len(args['body']) > 120000 and len(args['body']) <= 200000:
