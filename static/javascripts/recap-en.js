@@ -545,7 +545,7 @@ $recapOverviewButton.change(function () {
 });
 
 $buttonSaveProject.click(function () {
-    if (projectStructure) {
+    if (projectStructure !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -561,7 +561,7 @@ $buttonSaveProject.click(function () {
 })
 
 $buttonSaveAlltermsXml.click(function () {
-    if (selectedDocument) {
+    if (selectedDocument !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -573,7 +573,7 @@ $buttonSaveAlltermsXml.click(function () {
         downloadLink.download = 'allterms.xml';
         downloadLink.click();
     } else {
-        if (lastRecappedFileData) {
+        if (lastRecappedFileData !== null) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
@@ -589,7 +589,7 @@ $buttonSaveAlltermsXml.click(function () {
 })
 
 $buttonSaveParceXml.click(function () {
-    if (selectedDocument) {
+    if (selectedDocument !== null) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -601,7 +601,7 @@ $buttonSaveParceXml.click(function () {
         downloadLink.download = 'parce.xml';
         downloadLink.click();
     } else {
-        if (lastRecappedFileData) {
+        if (lastRecappedFileData !== null) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
