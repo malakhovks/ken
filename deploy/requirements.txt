@@ -4,6 +4,7 @@ spacy>=2.0.0,<2.1.0
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz#egg=en_core_web_sm
 pdfminer==20140328
 uWSGI>=2.0.17.1
+nltk==3.4.5
 textblob>=0.15.2
 chardet>=3.0.4
 # language-check>=1.1
