@@ -62,7 +62,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.layout import LAParams
 
 # load libraries for API proccessing
-from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template
+from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template, send_file, safe_join
 # A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -338,6 +338,38 @@ def get_task_status():
     if os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
         return jsonify({'task': {'id': task_id, 'status': True}}), 200
 
+@app.route('/kua/api/task/allterms')
+def get_allterms_xml():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/allterms.xml'):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    try:
+        safe_path = safe_join('/var/tmp/tasks/konspekt/' + task_id, 'allterms.xml')
+        return send_file(safe_path, conditional=True, mimetype='text/xml')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+
+@app.route('/kua/api/task/parce')
+def get_parce_xml():
+    task_id = request.args.get('id')
+    if not os.path.exists('/var/tmp/tasks/konspekt/' + task_id):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    if not os.path.isfile('/var/tmp/tasks/konspekt/' + task_id + '/parce.xml'):
+        return jsonify({'task': task_id, 'status': False}), 204
+
+    try:
+        safe_path = safe_join('/var/tmp/tasks/konspekt/' + task_id, 'parce.xml')
+        return send_file(safe_path, conditional=True, mimetype='text/xml')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+
 @app.route('/kua/api/task/allterms/result')
 def get_allterms_result():
     task_id = request.args.get('id')
@@ -407,16 +439,20 @@ def get_parce_result():
 def index():
     return Response(render_template('index.html'), mimetype='text/html')
 
-@app.route('/eng')
-def getEng():
-    return Response(render_template('index.html'), mimetype='text/html')
+@app.route('/en')
+def get_eng():
+    return Response(render_template('en.html'), mimetype='text/html')
+
+@app.route('/ua')
+def get_ukr():
+    return Response(render_template('ua.html'), mimetype='text/html')
 
 @app.route('/help')
-def getHelp():
+def get_help():
     return Response(render_template('help.html'), mimetype='text/html')
 
 @app.route('/changelog')
-def getChangelog():
+def get_changelog():
     return Response(render_template('changelog.html'), mimetype='text/html')
 
 """

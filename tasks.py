@@ -38,20 +38,25 @@ def konspekt_task_ua(args):
         logging.debug('Start task execution')
 
         # data size in bytes
-        logging.error('Data size in bytes: ' + str(len(args['body'])))
+        logging.debug('Data size in bytes: ' + str(len(args['body'])))
 
         if len(args['body']) <= 50000:
-            time_for_analyzing = 65
+            time_for_analyzing = 25
         elif len(args['body']) > 50000 and len(args['body']) <= 100000:
-            time_for_analyzing = 125
-        elif len(args['body']) > 100000 and len(args['body']) <= 200000:
-            time_for_analyzing = 185
+            time_for_analyzing = 50
+        elif len(args['body']) > 100000 and len(args['body']) <= 120000:
+            time_for_analyzing = 260
+        elif len(args['body']) > 120000 and len(args['body']) <= 200000:
+            time_for_analyzing = 280
         elif len(args['body']) > 200000:
-            time_for_analyzing = 300
+            time_for_analyzing = 420
 
         project_dir = args['project_dir']
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
+        # write the contents of the uploaded file to a temporary file tmp.txt
+        path_to_tmptxt = os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt')
 
+        # ----------------------------------------------------------------------------------------------------------------
         # f = io.open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore')
         """
         errors - response when encoding fails. There are six types of error response
@@ -78,18 +83,10 @@ def konspekt_task_ua(args):
         #     logging.debug(detector.result['encoding'])
         #     f.write(args['body'].decode(detector.result['encoding'], errors='ignore'))
         # f.close()
+        # ----------------------------------------------------------------------------------------------------------------
 
         try:
-             with open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore') as f:
-                """
-                errors - response when encoding fails. There are six types of error response
-                strict - default response which raises a UnicodeDecodeError exception on failure
-                ignore - ignores the unencodable unicode from the result
-                replace - replaces the unencodable unicode to a question mark ?
-                xmlcharrefreplace - inserts XML character reference instead of unencodable unicode
-                backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
-                namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
-                """
+             with open(path_to_tmptxt, 'w+', encoding='cp1251', errors='ignore') as f:
                 detector = UniversalDetector()
                 for line in args['body'].splitlines(True):
                     detector.feed(line)
@@ -112,9 +109,49 @@ def konspekt_task_ua(args):
                     f.write(raw_text_without_xml_predefined_entities)
         except IOError as e:
              logging.error(repr(e))
+             return uwsgi.SPOOL_IGNORE
 
-        # time for analyzing 105 sec
-        # time.sleep(105)
+        try:
+            shutil.move(os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt'), os.path.join(project_dir, 'deploy', 'konspekt', '1.txt'))
+        except Exception as e:
+            logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
+        # ----------------------------------------------------------------------------------------------------------------
+        # try:
+        #      with open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore') as f:
+        #         """
+        #         errors - response when encoding fails. There are six types of error response
+        #         strict - default response which raises a UnicodeDecodeError exception on failure
+        #         ignore - ignores the unencodable unicode from the result
+        #         replace - replaces the unencodable unicode to a question mark ?
+        #         xmlcharrefreplace - inserts XML character reference instead of unencodable unicode
+        #         backslashreplace - inserts a \uNNNN espace sequence instead of unencodable unicode
+        #         namereplace - inserts a \N{...} escape sequence instead of unencodable unicode
+        #         """
+        #         detector = UniversalDetector()
+        #         for line in args['body'].splitlines(True):
+        #             detector.feed(line)
+        #             if detector.done: break
+        #         detector.close()
+        #         if detector.result['encoding'] == 'utf-8':
+        #             logging.debug(detector.result['encoding'])
+        #             raw_text_without_xml_predefined_entities = args['body'].decode('UTF-8', errors='ignore')
+        #             raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
+        #             f.write(raw_text_without_xml_predefined_entities)
+        #         elif detector.result['encoding'] == 'windows-1251':
+        #             logging.debug(detector.result['encoding'])
+        #             raw_text_without_xml_predefined_entities = args['body'].decode('cp1251', errors='ignore')
+        #             raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
+        #             f.write(raw_text_without_xml_predefined_entities)
+        #         else:
+        #             logging.debug(detector.result['encoding'])
+        #             raw_text_without_xml_predefined_entities = args['body'].decode(detector.result['encoding'], errors='ignore')
+        #             raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
+        #             f.write(raw_text_without_xml_predefined_entities)
+        # except IOError as e:
+        #      logging.error(repr(e))
+        #      return uwsgi.SPOOL_IGNORE
+
         time.sleep(time_for_analyzing)
 
         # http://docs.python.org/2/library/shutil.html
@@ -127,12 +164,20 @@ def konspekt_task_ua(args):
 
         # copy file with results to unique folder with id
         # allterms.xml
-        shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'allterms.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        try:
+            shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'allterms.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        except Exception as e:
+            logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
         # parce.xml
-        shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'parce.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        try:
+            shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'parce.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
+        except Exception as e:
+            logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
 
         return uwsgi.SPOOL_OK
     except Exception as e:
-        logging.error(traceback.format_exc())
+        # logging.error(traceback.format_exc())
         logging.error(repr(e))
         return uwsgi.SPOOL_IGNORE

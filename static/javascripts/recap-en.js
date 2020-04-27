@@ -96,6 +96,19 @@ $buttonNewProjectAndClearAll.click(function () {
     });
 });
 
+$(window).resize(function () {
+    if ($(window).width() < 1024) {
+        alert('Minimum screen size is 1024x768!');
+    }
+});
+
+$(window).on("load", function () {
+    // page is fully loaded, including all frames, objects and images
+    if ($(window).width() < 1024) {
+        alert('Set the minimum screen size to 1024x768!');
+    }
+});
+
 $(document).ready(function () {
 
     // Detect device, browser and version
@@ -532,7 +545,7 @@ $recapOverviewButton.change(function () {
 });
 
 $buttonSaveProject.click(function () {
-    if (projectStructure !== null) {
+    if (projectStructure) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -548,7 +561,7 @@ $buttonSaveProject.click(function () {
 })
 
 $buttonSaveAlltermsXml.click(function () {
-    if (selectedDocument !== null) {
+    if (selectedDocument) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -560,7 +573,7 @@ $buttonSaveAlltermsXml.click(function () {
         downloadLink.download = 'allterms.xml';
         downloadLink.click();
     } else {
-        if (lastRecappedFileData !== null) {
+        if (lastRecappedFileData) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
@@ -576,7 +589,7 @@ $buttonSaveAlltermsXml.click(function () {
 })
 
 $buttonSaveParceXml.click(function () {
-    if (selectedDocument !== null) {
+    if (selectedDocument) {
         downloadLink = document.createElement("a");
         // Make sure that the link is not displayed
         downloadLink.style.display = "none";
@@ -588,7 +601,7 @@ $buttonSaveParceXml.click(function () {
         downloadLink.download = 'parce.xml';
         downloadLink.click();
     } else {
-        if (lastRecappedFileData !== null) {
+        if (lastRecappedFileData) {
             downloadLink = document.createElement("a");
             // Make sure that the link is not displayed
             downloadLink.style.display = "none";
