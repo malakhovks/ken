@@ -82,7 +82,7 @@ NLP_EN = spacy.load('en_core_web_sm')
 ENGLISH_STEMMER = SnowballStemmer("english")
 
 __author__ = "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
-__copyright__ = "Copyright (C) 2019 Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
+__copyright__ = "Copyright (C) 2020 Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
 
 class XMLResponse(Response):
     default_mimetype = 'application/xml'
