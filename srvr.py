@@ -4,6 +4,9 @@
 # load tempfile for temporary dir creation
 import sys, os, time, tempfile, shutil
 
+# load libraries for string proccessing
+import re, string
+
 # for displacy
 import json
 
@@ -11,30 +14,35 @@ import json
 import spacy
 # load Visualizers 
 from spacy import displacy
-from textblob import TextBlob
+# from textblob import TextBlob
 # load SnowballStemmer stemmer from nltk
 from nltk.stem.snowball import SnowballStemmer
-# load python wrapper language_check for LanguageTool grammar checker
-# import language_check
+# Load globally english SnowballStemmer
+ENGLISH_STEMMER = SnowballStemmer("english")
 
 # load misc utils
 import pickle
-import codecs, io
 import logging
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
-# load libraries for string proccessing
-import re, string
+# load libraries for docx processing
+import zipfile
+WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+PARA = WORD_NAMESPACE + 'p'
+TEXT = WORD_NAMESPACE + 't'
 # load libraries for XML proccessing
 import xml.etree.ElementTree as ET
+
 # load libraries for pdf processing pdfminer
-from io import BytesIO
+from io import StringIO
 from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage
-from pdfminer.layout import LAParams
+from pdfminer.pdfparser import PDFParser
 
 # load libraries for API proccessing
 from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template, send_file, safe_join
@@ -42,26 +50,11 @@ from flask import Flask, jsonify, flash, request, Response, redirect, url_for, a
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
-# for spooler
-import uwsgi
-from tasks import konspekt_task_ua
-
-# load libraries for docx processing
-import zipfile
-WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
-PARA = WORD_NAMESPACE + 'p'
-TEXT = WORD_NAMESPACE + 't'
-
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx']) 
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 # Load globally spaCy model via package name
 NLP_EN = spacy.load('en_core_web_sm')
-# or
-# NLP_en_lg = spacy.load('en_core_web_lg')
-
-# Load globally english SnowballStemmer
-ENGLISH_STEMMER = SnowballStemmer("english")
 
 __author__ = "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
 __copyright__ = "Copyright (C) 2020 Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
@@ -122,10 +115,10 @@ def get_size(obj, seen=None):
 # DEBUG functions
 # ------------------------------------------------------------------------------------------------------
 # """
-"""
 
+"""
 # ------------------------------------------------------------------------------------------------------
-# secondary functions
+# SECONDARY functions
 # ------------------------------------------------------------------------------------------------------
 # """
 
@@ -173,12 +166,6 @@ def text_normalization_default(raw_text):
             # remove leading and ending spaces
             line = line.strip()
             raw_text_list.append(line)
-            # logging.debug('Included line: ' + line)
-        else:
-            # TODO Remove debug log in production release
-            # print('Excluded line: ' + line)
-            logging.debug('Excluded line: ' + line)
-    # yet_raw_text = '\n'.join(raw_text_list)
     yet_raw_text = ' '.join(raw_text_list)
     return yet_raw_text
 
@@ -195,36 +182,6 @@ def sentence_normalization_default(raw_sentence):
     normalized_sentence = raw_sentence
     return normalized_sentence
 
-# sentence spelling TextBlob
-def sentence_spelling(unchecked_sentence):
-    blob = TextBlob(unchecked_sentence)
-    checked_sentence = str(blob.correct()).decode('utf-8')
-    return checked_sentence
-
-# Extracting all the text from PDF with PDFMiner
-def get_text_from_pdfminer(pdf_path):
-    resource_manager = PDFResourceManager()
-    retstr = BytesIO()
-    # save document layout including spaces that are only visual not a character
-    """
-    Some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text. To override this behavior the all_texts parameter needs to be set to True
-    """
-    laparams = LAParams()
-    setattr(laparams, 'all_texts', True)
-    # save document layout including spaces that are only visual not a character
-    device = TextConverter(resource_manager, retstr, laparams=laparams)
-    page_interpreter = PDFPageInterpreter(resource_manager, device)
-    with open(pdf_path, 'rb') as fh:
-        for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
-            page_interpreter.process_page(page)
-        text = retstr.getvalue()
-    # close open handles
-    fh.close()
-    device.close()
-    retstr.close()
-    if text:
-        return text
-
 # Extracting all the text from DOCX
 def get_text_from_docx(docx_path):
     """
@@ -235,22 +192,117 @@ def get_text_from_docx(docx_path):
     document.close()
     tree = ET.XML(xml_content)
     paragraphs = []
-    for paragraph in tree.getiterator(PARA):
+    for paragraph in tree.iter(PARA):
         texts = [node.text
-                 for node in paragraph.getiterator(TEXT)
+                 for node in paragraph.iter(TEXT)
                  if node.text]
         if texts:
             paragraphs.append(''.join(texts))
     return '\n\n'.join(paragraphs)
 
+# Extracting all the text from PDF with PDFMiner.six
+def get_text_from_pdf(pdf_path):
+    rsrcmgr = PDFResourceManager()
+    codec = 'utf-8'
+    laparams = LAParams()
+
+    with StringIO() as retstr:
+        with TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams) as device:
+            with open(pdf_path, 'rb') as fp:
+                interpreter = PDFPageInterpreter(rsrcmgr, device)
+                password = ""
+                maxpages = 0
+                caching = True
+                pagenos = set()
+                for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching, check_extractable=True):
+                    interpreter.process_page(page)
+
+                return retstr.getvalue()
+
+def get_text_from_pdfminer(pdf_path):
+    output_string = StringIO()
+    with open(pdf_path, 'rb') as in_file:
+        parser = PDFParser(in_file)
+        doc = PDFDocument(parser)
+        rsrcmgr = PDFResourceManager()
+        device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
+        interpreter = PDFPageInterpreter(rsrcmgr, device)
+        for page in PDFPage.create_pages(doc):
+            interpreter.process_page(page)
+    return output_string.getvalue()
+
 """
-# secondary functions
+# ------------------------------------------------------------------------------------------------------
+# Web app GUI
+# ------------------------------------------------------------------------------------------------------
+# """
+
+@app.route('/')
+def index():
+    return Response(render_template('index.html'), mimetype='text/html')
+
+@app.route('/en')
+def get_eng():
+    return Response(render_template('en.html'), mimetype='text/html')
+
+@app.route('/ua')
+def get_ukr():
+    return Response(render_template('ua.html'), mimetype='text/html')
+
+@app.route('/help')
+def get_help():
+    return Response(render_template('help.html'), mimetype='text/html')
+
+@app.route('/changelog')
+def get_changelog():
+    return Response(render_template('changelog.html'), mimetype='text/html')
+
+"""
+# ------------------------------------------------------------------------------------------------------
+# Web app GUI
 # ------------------------------------------------------------------------------------------------------
 # """
 
 """
+# Visualizers service
 # ------------------------------------------------------------------------------------------------------
-# Spooler
+# """
+
+@app.route('/ken/api/en/html/depparse/sentence', methods=['GET'])
+def get_dependency_parse():
+    # here we want to get the value of user (i.e. ?sentence=some-value)
+    sentence = request.args.get('sentence')
+    doc = NLP_EN(sentence)
+    return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
+
+# Noun chunks "base noun phrases" deps visualization
+@app.route('/ken/api/en/html/depparse/nounchunk', methods=['POST'])
+def get_dep_parse():
+    rec = json.loads(request.get_data(as_text=True))
+    doc = NLP_EN(rec['text'])
+    r_t = displacy.parse_deps(doc)
+    return Response(json.dumps(r_t), mimetype='text/plain')
+
+# NER in text visualization
+@app.route('/ken/api/en/html/ner', methods=['POST'])
+def get_ner():
+    req_data_JSON = json.loads(request.get_data(as_text=True))
+    doc = NLP_EN(' '.join(e for e in req_data_JSON))
+    # Measure the Size of doc Python Object
+    logging.info("%s byte", get_size(doc))
+    # colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
+    # options = {"colors": colors}
+    # html = displacy.render(doc, style="ent", options=options)
+    html = displacy.render(doc, style="ent")
+    return Response(html, mimetype='text/html')
+
+"""
+# Visualizers service
+# ------------------------------------------------------------------------------------------------------
+# """
+
+"""
+# UKRAINIAN PART
 # ------------------------------------------------------------------------------------------------------
 # """
 @app.route('/kua/api/task/queued', methods=['POST'])
@@ -282,7 +334,7 @@ def post_to_queue():
             file.close()
             if os.path.isfile(destination):
                 raw_text = get_text_from_pdfminer(destination)
-                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text)
+                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text.encode('utf-8', errors='ignore'))
                 resp = resp.rpartition('/')[2]
                 return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
             else:
@@ -398,41 +450,9 @@ def get_parce_result():
         shutil.rmtree('/var/tmp/tasks/konspekt/' + task_id)
 
     return ET.tostring(root, method='xml'), 200
-"""
-# ------------------------------------------------------------------------------------------------------
-# Spooler
-# ------------------------------------------------------------------------------------------------------
-# """
 
 """
-# ------------------------------------------------------------------------------------------------------
-# Web app GUI
-# ------------------------------------------------------------------------------------------------------
-# """
-
-@app.route('/')
-def index():
-    return Response(render_template('index.html'), mimetype='text/html')
-
-@app.route('/en')
-def get_eng():
-    return Response(render_template('en.html'), mimetype='text/html')
-
-@app.route('/ua')
-def get_ukr():
-    return Response(render_template('ua.html'), mimetype='text/html')
-
-@app.route('/help')
-def get_help():
-    return Response(render_template('help.html'), mimetype='text/html')
-
-@app.route('/changelog')
-def get_changelog():
-    return Response(render_template('changelog.html'), mimetype='text/html')
-
-"""
-# ------------------------------------------------------------------------------------------------------
-# Web app GUI
+# ENGLISH PART
 # ------------------------------------------------------------------------------------------------------
 # """
 
@@ -462,7 +482,7 @@ def generate_parcexml():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdfminer(destination).decode('utf-8', errors='replace')
+                raw_text = get_text_from_pdfminer(destination)
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -516,8 +536,8 @@ def generate_parcexml():
                 sentence_clean = sentence_normalization_default(sentence.text)
 
                 # spelling Correction with TextBlob
-                if request.args.get('spell', None) != None:
-                    sentence_clean = sentence_spelling(sentence_clean)
+                # if request.args.get('spell', None) != None:
+                #     sentence_clean = sentence_spelling(sentence_clean)
 
                 # XML structure creation
                 new_sentence_element = ET.Element('sentence')
@@ -662,7 +682,7 @@ def generate_allterms():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdfminer(destination).decode('utf-8', errors='replace')
+                raw_text = get_text_from_pdfminer(destination)
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -1210,46 +1230,6 @@ def generate_allterms():
 # ------------------------------------------------------------------------------------------------------
 # """
 
-
-"""
-# Visualizers service
-# ------------------------------------------------------------------------------------------------------
-# """
-
-@app.route('/ken/api/en/html/depparse/sentence', methods=['GET'])
-def get_dependency_parse():
-    # here we want to get the value of user (i.e. ?sentence=some-value)
-    sentence = request.args.get('sentence')
-    doc = NLP_EN(sentence)
-    return Response(displacy.render(doc, style="dep", page=True, minify=True), mimetype='text/html')
-
-# Noun chunks "base noun phrases" deps visualization
-@app.route('/ken/api/en/html/depparse/nounchunk', methods=['POST'])
-def get_dep_parse():
-    rec = json.loads(request.get_data(as_text=True))
-    doc = NLP_EN(rec['text'])
-    r_t = displacy.parse_deps(doc)
-    return Response(json.dumps(r_t), mimetype='text/plain')
-
-# NER in text visualization
-@app.route('/ken/api/en/html/ner', methods=['POST'])
-def get_ner():
-    req_data_JSON = json.loads(request.get_data(as_text=True))
-    doc = NLP_EN(' '.join(e for e in req_data_JSON))
-    # Measure the Size of doc Python Object
-    logging.info("%s byte", get_size(doc))
-    # colors = {"ORG": "linear-gradient(90deg, #b0fb5a, #ffffff)"}
-    # options = {"colors": colors}
-    # html = displacy.render(doc, style="ent", options=options)
-    html = displacy.render(doc, style="ent")
-    return Response(html, mimetype='text/html')
-
-"""
-# Visualizers service
-# ------------------------------------------------------------------------------------------------------
-# """
-
 if __name__ == '__main__':
     # default port = 5000
     app.run(host = '0.0.0.0')
-    # app.run(host = '127.0.0.1', port = 8000)

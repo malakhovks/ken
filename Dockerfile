@@ -1,7 +1,5 @@
-FROM python:2.7-slim-stretch
-
-# the most recent version of Debian
-# FROM python:2.7-slim
+FROM python:3.7.7-slim-stretch
+# FROM python:2.7-slim-stretch
 
 # https://linuxhint.com/install_wine_debian_10/
 # Resolving dependencies for Debian 10 Buster
@@ -9,7 +7,7 @@ FROM python:2.7-slim-stretch
 
 
 LABEL maintainer "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
-LABEL description "KEn (konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature (python:2.7-slim + Nginx + uWSGI + Flask) + KUa project (python:2.7-slim + Nginx + uWSGI + Flask + wine)"
+LABEL description "KEn v3 is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature (python 3.7 + Nginx + uWSGI + Flask + wine). English and Ukrainian languages are supported."
 
 COPY . /srv/ken
 WORKDIR /srv/ken
@@ -26,7 +24,7 @@ RUN chgrp -R www-data /srv/ken/deploy/konspekt \
     && apt-get -y install build-essential \
     # install app dependencies
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \
-    && python -m textblob.download_corpora \
+    # && python -m textblob.download_corpora \
     # install wine stable
     && apt-get install -y software-properties-common apt-transport-https \
     && dpkg --add-architecture i386 \
