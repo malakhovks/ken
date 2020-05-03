@@ -27,6 +27,10 @@ import logging
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
+# for spooler
+import uwsgi
+from tasks import konspekt_task_ua
+
 # load libraries for docx processing
 import zipfile
 WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
