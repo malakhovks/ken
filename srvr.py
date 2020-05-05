@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # load tempfile for temporary dir creation
-import sys, os, time, tempfile, shutil
+import sys, os, time, tempfile, shutil, traceback
 
 # load libraries for string proccessing
 import re, string
@@ -23,9 +23,9 @@ ENGLISH_STEMMER = SnowballStemmer("english")
 # load misc utils
 import pickle
 import logging
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # for spooler
 import uwsgi
@@ -40,7 +40,7 @@ TEXT = WORD_NAMESPACE + 't'
 import xml.etree.ElementTree as ET
 
 # load libraries for pdf processing pdfminer
-from io import StringIO
+from io import StringIO, BytesIO
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfdocument import PDFDocument
@@ -154,6 +154,8 @@ def text_normalization_default(raw_text):
             # line = re.sub('[^\w.,;!?-]', ' ', line)
             # remove all words which contains number
             line = re.sub(r'\w*\d\w*', ' ', line)
+            # remove % symbol
+            line = re.sub('%', ' ', line)
             # remove ° symbol
             line = re.sub('[°]', ' ', line)
             line = re.sub('[\n]', ' ', line)
@@ -230,6 +232,18 @@ def get_text_from_pdfminer(pdf_path):
         doc = PDFDocument(parser)
         rsrcmgr = PDFResourceManager()
         device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
+        interpreter = PDFPageInterpreter(rsrcmgr, device)
+        for page in PDFPage.create_pages(doc):
+            interpreter.process_page(page)
+    return output_string.getvalue()
+
+def get_bytes_from_pdfminer(pdf_path):
+    output_bytes = BytesIO()
+    with open(pdf_path, 'rb') as in_file:
+        parser = PDFParser(in_file)
+        doc = PDFDocument(parser)
+        rsrcmgr = PDFResourceManager()
+        device = TextConverter(rsrcmgr, output_bytes, laparams=LAParams())
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         for page in PDFPage.create_pages(doc):
             interpreter.process_page(page)
@@ -323,11 +337,13 @@ def post_to_queue():
         return abort(400)
 
     if file and allowed_file(file.filename):
+        pr_dr = os.getcwd()
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
             raw_text = file.read()
             file.close()
-            resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text)
+            resp = konspekt_task_ua.spool(project_dir = pr_dr.encode(), filename = '1.txt'.encode(), body = raw_text)
+            resp = resp.decode('utf-8', errors='ignore')
             resp = resp.rpartition('/')[2]
             return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
         # pdf processing
@@ -337,8 +353,9 @@ def post_to_queue():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdfminer(destination)
-                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text.encode('utf-8', errors='ignore'))
+                raw_text = get_bytes_from_pdfminer(destination)
+                resp = konspekt_task_ua.spool(project_dir = pr_dr.encode(), filename = '1.txt', body = raw_text)
+                resp = resp.decode('utf-8', errors='ignore')
                 resp = resp.rpartition('/')[2]
                 return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
             else:
@@ -351,7 +368,8 @@ def post_to_queue():
             file.close()
             if os.path.isfile(destination):
                 raw_text = get_text_from_docx(destination)
-                resp = konspekt_task_ua.spool(project_dir = os.getcwd(), filename = '1.txt', body = raw_text.encode('utf-8', errors='ignore'))
+                resp = konspekt_task_ua.spool(project_dir = pr_dr.encode(), filename = '1.txt'.encode(), body = raw_text.encode('utf-8', errors='ignore'))
+                resp = resp.decode('utf-8', errors='ignore')
                 resp = resp.rpartition('/')[2]
                 return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
             else:

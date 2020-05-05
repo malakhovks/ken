@@ -17,9 +17,9 @@ If you need speed, and you need to support Python 2.6 or earlier, you can use co
 from io import open
 from chardet.universaldetector import UniversalDetector
 
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # remove XML predefined entities from text
 def remove_xml_predefined_entities(raw_text):
@@ -51,13 +51,10 @@ def konspekt_task_ua(args):
         elif len(args['body']) > 200000:
             time_for_analyzing = 420
 
-        project_dir = args['project_dir']
+        project_dir = str(args['project_dir'])
         path_to_1txt = os.path.join(project_dir, 'deploy', 'konspekt', '1.txt')
         # write the contents of the uploaded file to a temporary file tmp.txt
         path_to_tmptxt = os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt')
-
-        # ----------------------------------------------------------------------------------------------------------------
-        # f = io.open(path_to_1txt, 'w+', encoding='cp1251', errors='ignore')
 
         try:
              with open(path_to_tmptxt, 'w+', encoding='cp1251', errors='ignore') as f:
@@ -82,13 +79,15 @@ def konspekt_task_ua(args):
                     raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
                     f.write(raw_text_without_xml_predefined_entities)
         except IOError as e:
-             logging.error(repr(e))
-             return uwsgi.SPOOL_IGNORE
+            logging.error(traceback.format_exc())
+            # logging.error(repr(e))
+            return uwsgi.SPOOL_IGNORE
 
         try:
             shutil.move(os.path.join(project_dir, 'deploy', 'konspekt', 'tmp.txt'), os.path.join(project_dir, 'deploy', 'konspekt', '1.txt'))
         except Exception as e:
-            logging.error(repr(e))
+            logging.error(traceback.format_exc())
+            # logging.error(repr(e))
             return uwsgi.SPOOL_IGNORE
 
         time.sleep(time_for_analyzing)
@@ -106,17 +105,19 @@ def konspekt_task_ua(args):
         try:
             shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'allterms.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
         except Exception as e:
-            logging.error(repr(e))
+            logging.error(traceback.format_exc())
+            # logging.error(repr(e))
             return uwsgi.SPOOL_IGNORE
         # parce.xml
         try:
             shutil.copy2(os.path.join(project_dir, 'deploy', 'konspekt', 'parce.xml'), '/var/tmp/tasks/konspekt/' + args['spooler_task_name'])
         except Exception as e:
-            logging.error(repr(e))
+            logging.error(traceback.format_exc())
+            # logging.error(repr(e))
             return uwsgi.SPOOL_IGNORE
 
         return uwsgi.SPOOL_OK
     except Exception as e:
-        # logging.error(traceback.format_exc())
-        logging.error(repr(e))
+        logging.error(traceback.format_exc())
+        # logging.error(repr(e))
         return uwsgi.SPOOL_IGNORE
