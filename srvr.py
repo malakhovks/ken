@@ -212,7 +212,13 @@ def get_text_from_pdf(pdf_path):
     rsrcmgr = PDFResourceManager()
     codec = 'utf-8'
     laparams = LAParams()
-
+    # save document layout including spaces that are only visual not a character
+    """
+    Some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text. To override this behavior the all_texts parameter needs to be set to True
+    """
+    laparams = LAParams()
+    setattr(laparams, 'all_texts', True)
+    # save document layout including spaces that are only visual not a character
     with StringIO() as retstr:
         with TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams) as device:
             with open(pdf_path, 'rb') as fp:
@@ -223,8 +229,30 @@ def get_text_from_pdf(pdf_path):
                 pagenos = set()
                 for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching, check_extractable=True):
                     interpreter.process_page(page)
+        return retstr.getvalue()
 
-                return retstr.getvalue()
+def get_bytes_from_pdf(pdf_path):
+    rsrcmgr = PDFResourceManager()
+    codec = 'utf-8'
+    laparams = LAParams()
+    # save document layout including spaces that are only visual not a character
+    """
+    Some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text. To override this behavior the all_texts parameter needs to be set to True
+    """
+    laparams = LAParams()
+    setattr(laparams, 'all_texts', True)
+    # save document layout including spaces that are only visual not a character
+    with BytesIO() as retstr:
+        with TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams) as device:
+            with open(pdf_path, 'rb') as fp:
+                interpreter = PDFPageInterpreter(rsrcmgr, device)
+                password = ""
+                maxpages = 0
+                caching = True
+                pagenos = set()
+                for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching, check_extractable=True):
+                    interpreter.process_page(page)
+        return retstr.getvalue()
 
 def get_text_from_pdfminer(pdf_path):
     output_string = StringIO()
@@ -345,6 +373,7 @@ def post_to_queue():
             destination = "/".join([tempfile.mkdtemp(),txt_file])
             file.save(destination)
             file.close()
+
             with open(destination,'rb') as t_f:
                 r_text = t_f.read()
                 detector = UniversalDetector()
@@ -361,10 +390,12 @@ def post_to_queue():
             elif enc == 'windows-1251':
                 with codecs.open(destination, encoding='cp1251') as f:
                     raw_text = f.read()
+
             resp = konspekt_task_ua.spool(project_dir = pr_dr.encode(), filename = '1.txt'.encode(), body = raw_text)
             resp = resp.decode('utf-8', errors='ignore')
             resp = resp.rpartition('/')[2]
             return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
+
         # pdf processing
         elif file.filename.rsplit('.', 1)[1].lower() == 'pdf':
             pdf_file = secure_filename(file.filename)
@@ -379,6 +410,7 @@ def post_to_queue():
                 return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
             else:
                 return abort(500)
+
         # docx processing
         elif file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -523,7 +555,8 @@ def generate_parcexml():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdfminer(destination)
+                # raw_text = get_text_from_pdfminer(destination)
+                raw_text = get_text_from_pdf(destination)
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
@@ -723,7 +756,8 @@ def generate_allterms():
             file.save(destination)
             file.close()
             if os.path.isfile(destination):
-                raw_text = get_text_from_pdfminer(destination)
+                # raw_text = get_text_from_pdfminer(destination)
+                raw_text = get_text_from_pdf(destination)
         # docx processing
         if file.filename.rsplit('.', 1)[1].lower() == 'docx':
             docx_file = secure_filename(file.filename)
