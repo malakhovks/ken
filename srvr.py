@@ -6,6 +6,7 @@ import sys, os, time, tempfile, shutil, traceback
 
 # load libraries for string proccessing
 import re, string, codecs
+from chardet.universaldetector import UniversalDetector
 
 # for displacy
 import json
