@@ -4,22 +4,12 @@ import traceback
 import uwsgi
 from uwsgidecorators import spool
 import shutil, os, re, string
-"""
-without `from io import open` I get:
-
-`TypeError: file() takes at most 3 arguments (4 given)`
-
-To get an encoding parameter in Python 2:
-If you only need to support Python 2.6 and 2.7 you can use io.open instead of open. io is the new io subsystem for Python 3, and it exists in Python 2,6 ans 2.7 as well. Please be aware that in Python 2.6 (as well as 3.0) it's implemented purely in python and very slow, so if you need speed in reading files, it's not a good option.
-
-If you need speed, and you need to support Python 2.6 or earlier, you can use codecs.open instead. It also has an encoding parameter, and is quite similar to io.open except it handles line-endings differently.
-"""
 from io import open
-from chardet.universaldetector import UniversalDetector
+# from chardet.universaldetector import UniversalDetector
 
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+#logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # remove XML predefined entities from text
 def remove_xml_predefined_entities(raw_text):
@@ -58,26 +48,8 @@ def konspekt_task_ua(args):
 
         try:
              with open(path_to_tmptxt, 'w+', encoding='cp1251', errors='ignore') as f:
-                detector = UniversalDetector()
-                for line in args['body'].splitlines(True):
-                    detector.feed(line)
-                    if detector.done: break
-                detector.close()
-                if detector.result['encoding'] == 'utf-8':
-                    logging.debug(detector.result['encoding'])
-                    raw_text_without_xml_predefined_entities = args['body'].decode('UTF-8', errors='ignore')
-                    raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
-                    f.write(raw_text_without_xml_predefined_entities)
-                elif detector.result['encoding'] == 'windows-1251':
-                    logging.debug(detector.result['encoding'])
-                    raw_text_without_xml_predefined_entities = args['body'].decode('cp1251', errors='ignore')
-                    raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
-                    f.write(raw_text_without_xml_predefined_entities)
-                else:
-                    logging.debug(detector.result['encoding'])
-                    raw_text_without_xml_predefined_entities = args['body'].decode(detector.result['encoding'], errors='ignore')
-                    raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(raw_text_without_xml_predefined_entities)
-                    f.write(raw_text_without_xml_predefined_entities)
+                raw_text_without_xml_predefined_entities = remove_xml_predefined_entities(args['body'])
+                f.write(raw_text_without_xml_predefined_entities)
         except IOError as e:
             logging.error(traceback.format_exc())
             # logging.error(repr(e))

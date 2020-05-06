@@ -5,7 +5,7 @@
 import sys, os, time, tempfile, shutil, traceback
 
 # load libraries for string proccessing
-import re, string
+import re, string, codecs
 
 # for displacy
 import json
@@ -23,9 +23,9 @@ ENGLISH_STEMMER = SnowballStemmer("english")
 # load misc utils
 import pickle
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # for spooler
 import uwsgi
@@ -247,7 +247,7 @@ def get_bytes_from_pdfminer(pdf_path):
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         for page in PDFPage.create_pages(doc):
             interpreter.process_page(page)
-    return output_string.getvalue()
+    return output_bytes.getvalue()
 
 """
 # ------------------------------------------------------------------------------------------------------
@@ -340,8 +340,26 @@ def post_to_queue():
         pr_dr = os.getcwd()
         # txt processing
         if file.filename.rsplit('.', 1)[1].lower() == 'txt':
-            raw_text = file.read()
+            txt_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),txt_file])
+            file.save(destination)
             file.close()
+            with open(destination,'rb') as t_f:
+                r_text = t_f.read()
+                detector = UniversalDetector()
+                for line in r_text.splitlines(True):
+                   detector.feed(line)
+                   if detector.done: break
+                detector.close()
+
+            enc = detector.result['encoding']
+
+            if enc == 'utf-8':
+                with codecs.open(destination, encoding='utf-8') as f:
+                    raw_text = f.read()
+            elif enc == 'windows-1251':
+                with codecs.open(destination, encoding='cp1251') as f:
+                    raw_text = f.read()
             resp = konspekt_task_ua.spool(project_dir = pr_dr.encode(), filename = '1.txt'.encode(), body = raw_text)
             resp = resp.decode('utf-8', errors='ignore')
             resp = resp.rpartition('/')[2]
