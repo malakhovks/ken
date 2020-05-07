@@ -675,7 +675,10 @@ def generate_parcexml():
                     new_item_element.append(new_word_element)
                     # create and append <lemma>
                     new_lemma_element = ET.Element('lemma')
-                    new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
+                    if lemma.lemma_ not in ['-PRON-']:
+                        new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
+                    else:
+                        new_lemma_element.text = lemma.text
                     new_item_element.append(new_lemma_element)
                     # create and append <number>
                     new_number_element = ET.Element('number')
