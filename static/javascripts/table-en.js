@@ -409,19 +409,29 @@ function getFormattedTime() {
     return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s;
 }
 
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
+
 document.getElementById("button-save-table").addEventListener("click", e => {
     iziToast.info({
         title: 'Save spreadsheet as: ',
         position: 'center',
         timeout: 10000,
         buttons: [
-            ['<button>.xls</button>', function (instance, toast) {
+            ['<button>.xlsx</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     onClosing: function (instance, toast, closedBy) {
                         var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
                         $govno.find("th.row-header").remove();
-                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
+                        // tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
+                        var wb = XLSX.utils.table_to_book(document.getElementById('table-body1'), {sheet:"Confor" + getFormattedTime()});
+                        var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+                        saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'confor' + getFormattedTime() + '.xlsx');
                         $govno.remove();
                     }
                 }, toast);
