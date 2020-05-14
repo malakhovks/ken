@@ -415,13 +415,13 @@ document.getElementById("button-save-table").addEventListener("click", e => {
         position: 'center',
         timeout: 10000,
         buttons: [
-            ['<button>.xlsx</button>', function (instance, toast) {
+            ['<button>.xls</button>', function (instance, toast) {
                 instance.hide({
                     transitionOut: 'fadeOutUp',
                     onClosing: function (instance, toast, closedBy) {
                         var $govno = $("#table-body").clone().attr('id', 'table-body1').appendTo("table").hide();
                         $govno.find("th.row-header").remove();
-                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xlsx');
+                        tableToExcel(document.getElementById('table-body1'), 'CONFOR ' + getFormattedTime(), 'confor' + getFormattedTime() + '.xls');
                         $govno.remove();
                     }
                 }, toast);
