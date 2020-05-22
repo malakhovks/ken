@@ -512,7 +512,7 @@ function fetchFileToTaskQueuedService() {
     const fsizeMath = Math.round((fsize / 1024));
 
     if (fsizeMath > 2048) {
-        alert("Файл занадто великий, виберіть файл менше 2 Мб");
+        alert("Файл занадто великий, оберіть файл менше 2 Мб");
         // alert("File too Big, please select a file less than 2mb");
         location.reload();
     } else {
