@@ -13,6 +13,8 @@ import json
 
 # load libraries for NLP pipeline
 import spacy
+# load Matcher
+from spacy.matcher import Matcher
 # load Visualizers 
 from spacy import displacy
 # from textblob import TextBlob
@@ -1367,6 +1369,26 @@ def get_allterms_json():
         # Helper list for multiple-word terms (from 4-word terms)
         multiple_word_terms_help_list_json = []
 
+        # patterns for spaCy Matcher https://spacy.io/usage/rule-based-matching
+        patterns = [
+        # 1 term
+        [{'POS': {'IN':['NOUN', 'PROPN']}}],
+        # 2 terms
+        [{'POS': {'IN':['NOUN', 'ADJ','PROPN']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN']}}],
+        # 3 terms
+        [{'POS': {'IN':['NOUN', 'ADJ','PROPN']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN']}}],
+        # 4 terms
+        [{'POS': {'IN':['NOUN', 'ADJ','PROPN']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN']}},{'POS': {'IN':['NOUN', 'ADJ','PROPN']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN']}}],
+        # 3 terms with APD in the middle
+        [{'POS': {'IN':['NOUN', 'ADJ','PROPN']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN', 'ADP']}}, {'POS': {'IN':['NOUN', 'ADJ','PROPN']}}]
+        ]
+        matcher = Matcher(NLP_EN.vocab)
+        matcher.add("NOUN/PROPN", None, patterns[0])
+        # matcher.add("NOUN/ADJ/PROPN+NOUN/ADJ/PROPN", None, patterns[1])
+        # matcher.add("NOUN/ADJ/PROPN+NOUN/ADJ/PROPN+NOUN/ADJ/PROPN", None, patterns[2])
+        # matcher.add("NOUN/ADJ/PROPN+NOUN/ADJ/PROPN+NOUN/ADJ/PROPN+NOUN/ADJ/PROPN", None, patterns[3])
+        # matcher.add("NOUN/ADJ/PROPN+NOUN/ADJ/PROPN/ADP+NOUN/ADJ/PROPN", None, patterns[4])
+
         try:
             # spaCy doc init + default sentence normalization
             doc = NLP_EN(text_normalization_default(raw_text))
@@ -1388,28 +1410,58 @@ def get_allterms_json():
                 # for processing specific sentence
                 doc_sentence = NLP_EN(sentence_clean)
 
+                # MATCHER
+                # MATCHING NOUN/PROPN --------------------------------------
+                matches = matcher(doc_sentence)
+                for match_id, start, end in matches:
+                    string_id = NLP_EN.vocab.strings[match_id]
+                    span = doc_sentence[start:end]
+
+                    if len(span) == 1:
+
+                        logging.debug('MATCHER | Matched span: ' + span.text + ' | Span lenght: ' + str(len(span)) + ' | Span POS: ' + span.root.pos_)
+
+                        if span.lemma_ not in one_word_terms_help_list_json:
+                            one_word_terms_help_list_json.append(span.lemma_)
+                            term_properties = {}
+                            sentpos_array = []
+                            term_properties['wcount'] = '1'
+                            term_properties['ttype'] = span.root.pos_
+                            term_properties['tname'] = span.lemma_
+                            term_properties['osn'] = ENGLISH_STEMMER.stem(span.text)
+                            sentpos_array.append(str(sentence_index) + '/' + str(span.start+1))
+                            term_properties['sentpos'] = sentpos_array
+                            terms_element[span.lemma_] = term_properties
+                        else:
+                            if span.lemma_ in terms_element:
+                                if str(sentence_index) + '/' + str(span.start+1) not in terms_element[span.lemma_]['sentpos']:
+                                    terms_element[span.lemma_]['sentpos'].append(str(sentence_index) + '/' + str(span.start+1))
+
+                # NP shallow
                 # sentence NP shallow parsing cycle
                 for chunk in doc_sentence.noun_chunks:
 
                     if len(chunk) == 1:
 
-                        logging.debug('Matched Noun Chunk: ' + chunk.text + ' | Noun Chunk lenght: ' + str(len(chunk)) + ' | Noun Chunk POS: ' + str([tkn.pos_ for tkn in chunk]))
+                        if chunk[0].pos_ not in ['PRON']:
 
-                        if chunk.lemma_ not in one_word_terms_help_list_json:
-                            one_word_terms_help_list_json.append(chunk.lemma_)
-                            term_properties = {}
-                            sentpos_array = []
-                            term_properties['wcount'] = '1'
-                            term_properties['ttype'] = chunk.root.pos_
-                            term_properties['tname'] = chunk.lemma_
-                            term_properties['osn'] = ENGLISH_STEMMER.stem(chunk.text)
-                            sentpos_array.append(str(sentence_index) + '/' + str(chunk.start + 1))
-                            term_properties['sentpos'] = sentpos_array
-                            terms_element[chunk.lemma_] = term_properties
-                        else:
-                            if chunk.lemma_ in terms_element:
-                                if str(sentence_index) + '/' + str(chunk.start + 1) not in terms_element[chunk.lemma_]['sentpos']:
-                                    terms_element[chunk.lemma_]['sentpos'].append(str(sentence_index) + '/' + str(chunk.start + 1))
+                            logging.debug('BASE NOUN PHRASE | NOUN CHUNK: ' + chunk.text + ' | Noun chunk lenght: ' + str(len(chunk)) + ' | Noun chunk POS: ' + str([tkn.pos_ for tkn in chunk]))
+
+                            if chunk.lemma_ not in one_word_terms_help_list_json:
+                                one_word_terms_help_list_json.append(chunk.lemma_)
+                                term_properties = {}
+                                sentpos_array = []
+                                term_properties['wcount'] = '1'
+                                term_properties['ttype'] = chunk.root.pos_
+                                term_properties['tname'] = chunk.lemma_
+                                term_properties['osn'] = ENGLISH_STEMMER.stem(chunk.text)
+                                sentpos_array.append(str(sentence_index) + '/' + str(chunk.start + 1))
+                                term_properties['sentpos'] = sentpos_array
+                                terms_element[chunk.lemma_] = term_properties
+                            else:
+                                if chunk.lemma_ in terms_element:
+                                    if str(sentence_index) + '/' + str(chunk.start + 1) not in terms_element[chunk.lemma_]['sentpos']:
+                                        terms_element[chunk.lemma_]['sentpos'].append(str(sentence_index) + '/' + str(chunk.start + 1))
 
             logging.debug(allterms)
             return Response(json.dumps(allterms), mimetype='application/json')
