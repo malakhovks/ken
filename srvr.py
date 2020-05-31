@@ -1342,30 +1342,30 @@ def get_allterms_json():
             raw_text = file.read().decode('utf-8', errors='replace')
             file.close()
 
-    # for allterms JSON structure
-    allterms = {
-      "termsintext": {
-        "exporterms": {
-            "term": {}
-        },
-        "sentences": {
-            "sent": []
+        # for allterms JSON structure
+        allterms = {
+        "termsintext": {
+            "exporterms": {
+                "term": {}
+            },
+            "sentences": {
+                "sent": []
+            }
         }
-      }
-    }
+        }
 
-    terms_element = allterms['termsintext']['exporterms']['term']
-    sent_array = allterms['termsintext']['sentences']['sent']
-    # for allterms JSON structure
+        terms_element = allterms['termsintext']['exporterms']['term']
+        sent_array = allterms['termsintext']['sentences']['sent']
+        # for allterms JSON structure
 
-    # Helper list for 1-word terms
-    one_word_terms_help_list_json = []
-    # Helper list for 2-word terms
-    two_word_terms_help_list_json = []
-    # Helper list for 3-word terms
-    three_word_terms_help_list_json = []
-    # Helper list for multiple-word terms (from 4-word terms)
-    multiple_word_terms_help_list_json = []
+        # Helper list for 1-word terms
+        one_word_terms_help_list_json = []
+        # Helper list for 2-word terms
+        two_word_terms_help_list_json = []
+        # Helper list for 3-word terms
+        three_word_terms_help_list_json = []
+        # Helper list for multiple-word terms (from 4-word terms)
+        multiple_word_terms_help_list_json = []
 
         try:
             # spaCy doc init + default sentence normalization
