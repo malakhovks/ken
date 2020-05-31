@@ -25,8 +25,8 @@ ENGLISH_STEMMER = SnowballStemmer("english")
 import pickle
 import logging
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # for spooler
 import uwsgi
@@ -55,7 +55,6 @@ from flask import Flask, jsonify, flash, request, Response, redirect, url_for, a
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
-# ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'doc', 'docx'])
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 # Load globally spaCy model via package name
@@ -1298,6 +1297,122 @@ def generate_allterms():
             root_termsintext_element.append(sentences_element)
 
             return ET.tostring(root_termsintext_element, encoding='utf8', method='xml')
+        except Exception as e:
+            logging.error(e, exc_info=True)
+            return abort(500)
+    file.close()
+    return abort(400)
+
+@app.route('/ken/api/en/file/json/allterms', methods=['POST'])
+def get_allterms_json():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    file = request.files['file']
+
+    # if user does not select file, browser also submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return abort(400)
+
+    if file and allowed_file(file.filename):
+        # TODO doc/docx processing
+        # pdf processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+            pdf_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),pdf_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                # raw_text = get_text_from_pdfminer(destination)
+                raw_text = get_text_from_pdf(destination)
+        # docx processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'docx':
+            docx_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),docx_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_docx(destination)
+        # txt processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            # decode the file as UTF-8 ignoring any errors
+            raw_text = file.read().decode('utf-8', errors='replace')
+            file.close()
+
+    # for allterms JSON structure
+    allterms = {
+      "termsintext": {
+        "exporterms": {
+            "term": {}
+        },
+        "sentences": {
+            "sent": []
+        }
+      }
+    }
+
+    terms_element = allterms['termsintext']['exporterms']['term']
+    sent_array = allterms['termsintext']['sentences']['sent']
+    # for allterms JSON structure
+
+    # Helper list for 1-word terms
+    one_word_terms_help_list_json = []
+    # Helper list for 2-word terms
+    two_word_terms_help_list_json = []
+    # Helper list for 3-word terms
+    three_word_terms_help_list_json = []
+    # Helper list for multiple-word terms (from 4-word terms)
+    multiple_word_terms_help_list_json = []
+
+        try:
+            # spaCy doc init + default sentence normalization
+            doc = NLP_EN(text_normalization_default(raw_text))
+            # Measure the Size of doc Python Object
+            logging.debug("%s byte", get_size(doc))
+
+            '''
+            # Main text parsing loop for sentences
+            '''
+            for sentence_index, sentence in enumerate(doc.sents):
+                # default sentence normalization
+                sentence_clean = sentence_normalization_default(sentence.text)
+
+                logging.debug('Sentence: ' + sentence_clean)
+
+                # add sentence to sent array
+                sent_array.append(sentence_clean)
+
+                # for processing specific sentence
+                doc_sentence = NLP_EN(sentence_clean)
+
+                # sentence NP shallow parsing cycle
+                for chunk in doc_sentence.noun_chunks:
+
+                    if len(chunk) == 1:
+
+                        logging.debug('Matched Noun Chunk: ' + chunk.text + ' | Noun Chunk lenght: ' + str(len(chunk)) + ' | Noun Chunk POS: ' + str([tkn.pos_ for tkn in chunk]))
+
+                        if chunk.lemma_ not in one_word_terms_help_list_json:
+                            one_word_terms_help_list_json.append(chunk.lemma_)
+                            term_properties = {}
+                            sentpos_array = []
+                            term_properties['wcount'] = '1'
+                            term_properties['ttype'] = chunk.root.pos_
+                            term_properties['tname'] = chunk.lemma_
+                            term_properties['osn'] = ENGLISH_STEMMER.stem(chunk.text)
+                            sentpos_array.append(str(sentence_index) + '/' + str(chunk.start + 1))
+                            term_properties['sentpos'] = sentpos_array
+                            terms_element[chunk.lemma_] = term_properties
+                        else:
+                            if chunk.lemma_ in terms_element:
+                                if str(sentence_index) + '/' + str(chunk.start + 1) not in terms_element[chunk.lemma_]['sentpos']:
+                                    terms_element[chunk.lemma_]['sentpos'].append(str(sentence_index) + '/' + str(chunk.start + 1))
+
+            logging.debug(allterms)
+            return Response(json.dumps(allterms), mimetype='application/json')
         except Exception as e:
             logging.error(e, exc_info=True)
             return abort(500)
