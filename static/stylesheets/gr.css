@@ -9,6 +9,12 @@
     left: 0;
 } */
 
+/* h1 {
+    float: left;
+    text-align: left !important;
+    width: 100%;
+  } */
+
 .canvas-interactive-wrapper {
     position: absolute;
     height: 100%;
