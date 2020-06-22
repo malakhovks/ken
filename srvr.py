@@ -31,8 +31,8 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # for spooler
-import uwsgi
-from tasks import konspekt_task_ua
+# import uwsgi
+# from tasks import konspekt_task_ua
 
 # load libraries for docx processing
 import zipfile
@@ -288,6 +288,10 @@ def get_bytes_from_pdfminer(pdf_path):
 @app.route('/')
 def index():
     return Response(render_template('index.html'), mimetype='text/html')
+
+@app.route('/new')
+def ndx():
+    return Response(render_template('ndx.html'), mimetype='text/html')
 
 @app.route('/en')
 def get_eng():
