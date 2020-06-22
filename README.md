@@ -978,7 +978,7 @@ jQuery.ajax({
 -------
 
 <a name="toc-en"></a>
-**KEn** (Konspekt English) is a natural language processing API service for contextual and semantic analysis with document taxonomy building feature.
+**KEn** (Konspekt English) is an NLP-powered Web service for contextual and semantic analysis with document taxonomy building feature.
 
 ### Table of Contents
 - **[Features](#features-en)**
@@ -989,9 +989,9 @@ jQuery.ajax({
 <a name="features-en"></a>
 ## Features
 
-**KEn** (Konspekt English) network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
+**KEn** network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
-**KEn** (Konspekt English) network toolkit (Web service with API) covers all the most important stages of the natural language processing, namely:
+**KEn** (Konspekt English) Web service covers all the most important stages of the natural language processing, namely:
 
 - extracting text data from e-documents (`pdf`, `docx`, `txt`);
 - text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
