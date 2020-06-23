@@ -32,6 +32,39 @@ html {
    -webkit-linear-gradient(-45deg, rgba(120, 155, 255, 0.9) 50%, rgb(165 232 234) 0%);
   }
 
+  .footer{
+    margin: auto auto;
+    display: flex;
+    width: 50px;
+    justify-content: space-evenly;
+  }
+  .nametag{
+    position: absolute;
+  }
+  .nametag:nth-child(1){
+    animation-name: fade;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-duration: 7s;
+    animation-direction: alternate-reverse;  
+  }
+  .nametag:nth-child(2){
+    animation-name: fade;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-duration: 7s;
+    animation-direction: alternate;
+  }
+  
+  @keyframes fade{
+      0%,45% {
+        opacity: 0;
+  }
+      100%{
+        opacity: 1;
+    }
+  }
+
 /* Grow Shadow __________________________________________________________________________________________________________*/
 .hvr-grow-shadow {
   display: inline-block;
