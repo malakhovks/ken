@@ -30,7 +30,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
-for spooler
+# for spooler
 import uwsgi
 from tasks import konspekt_task_ua
 
