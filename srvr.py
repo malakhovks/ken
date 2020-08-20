@@ -357,6 +357,19 @@ def get_ner():
 # UKRAINIAN PART
 # ------------------------------------------------------------------------------------------------------
 # """
+@app.route('/kua/api/task/message/queued', methods=['POST'])
+def post_message_to_queue():
+    try:
+        req_data = request.get_json()
+        message_text = req_data['message']
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(400)
+    resp = konspekt_task_ua.spool(project_dir = pr_dr.encode(), filename = '1.txt'.encode(), body = message_text)
+    resp = resp.decode('utf-8', errors='ignore')
+    resp = resp.rpartition('/')[2]
+    return jsonify({'task': { 'status': 'queued', 'file': file.filename, 'id': resp}}), 202
+
 @app.route('/kua/api/task/queued', methods=['POST'])
 def post_to_queue():
     if 'file' not in request.files:
