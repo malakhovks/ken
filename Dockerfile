@@ -1,4 +1,5 @@
-FROM python:3.7.7-slim-stretch
+FROM python:3.7.9-slim-stretch
+# FROM python:3.7.7-slim-stretch
 # FROM python:2.7-slim-stretch
 
 # https://linuxhint.com/install_wine_debian_10/

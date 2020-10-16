@@ -145,7 +145,8 @@ class Handler:
                                         new_element.text = sent
         # TODO Encoding variations
         try:
-            return ET.tostring(e, encoding='unicode', method="xml", xml_declaration=True)
+            # return ET.tostring(e, encoding='unicode', method="xml", xml_declaration=True)
+            return ET.tostring(e, encoding='utf-8', method="xml", xml_declaration=True)
         except Exception as e:
             return logging.error(e, exc_info=True)
         # outFile = open(output_structure_path, 'w+', encoding='utf-8')
