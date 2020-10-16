@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-	height:100%;
+	height: 100%;
 	padding: 0;
 }
 
@@ -19,78 +19,80 @@ body {
 	transition: transform .8s;
 }
 
-.dropdown-menu > li > a {
-    color: #0d47a1 !important;
+.dropdown-menu>li>a {
+	color: #0d47a1 !important;
 }
 
-.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
-	background-color:#ffeb3b;
+.dropdown-menu li>a:hover, .dropdown-menu li>a:focus, .dropdown-submenu:hover>a {
+	background-color: #ffeb3b;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-	background-color:#0d47a1;	
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	background-color: #0d47a1;
 }
 
 label {
-    font-weight: normal !important;
+	font-weight: normal !important;
 }
 
-.nav-tabs > li {
-    float:none;
-    display:inline-block;
-    zoom:1;
+.nav-tabs>li {
+	float: none;
+	display: inline-block;
+	zoom: 1;
 }
 
 .nav-tabs {
-    text-align:center;
+	text-align: center;
 }
 
 /* <!-- Basic dropdown --> */
+
 #button-save {
 	background-color: #546E7A;
-    justify-content: center;
-    line-height: 30px;
-    width: 100%;
-    padding: 0;
-    margin: 0 5px 0 0;
-    border: none;
-    color: white;
+	justify-content: center;
+	line-height: 30px;
+	width: 100%;
+	padding: 0;
+	margin: 0 5px 0 0;
+	border: none;
+	color: white;
 }
 
 #button-dropdown-open {
 	background-color: #546E7A;
-    justify-content: center;
-    line-height: 30px;
-    width: 100%;
-    padding: 0;
-    margin: 0 5px 0 0;
-    border: none;
-    color: white;
+	justify-content: center;
+	line-height: 30px;
+	width: 100%;
+	padding: 0;
+	margin: 0 5px 0 0;
+	border: none;
+	color: white;
 }
 
 #button-dropdown-help {
 	background-color: #0d47a1;
-    justify-content: center;
-    line-height: 30px;
-    width: 100%;
-    padding: 0;
-    border: none;
-    color: white;
+	justify-content: center;
+	line-height: 30px;
+	width: 100%;
+	padding: 0;
+	border: none;
+	color: white;
 }
 
 #button-dropdown-project {
 	background-color: #0d47a1;
-    justify-content: center;
-    line-height: 30px;
-    width: 100%;
-    padding: 0;
-    margin: 0 5px 0 0;
-    border: none;
-    color: white;
+	justify-content: center;
+	line-height: 30px;
+	width: 100%;
+	padding: 0;
+	margin: 0 5px 0 0;
+	border: none;
+	color: white;
 }
+
 /* <!-- Basic dropdown --> */
 
-.navbar-default .navbar-nav > li > a::before {
+.navbar-default .navbar-nav>li>a::before {
 	content: '';
 	position: absolute;
 	height: 1px;
@@ -100,21 +102,21 @@ label {
 	transition: width .6s ease-in;
 }
 
-.navbar-default .navbar-nav > li > a:hover::before {
+.navbar-default .navbar-nav>li>a:hover::before {
 	width: calc(100% - 24px);
 	transition: width .6s ease-out;
 }
 
 .container_adapter_for_one_page_view {
-	height:100%;
-	width:100%;
+	height: 100%;
+	width: 100%;
 	padding: 0px 5px 0px 5px;
 	overflow: hidden;
 }
 
 .col-md-3 {
 	padding: 5px 5px 5px 0;
-	height:100%;
+	height: 100%;
 	width: 30%;
 	display: flex;
 	flex-direction: column;
@@ -123,8 +125,8 @@ label {
 
 .col-md-6 {
 	padding: 5px 0;
-	height:100%;
-	width:40%;
+	height: 100%;
+	width: 40%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -167,7 +169,7 @@ label {
 }
 
 .panel-body {
-    padding: 5px;
+	padding: 5px;
 }
 
 #term-tree {
@@ -191,6 +193,7 @@ label {
 }
 
 /*OVERVIEW BUTTON*/
+
 #overview-button, #upload-button {
 	position: relative;
 	margin: 0 0 5px 0;
@@ -238,6 +241,7 @@ label {
 }
 
 /*SELECT*/
+
 select {
 	width: 100%;
 	font-size: 16px;
@@ -248,7 +252,7 @@ select {
 
 #select-block {
 	overflow: hidden;
-	width:100%;
+	width: 100%;
 	height: 100%;
 }
 
@@ -256,7 +260,7 @@ select {
 
 #table-content-block {
 	overflow: auto;
-	width:100%;
+	width: 100%;
 	height: 100%;
 }
 
@@ -266,8 +270,10 @@ select {
 	overflow-y: auto;
 	height: 100%;
 }
- /* mark.js */
- mark {
+
+/* mark.js */
+
+mark {
 	padding: 0;
 	background: transparent;
 	background: linear-gradient(to right, #f0ad4e 50%, transparent 50%);
@@ -275,13 +281,14 @@ select {
 	background-size: 200% 100%;
 	transition: all .5s ease;
 	color: #fff;
-  }
-  
-  mark.animate {
+}
+
+mark.animate {
 	background-position: left bottom;
 	color: #000;
-  }
-  /* mark.js */
+}
+
+/* mark.js */
 
 #sents_from_text {
 	height: auto;
@@ -335,7 +342,7 @@ select {
 	display: flex;
 	justify-content: center;
 	line-height: 30px;
-	width:100%;
+	width: 100%;
 	padding: 0;
 	margin: 0 5px 0 0;
 	border: none;
@@ -350,7 +357,7 @@ select {
 	flex-direction: row;
 }
 
-.table_edit_elements button{
+.table_edit_elements button {
 	height: 30px;
 	background-color: #0d47a1;
 	width: 100%;
@@ -365,6 +372,7 @@ select {
 }
 
 /*TABLE*/
+
 #table-block input {
 	border: none;
 	font-size: 14px;
@@ -379,28 +387,33 @@ select {
 }
 
 /*PLACEHOLDER_________________________________________________________________________________________________________*/
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+
+::-webkit-input-placeholder {
+	/* WebKit, Blink, Edge */
 	color: #cdcdcd;
 }
 
-::-moz-placeholder { /* Mozilla Firefox 19+ */
+::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
 	color: #cdcdcd;
-	opacity:  1;
+	opacity: 1;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+
+:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
 	color: #cdcdcd;
 }
+
 /*PLACEHOLDER_________________________________________________________________________________________________________*/
 
 /*LOADER_________________________________________________________________________________________________________*/
+
 .loader {
 	position: center;
 	display: none;
-  }
-  
-  .outer,
-  .middle,
-  .inner {
+}
+
+.outer, .middle, .inner {
 	border: 3px solid transparent;
 	border-top-color: #546E7A;
 	border-right-color: #546E7A;
@@ -408,40 +421,42 @@ select {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-  }
-  
-  .outer {
+}
+
+.outer {
 	width: 3.5em;
 	height: 3.5em;
 	margin-left: -1.75em;
 	margin-top: -1.75em;
 	animation: spin 2s linear infinite;
-  }
-  
-  .middle {
+}
+
+.middle {
 	width: 2.1em;
 	height: 2.1em;
 	margin-left: -1.05em;
 	margin-top: -1.05em;
 	animation: spin 1.75s linear reverse infinite;
-  }
-  
-  .inner {
+}
+
+.inner {
 	width: 0.8em;
 	height: 0.8em;
 	margin-left: -0.4em;
 	margin-top: -0.4em;
 	animation: spin 1.5s linear infinite;
-  }
-  
-  @keyframes spin {
+}
+
+@keyframes spin {
 	to {
-	  transform: rotate(360deg);
+		transform: rotate(360deg);
 	}
-  }
+}
+
 /*LOADER_________________________________________________________________________________________________________*/
 
 /*displacy_________________________________________________________________________________________________________*/
+
 #displacy {
 	overflow: auto;
 }
@@ -453,7 +468,7 @@ select {
 #displacy-label {
 	position: sticky;
 	top: 0px;
-	background:white;
+	background: white;
 }
 
 .grid-container {
@@ -462,26 +477,26 @@ select {
 	grid-template-rows: min-content 1fr;
 	/* grid-gap: 0.5em; */
 }
+
 /*displacy_________________________________________________________________________________________________________*/
 
 /*material-icons___________________________________________________________________________________________________*/
+
 @font-face {
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;
-	src: url(/static/images/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
-	src: local('Material Icons'),
-		 local('MaterialIcons-Regular'),
-		 url(/static/images/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
-		 url(/static/images/iconfont/MaterialIcons-Regular.woff) format('woff'),
-		 url(/static/images/iconfont/MaterialIcons-Regular.ttf) format('truetype');
-  }
+	src: url(/static/images/iconfont/MaterialIcons-Regular.eot);
+	/* For IE6-8 */
+	src: local('Material Icons'), local('MaterialIcons-Regular'), url(/static/images/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(/static/images/iconfont/MaterialIcons-Regular.woff) format('woff'), url(/static/images/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
 
 .material-icons {
 	font-family: 'Material Icons';
 	font-weight: normal;
 	font-style: normal;
-	font-size: 24px;  /* Preferred icon size */
+	font-size: 24px;
+	/* Preferred icon size */
 	margin: 3px 5px;
 	display: inline-block;
 	line-height: 1;
@@ -490,18 +505,16 @@ select {
 	word-wrap: normal;
 	white-space: nowrap;
 	direction: ltr;
-  
 	/* Support for all WebKit browsers. */
 	-webkit-font-smoothing: antialiased;
 	/* Support for Safari and Chrome. */
 	text-rendering: optimizeLegibility;
-  
 	/* Support for Firefox. */
 	-moz-osx-font-smoothing: grayscale;
-  
 	/* Support for IE. */
 	font-feature-settings: 'liga';
-  }
+}
+
 /*material-icons___________________________________________________________________________________________________*/
 
 /*FOOTER______________________________________________________________________________________________________________*/
@@ -520,9 +533,57 @@ select {
 /*TOGGLE______________________________________________________________________________________________________________*/
 
 /*https://stackoverflow.com/questions/639815/how-to-disable-all-div-content/14973111*/
+
 /* A simple way to disable any DIV including its contents is to just disable mouse interaction. */
+
 /* Note: With this solution, you can’t interact with this element, or any children of this element, with a mouse, or on a touch device. But you can still tab to it with your keyboard. */
+
 .disabledbutton {
-    pointer-events: none;
-    opacity: 0.4;
+	pointer-events: none;
+	opacity: 0.4;
 }
+
+/*MERGE-TAB______________________________________________________________________________________________________________*/
+
+/* #grid-container-merge-tab {
+	display: grid;
+	grid-template-columns: 50% 1fr;
+	grid-template-rows: 50% 1fr;
+	grid-gap: 0.2em;
+	width: 100%;
+	height: 150px;
+	padding: 0.2em;
+} */
+
+#grid-container-merge-tab {
+	display: grid;
+	grid-template-columns: 50% 1fr;
+	grid-template-rows: 50% 1fr;
+	grid-gap: 1px;
+	width: 100%;
+	height: 150px;
+	/* padding: 0.2em; */
+	background-color: #0d47a1;
+	margin: 2px 0 0 0;
+}
+
+/* .grid-item {
+	background-color: #e4e4e4;
+	color: black;
+	padding: 0.5em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} */
+
+.grid-item {
+	background-color: #ffffff;
+	color: black;
+	padding: 0.5em;
+	/* display: flex; */
+	display: grid;
+	justify-content: center;
+	align-items: center;
+}
+
+/*MERGE-TAB______________________________________________________________________________________________________________*/

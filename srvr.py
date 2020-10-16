@@ -42,6 +42,9 @@ TEXT = WORD_NAMESPACE + 't'
 # load libraries for XML proccessing
 import xml.etree.ElementTree as ET
 
+# load comparator
+from terms_comparator import Handler
+
 # load libraries for pdf processing pdfminer
 from io import StringIO, BytesIO
 from pdfminer.converter import TextConverter
@@ -542,6 +545,38 @@ def get_parce_result():
         shutil.rmtree('/var/tmp/tasks/konspekt/' + task_id)
 
     return ET.tostring(root, method='xml'), 200
+
+@app.route('/kua/api/task/merge', methods=['POST'])
+def merge_alltermsxml_structurexml():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    uploaded_files = request.files.getlist("file")
+
+    for file in uploaded_files:
+        # if user does not select file, browser also submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return abort(400)
+
+    destinations_list = []
+    comparator = Handler()
+
+    for file in uploaded_files:
+        # if file.filename.rsplit('.', 1)[1].lower() == 'xml':
+        xml_file = secure_filename(file.filename)
+        xml_file_destination = "/".join([tempfile.mkdtemp(),xml_file])
+        file.save(xml_file_destination)
+        destinations_list.append(xml_file_destination)
+        file.close()
+    try:
+        result = comparator.make_comparation(input_terms_path=destinations_list[0], input_structure_path=destinations_list[1])
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+    return result
 
 """
 # ENGLISH PART

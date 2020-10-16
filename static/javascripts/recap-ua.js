@@ -39,6 +39,8 @@ var $buttonNewProjectAndClearAll = $('#button-new-project'),
     $sortSelect = $('#sort-select'),
     $buttonSaveProject = $('#button-save-project'),
     $textareaNotes = $('#notes');
+    $alltermsXml = $('#allterms-xml');
+    $structureXml = $('#structure-xml');
 
 $buttonNewProjectAndClearAll.click(function () {
     iziToast.warning({
@@ -1319,3 +1321,125 @@ function saveNotesToLF() {
     });
 }
 // the textarea sutosave ----------------------------------------------------------------------------------------------
+
+// comparator ----------------------------------------------------------------------------------------------
+function fetchFileToMergeService() {
+    form = new FormData();
+    form.append("file", $alltermsXml[0].files[0]);
+    form.append("file", $structureXml[0].files[0]);
+
+    if (self.fetch) {
+        // Show progress bar
+        $("body").css("cursor", "progress");
+        $(".loader").show();
+        // Disable any DIV including its contents is to just disable mouse interaction.
+        $(".container_adapter_for_one_page_view").addClass("disabledbutton");
+        fetch('/kua/api/task/merge', {
+            method: 'post',
+            body: form
+        }).then(response => {
+            if (response.status == 503) {
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                iziToast.warning({
+                    title: 'Сервіс зайнятий, спробуйте ще раз.',
+                    // title: 'Service Unavailable error, try again later.',
+                    message: 'Status: ' + response.status,
+                    position: 'bottomLeft',
+                    onClosed: function () {
+                        iziToast.destroy();
+                    }
+                });
+                return;
+            }
+            if (!response.ok) {
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+                throw new Error(response.status)
+            }
+            return response.text().then(result => {
+                // xmldom = new DOMParser().parseFromString(result, "text/xml");
+
+                let blob = new Blob([result], { type: "text/xml" });
+                localforage.setItem('blob-nodedata', blob).then(() => {
+                    console.log('blob-nodedata' + ' item added to database (localforage)');
+                }).catch((error) => {
+                    console.log(error);
+                })
+                downloadLink = document.createElement("a");
+                // Make sure that the link is not displayed
+                downloadLink.style.display = "none";
+                // Add the link to your DOM
+                document.body.appendChild(downloadLink);
+                url = window.URL.createObjectURL(blob);
+                downloadLink.href = url;
+                downloadLink.download = 'nodedata.xml';
+                downloadLink.click();
+                // Hide progress bar
+                $("body").css("cursor", "default");
+                $(".loader").hide();
+                $(".container_adapter_for_one_page_view").removeClass("disabledbutton");
+            })
+        })
+    } else {
+        iziToast.warning({
+            title: 'Fetch error!',
+            message: 'Ваш браузер застарів, встановіть актуальну версію Google Chrome!',
+            // message: 'Use the most recent version of Google Chrome browser!',
+            position: 'bottomLeft',
+            onClosed: function () {
+                iziToast.destroy();
+            }
+        });
+    }
+}
+// merge
+$('#button-merge').click(function () {
+    if (document.getElementById("allterms-xml").files.length == 0 || document.getElementById("structure-xml").files.length == 0) {
+        console.log("no files selected");
+        iziToast.warning({
+            title: 'Файли не обрані!',
+            message: 'Оберіть файли!',
+            // message: 'Use the most recent version of Google Chrome browser!',
+            position: 'bottomLeft',
+            onClosed: function () {
+                iziToast.destroy();
+            }
+        });
+    } else {
+        fetchFileToMergeService();
+    }
+});
+// merge download
+$('#button-merge-download').click(function () {
+    localforage.getItem('blob-nodedata').then((value) => {
+        if (value) {
+            downloadLink = document.createElement("a");
+            // Make sure that the link is not displayed
+            downloadLink.style.display = "none";
+            // Add the link to your DOM
+            document.body.appendChild(downloadLink);
+            url = window.URL.createObjectURL(value);
+            downloadLink.href = url;
+            downloadLink.download = 'blob-nodedata.xml';
+            downloadLink.click();
+        } else {
+            console.log(lastRecappedFileData.results.parcexmlAlias + ' not exist!');
+        }
+    }).catch(function (err) {
+        console.log(err);
+        iziToast.error({
+            title: 'Помилка!',
+            message: 'Дивіться деталі в JavaScript Console.',
+            position: 'bottomLeft',
+            onClosed: function () {
+                iziToast.destroy();
+            }
+        });
+    });
+});
+// comparator ----------------------------------------------------------------------------------------------

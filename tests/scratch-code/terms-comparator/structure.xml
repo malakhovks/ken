@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Graph nodesize="10" vspacing="5" hspacing="20" padding="4" guid="cb331d51-b0a8-42bc-878d-85d30fd3d570" searchurl="">
+  <datagroups/>
+  <Nodes>
+    <Node guid="1B61DDCAE9D7" nodeName="Департамент військово-технічної політики, розвитку озброєння та військової техніки Міністерства оборони України" nclass="" shape="circle" color="13421772" xPos="640" yPos="40" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDCA96EE" nodeName="Завдання" nclass="" shape="circle" color="13421772" xPos="240" yPos="239.65" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDCAB8AE" nodeName="Напрямки діяльності" nclass="" shape="circle" color="13421772" xPos="440" yPos="1875.85" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDDB3810" nodeName="Права" nclass="" shape="circle" color="13421772" xPos="440" yPos="3881.1" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDDE476A" nodeName="військово-технічна політика" nclass="" shape="circle" color="13421772" xPos="40" yPos="40" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDEBA8D0" nodeName="Державна програма" nclass="" shape="circle" color="13421772" xPos="40" yPos="90" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDEE806E" nodeName="цільова програма" nclass="" shape="circle" color="13421772" xPos="40" yPos="140" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DDF2895D" nodeName="НДДКР" nclass="" shape="circle" color="13421772" xPos="40" yPos="190" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE0834B6" nodeName="життєдіяльність Збройних Сил України" nclass="" shape="circle" color="13421772" xPos="40" yPos="240" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE0BBEC4" nodeName="охорона державної таємниці" nclass="" shape="circle" color="13421772" xPos="40" yPos="290" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE0E8353" nodeName="захист інформації" nclass="" shape="circle" color="13421772" xPos="40" yPos="340" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE105350" nodeName="міжнародне співробітництво" nclass="" shape="circle" color="13421772" xPos="40" yPos="390" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE102F29" nodeName="експортний контроль" nclass="" shape="circle" color="13421772" xPos="40" yPos="440" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE20FB48" nodeName="Конституція" nclass="" shape="circle" color="13421772" xPos="40" yPos="490" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE20DC0A" nodeName="Закон" nclass="" shape="circle" color="13421772" xPos="240" yPos="539.35" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE20B64E" nodeName="Акт" nclass="" shape="circle" color="13421772" xPos="240" yPos="639.8" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE2FD1EC" nodeName="Наказ" nclass="" shape="circle" color="13421772" xPos="240" yPos="765.8" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE2F7FAE" nodeName="Закон України" nclass="" shape="circle" color="13421772" xPos="40" yPos="540" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE2F2986" nodeName="Президент України" nclass="" shape="circle" color="13421772" xPos="40" yPos="590" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE2FE17D" nodeName="Верховна Рада України" nclass="" shape="circle" color="13421772" xPos="40" yPos="640" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE3F5985" nodeName="Кабінет Міністрів України" nclass="" shape="circle" color="13421772" xPos="40" yPos="690" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE42A8AF" nodeName="Міністерство оборони України" nclass="" shape="circle" color="13421772" xPos="40" yPos="740" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE4572EB" nodeName="центральний орган виконавчої влади" nclass="" shape="circle" color="13421772" xPos="40" yPos="790" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE4AD144" nodeName="нормативно-правовий акт" nclass="" shape="circle" color="13421772" xPos="40" yPos="840" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE4D2A35" nodeName="технічний регламент" nclass="" shape="circle" color="13421772" xPos="40" yPos="890" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE503B81" nodeName="стандарт" nclass="" shape="circle" color="13421772" xPos="40" yPos="940" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE5645F2" nodeName="державна космічна політика" nclass="" shape="circle" color="13421772" xPos="40" yPos="990" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE5BDB83" nodeName="пропозиція" nclass="" shape="circle" color="13421772" xPos="240" yPos="1914.9" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE5EBED3" nodeName="науково-технічна діяльність" nclass="" shape="circle" color="13421772" xPos="40" yPos="1040" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE619E36" nodeName="фінансово-економічне забезпечення" nclass="" shape="circle" color="13421772" xPos="40" yPos="1090" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE63FDE6" nodeName="військово-технічне співробітництво" nclass="" shape="circle" color="13421772" xPos="40" yPos="1140" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE66BD88" nodeName="оперативно-стратегічні вимоги" nclass="" shape="circle" color="13421772" xPos="40" yPos="1190" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE69BBA7" nodeName="оперативно-тактичні вимоги" nclass="" shape="circle" color="13421772" xPos="40" yPos="1240" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE6C1968" nodeName="звернення громадян" nclass="" shape="circle" color="13421772" xPos="40" yPos="1290" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE71359D" nodeName="строк засекречування" nclass="" shape="circle" color="13421772" xPos="40" yPos="1340" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE747DFD" nodeName="дослідження" nclass="" shape="circle" color="13421772" xPos="40" yPos="1390" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE744960" nodeName="державне оборонне замовлення" nclass="" shape="circle" color="13421772" xPos="40" yPos="1440" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE742E68" nodeName="закупівля" nclass="" shape="circle" color="13421772" xPos="40" yPos="1490" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE74D6FE" nodeName="щорічний звіт" nclass="" shape="circle" color="13421772" xPos="40" yPos="1540" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE74226E" nodeName="заключний звіт" nclass="" shape="circle" color="13421772" xPos="40" yPos="1590" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE745A52" nodeName="подання" nclass="" shape="circle" color="13421772" xPos="40" yPos="1640" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE848382" nodeName="розподіл коштів" nclass="" shape="circle" color="13421772" xPos="40" yPos="1690" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE933EE0" nodeName="розрахунковий (платіжний) документ" nclass="" shape="circle" color="13421772" xPos="40" yPos="1740" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DE934F4E" nodeName="інформація" nclass="" shape="circle" color="13421772" xPos="40" yPos="1790" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEA43315" nodeName="Стратегічний оборонний бюлетень" nclass="" shape="circle" color="13421772" xPos="40" yPos="1840" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEA7B74D" nodeName="“Біла книга”" nclass="" shape="circle" color="13421772" xPos="40" yPos="1890" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEAAF70E" nodeName="бюджетний запит" nclass="" shape="circle" color="13421772" xPos="40" yPos="1940" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEAD109E" nodeName="державний експерт" nclass="" shape="circle" color="13421772" xPos="40" yPos="1990" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEAF17A5" nodeName="оборонний огляд" nclass="" shape="circle" color="13421772" xPos="40" yPos="2040" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEB21181" nodeName="аналіз можливостей підприємств" nclass="" shape="circle" color="13421772" xPos="40" yPos="2090" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEB5902F" nodeName="випробування зразків ОВТ" nclass="" shape="circle" color="13421772" xPos="40" yPos="2140" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEB873AE" nodeName="претензійна робота" nclass="" shape="circle" color="13421772" xPos="40" yPos="2190" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEBB519E" nodeName="облік" nclass="" shape="circle" color="13421772" xPos="240" yPos="2415.15" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEBEBB60" nodeName="мобілізація" nclass="" shape="circle" color="13421772" xPos="40" yPos="2240" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC18F14" nodeName="демобілізація" nclass="" shape="circle" color="13421772" xPos="40" yPos="2290" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC3B730" nodeName="бюджетне призначення" nclass="" shape="circle" color="13421772" xPos="40" yPos="2340" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC65A12" nodeName="асигнування" nclass="" shape="circle" color="13421772" xPos="40" yPos="2390" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC838A9" nodeName="операція за централізованими розрахунками" nclass="" shape="circle" color="13421772" xPos="40" yPos="2440" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC85D48" nodeName="аналітичний облік" nclass="" shape="circle" color="13421772" xPos="40" yPos="2490" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC82F6E" nodeName="наукова діяльність" nclass="" shape="circle" color="13421772" xPos="40" yPos="2540" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC8E9D1" nodeName="діяльність структурних підрозділів" nclass="" shape="circle" color="13421772" xPos="40" yPos="2590" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC833F9" nodeName="договір" nclass="" shape="circle" color="13421772" xPos="40" yPos="2640" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEC82455" nodeName="контракт" nclass="" shape="circle" color="13421772" xPos="40" yPos="2690" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DED89B71" nodeName="управління ризиками" nclass="" shape="circle" color="13421772" xPos="40" yPos="2740" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DED87C6F" nodeName="програма (проект)" nclass="" shape="circle" color="13421772" xPos="40" yPos="2790" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DED81D36" nodeName="науково-технічна продукція" nclass="" shape="circle" color="13421772" xPos="40" yPos="2840" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DED8EE27" nodeName="прийняття на озброєння" nclass="" shape="circle" color="13421772" xPos="40" yPos="2890" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEE7DEB1" nodeName="відповідність результатів робіт" nclass="" shape="circle" color="13421772" xPos="40" yPos="2940" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEE79842" nodeName="протокол цін" nclass="" shape="circle" color="13421772" xPos="40" yPos="2990" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEE7710A" nodeName="рекламаційна робота" nclass="" shape="circle" color="13421772" xPos="40" yPos="3040" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEE7F912" nodeName="міжнародне оборонне співробітництво" nclass="" shape="circle" color="13421772" xPos="40" yPos="3090" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEE72A9A" nodeName="заступник Міністра оборони України" nclass="" shape="circle" color="13421772" xPos="40" yPos="3140" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEE7DA77" nodeName="звітність" nclass="" shape="circle" color="13421772" xPos="240" yPos="3215.45" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEF7855C" nodeName="фінансова звітність" nclass="" shape="circle" color="13421772" xPos="40" yPos="3190" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEF73BF9" nodeName="статистична звітність" nclass="" shape="circle" color="13421772" xPos="40" yPos="3240" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEF79B3F" nodeName="міжнародна технічна допомога" nclass="" shape="circle" color="13421772" xPos="40" yPos="3290" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DEF74E7D" nodeName="діяльність" nclass="" shape="circle" color="13421772" xPos="240" yPos="2671.45" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF0C96A5" nodeName="повсякденна службова діяльність" nclass="" shape="circle" color="13421772" xPos="40" yPos="3340" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF0F3E0A" nodeName="управлінська діяльність" nclass="" shape="circle" color="13421772" xPos="40" yPos="3390" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF1348C2" nodeName="матеріали" nclass="" shape="circle" color="13421772" xPos="40" yPos="3440" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF169A4F" nodeName="Генеральний штаб" nclass="" shape="circle" color="13421772" xPos="40" yPos="3490" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF19E88C" nodeName="доукомплектування за штатом воєнного часу" nclass="" shape="circle" color="13421772" xPos="40" yPos="3540" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF1D1C7E" nodeName="бронювання військовозобов’язаних" nclass="" shape="circle" color="13421772" xPos="40" yPos="3590" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF234FC4" nodeName="підвищення професійної підготовки особового складу" nclass="" shape="circle" color="13421772" xPos="40" yPos="3640" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF26BE02" nodeName="запобігання корупції" nclass="" shape="circle" color="13421772" xPos="40" yPos="3690" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF29D917" nodeName="недопущення вчинення правопорушень" nclass="" shape="circle" color="13421772" xPos="40" yPos="3740" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF31A3D4" nodeName="Рада національної безпеки і оборони України" nclass="" shape="circle" color="13421772" xPos="40" yPos="3790" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF34D753" nodeName="державна таємниця" nclass="" shape="circle" color="13421772" xPos="240" yPos="289.65" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF39AAE5" nodeName="документування" nclass="" shape="circle" color="13421772" xPos="40" yPos="3840" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF3B9DB9" nodeName="органи військового управління" nclass="" shape="circle" color="13421772" xPos="40" yPos="3890" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF3B43E9" nodeName="скликання нарад" nclass="" shape="circle" color="13421772" xPos="40" yPos="3940" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF3B4673" nodeName="створення комісій" nclass="" shape="circle" color="13421772" xPos="40" yPos="3990" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF3BA421" nodeName="створення робочих груп" nclass="" shape="circle" color="13421772" xPos="40" yPos="4040" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF4BC280" nodeName="проведення наукових конференцій" nclass="" shape="circle" color="13421772" xPos="40" yPos="4090" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF4BE4AC" nodeName="правочин" nclass="" shape="circle" color="13421772" xPos="40" yPos="4140" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF4BC5C5" nodeName="експертна оцінка" nclass="" shape="circle" color="13421772" xPos="240" yPos="4189.25" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF4B74D2" nodeName="матеріальні носії інформації" nclass="" shape="circle" color="13421772" xPos="40" yPos="4190" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF5A666A" nodeName="бази даних" nclass="" shape="circle" color="13421772" xPos="40" yPos="4240" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF5A3DAA" nodeName="порадник" nclass="" shape="circle" color="13421772" xPos="40" yPos="4290" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF5A2329" nodeName="інструкція" nclass="" shape="circle" color="13421772" xPos="40" yPos="4340" font="Verdana" fontsize="14"/>
+    <Node guid="1B61DF5AAA7A" nodeName="методичні рекомендації" nclass="" shape="circle" color="13421772" xPos="40" yPos="4390" font="Verdana" fontsize="14"/>
+  </Nodes>
+  <Linkgroups>
+    <Group name="підписує" color="10066329"/>
+    <Group name="представляти інтереси" color="10066329"/>
+    <Group name="залучати" color="10066329"/>
+    <Group name="контроль" color="10066329"/>
+    <Group name="Default" color="10066329"/>
+    <Group name="готує та подає" color="10066329"/>
+    <Group name="замовляє і формує" color="10066329"/>
+    <Group name="визначення обізнаності" color="10066329"/>
+    <Group name="координує" color="10066329"/>
+    <Group name="погоджує" color="10066329"/>
+    <Group name="розробляти" color="10066329"/>
+    <Group name="розроблення" color="10066329"/>
+    <Group name="розглядає" color="10066329"/>
+    <Group name="отримання" color="10066329"/>
+    <Group name="забезпечує" color="10066329"/>
+    <Group name="організовує" color="10066329"/>
+    <Group name="здійснювати" color="10066329"/>
+    <Group name="представляє" color="10066329"/>
+    <Group name="виконання" color="10066329"/>
+    <Group name="складання" color="10066329"/>
+    <Group name="надає допомогу" color="10066329"/>
+    <Group name="одержувати" color="10066329"/>
+    <Group name="забезпечення" color="10066329"/>
+    <Group name="проведення" color="10066329"/>
+    <Group name="здійснює заходи" color="10066329"/>
+    <Group name="облік та контроль" color="10066329"/>
+    <Group name="формування" color="10066329"/>
+    <Group name="планування" color="10066329"/>
+    <Group name="перевіряє" color="10066329"/>
+    <Group name="підготовка" color="10066329"/>
+    <Group name="інформування" color="10066329"/>
+    <Group name="ініціювати" color="10066329"/>
+    <Group name="здійснення" color="10066329"/>
+    <Group name="укладає" color="10066329"/>
+    <Group name="використовувати" color="10066329"/>
+    <Group name="бере участь" color="10066329"/>
+  </Linkgroups>
+  <Edges>
+    <Edge guid="1B61DDCA5E0C" edgeName="" node1="Завдання" node2="Департамент військово-технічної політики, розвитку озброєння та військової техніки Міністерства оборони України" group="Default" istwoway="false"/>
+    <Edge guid="1B61DDDA5BC7" edgeName="" node1="Напрямки діяльності" node2="Департамент військово-технічної політики, розвитку озброєння та військової техніки Міністерства оборони України" group="Default" istwoway="false"/>
+    <Edge guid="1B61DDDD83F0" edgeName="" node1="Права" node2="Департамент військово-технічної політики, розвитку озброєння та військової техніки Міністерства оборони України" group="Default" istwoway="false"/>
+    <Edge guid="1B61DDEAB40A" edgeName="" node1="військово-технічна політика" node2="Завдання" group="формування" istwoway="false"/>
+    <Edge guid="1B61DDF1A626" edgeName="" node1="Державна програма" node2="Завдання" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DDF172AA" edgeName="" node1="цільова програма" node2="Завдання" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE080893" edgeName="" node1="НДДКР" node2="Завдання" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE0ACB18" edgeName="" node1="життєдіяльність Збройних Сил України" node2="Завдання" group="забезпечення" istwoway="false"/>
+    <Edge guid="1B61DE0D57C0" edgeName="" node1="охорона державної таємниці" node2="Завдання" group="забезпечення" istwoway="false"/>
+    <Edge guid="1B61DE102D72" edgeName="" node1="захист інформації" node2="Завдання" group="забезпечення" istwoway="false"/>
+    <Edge guid="1B61DE10C65B" edgeName="" node1="міжнародне співробітництво" node2="Завдання" group="здійснення" istwoway="false"/>
+    <Edge guid="1B61DE20A210" edgeName="" node1="експортний контроль" node2="Завдання" group="здійснення" istwoway="false"/>
+    <Edge guid="1B61DE20CFFE" edgeName="" node1="Конституція" node2="Напрямки діяльності" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE20A983" edgeName="" node1="Закон" node2="Напрямки діяльності" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE2FA51C" edgeName="" node1="Акт" node2="Напрямки діяльності" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE4CA0D3" edgeName="" node1="Наказ" node2="Напрямки діяльності" group="розроблення" istwoway="false"/>
+    <Edge guid="1B61DE2F465E" edgeName="" node1="Закон України" node2="Закон" group="Default" istwoway="false"/>
+    <Edge guid="1B61DE2FD427" edgeName="" node1="Президент України" node2="Акт" group="Default" istwoway="false"/>
+    <Edge guid="1B61DE2FC128" edgeName="" node1="Верховна Рада України" node2="Акт" group="Default" istwoway="false"/>
+    <Edge guid="1B61DE41D023" edgeName="" node1="Кабінет Міністрів України" node2="Акт" group="Default" istwoway="false"/>
+    <Edge guid="1B61DE457028" edgeName="" node1="Міністерство оборони України" node2="Наказ" group="Default" istwoway="false"/>
+    <Edge guid="1B61DE47760E" edgeName="" node1="центральний орган виконавчої влади" node2="Наказ" group="Default" istwoway="false"/>
+    <Edge guid="1B61DE499D63" edgeName="" node1="Закон України" node2="Напрямки діяльності" group="розроблення" istwoway="false"/>
+    <Edge guid="1B61DE4CA4C1" edgeName="" node1="нормативно-правовий акт" node2="Напрямки діяльності" group="розроблення" istwoway="false"/>
+    <Edge guid="1B61DE4F09DF" edgeName="" node1="технічний регламент" node2="Напрямки діяльності" group="розроблення" istwoway="false"/>
+    <Edge guid="1B61DE5231BE" edgeName="" node1="стандарт" node2="Напрямки діяльності" group="розроблення" istwoway="false"/>
+    <Edge guid="1B61DE737031" edgeName="" node1="Державна програма" node2="Напрямки діяльності" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE7457E1" edgeName="" node1="цільова програма" node2="Напрямки діяльності" group="виконання" istwoway="false"/>
+    <Edge guid="1B61DE593753" edgeName="" node1="державна космічна політика" node2="Напрямки діяльності" group="розроблення" istwoway="false"/>
+    <Edge guid="1B61DED870D6" edgeName="" node1="НДДКР" node2="Напрямки діяльності" group="облік та контроль" istwoway="false"/>
+    <Edge guid="1B61DE7412FA" edgeName="" node1="пропозиція" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DEC8F260" edgeName="" node1="науково-технічна діяльність" node2="Напрямки діяльності" group="координує" istwoway="false"/>
+    <Edge guid="1B61DE63A15F" edgeName="" node1="фінансово-економічне забезпечення" node2="Напрямки діяльності" group="здійснення" istwoway="false"/>
+    <Edge guid="1B61DF1877CC" edgeName="" node1="військово-технічне співробітництво" node2="Напрямки діяльності" group="надає допомогу" istwoway="false"/>
+    <Edge guid="1B61DE6EB1E6" edgeName="" node1="оперативно-стратегічні вимоги" node2="Напрямки діяльності" group="погоджує" istwoway="false"/>
+    <Edge guid="1B61DE6E3732" edgeName="" node1="оперативно-тактичні вимоги" node2="Напрямки діяльності" group="погоджує" istwoway="false"/>
+    <Edge guid="1B61DE6ED4C7" edgeName="" node1="звернення громадян" node2="Напрямки діяльності" group="розглядає" istwoway="false"/>
+    <Edge guid="1B61DED80BF7" edgeName="" node1="охорона державної таємниці" node2="Напрямки діяльності" group="контроль" istwoway="false"/>
+    <Edge guid="1B61DE738D79" edgeName="" node1="строк засекречування" node2="Напрямки діяльності" group="погоджує" istwoway="false"/>
+    <Edge guid="1B61DEB8A2FC" edgeName="" node1="дослідження" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DED8F40E" edgeName="" node1="державне оборонне замовлення" node2="Напрямки діяльності" group="замовляє і формує" istwoway="false"/>
+    <Edge guid="1B61DEB7C1F6" edgeName="" node1="закупівля" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DE74FDD9" edgeName="" node1="щорічний звіт" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DE74D505" edgeName="" node1="заключний звіт" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DE8468B2" edgeName="" node1="подання" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DE93446E" edgeName="" node1="розподіл коштів" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DE932461" edgeName="" node1="розрахунковий (платіжний) документ" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DEA38E25" edgeName="" node1="інформація" node2="Напрямки діяльності" group="готує та подає" istwoway="false"/>
+    <Edge guid="1B61DEA6EE9B" edgeName="" node1="Стратегічний оборонний бюлетень" node2="пропозиція" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEA92CDA" edgeName="" node1="“Біла книга”" node2="пропозиція" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEAC6BF5" edgeName="" node1="бюджетний запит" node2="пропозиція" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEAFE2CB" edgeName="" node1="державний експерт" node2="пропозиція" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEB1EE71" edgeName="" node1="оборонний огляд" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DEB443F5" edgeName="" node1="аналіз можливостей підприємств" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DEB72214" edgeName="" node1="випробування зразків ОВТ" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DEBA9D0F" edgeName="" node1="претензійна робота" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DEBDBF59" edgeName="" node1="облік" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DF19B06B" edgeName="" node1="мобілізація" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DEC2BE3A" edgeName="" node1="демобілізація" node2="Напрямки діяльності" group="проведення" istwoway="false"/>
+    <Edge guid="1B61DEC51811" edgeName="" node1="бюджетне призначення" node2="облік" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEC8199A" edgeName="" node1="асигнування" node2="облік" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEC81B1F" edgeName="" node1="операція за централізованими розрахунками" node2="облік" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEC87F75" edgeName="" node1="аналітичний облік" node2="облік" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEC8D774" edgeName="" node1="наукова діяльність" node2="Напрямки діяльності" group="координує" istwoway="false"/>
+    <Edge guid="1B61DEC8A255" edgeName="" node1="діяльність структурних підрозділів" node2="Напрямки діяльності" group="координує" istwoway="false"/>
+    <Edge guid="1B61DED80F19" edgeName="" node1="договір" node2="Напрямки діяльності" group="контроль" istwoway="false"/>
+    <Edge guid="1B61DED808FF" edgeName="" node1="контракт" node2="Напрямки діяльності" group="контроль" istwoway="false"/>
+    <Edge guid="1B61DED88E87" edgeName="" node1="управління ризиками" node2="Напрямки діяльності" group="контроль" istwoway="false"/>
+    <Edge guid="1B61DED8575C" edgeName="" node1="програма (проект)" node2="Напрямки діяльності" group="контроль" istwoway="false"/>
+    <Edge guid="1B61DED8276B" edgeName="" node1="науково-технічна продукція" node2="Напрямки діяльності" group="облік та контроль" istwoway="false"/>
+    <Edge guid="1B61DED89E96" edgeName="" node1="прийняття на озброєння" node2="Напрямки діяльності" group="забезпечує" istwoway="false"/>
+    <Edge guid="1B61DEE7CF4A" edgeName="" node1="відповідність результатів робіт" node2="Напрямки діяльності" group="перевіряє" istwoway="false"/>
+    <Edge guid="1B61DEE7FA2A" edgeName="" node1="протокол цін" node2="Напрямки діяльності" group="підписує" istwoway="false"/>
+    <Edge guid="1B61DEE747EE" edgeName="" node1="рекламаційна робота" node2="Напрямки діяльності" group="бере участь" istwoway="false"/>
+    <Edge guid="1B61DF18E979" edgeName="" node1="міжнародне оборонне співробітництво" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DEF7A933" edgeName="" node1="заступник Міністра оборони України" node2="Напрямки діяльності" group="планування" istwoway="false"/>
+    <Edge guid="1B61DEF72993" edgeName="" node1="звітність" node2="Напрямки діяльності" group="складання" istwoway="false"/>
+    <Edge guid="1B61DEF74C9D" edgeName="" node1="фінансова звітність" node2="звітність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DEF71494" edgeName="" node1="статистична звітність" node2="звітність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF15726B" edgeName="" node1="Міністерство оборони України" node2="Напрямки діяльності" group="надає допомогу" istwoway="false"/>
+    <Edge guid="1B61DEF780C6" edgeName="" node1="міжнародна технічна допомога" node2="Напрямки діяльності" group="отримання" istwoway="false"/>
+    <Edge guid="1B61DEF7B2B9" edgeName="" node1="діяльність" node2="Напрямки діяльності" group="планування" istwoway="false"/>
+    <Edge guid="1B61DF07D614" edgeName="" node1="науково-технічна діяльність" node2="діяльність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF09BA17" edgeName="" node1="наукова діяльність" node2="діяльність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF0CFC1D" edgeName="" node1="діяльність структурних підрозділів" node2="діяльність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF0F5EAB" edgeName="" node1="повсякденна службова діяльність" node2="діяльність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF12FF8C" edgeName="" node1="управлінська діяльність" node2="діяльність" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF15C1F8" edgeName="" node1="матеріали" node2="Напрямки діяльності" group="підготовка" istwoway="false"/>
+    <Edge guid="1B61DF18A3EB" edgeName="" node1="Генеральний штаб" node2="Напрямки діяльності" group="надає допомогу" istwoway="false"/>
+    <Edge guid="1B61DF1C3556" edgeName="" node1="доукомплектування за штатом воєнного часу" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF1F6189" edgeName="" node1="бронювання військовозобов’язаних" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF21D2A0" edgeName="" node1="захист інформації" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF222265" edgeName="" node1="повсякденна службова діяльність" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF25854D" edgeName="" node1="підвищення професійної підготовки особового складу" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF28C092" edgeName="" node1="запобігання корупції" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF2BB8D7" edgeName="" node1="недопущення вчинення правопорушень" node2="Напрямки діяльності" group="здійснює заходи" istwoway="false"/>
+    <Edge guid="1B61DF2DD400" edgeName="" node1="Президент України" node2="Напрямки діяльності" group="інформування" istwoway="false"/>
+    <Edge guid="1B61DF2FA128" edgeName="" node1="Верховна Рада України" node2="Напрямки діяльності" group="інформування" istwoway="false"/>
+    <Edge guid="1B61DF31FA6B" edgeName="" node1="Кабінет Міністрів України" node2="Напрямки діяльності" group="інформування" istwoway="false"/>
+    <Edge guid="1B61DF33524A" edgeName="" node1="Рада національної безпеки і оборони України" node2="Напрямки діяльності" group="інформування" istwoway="false"/>
+    <Edge guid="1B61DF367A62" edgeName="" node1="державна таємниця" node2="Напрямки діяльності" group="визначення обізнаності" istwoway="false"/>
+    <Edge guid="1B61DF38E7CD" edgeName="" node1="охорона державної таємниці" node2="державна таємниця" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF3B0877" edgeName="" node1="документування" node2="Напрямки діяльності" group="організовує" istwoway="false"/>
+    <Edge guid="1B61DF3BFFFF" edgeName="" node1="інформація" node2="Права" group="одержувати" istwoway="false"/>
+    <Edge guid="1B61DF5AE3E7" edgeName="" node1="Міністерство оборони України" node2="Права" group="представляти інтереси" istwoway="false"/>
+    <Edge guid="1B61DF3B4402" edgeName="" node1="Генеральний штаб" node2="Права" group="залучати" istwoway="false"/>
+    <Edge guid="1B61DF3BF725" edgeName="" node1="органи військового управління" node2="Права" group="залучати" istwoway="false"/>
+    <Edge guid="1B61DF3BBA0D" edgeName="" node1="скликання нарад" node2="Права" group="ініціювати" istwoway="false"/>
+    <Edge guid="1B61DF3BE0A8" edgeName="" node1="створення комісій" node2="Права" group="ініціювати" istwoway="false"/>
+    <Edge guid="1B61DF4B1BFA" edgeName="" node1="створення робочих груп" node2="Права" group="ініціювати" istwoway="false"/>
+    <Edge guid="1B61DF4B59D3" edgeName="" node1="проведення наукових конференцій" node2="Права" group="ініціювати" istwoway="false"/>
+    <Edge guid="1B61DF4B60A1" edgeName="" node1="правочин" node2="Права" group="здійснювати" istwoway="false"/>
+    <Edge guid="1B61DF4B2E46" edgeName="" node1="НДДКР" node2="Права" group="здійснювати" istwoway="false"/>
+    <Edge guid="1B61DF4B3933" edgeName="" node1="договір" node2="Права" group="здійснювати" istwoway="false"/>
+    <Edge guid="1B61DF4BF2A4" edgeName="" node1="контракт" node2="Права" group="здійснювати" istwoway="false"/>
+    <Edge guid="1B61DF4B2CB3" edgeName="" node1="експертна оцінка" node2="Права" group="здійснювати" istwoway="false"/>
+    <Edge guid="1B61DF5A97BC" edgeName="" node1="матеріальні носії інформації" node2="експертна оцінка" group="Default" istwoway="false"/>
+    <Edge guid="1B61DF5A60E8" edgeName="" node1="бази даних" node2="Права" group="використовувати" istwoway="false"/>
+    <Edge guid="1B61DF5AD5D9" edgeName="" node1="порадник" node2="Права" group="розробляти" istwoway="false"/>
+    <Edge guid="1B61DF5A2965" edgeName="" node1="інструкція" node2="Права" group="розробляти" istwoway="false"/>
+    <Edge guid="1B61DF5A5CC1" edgeName="" node1="методичні рекомендації" node2="Права" group="розробляти" istwoway="false"/>
+  </Edges>
+</Graph>
