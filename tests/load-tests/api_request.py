@@ -1,6 +1,7 @@
 import requests
 
-files = {'file': open('about-ontology.txt', 'rb')}
+# files = {'file': open('about-ontology.txt', 'rb')}
+files = {'file': open('short.txt', 'rb')}
 url_allterms = 'http://test.ulif.org.ua:51080/ken/api/en/file/allterms'
 url_parce = 'http://test.ulif.org.ua:51080/ken/api/en/file/parcexml'
 
