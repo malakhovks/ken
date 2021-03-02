@@ -2,580 +2,848 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>CHANGELOG</title></head>
-<body><h2>v1.0.3, 2019-10-31</h2>
-<h3>⚠️ Зауваження</h3>
-<ul>
-<li>Для коректної роботи клієнтської частини веб-застосунка <code>KEn</code>, необхідно використовувати актуальну версію браузера <code>Google Chrome</code> (70 та вище).</li>
-<li>При оновленні <code>KEn</code> з версії <code>v1.0.2</code> (або більш ранньої) до <code>v.1.0.3</code> дані проаналізованих раніше документів будуть втрачені.</li>
-<li>Змінено специфікацію <code>JSON</code>-файлу проекту:</li>
-
-</ul>
-<details><summary>Специфікація `JSON`-файлу проекту:</summary>
-<p></p></details>
-<pre><code class='language-json' lang='json'>{
-  &quot;project&quot;: {
-    &quot;name&quot;: &quot;&quot;,
-    &quot;notes&quot;: &quot;&quot;,
-    &quot;content&quot;: {
-      &quot;documents&quot;: [
-        {
-          &quot;names&quot;: {
-            &quot;original&quot;: &quot;&quot;,
-            &quot;unique&quot;: &quot;&quot;
-          },
-          &quot;results&quot;: {
-            &quot;alltermsxmlCompressed&quot;: &quot;&quot;,
-            &quot;parcexmlCompressed&quot;: &quot;&quot;,
-            &quot;alltermsjson&quot;: {},
-            &quot;parcejson&quot;: {},
-            &quot;nerhtmlCompressed&quot;: &quot;&quot;
-          }
-        },
-        {
-          &quot;names&quot;: {
-            &quot;original&quot;: &quot;&quot;,
-            &quot;unique&quot;: &quot;&quot;
-          },
-          &quot;results&quot;: {
-            &quot;alltermsxmlCompressed&quot;: &quot;&quot;,
-            &quot;parcexmlCompressed&quot;: &quot;&quot;,
-            &quot;alltermsjson&quot;: {},
-            &quot;parcejson&quot;: {},
-            &quot;nerhtmlCompressed&quot;: &quot;&quot;
-          }
-        }
-      ]
-    }
-  }
+<title>CHANGELOG</title><link href='https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
 }
-</code></pre>
-<p></p>
-</details></p>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Реалізовано функцію визначення браузера клієнта (Для коректної роботи клієнтської частини веб-застосунка <code>KEn</code>, необхідно використовувати актуальну версію браузера <code>Google Chrome</code>).</li>
-
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Дрібні виправлення <code>JavaScript</code> на клієнті.</li>
-<li>Виправлено роботу елемента <code>#notes</code> (Блокнот), а саме додано функцію автоматичного збереження вмісту елемента <code>#notes</code> до головного <code>JSON</code>-файлу проекту в поле <code>notes</code>, та відповідно змінено його специфікацію.</li>
-
-</ul>
-<h2>v1.0.2, 2019-09-27</h2>
-<h3>⚠️ Зауваження</h3>
-<ul>
-<li>Значення параметра конфігурації <code>app.config[&#39;MAX_CONTENT_LENGTH&#39;]</code> об&#39;єкту Flask відновлено за замовчуванням (За замовчуванням об&#39;єкт Flask прийме завантаження файлів на необмежену кількість пам&#39;яті).</li>
-
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li><p>Змінено елемент <code>&lt;title&gt;</code> головної сторінки <code>index.html</code> (видалено рік):</p>
-<pre><code class='language-html' lang='html'>&lt;title&gt;Конспект - v1.0.2&lt;/title&gt;
-</code></pre>
-</li>
-
-</ul>
-<h2>v1.0.1, 2019-08-24</h2>
-<h3>⚠️ Зауваження</h3>
-<ul>
-<li>При оновленні <code>KEn</code> з версії <code>v1.0.0</code> (або більш ранньої) до <code>v.1.0.1</code> дані проаналізованих раніше документів будуть втрачені.</li>
-<li>Змінено специфікацію <code>JSON</code>-файлу проекту:</li>
-
-</ul>
-<details><summary>Специфікація `JSON`-файлу проекту:</summary>
-<p></p></details>
-<pre><code class='language-json' lang='json'>{
-  &quot;project&quot;: {
-    &quot;name&quot;: &quot;&quot;,
-    &quot;content&quot;: {
-      &quot;documents&quot;: [
-        {
-          &quot;names&quot;: {
-            &quot;original&quot;: &quot;&quot;,
-            &quot;unique&quot;: &quot;&quot;
-          },
-          &quot;results&quot;: {
-            &quot;alltermsxmlCompressed&quot;: &quot;&quot;,
-            &quot;parcexmlCompressed&quot;: &quot;&quot;,
-            &quot;alltermsjson&quot;: {},
-            &quot;parcejson&quot;: {},
-            &quot;nerhtmlCompressed&quot;: &quot;&quot;
-          }
-        },
-        {
-          &quot;names&quot;: {
-            &quot;original&quot;: &quot;&quot;,
-            &quot;unique&quot;: &quot;&quot;
-          },
-          &quot;results&quot;: {
-            &quot;alltermsxmlCompressed&quot;: &quot;&quot;,
-            &quot;parcexmlCompressed&quot;: &quot;&quot;,
-            &quot;alltermsjson&quot;: {},
-            &quot;parcejson&quot;: {},
-            &quot;nerhtmlCompressed&quot;: &quot;&quot;
-          }
-        }
-      ]
-    }
-  }
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
 }
-</code></pre>
-<p></p>
-</details></p>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Реалізовано функції зжимання та відновлення строк з використанням програмної бібліотеки <a href='https://github.com/pieroxy/lz-string/'>LZ-based compression algorithm for JavaScript</a>, а саме поцедур <code>compressToBase64</code>/<code>decompressFromBase64</code> (що зберігають <code>allterms.xml</code> в <code>alltermsxmlCompressed</code>, та <code>parce.xml</code> в <code>parcexmlCompressed</code> (в <code>JSON</code>-файлі проекту)).</li>
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignobject { font-size: var(--mermaid-font-zoom); }
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено помилку графічного інтерфейсу розташування елементу <code>#notes</code> відносно <code>#displacy</code>, <code>#displacy-ner</code>, <code>#displacy-label</code>.</li>
 
-</ul>
-<h2>v1.0.0, 2019-08-20</h2>
-<h3>⚠️ Зауваження</h3>
-<ul>
-<li>При оновленні <code>KEn</code> з версії <code>v0.7.1</code> (або більш ранньої) до <code>v.1.0.0</code> дані проаналізованих раніше документів будуть втрачені.</li>
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
 
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li><p>Збільшено розмір <code>nginx client_max_body_size</code> до <code>500 mb</code> (що дозволяє проводити обробку файлів розміром до 500 мб).</p>
-</li>
-<li><p>Оновлено функції та процедури роботи клієнтської частини програми з використанням <a href='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'>IndexedDB API</a> та програмної бібліотеки <a href='https://localforage.github.io/localForage/'>localForage</a>, що відповідають за збереження та ініціалізацію результатів лінгвістичного аналізу документів та основного файлу проекту:</p>
-<ul>
-<li>додавання розбору (РІС, allterms, parce) кожного нового документу до головного <code>JSON</code>-файл проекту;</li>
-<li>збереження проекту в локальний <code>JSON</code>-файл, що міститеме розбори всіх документів (РІС, allterms, parce) та налаштування;</li>
-<li>відкриття проекту з локального <code>JSON</code>-файлу.</li>
 
-</ul>
-</li>
+/* meyer reset -- http://meyerweb.com/eric/tools/css/reset/ , v2.0 | 20110126 | License: none (public domain) */
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li><p>Виправлено роботу елемента <code>#termTree</code>, а саме додано функцію &quot;візуалізації залежностей термінів&quot; з елементу <code>#termTree</code> в елементі <code>#depparse_tab</code>, а саме в <code>#displacy</code>.</p>
-</li>
-<li><p>Виправлено помилку <code>DOMException QuotaExceededError</code> / <code>QUOTA_EXCEEDED_ERR: DOM Exception 22</code> (Перевищено розмір квоти для <strong>localStorage</strong>, що становить 5 Мб. Тобто є <strong>ліміт</strong> на кількість файлів, що можуть бути збережені в проекті). Збереження файлів проекту відтепер здійснюється з використанням <a href='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'>IndexedDB API</a> та програмної бібліотеки <a href='https://localforage.github.io/localForage/'>localForage</a>. <em>Довідка</em>:</p>
-<ul>
-<li>про розмір квот для <strong>localStorage</strong> та скрипт <strong>localStorageDB</strong> (використовує IndexedDB як key-value сховище, квота може перевищувати 5Мб) - <a href='https://stackoverflow.com/questions/5663166/is-there-a-way-to-increase-the-size-of-localstorage-in-google-chrome-to-avoid-qu'>localStorageDB скрипт</a>;</li>
-<li>максимальна квота для <strong>IndexedDB</strong> - <a href='https://stackoverflow.com/questions/5692820/maximum-item-size-in-indexeddb'>Maximum item size in IndexedDB</a>;</li>
-<li>поліпшене керування сховищем в браузері: бібліотека <a href='https://github.com/localForage/localForage'>localForage</a>;</li>
+@include-when-export url(https://fonts.loli.net/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext);
 
-</ul>
-</li>
+/* =========== */
 
-</ul>
-<h3>⚠️ Застаріле</h3>
-<ul>
-<li>Функції та процедури роботи клієнтської частини програми на основі <code>localStorage</code> (що відповідають за збереження та ініціалізацію результатів лінгвістичного аналізу файлів проекту), окрім таблиці.</li>
+/* pt-serif-regular - latin */
+/* pt-serif-italic - latin */
+/* pt-serif-700 - latin */
+/* pt-serif-700italic - latin */
+:root {
+	--active-file-bg-color: #dadada;
+	--active-file-bg-color: rgba(32, 43, 51, 0.63);
+	--active-file-text-color: white;
+	--bg-color: #f3f2ee;
+	--text-color: #1f0909;
+	--control-text-color: #444;
+	--rawblock-edit-panel-bd: #e5e5e5;
 
-</ul>
-<h2>v0.7.1, 2019-08-14</h2>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Додано функцію &quot;копіювання по кліку&quot; термінів з елементу <code>#termTree</code> (дерево термінів) в елемент <code>#table-body</code> (таблиця).</li>
-<li>Оновлено меню &quot;Допомога&quot; (елемент <code>#button-dropdown-help</code>): додано &quot;Журнал змін&quot; (елемент <code>#button-changelog</code>) - Журнал змін проекту <code>CHANGELOG.md</code>.</li>
+	--select-text-bg-color: rgba(32, 43, 51, 0.63);
+  --select-text-font-color: white;
+}
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено імена, що надаються за замовчуванням при збереженні в файл списків &quot;Терміни&quot; (<code>#uploadResultList</code>), РІС (<code>#uploadUnknownTerms</code>).</li>
+pre {
+	--select-text-bg-color: #36284e;
+	--select-text-font-color: #fff;
+}
 
-</ul>
-<h2>v0.7.0, 2019-08-10</h2>
-<h3>⚠️ Зауваження</h3>
-<ul>
-<li>При оновленні <code>KEn</code> з версії <code>v0.6.0</code> до <code>v.0.7.0</code> дані проаналізованих раніше файлів будуть втрачені або працюватимуть некоректно.</li>
+html {
+	font-size: 16px;
+}
 
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Оновлено функції та процедури роботи з <code>localStorage</code>, що відповідають за збереження та ініціалізацію результатів лінгвістичного аналізу файлів проекту.</li>
-<li>Вимкнено запис логів при доступі до файлів, що знаходяться в папці <code>static</code>.</li>
+html, body {
+	background-color: #f3f2ee;
+	font-family: "PT Serif", 'Times New Roman', Times, serif;
+	color: #1f0909;
+	line-height: 1.5em;
+}
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li><p>Виправлено оновлення деяких елементів при перемиканні/вибору файлів в елементі <code>#projectFileList</code> (&quot;Файли&quot;). Оновлються елементи:</p>
-<ul>
-<li><code>#displacy-ner</code> (&quot;Візуалізація&quot;)</li>
-<li><code>#uploadUnknownTerms</code> (&quot;РІС&quot;)
-відповідно до обраного файлу в елементі <code>#projectFileList</code> (&quot;Файли&quot;).</li>
+/*#write {
+	overflow-x: auto;
+    max-width: initial;
+	padding-left: calc(50% - 17em);
+    padding-right: calc(50% - 17em);
+}
 
-</ul>
-</li>
-<li><p>Виправлено очищення відповідних розборів документів (<code>-parsexml</code>, <code>-alltermsxml</code> та <code>JSON</code>-розборів), що зберігаються в localStorage при видаленні файлів проекту зі списку Файли <code>#projectFileList</code>.</p>
-</li>
-<li><p>Дрібні виправлення <code>JavaScript</code> на клієнті (зокрема, елементів контейнеру <code>class=&quot;col-md-6&quot;</code>).</p>
-</li>
+@media (max-width: 36em) {
+ 	#write {
+ 		padding-left: 1em;
+    	padding-right: 1em;
+ 	}
+}*/
 
-</ul>
-<h2>v0.6.0, 2019-08-07</h2>
-<h3>🏭 Нові можливості</h3>
-<ul>
-<li><p>Реалізовано можливість локального збереження файлів разбору <code>allterms.xml</code> та <code>parce.xml</code> через графічний інтерфейс користувача, зокрема, через взаємодію з елементом <code>#button-save</code> відповідно:</p>
-<ul>
-<li><code>#button-save-allterms-xml</code> для збереження <code>allterms.xml</code>;</li>
-<li><code>#button-save-parce-xml</code> для збереження <code>parce.xml</code>.</li>
+#write {
+	max-width: 40em;
+}
 
-</ul>
-</li>
+@media only screen and (min-width: 1400px) {
+	#write {
+			max-width: 914px;
+	}
+}
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Дрібні виправлення <code>JavaScript</code> на клієнті.</li>
+ol li {
+	list-style-type: decimal;
+	list-style-position: outside;
+}
+ul li {
+	list-style-type: disc;
+	list-style-position: outside;
+}
 
-</ul>
-<h2>v0.5.5, 2019-08-03</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено <code>id</code> елементу <code>#text-content-panel-body</code>.</li>
+ol,
+ul {
+	list-style: none;
+}
 
-</ul>
-<h2>v0.5.4, 2019-07-30</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено поведінку елементу <code>#notes</code> (відключено можливість змінення розміру).</li>
+blockquote,
+q {
+	quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* styles */
 
-</ul>
-<h2>v0.5.3, 2019-07-28</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li><p>Виправлено випадкове виконання функцій <code>events</code> при взаємодії з елементами:</p>
-<ul>
-<li><code>#uploadResultList</code></li>
-<li><code>#projectFileList</code></li>
-<li><code>#uploadUnknownTerms</code></li>
+/* ====== */
 
-</ul>
-</li>
+/* headings */
 
-</ul>
-<h2>v0.5.2, 2019-07-27</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено помилку роботи з файлами, що мають однакові імена але різний зміст (Реалізовано генерування унікальних імен файлів для <code>localStorage</code>).</li>
-<li>Дрібні виправлення <code>JavaScript</code> на клієнті.</li>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: bold;
+}
+h1 {
+	font-size: 1.875em;
+	/*30 / 16*/
+	line-height: 1.6em;
+	/* 48 / 30*/
+	margin-top: 2em;
+}
+h2,
+h3 {
+	font-size: 1.3125em;
+	/*21 / 16*/
+	line-height: 1.15;
+	/*24 / 21*/
+	margin-top: 2.285714em;
+	/*48 / 21*/
+	margin-bottom: 1.15em;
+	/*24 / 21*/
+}
+h3 {
+	font-weight: normal;
+}
+h4 {
+	font-size: 1.125em;
+	/*18 / 16*/
+	margin-top: 2.67em;
+	/*48 / 18*/
+}
+h5,
+h6 {
+	font-size: 1em;
+	/*16*/
+}
+h1 {
+	border-bottom: 1px solid;
+	margin-bottom: 1.875em;
+	padding-bottom: 0.8125em;
+}
+/* links */
 
-</ul>
-<h2>v0.5.1, 2019-07-25</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено дерево термінів:
-Реалізовано активне дерево термінів, тобто - перехід до вибраного терміну в дереві термінів (відповідне відображення речень з терміном в елементі <code>#term-tree</code> та виділення речень з терміном в <code>sents_from_text</code>).</li>
-<li>Дрібні виправлення інтерфейсу.</li>
-<li>Видалено невикористовувані <code>JavaScript</code>-бібліотеки.</li>
+a {
+	text-decoration: none;
+	color: #065588;
+}
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+/* block spacing */
 
-</ul>
-<h2>v0.5.0, 2019-07-25</h2>
-<h3>🏭 Нові можливості</h3>
-<ul>
-<li>Реалізовано підсвічування речень з вибраним терміном в елементі <code>#sents_from_text</code> та вибраних термінів в <code>#text-content</code> з використанням бібліотеки <a href='https://markjs.io/'>mark.js</a></li>
+p,
+blockquote,
+.md-fences {
+	margin-bottom: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-bottom: 1.5em;
+}
+/* blockquote */
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Дрібні виправлення інтерфейсу.</li>
-<li>Дрібні виправлення серверної частини: 
-змінено роботу нормалізації тексту (відключено <code>line = re.sub(r&#39;\W&#39;, &#39; &#39;, line, flags=re.I)</code>).</li>
+blockquote {
+	font-style: italic;
+	border-left: 5px solid;
+	margin-left: 2em;
+	padding-left: 1em;
+}
+/* lists */
 
-</ul>
-<h2>v0.4.2, 2019-07-23</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено номер версії в елементі <code>title</code>.</li>
+ul,
+ol {
+	margin: 0 0 1.5em 1.5em;
+}
+/* tables */
+.md-meta,.md-before, .md-after {
+	color:#999;
+}
 
-</ul>
-<h2>v0.4.1, 2019-07-23</h2>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Додано номер поточної версії KEn до елементу <code>title</code>.</li>
+table {
+	margin-bottom: 1.5em;
+	/*24 / 16*/
+	font-size: 1em;
+	/* width: 100%; */
+}
+thead th,
+tfoot th {
+	padding: .25em .25em .25em .4em;
+	text-transform: uppercase;
+}
+th {
+	text-align: left;
+}
+td {
+	vertical-align: top;
+	padding: .25em .25em .25em .4em;
+}
 
-</ul>
-<h2>v0.4.0, 2019-07-23</h2>
-<h3>🏭 Нові можливості</h3>
-<ul>
-<li><p>Реалізовано відображення показників частоти термінів за допомоги спливаючої підказки <code>title</code> для кожного терміну елементу <code>#uploadResultList</code>.
-Реалізовано можливість сортування термінів в елементі <code>#uploadResultList</code> згідно:</p>
-<ul>
-<li>частоти (за збільшенням);</li>
-<li>частоти (за зменшенням);</li>
-<li>за алфавітом;</li>
-<li>за черговою появою в тексті;</li>
+code,
+.md-fences {
+	background-color: #dadada;
+}
 
-</ul>
-</li>
-<li><p>Реалізовано елемент <code>#sort-select</code> для обрання відповідного типу сортування.</p>
-</li>
+code {
+	padding-left: 2px;
+	padding-right: 2px;
+}
 
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Рефакторинг програмного коду.</li>
+.md-fences {
+	margin-left: 2em;
+	margin-bottom: 3em;
+	padding-left: 1ch;
+	padding-right: 1ch;
+}
 
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Дрібні виправлення.</li>
+pre,
+code,
+tt {
+	font-size: .875em;
+	line-height: 1.714285em;
+}
+/* some fixes */
 
-</ul>
-<h3>📚 Документація</h3>
-<ul>
-<li>Оновлено розділи <code>Системні вимоги</code> згідно нових мінімальних системних вимог, україномовної частини <code>README.md</code>.</li>
+h1 {
+	line-height: 1.3em;
+	font-weight: normal;
+	margin-bottom: 0.5em;
+}
 
-</ul>
-<h2>v0.3.0, 2019-07-22</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li><p>Виправлено помилку <code>UnicodeDecodeError: &#39;utf8&#39; codec can&#39;t decode byte</code>.
-Декодовано файл як <code>UTF-8</code>, ігноруючи будь-які символи які закодовані в неправильному кодуванні:</p>
-<pre><code class='language-python' lang='python'># decode the file as UTF-8 ignoring any errors
-raw_text = file.read().decode(&#39;utf-8&#39;, errors=&#39;replace&#39;)
-</code></pre>
-</li>
-<li><p>Включено збереження макета документа, включаючи пробіли, які є лише візуальними, а не символами.
-Виправлено згідно <a href='https://stackoverflow.com/questions/49457443/python-pdfminer-converts-pdf-file-into-one-chunk-of-string-with-no-spaces-betwee'>python pdfminer converts pdf file into one chunk of string with no spaces between words</a>:</p>
-<pre><code class='language-python' lang='python'># save document layout including spaces that are only visual not a character
-&quot;&quot;&quot;
-some pdfs mark the entire text as figure and by default PDFMiner doesn&#39;t try to perform layout analysis for figure text.
-To override this behavior the all_texts parameter needs to be set to True
-in function def get_text_from_pdf_pdfminer(pdf_path)
-&quot;&quot;&quot;
-laparams = LAParams()
-setattr(laparams, &#39;all_texts&#39;, True)
-</code></pre>
-</li>
-<li><p>Виправлено роботу елементу <code>iziToast</code> (нотифікації про процес обробки документів).</p>
-</li>
+p + ul,
+p + ol{
+	margin-top: .5em;
+}
 
-</ul>
-<h2>v0.2.8, 2019-07-20</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Реалізовано видалення символу <code>°</code> на етапі нормалізації тексту.</li>
-<li>Реалізовано видалення всіх не словникових символів (<code>\W</code> non-alphanumeric characters) на етапі нормалізації тексту.</li>
-<li>Реалізовано видалення всіх слів, що містять числа при нормалізації тексту.</li>
+h3 + ul,
+h4 + ul,
+h5 + ul,
+h6 + ul,
+h3 + ol,
+h4 + ol,
+h5 + ol,
+h6 + ol {
+	margin-top: .5em;
+}
 
-</ul>
-<h2>v0.2.7, 2019-07-19</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Вимкнено появу стандартного контекстного меню на елементі <code>#projectFileList</code> при евенті видалення файлів проекту за кліком правої кнопки миші.</li>
-<li>Збільшено максимально допустимий розмір тіла запиту клієнта до <strong>50 мегабайт</strong>: <code>client_max_body_size 50M</code>.</li>
+li > ul,
+li > ol {
+	margin-top: inherit;
+	margin-bottom: 0;
+}
 
-</ul>
-<p>📚 Документація</p>
-<ul>
-<li>Додано файл <code>CHANGELOG.md</code>, що містить список версій програми та список відповідних змін програмного коду, виправлень та покращень.</li>
+li ol>li {
+	list-style-type: lower-alpha;
+}
 
-</ul>
-<h2>v0.2.6, 2019-07-18</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено скролінг в елементах класу <code>.col-md-6</code>.</li>
+li li ol>li{
+	list-style-type: lower-roman;
+}
 
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Додано вкладку &quot;Блокнот&quot; з елементом textarea до <code>.col-md-6</code>.</li>
+h2,
+h3 {
+	margin-bottom: .75em;
+}
+hr {
+	border-top: none;
+	border-right: none;
+	border-bottom: 1px solid;
+	border-left: none;
+}
+h1 {
+	border-color: #c5c5c5;
+}
+blockquote {
+	border-color: #bababa;
+	color: #656565;
+}
 
-</ul>
-<h2>v0.2.5, 2019-07-18</h2>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Дрібні виправлення.</li>
+blockquote ul,
+blockquote ol {
+	margin-left:0;
+}
 
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Видалено тег версій з кінцевих точок API:
-було:
+.ty-table-edit {
+	background-color: transparent;
+}
+thead {
+	background-color: #dadada;
+}
+tr:nth-child(even) {
+	background: #e8e7e7;
+}
+hr {
+	border-color: #c5c5c5;
+}
+.task-list{
+	padding-left: 1rem;
+}
+
+.md-task-list-item {
+	padding-left: 1.5rem;
+	list-style-type: none;
+}
+
+.md-task-list-item > input:before {
+	content: '\221A';
+	display: inline-block;
+	width: 1.25rem;
+  	height: 1.6rem;
+	vertical-align: middle;
+	text-align: center;
+	color: #ddd;
+	background-color: #F3F2EE;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before{
+	color: inherit;
+}
+
+#write pre.md-meta-block {
+	min-height: 1.875rem;
+	color: #555;
+	border: 0px;
+	background: transparent;
+	margin-top: -4px;
+	margin-left: 1em;
+	margin-top: 1em;
+}
+
+.md-image>.md-meta {
+	color: #9B5146;
+}
+
+.md-image>.md-meta{
+	font-family: Menlo, 'Ubuntu Mono', Consolas, 'Courier New', 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', serif;
+}
+
+
+#write>h3.md-focus:before{
+	left: -1.5rem;
+	color:#999;
+	border-color:#999;
+}
+#write>h4.md-focus:before{
+	left: -1.5rem;
+	top: .25rem;
+	color:#999;
+	border-color:#999;
+}
+#write>h5.md-focus:before{
+	left: -1.5rem;
+	top: .0.3125rem;
+	color:#999;
+	border-color:#999;
+}
+#write>h6.md-focus:before{
+	left: -1.5rem;
+	top: 0.3125rem;
+	color:#999;
+	border-color:#999;
+}
+
+.md-toc:focus .md-toc-content{
+	margin-top: 19px;
+}
+
+.md-toc-content:empty:before{
+	color: #065588;
+}
+.md-toc-item {
+	color: #065588;
+}
+#write div.md-toc-tooltip {
+	background-color: #f3f2ee;
+}
+
+#typora-sidebar {
+	background-color: #f3f2ee;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.375);
+  	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.375);
+}
+
+.pin-outline #typora-sidebar {
+	background: inherit;
+	box-shadow: none;
+	border-right: 1px dashed;
+}
+
+.pin-outline #typora-sidebar:hover .outline-title-wrapper {
+	border-left:1px dashed;
+}
+
+.outline-item:hover {
+  background-color: #dadada;
+  border-left: 28px solid #dadada;
+  border-right: 18px solid #dadada;
+}
+
+.typora-node .outline-item:hover {
+  	border-right: 28px solid #dadada;
+}
+
+.outline-expander:before {
+  content: "\f0da";
+  font-family: FontAwesome;
+  font-size:14px;
+  top: 1px;
+}
+
+.outline-expander:hover:before,
+.outline-item-open>.outline-item>.outline-expander:before {
+  content: "\f0d7";
+}
+
+.modal-content {
+	background-color: #f3f2ee;
+}
+
+.auto-suggest-container ul li {
+	list-style-type: none;
+}
+
+/** UI for electron */
+
+.megamenu-menu,
+#top-titlebar, #top-titlebar *,
+.megamenu-content {
+	background: #f3f2ee;
+	color: #1f0909;
+}
+
+.megamenu-menu-header {
+	border-bottom: 1px dashed #202B33;
+}
+
+.megamenu-menu {
+	box-shadow: none;
+	border-right: 1px dashed;
+}
+
+header, .context-menu, .megamenu-content, footer {
+	font-family: "PT Serif", 'Times New Roman', Times, serif;
+    color: #1f0909;
+}
+
+#megamenu-back-btn {
+	color: #1f0909;
+	border-color: #1f0909;
+}
+
+.megamenu-menu-header #megamenu-menu-header-title:before {
+	color: #1f0909;
+}
+
+.megamenu-menu-list li a:hover, .megamenu-menu-list li a.active {
+	color: inherit;
+	background-color: #e8e7df;
+}
+
+.long-btn:hover {
+	background-color: #e8e7df;
+}
+
+#recent-file-panel tbody tr:nth-child(2n-1) {
+    background-color: transparent !important;
+}
+
+.megamenu-menu-panel tbody tr:hover td:nth-child(2) {
+    color: inherit;
+}
+
+.megamenu-menu-panel .btn {
+	background-color: #D2D1D1;
+}
+
+.btn-default {
+	background-color: transparent;
+}
+
+.typora-sourceview-on #toggle-sourceview-btn,
+.ty-show-word-count #footer-word-count {
+	background: #c7c5c5;
+}
+
+#typora-quick-open {
+    background-color: inherit;
+}
+
+.md-diagram-panel {
+	margin-top: 8px;
+}
+
+.file-list-item-file-name {
+	font-weight: initial;
+}
+
+.file-list-item-summary {
+	opacity: 1;
+}
+
+.file-list-item {
+	color: #777;
+}
+
+.file-list-item.active {
+	background-color: inherit;
+	color: black;
+}
+
+.ty-side-sort-btn.active {
+	background-color: inherit;
+}
+
+.file-list-item.active .file-list-item-file-name  {
+	font-weight: bold;
+}
+
+.file-list-item{
+    opacity:1 !important;
+}
+
+.file-library-node.active>.file-node-background{
+	background-color: rgba(32, 43, 51, 0.63);
+	background-color: var(--active-file-bg-color);
+}
+
+.file-tree-node.active>.file-node-content{
+	color: white;
+	color: var(--active-file-text-color);
+}
+
+.md-task-list-item>input {
+	margin-left: -1.7em;
+	margin-top: calc(1rem - 12px);
+}
+
+input {
+	border: 1px solid #aaa;
+}
+
+.megamenu-menu-header #megamenu-menu-header-title,
+.megamenu-menu-header:hover, 
+.megamenu-menu-header:focus {
+	color: inherit;
+}
+
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
+/* https://github.com/typora/typora-issues/issues/2046 */
+.os-windows-7 strong,
+.os-windows-7 strong  {
+	font-weight: 760;
+}
+
+.ty-preferences .btn-default {
+	background: transparent;
+}
+
+.ty-preferences .window-header {
+	border-bottom: 1px dashed #202B33;
+	box-shadow: none;
+}
+
+#sidebar-loading-template, #sidebar-loading-template.file-list-item {
+	color: #777;
+}
+
+.searchpanel-search-option-btn.active {
+	background: #777;
+	color: white;
+}
+
+ :root {--mermaid-font-zoom:1.25em ;} 
+</style>
+</head>
+<body class='typora-export os-windows'>
+<div id='write'  class=''><h2><a name="v310-2021-03-02" class="md-header-anchor"></a><span>v3.1.0, 2021-03-02</span></h2><h3><a name="👍-покращення" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>оновлено бібліотеку spaCy до версії 2.3.5;</span></li><li><span>оновлено модель бібліотеки spaCy </span><code>en_core_web_sm</code><span> до версії 2.3.1;</span></li><li><span>elementTree API оновлено до версії python 3.7.9;</span></li></ul><h3><a name="🔴-виправлення-помилок" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>виправлено xml declaration (elementTree API оновлено до версії python 3.7.9);</span></li><li><span>дрібні виправлення.</span></li></ul><h2><a name="v303-2020-10-16" class="md-header-anchor"></a><span>v3.0.3, 2020-10-16</span></h2><h3><a name="🔴-виправлення-помилок-n20" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h2><a name="v302-2020-10-16" class="md-header-anchor"></a><span>v3.0.2, 2020-10-16</span></h2><h3><a name="👍-покращення-n25" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Оновлено платформу </span><code>Python</code><span> до версії  </span><code>Python 3.7.9</code><span>.</span></li></ul><h3><a name="🔴-виправлення-помилок-n29" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h2><a name="v301-2020-10-16" class="md-header-anchor"></a><span>v3.0.1, 2020-10-16</span></h2><h3><a name="🏭-нові-можливості" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><span>UKR🇺🇦 Додано функцию заповнення контекстів в онтологічному шаблоні (вхідні структури: </span><code>allterms.xml</code><span> та </span><code>structure.xml</code><span>).</span></li></ul><h3><a name="🔴-виправлення-помилок-n38" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h2><a name="v300-beta-6-2020-08-21" class="md-header-anchor"></a><span>v3.0.0-beta-6, 2020-08-21</span></h2><h3><a name="📚-документація" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>UKR🇺🇦 Створено окрему документацію по API та використанню API-ендпоентів - </span><code>HELP.md</code><span>.</span></li></ul><h3><a name="🔴-виправлення-помилок-n47" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h2><a name="v300-beta-5-2020-08-20" class="md-header-anchor"></a><span>v3.0.0-beta-5, 2020-08-20</span></h2><h3><a name="🏭-нові-можливості-n52" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><p><span>UKR🇺🇦 Додано API для обробки/аналізу текстів у вигляді повідомлень. Приклад вхідних даних:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="json"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="json"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-string cm-property">"message"</span>: <span class="cm-string">"Не зважаючи на стрімкий розвиток індустрії інформатики протягом останніх кількох десятків років, процес самовизначення інформатики як науки все ще не можна вважати завершеним."</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 120px;"></div><div class="CodeMirror-gutters" style="display: none; height: 120px;"></div></div></div></pre><p><span>Кінцева точка: </span><code>http://IP:PORT/kua/api/task/message/queued</code></p></li></ul><h2><a name="v300-beta-4-2020-05-19" class="md-header-anchor"></a><span>v3.0.0-beta-4, 2020-05-19</span></h2><h3><a name="🏭-нові-можливості-n59" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Додано можливість завантаження таблиці з зовнішнього XLSX документу.</span></li></ul><h2><a name="v300-beta-3-2020-05-14" class="md-header-anchor"></a><span>v3.0.0-beta-3, 2020-05-14</span></h2><h3><a name="🔴-виправлення-помилок-n64" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Виправлено помилку при збереженні таблиці в формат EXCEL (встановлено формат файлу </span><code>xlsx</code><span> замість </span><code>xls</code><span>) з використанням </span><a href='https://github.com/eligrey/FileSaver.js'><span>FileSaver.js</span></a><span> та </span><a href='https://github.com/SheetJS/sheetjs'><span>xlsx.full.min.js</span></a><span>.</span></li></ul><h2><a name="v300-beta-2-2020-05-14" class="md-header-anchor"></a><span>v3.0.0-beta-2, 2020-05-14</span></h2><h3><a name="🔴-виправлення-помилок-n69" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Виправлено помилку при збереженні таблиці в формат EXCEL (встановлено розширення файлу </span><code>xls</code><span> замість </span><code>xlsx</code><span>).</span></li></ul><h2><a name="v300-beta-1-2020-05-07" class="md-header-anchor"></a><span>v3.0.0-beta-1, 2020-05-07</span></h2><h3><a name="🏭-нові-можливості-n74" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Здійснено перехід проекту на актуальну версію Python 3 та відповідне оновлення початкового коду.</span></li></ul><h3><a name="👍-покращення-n78" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>ENG🇬🇧 Здійснено перехід на актуальну версію бібліотеки spaCy та її моделей.</span></li></ul><hr /><h2><a name="v200-beta-73-2020-04-16" class="md-header-anchor"></a><span>v2.0.0-beta-73, 2020-04-16</span></h2><h3><a name="⚠️-зауваження" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Встановлені постійні залежності в </span><code>requirements.txt</code><span> (для підтримки Python 2.7.17).</span></li></ul><h2><a name="v200-beta-72-2020-04-16" class="md-header-anchor"></a><span>v2.0.0-beta-72, 2020-04-16</span></h2><h3><a name="🔴-виправлення-помилок-n89" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>ENG🇬🇧 Виправлено помилку при збереженні локально файлів </span><code>allterms.xml</code><span>, </span><code>parce.xml</code><span>.</span></li></ul><h3><a name="👍-покращення-n93" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>UKR🇺🇦 Прискорено аналіз документів розміром від 50000 до 100000 байт.</span></li></ul><h2><a name="v200-beta-71-2020-03-08" class="md-header-anchor"></a><span>v2.0.0-beta-71, 2020-03-08</span></h2><h3><a name="🔴-виправлення-помилок-n98" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Виправлено помилку інтерактивного підсвічування термінів (при виборі терміна в елементі </span><code>#term-tree</code><span>).</span></li></ul><h2><a name="v200-beta-70-2020-02-27" class="md-header-anchor"></a><span>v2.0.0-beta-70, 2020-02-27</span></h2><h3><a name="🔴-виправлення-помилок-n103" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Протестовано та виправлено роботу бібліотеки Konspekt.exe (для української мови версії від 03-11-2018) з файлами великого розміру.</span></li><li><span>UKR🇺🇦 Вимкнено режим налагодження </span><code>wine</code><span> (додано змінну середовища </span><code>export WINEDEBUG=-all</code><span>).</span></li><li><span>UKR🇺🇦 Виправлено помилку інтерактивного підсвічування термінів (якщо частота появи терміна в тексті перевищує 300 разів, в цьому випадку буде відключене інтерактивне підсвічування терміна задля коректного роботи інтерфейсу веб-застосунку).</span></li></ul><h2><a name="v200-beta-67-2020-02-24" class="md-header-anchor"></a><span>v2.0.0-beta-67, 2020-02-24</span></h2><h3><a name="👍-покращення-n112" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 На головну веб-сторінку додатка додано номер бета-версії.</span></li></ul><h2><a name="v200-beta-66-2020-02-22" class="md-header-anchor"></a><span>v2.0.0-beta-66, 2020-02-22</span></h2><h3><a name="🔴-виправлення-помилок-n117" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Виправлено список змін.</span></li></ul><h2><a name="v200-beta-65-2020-02-22" class="md-header-anchor"></a><span>v2.0.0-beta-65, 2020-02-22</span></h2><h3><a name="⚠️-зауваження-n122" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>UKR🇺🇦 Додано обмеження на розмір оброблюваного файлу, яке становить 2 мб.</span></li><li><span>UKR🇺🇦 Протестовано роботу бібліотеки Konspekt.exe (для української мови версії від 03-11-2018) з файлами великого розміру.</span></li><li><span>UKR🇺🇦 Змінено специфікацію </span><code>JSON</code><span>-файлу проекту (Konspekt.exe для української мови версії від 03-11-2018).</span>
+<span>Результати роботи Konspekt.exe (для української мови версії від 03-11-2018), а саме файли </span><code>allterms.xml</code><span> та </span><code>parce.xml</code><span> відтепер зберігаються як </span><code>blob</code><span> в IndexedDB, з використанням бібліотеки localforage; унікальні ідентифікатори на ці </span><code>blob</code><span> містяться у структурі </span><code>JSON</code><span>-файлу проекту, відповідно </span><code>&quot;alltermsxmlAlias&quot;: &quot;&quot;</code><span> - аліас для </span><code>allterms.xml</code><span> та </span><code>&quot;parcexmlAlias&quot;: &quot;&quot;</code><span> - аліас для </span><code>parce.xml</code><span>.</span></li></ul><details><summary>Специфікація `JSON`-файлу проекту (Konspekt.exe для української мови версії від 03-11-2018):</summary>
+<p></p></details><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="json" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="json"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-string cm-property">"project"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"name"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"notes"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"content"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"documents"</span>: [</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlAlias"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlAlias"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlAlias"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlAlias"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;  ]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 816px;"></div><div class="CodeMirror-gutters" style="display: none; height: 816px;"></div></div></div></pre><p></p>
+</details></p><h3><a name="👍-покращення-n134" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Додана стартова сторінка вибору мови Конспекту (для обробки документів української або англійською).</span></li><li><span>UKR🇺🇦 Зменшено час аналізу файлів бібліотекою Konspekt.exe (для української мови версії від 03-11-2018).</span></li><li><span>UKR🇺🇦 При виборі терміна в елементах </span><code>&lt;select&gt;</code><span> </span><code>#uploadResultList</code><span> (спиcок термінів) та </span><code>&lt;select&gt;</code><span> </span><code>#term-tree</code><span> (дерево термінів), якщо обчислення займає тривалий час, то інтерфейс відображає процес завантаження.</span></li></ul><h3><a name="🔴-виправлення-помилок-n142" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Виправлені функції сортування в елементі </span><code>&lt;select&gt;</code><span> </span><code>#uploadResultList</code><span>.</span></li><li><span>UKR🇺🇦 Виправлені технологія та функції підсвічування термінів (</span><code>function mark(text)</code><span>, </span><code>function markTerms(term)</code><span>) в елементі </span><code>#text-content</code><span>.</span></li></ul><h2><a name="v200-beta-47-2020-01-08" class="md-header-anchor"></a><span>v2.0.0-beta-47, 2020-01-08</span></h2><h3><a name="⚠️-зауваження-n149" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>UKR🇺🇦 Змінено специфікацію </span><code>JSON</code><span>-файлу проекту (Konspekt.exe для української мови версії від 03-11-2018):</span></li></ul><details><summary>Специфікація `JSON`-файлу проекту (Konspekt.exe для української мови версії від 03-11-2018):</summary>
+<p></p></details><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="json" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="json"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-string cm-property">"project"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"name"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"notes"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"content"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"documents"</span>: [</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;  ]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 816px;"></div><div class="CodeMirror-gutters" style="display: none; height: 816px;"></div></div></div></pre><p></p>
+</details></p><h3><a name="🔴-виправлення-помилок-n157" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 ENG🇬🇧 Видалено невикористовувані </span><code>JavaScript</code><span>-бібліотеки, зокрема, </span><code>tippy.js</code><span>.</span></li></ul><h2><a name="v200-beta-41-2019-12-25" class="md-header-anchor"></a><span>v2.0.0-beta-41, 2019-12-25</span></h2><h3><a name="🔴-виправлення-помилок-n162" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Виправлено проблему з попередньо визначеними об&#39;єктами XML </span><code>r&#39;&amp;|&gt;|&lt;|_|&quot;|\.\.+|\s\s+&#39;</code><span> (Konspekt.exe для української мови версії від 03-11-2018).</span></li><li><span>UKR🇺🇦 Виправлені проблеми з кодиваннями utf-8/windows-1251.</span></li></ul><h3><a name="👍-покращення-n168" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><p><span>UKR🇺🇦 Додана функція динамічного визначення часу на тривалість роботи Konspekt.exe для української мови версії від 03-11-2018:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">if</span> <span class="cm-builtin">len</span>(<span class="cm-variable">args</span>[<span class="cm-string">'body'</span>]) <span class="cm-operator">&lt;</span>= <span class="cm-number">50000</span>:</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable cm-error">time_for_analyzing</span> = <span class="cm-number">65</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">elif</span> <span class="cm-builtin">len</span>(<span class="cm-variable">args</span>[<span class="cm-string">'body'</span>]) <span class="cm-operator">&gt;</span> <span class="cm-number">50000</span> <span class="cm-keyword">and</span> <span class="cm-builtin">len</span>(<span class="cm-variable">args</span>[<span class="cm-string">'body'</span>]) <span class="cm-operator">&lt;</span>= <span class="cm-number">100000</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable cm-error">time_for_analyzing</span> = <span class="cm-number">125</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">elif</span> <span class="cm-builtin">len</span>(<span class="cm-variable">args</span>[<span class="cm-string">'body'</span>]) <span class="cm-operator">&gt;</span> <span class="cm-number">100000</span> <span class="cm-keyword">and</span> <span class="cm-builtin">len</span>(<span class="cm-variable">args</span>[<span class="cm-string">'body'</span>]) <span class="cm-operator">&lt;</span>= <span class="cm-number">200000</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable cm-error">time_for_analyzing</span> = <span class="cm-number">185</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">elif</span> <span class="cm-builtin">len</span>(<span class="cm-variable">args</span>[<span class="cm-string">'body'</span>]) <span class="cm-operator">&gt;</span> <span class="cm-number">200000</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable cm-error">time_for_analyzing</span> = <span class="cm-number">300</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 192px;"></div><div class="CodeMirror-gutters" style="display: none; height: 192px;"></div></div></div></pre></li></ul><h2><a name="v200-beta-15-2019-12-21" class="md-header-anchor"></a><span>v2.0.0-beta-15, 2019-12-21</span></h2><h3><a name="🔴-виправлення-помилок-n174" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Виправлено помилки при decode()/encode().</span></li></ul><h2><a name="v200-beta-12-2019-12-20" class="md-header-anchor"></a><span>v2.0.0-beta-12, 2019-12-20</span></h2><h3><a name="👍-покращення-n179" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>UKR🇺🇦 Додана детекція кодування бібліотекою chardet.</span></li></ul><h2><a name="v200-beta-11-2019-12-20" class="md-header-anchor"></a><span>v2.0.0-beta-11, 2019-12-20</span></h2><h3><a name="🔴-виправлення-помилок-n184" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>UKR🇺🇦 Виправлено помилку роботи утиліти </span><a href='https://en.wikipedia.org/wiki/Xvfb'><span>Xvfb</span></a><span> (Xvfb or X virtual framebuffer is a display server implementing the X11 display server protocol) та програми Konspekt.exe для української мови (версії від 03-11-2018).</span></li><li><span>UKR🇺🇦 Виправлено помилки при кодуванні: decode the file as CP1251 ignoring any errors.</span></li></ul><h2><a name="v200-beta-5-2019-12-19" class="md-header-anchor"></a><span>v2.0.0-beta-5, 2019-12-19</span></h2><h3><a name="👍-покращення-n191" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>UKR🇺🇦 Оновлено Konspekt.exe для української мови до версії від 03-11-2018.</span></li><li><span>UKR🇺🇦 Оновлено документацію та список змін.</span></li></ul><h2><a name="v200-beta-4-2019-12-18" class="md-header-anchor"></a><span>v2.0.0-beta-4, 2019-12-18</span></h2><h3><a name="🔴-виправлення-помилок-n198" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>ENG🇬🇧 Виправлені помилки англійської локалізації інтерфейсу користувача англомовної частини.</span></li><li><span>ENG🇬🇧 Дрібні виправлення </span><code>JavaScript</code><span> на клієнті.</span></li></ul><h2><a name="v200-beta-3-2019-12-18" class="md-header-anchor"></a><span>v2.0.0-beta-3, 2019-12-18</span></h2><h3><a name="👍-покращення-n205" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>ENG🇬🇧 Додана англійська локалізація інтерфейсу користувача англомовної частини.</span></li></ul><h3><a name="🔴-виправлення-помилок-n209" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення на серверній частині.</span></li></ul><h2><a name="v200-beta-2-2019-12-17" class="md-header-anchor"></a><span>v2.0.0-beta-2, 2019-12-17</span></h2><h3><a name="🔴-виправлення-помилок-n214" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення на серверній частині.</span></li></ul><h2><a name="v200-beta-1-2019-12-17" class="md-header-anchor"></a><span>v2.0.0-beta-1, 2019-12-17</span></h2><h3><a name="🏭-нові-можливості-n219" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><p><span>🌟 Багатомовна версія ENG🇬🇧, UKR🇺🇦</span></p><p><span>🌟 Initial commit for multilingual version ENG🇬🇧, UKR🇺🇦</span></p><hr /><h2><a name="v105-2019-12-11" class="md-header-anchor"></a><span>v1.0.5, 2019-12-11</span></h2><h3><a name="🔴-виправлення-помилок-n224" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено помилку при нумерації в тегах </span><code>&lt;relup&gt;</code><span>/</span><code>&lt;reldown&gt;</code><span> файлу </span><code>allterms.xml</code><span>.</span>
+<span>Нумерація в тегах </span><code>&lt;relup&gt;</code><span>/</span><code>&lt;reldown&gt;</code><span> файлу </span><code>allterms.xml</code><span> починається з </span><code>0</code><span>.</span></li><li><span>Виправлення </span><code>JavaScript</code><span> на клієнті згідно нової нумерації в тегах </span><code>&lt;relup&gt;</code><span>/</span><code>&lt;reldown&gt;</code><span>, </span><code>&lt;sentpos&gt;</code><span> файлу </span><code>allterms.xml</code><span>.</span></li></ul><h2><a name="v104-2019-12-10" class="md-header-anchor"></a><span>v1.0.4, 2019-12-10</span></h2><h3><a name="🔴-виправлення-помилок-n231" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><p><span>Виправлено помилку при нумерації речень в тегу </span><code>&lt;sentpos&gt;</code><span> файлу </span><code>allterms.xml</code><span>. Нумерація речень в тегу </span><code>&lt;sentpos&gt;</code><span> файлу </span><code>allterms.xml</code><span> починається з </span><code>0</code><span>.</span>
+<span>Для індексації речень з використанням </span><code>spaCy</code><span> (в цій бібліотеці відсутня індексація речень) за основу використано </span><a href='https://stackoverflow.com/questions/58197863/how-to-get-sentence-number-in-spacy'><span>приклад</span></a><span>:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span> <span class="cm-variable">sent_i</span>, <span class="cm-variable">sent</span> <span class="cm-keyword">in</span> <span class="cm-builtin">enumerate</span>(<span class="cm-variable">doc</span>.<span class="cm-property">sents</span>):</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">for</span> <span class="cm-variable">token</span> <span class="cm-keyword">in</span> <span class="cm-variable">sent</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-builtin">print</span>(<span class="cm-variable">sent_i</span>, <span class="cm-variable">token</span>.<span class="cm-property">i</span>, <span class="cm-variable">token</span>.<span class="cm-property">text</span>)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 72px;"></div><div class="CodeMirror-gutters" style="display: none; height: 72px;"></div></div></div></pre></li><li><p><span>Розширення файлу при збереженні таблиці </span><code>#table-main</code><span> в формат Office Open XML Workbook виправлено на </span><code>xlsx</code><span>.</span></p></li><li><p><span>Дублюючий символ крапка </span><code>.</code><span> при обробці тексту з </span><code>PDF</code><span> файлів. В функцию </span><code>def text_normalization_default(raw_text)</code><span> додано можливість видалення дублюючого символу крапка </span><code>.</code><span> (а саме заміна на один символ крапка </span><code>.</code><span>) при нормалізації тексту.</span></p></li></ul><h3><a name="👍-покращення-n240" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><p><span>Змінено елемент </span><code>&lt;title&gt;</code><span> головної сторінки </span><code>index.html</code><span> (додано мовний код EN додатку </span><code>ken</code><span> згідно стандарту представлення назв мов </span><a href='https://uk.wikipedia.org/wiki/ISO_639-1'><span>ISO 639-1</span></a><span>):</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="html"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="html"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span>Конспект (EN) - v1.0.4<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre></li></ul><h2><a name="v103-2019-10-31" class="md-header-anchor"></a><span>v1.0.3, 2019-10-31</span></h2><h3><a name="⚠️-зауваження-n246" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>Для коректної роботи клієнтської частини веб-застосунка </span><code>KEn</code><span>, необхідно використовувати актуальну версію браузера </span><code>Google Chrome</code><span> (70 та вище).</span></li><li><span>При оновленні </span><code>KEn</code><span> з версії </span><code>v1.0.2</code><span> (або більш ранньої) до </span><code>v.1.0.3</code><span> дані проаналізованих раніше документів будуть втрачені.</span></li><li><span>Змінено специфікацію </span><code>JSON</code><span>-файлу проекту:</span></li></ul><details><summary>Специфікація `JSON`-файлу проекту:</summary>
+<p></p></details><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="json" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="json"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-string cm-property">"project"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"name"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"notes"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"content"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"documents"</span>: [</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"nerhtmlCompressed"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"nerhtmlCompressed"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;  ]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 864px;"></div><div class="CodeMirror-gutters" style="display: none; height: 864px;"></div></div></div></pre><p></p>
+</details></p><h3><a name="👍-покращення-n258" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Реалізовано функцію визначення браузера клієнта (Для коректної роботи клієнтської частини веб-застосунка </span><code>KEn</code><span>, необхідно використовувати актуальну версію браузера </span><code>Google Chrome</code><span>).</span></li></ul><h3><a name="🔴-виправлення-помилок-n263" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення </span><code>JavaScript</code><span> на клієнті.</span></li><li><span>Виправлено роботу елемента </span><code>#notes</code><span> (Блокнот), а саме додано функцію автоматичного збереження вмісту елемента </span><code>#notes</code><span> до головного </span><code>JSON</code><span>-файлу проекту в поле </span><code>notes</code><span>, та відповідно змінено його специфікацію.</span></li></ul><h2><a name="v102-2019-09-27" class="md-header-anchor"></a><span>v1.0.2, 2019-09-27</span></h2><h3><a name="⚠️-зауваження-n270" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>Значення параметра конфігурації </span><code>app.config[&#39;MAX_CONTENT_LENGTH&#39;]</code><span> об&#39;єкту Flask відновлено за замовчуванням (За замовчуванням об&#39;єкт Flask прийме завантаження файлів на необмежену кількість пам&#39;яті).</span></li></ul><h3><a name="👍-покращення-n274" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><p><span>Змінено елемент </span><code>&lt;title&gt;</code><span> головної сторінки </span><code>index.html</code><span> (видалено рік):</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="html"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="html"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span>Конспект - v1.0.2<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 24px;"></div><div class="CodeMirror-gutters" style="display: none; height: 24px;"></div></div></div></pre></li></ul><h2><a name="v101-2019-08-24" class="md-header-anchor"></a><span>v1.0.1, 2019-08-24</span></h2><h3><a name="⚠️-зауваження-n280" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>При оновленні </span><code>KEn</code><span> з версії </span><code>v1.0.0</code><span> (або більш ранньої) до </span><code>v.1.0.1</code><span> дані проаналізованих раніше документів будуть втрачені.</span></li><li><span>Змінено специфікацію </span><code>JSON</code><span>-файлу проекту:</span></li></ul><details><summary>Специфікація `JSON`-файлу проекту:</summary>
+<p></p></details><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="json" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="json"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-string cm-property">"project"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"name"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-string cm-property">"content"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"documents"</span>: [</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"nerhtmlCompressed"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"names"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"original"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"unique"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  },</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"results"</span>: {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsxmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcexmlCompressed"</span>: <span class="cm-string">""</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"alltermsjson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"parcejson"</span>: {},</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-string cm-property">"nerhtmlCompressed"</span>: <span class="cm-string">""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;  ]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 840px;"></div><div class="CodeMirror-gutters" style="display: none; height: 840px;"></div></div></div></pre><p></p>
+</details></p><h3><a name="👍-покращення-n290" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Реалізовано функції зжимання та відновлення строк з використанням програмної бібліотеки </span><a href='https://github.com/pieroxy/lz-string/'><span>LZ-based compression algorithm for JavaScript</span></a><span>, а саме поцедур </span><code>compressToBase64</code><span>/</span><code>decompressFromBase64</code><span> (що зберігають </span><code>allterms.xml</code><span> в </span><code>alltermsxmlCompressed</code><span>, та </span><code>parce.xml</code><span> в </span><code>parcexmlCompressed</code><span> (в </span><code>JSON</code><span>-файлі проекту)).</span></li></ul><h3><a name="🔴-виправлення-помилок-n294" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено помилку графічного інтерфейсу розташування елементу </span><code>#notes</code><span> відносно </span><code>#displacy</code><span>, </span><code>#displacy-ner</code><span>, </span><code>#displacy-label</code><span>.</span></li></ul><h2><a name="v100-2019-08-20" class="md-header-anchor"></a><span>v1.0.0, 2019-08-20</span></h2><h3><a name="⚠️-зауваження-n299" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>При оновленні </span><code>KEn</code><span> з версії </span><code>v0.7.1</code><span> (або більш ранньої) до </span><code>v.1.0.0</code><span> дані проаналізованих раніше документів будуть втрачені.</span></li></ul><h3><a name="👍-покращення-n303" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><p><span>Збільшено розмір </span><code>nginx client_max_body_size</code><span> до </span><code>500 mb</code><span> (що дозволяє проводити обробку файлів розміром до 500 мб).</span></p></li><li><p><span>Оновлено функції та процедури роботи клієнтської частини програми з використанням </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'><span>IndexedDB API</span></a><span> та програмної бібліотеки </span><a href='https://localforage.github.io/localForage/'><span>localForage</span></a><span>, що відповідають за збереження та ініціалізацію результатів лінгвістичного аналізу документів та основного файлу проекту:</span></p><ul><li><span>додавання розбору (РІС, allterms, parce) кожного нового документу до головного </span><code>JSON</code><span>-файл проекту;</span></li><li><span>збереження проекту в локальний </span><code>JSON</code><span>-файл, що міститеме розбори всіх документів (РІС, allterms, parce) та налаштування;</span></li><li><span>відкриття проекту з локального </span><code>JSON</code><span>-файлу.</span></li></ul></li></ul><h3><a name="🔴-виправлення-помилок-n316" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><p><span>Виправлено роботу елемента </span><code>#termTree</code><span>, а саме додано функцію &quot;візуалізації залежностей термінів&quot; з елементу </span><code>#termTree</code><span> в елементі </span><code>#depparse_tab</code><span>, а саме в </span><code>#displacy</code><span>.</span></p></li><li><p><span>Виправлено помилку </span><code>DOMException QuotaExceededError</code><span> / </span><code>QUOTA_EXCEEDED_ERR: DOM Exception 22</code><span> (Перевищено розмір квоти для </span><strong><span>localStorage</span></strong><span>, що становить 5 Мб. Тобто є </span><strong><span>ліміт</span></strong><span> на кількість файлів, що можуть бути збережені в проекті). Збереження файлів проекту відтепер здійснюється з використанням </span><a href='https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'><span>IndexedDB API</span></a><span> та програмної бібліотеки </span><a href='https://localforage.github.io/localForage/'><span>localForage</span></a><span>. </span><em><span>Довідка</span></em><span>:</span></p><ul><li><span>про розмір квот для </span><strong><span>localStorage</span></strong><span> та скрипт </span><strong><span>localStorageDB</span></strong><span> (використовує IndexedDB як key-value сховище, квота може перевищувати 5Мб) - </span><a href='https://stackoverflow.com/questions/5663166/is-there-a-way-to-increase-the-size-of-localstorage-in-google-chrome-to-avoid-qu'><span>localStorageDB скрипт</span></a><span>;</span></li><li><span>максимальна квота для </span><strong><span>IndexedDB</span></strong><span> - </span><a href='https://stackoverflow.com/questions/5692820/maximum-item-size-in-indexeddb'><span>Maximum item size in IndexedDB</span></a><span>;</span></li><li><span>поліпшене керування сховищем в браузері: бібліотека </span><a href='https://github.com/localForage/localForage'><span>localForage</span></a><span>;</span></li></ul></li></ul><h3><a name="⚠️-застаріле" class="md-header-anchor"></a><span>⚠️ Застаріле</span></h3><ul><li><span>Функції та процедури роботи клієнтської частини програми на основі </span><code>localStorage</code><span> (що відповідають за збереження та ініціалізацію результатів лінгвістичного аналізу файлів проекту), окрім таблиці.</span></li></ul><h2><a name="v071-2019-08-14" class="md-header-anchor"></a><span>v0.7.1, 2019-08-14</span></h2><h3><a name="👍-покращення-n334" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Додано функцію &quot;копіювання по кліку&quot; термінів з елементу </span><code>#termTree</code><span> (дерево термінів) в елемент </span><code>#table-body</code><span> (таблиця).</span></li><li><span>Оновлено меню &quot;Допомога&quot; (елемент </span><code>#button-dropdown-help</code><span>): додано &quot;Журнал змін&quot; (елемент </span><code>#button-changelog</code><span>) - Журнал змін проекту </span><code>CHANGELOG.md</code><span>.</span></li></ul><h3><a name="🔴-виправлення-помилок-n340" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено імена, що надаються за замовчуванням при збереженні в файл списків &quot;Терміни&quot; (</span><code>#uploadResultList</code><span>), РІС (</span><code>#uploadUnknownTerms</code><span>).</span></li></ul><h2><a name="v070-2019-08-10" class="md-header-anchor"></a><span>v0.7.0, 2019-08-10</span></h2><h3><a name="⚠️-зауваження-n345" class="md-header-anchor"></a><span>⚠️ Зауваження</span></h3><ul><li><span>При оновленні </span><code>KEn</code><span> з версії </span><code>v0.6.0</code><span> до </span><code>v.0.7.0</code><span> дані проаналізованих раніше файлів будуть втрачені або працюватимуть некоректно.</span></li></ul><h3><a name="👍-покращення-n349" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Оновлено функції та процедури роботи з </span><code>localStorage</code><span>, що відповідають за збереження та ініціалізацію результатів лінгвістичного аналізу файлів проекту.</span></li><li><span>Вимкнено запис логів при доступі до файлів, що знаходяться в папці </span><code>static</code><span>.</span></li></ul><h3><a name="🔴-виправлення-помилок-n355" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><p><span>Виправлено оновлення деяких елементів при перемиканні/вибору файлів в елементі </span><code>#projectFileList</code><span> (&quot;Файли&quot;). Оновлються елементи:</span></p><ul><li><code>#displacy-ner</code><span> (&quot;Візуалізація&quot;)</span></li><li><code>#uploadUnknownTerms</code><span> (&quot;РІС&quot;)</span>
+<span>відповідно до обраного файлу в елементі </span><code>#projectFileList</code><span> (&quot;Файли&quot;).</span></li></ul></li><li><p><span>Виправлено очищення відповідних розборів документів (</span><code>-parsexml</code><span>, </span><code>-alltermsxml</code><span> та </span><code>JSON</code><span>-розборів), що зберігаються в localStorage при видаленні файлів проекту зі списку Файли </span><code>#projectFileList</code><span>.</span></p></li><li><p><span>Дрібні виправлення </span><code>JavaScript</code><span> на клієнті (зокрема, елементів контейнеру </span><code>class=&quot;col-md-6&quot;</code><span>).</span></p></li></ul><h2><a name="v060-2019-08-07" class="md-header-anchor"></a><span>v0.6.0, 2019-08-07</span></h2><h3><a name="🏭-нові-можливості-n369" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><p><span>Реалізовано можливість локального збереження файлів разбору </span><code>allterms.xml</code><span> та </span><code>parce.xml</code><span> через графічний інтерфейс користувача, зокрема, через взаємодію з елементом </span><code>#button-save</code><span> відповідно:</span></p><ul><li><code>#button-save-allterms-xml</code><span> для збереження </span><code>allterms.xml</code><span>;</span></li><li><code>#button-save-parce-xml</code><span> для збереження </span><code>parce.xml</code><span>.</span></li></ul></li></ul><h3><a name="🔴-виправлення-помилок-n378" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення </span><code>JavaScript</code><span> на клієнті.</span></li></ul><h2><a name="v055-2019-08-03" class="md-header-anchor"></a><span>v0.5.5, 2019-08-03</span></h2><h3><a name="🔴-виправлення-помилок-n383" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено </span><code>id</code><span> елементу </span><code>#text-content-panel-body</code><span>.</span></li></ul><h2><a name="v054-2019-07-30" class="md-header-anchor"></a><span>v0.5.4, 2019-07-30</span></h2><h3><a name="🔴-виправлення-помилок-n388" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено поведінку елементу </span><code>#notes</code><span> (відключено можливість змінення розміру).</span></li></ul><h2><a name="v053-2019-07-28" class="md-header-anchor"></a><span>v0.5.3, 2019-07-28</span></h2><h3><a name="🔴-виправлення-помилок-n393" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><p><span>Виправлено випадкове виконання функцій </span><code>events</code><span> при взаємодії з елементами:</span></p><ul><li><code>#uploadResultList</code></li><li><code>#projectFileList</code></li><li><code>#uploadUnknownTerms</code></li></ul></li></ul><h2><a name="v052-2019-07-27" class="md-header-anchor"></a><span>v0.5.2, 2019-07-27</span></h2><h3><a name="🔴-виправлення-помилок-n405" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено помилку роботи з файлами, що мають однакові імена але різний зміст (Реалізовано генерування унікальних імен файлів для </span><code>localStorage</code><span>).</span></li><li><span>Дрібні виправлення </span><code>JavaScript</code><span> на клієнті.</span></li></ul><h2><a name="v051-2019-07-25" class="md-header-anchor"></a><span>v0.5.1, 2019-07-25</span></h2><h3><a name="🔴-виправлення-помилок-n412" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено дерево термінів:</span>
+<span>Реалізовано активне дерево термінів, тобто - перехід до вибраного терміну в дереві термінів (відповідне відображення речень з терміном в елементі </span><code>#term-tree</code><span> та виділення речень з терміном в </span><code>sents_from_text</code><span>).</span></li><li><span>Дрібні виправлення інтерфейсу.</span></li><li><span>Видалено невикористовувані </span><code>JavaScript</code><span>-бібліотеки.</span></li></ul><h2><a name="v050-2019-07-25" class="md-header-anchor"></a><span>v0.5.0, 2019-07-25</span></h2><h3><a name="🏭-нові-можливості-n421" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><span>Реалізовано підсвічування речень з вибраним терміном в елементі </span><code>#sents_from_text</code><span> та вибраних термінів в </span><code>#text-content</code><span> з використанням бібліотеки </span><a href='https://markjs.io/'><span>mark.js</span></a></li></ul><h3><a name="🔴-виправлення-помилок-n425" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення інтерфейсу.</span></li><li><span>Дрібні виправлення серверної частини: </span>
+<span>змінено роботу нормалізації тексту (відключено </span><code>line = re.sub(r&#39;\W&#39;, &#39; &#39;, line, flags=re.I)</code><span>).</span></li></ul><h2><a name="v042-2019-07-23" class="md-header-anchor"></a><span>v0.4.2, 2019-07-23</span></h2><h3><a name="🔴-виправлення-помилок-n432" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено номер версії в елементі </span><code>title</code><span>.</span></li></ul><h2><a name="v041-2019-07-23" class="md-header-anchor"></a><span>v0.4.1, 2019-07-23</span></h2><h3><a name="👍-покращення-n437" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Додано номер поточної версії KEn до елементу </span><code>title</code><span>.</span></li></ul><h2><a name="v040-2019-07-23" class="md-header-anchor"></a><span>v0.4.0, 2019-07-23</span></h2><h3><a name="🏭-нові-можливості-n442" class="md-header-anchor"></a><span>🏭 Нові можливості</span></h3><ul><li><p><span>Реалізовано відображення показників частоти термінів за допомоги спливаючої підказки </span><code>title</code><span> для кожного терміну елементу </span><code>#uploadResultList</code><span>.</span>
+<span>Реалізовано можливість сортування термінів в елементі </span><code>#uploadResultList</code><span> згідно:</span></p><ul><li><span>частоти (за збільшенням);</span></li><li><span>частоти (за зменшенням);</span></li><li><span>за алфавітом;</span></li><li><span>за черговою появою в тексті;</span></li></ul></li><li><p><span>Реалізовано елемент </span><code>#sort-select</code><span> для обрання відповідного типу сортування.</span></p></li></ul><h3><a name="👍-покращення-n457" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Рефакторинг програмного коду.</span></li></ul><h3><a name="🔴-виправлення-помилок-n461" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h3><a name="📚-документація-n465" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>Оновлено розділи </span><code>Системні вимоги</code><span> згідно нових мінімальних системних вимог, україномовної частини </span><code>README.md</code><span>.</span></li></ul><h2><a name="v030-2019-07-22" class="md-header-anchor"></a><span>v0.3.0, 2019-07-22</span></h2><h3><a name="🔴-виправлення-помилок-n470" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><p><span>Виправлено помилку </span><code>UnicodeDecodeError: &#39;utf8&#39; codec can&#39;t decode byte</code><span>.</span>
+<span>Декодовано файл як </span><code>UTF-8</code><span>, ігноруючи будь-які символи які закодовані в неправильному кодуванні:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment"># decode the file as UTF-8 ignoring any errors</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">raw_text</span> = <span class="cm-variable">file</span>.<span class="cm-property">read</span>().<span class="cm-property">decode</span>(<span class="cm-string">'utf-8'</span>, <span class="cm-variable">errors</span>=<span class="cm-string">'replace'</span>)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 48px;"></div><div class="CodeMirror-gutters" style="display: none; height: 48px;"></div></div></div></pre></li><li><p><span>Включено збереження макета документа, включаючи пробіли, які є лише візуальними, а не символами.</span>
+<span>Виправлено згідно </span><a href='https://stackoverflow.com/questions/49457443/python-pdfminer-converts-pdf-file-into-one-chunk-of-string-with-no-spaces-betwee'><span>python pdfminer converts pdf file into one chunk of string with no spaces between words</span></a><span>:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 4px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment"># save document layout including spaces that are only visual not a character</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-string">"""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-string">some pdfs mark the entire text as figure and by default PDFMiner doesn't try to perform layout analysis for figure text.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-string">To override this behavior the all_texts parameter needs to be set to True</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-string">in function def get_text_from_pdf_pdfminer(pdf_path)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-string">"""</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">laparams</span> = <span class="cm-variable">LAParams</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-builtin">setattr</span>(<span class="cm-variable">laparams</span>, <span class="cm-string">'all_texts'</span>, <span class="cm-keyword">True</span>)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 216px;"></div><div class="CodeMirror-gutters" style="display: none; height: 216px;"></div></div></div></pre></li><li><p><span>Виправлено роботу елементу </span><code>iziToast</code><span> (нотифікації про процес обробки документів).</span></p></li></ul><h2><a name="v028-2019-07-20" class="md-header-anchor"></a><span>v0.2.8, 2019-07-20</span></h2><h3><a name="🔴-виправлення-помилок-n481" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Реалізовано видалення символу </span><code>°</code><span> на етапі нормалізації тексту.</span></li><li><span>Реалізовано видалення всіх не словникових символів (</span><code>\W</code><span> non-alphanumeric characters) на етапі нормалізації тексту.</span></li><li><span>Реалізовано видалення всіх слів, що містять числа при нормалізації тексту.</span></li></ul><h2><a name="v027-2019-07-19" class="md-header-anchor"></a><span>v0.2.7, 2019-07-19</span></h2><h3><a name="🔴-виправлення-помилок-n490" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Вимкнено появу стандартного контекстного меню на елементі </span><code>#projectFileList</code><span> при евенті видалення файлів проекту за кліком правої кнопки миші.</span></li><li><span>Збільшено максимально допустимий розмір тіла запиту клієнта до </span><strong><span>50 мегабайт</span></strong><span>: </span><code>client_max_body_size 50M</code><span>.</span></li></ul><p><span>📚 Документація</span></p><ul><li><span>Додано файл </span><code>CHANGELOG.md</code><span>, що містить список версій програми та список відповідних змін програмного коду, виправлень та покращень.</span></li></ul><h2><a name="v026-2019-07-18" class="md-header-anchor"></a><span>v0.2.6, 2019-07-18</span></h2><h3><a name="🔴-виправлення-помилок-n501" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено скролінг в елементах класу </span><code>.col-md-6</code><span>.</span></li></ul><h3><a name="👍-покращення-n505" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Додано вкладку &quot;Блокнот&quot; з елементом textarea до </span><code>.col-md-6</code><span>.</span></li></ul><h2><a name="v025-2019-07-18" class="md-header-anchor"></a><span>v0.2.5, 2019-07-18</span></h2><h3><a name="🔴-виправлення-помилок-n510" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h3><a name="👍-покращення-n514" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Видалено тег версій з кінцевих точок API:</span>
+<span>було:</span>
 <code>host[:port]/ken/api/**v1.0**/en/file/allterms</code>
-стало:
-<code>host[:port]/ken/api/en/file/allterms</code>.</li>
-<li>Додано горизонтальный скролл до елементів <code>id=&quot;uploadResultList&quot;</code>; <code>#term-tree</code>.</li>
-<li>Додано можливість видалення файлів зі списку &quot;Файли&quot; <code>id=&quot;projectFileList&quot;</code> по кліку правої кнопки миші.</li>
-<li>Оновлено структуру проекту.</li>
-<li>Рефакторинг програмного коду.</li>
-
-</ul>
-<h3>📚 Документація</h3>
-<ul>
-<li>Додана настанова користувача Як зберегти Docker image в файл (резервне копіювання) для подальшого використання на іншому сервері.</li>
-<li>Виправлено <strong>виділення</strong> термінів на <strong>виокремлення</strong> термінів.</li>
-<li>Оновлення україномовної частини <code>README.md</code>.</li>
-
-</ul>
-<h2>v0.2.4, 2019-07-08</h2>
-<h3>🔴 Bug fixes</h3>
-<ul>
-<li>Fix sentence duplication in <code>id=&quot;text-content&quot;</code>.</li>
-<li>Fix <code>id=&quot;sents_from_text&quot;</code> area to update for a new text.</li>
-<li>Fix add text from last file to <code>id=&quot;sents_from_text&quot;</code> area.</li>
-<li>Fix add text to <code>id=&quot;sents_from_text&quot;</code> area when selecting files from <code>id=&quot;projectFileList&quot;</code> select list.</li>
-
-</ul>
-<h3>👍 Improvements</h3>
-<ul>
-<li>Update project structure.</li>
-<li>Clean up source code.</li>
-
-</ul>
-<h3>📚 Tutorial and doc improvements</h3>
-<ul>
-<li>Update UA part of <code>README.md</code>.</li>
-
-</ul>
-<hr />
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Виправлено дублювання речення в елементі <code>id =&quot; text-content &quot;</code>.</li>
-<li>Виправлено оновлення елементу <code>id=&quot;sents_from_text&quot;</code> згідно нового тексту.</li>
-<li>Виправлено додавання тексту з останнього опрацьованого файлу в область `id =&quot; sents_from_text &quot;.</li>
-<li>Виправлено додавання тексту в елемент <code>id=&quot;sents_from_text&quot;</code> при виборі відповідного файлу зі списку елементу <code>id=&quot;projectFileList&quot;</code>.</li>
-<li>Дрібні виправлення.</li>
-
-</ul>
-<h3>👍 Покращення</h3>
-<ul>
-<li>Оновлено структуру проекту.</li>
-<li>Рефакторинг програмного коду.</li>
-
-</ul>
-<h3>📚 Документація</h3>
-<ul>
-<li>Оновлення україномовної частини <code>README.md</code>.</li>
-
-</ul>
-<h2>v0.2.3, 2019-06-25</h2>
-<h3>👍 Improvements</h3>
-<ul>
-<li>Remove (comment) dependencies for language_check.</li>
-<li>Clean up source code.</li>
-
-</ul>
-<h3>📚 Tutorial and doc improvements</h3>
-<ul>
-<li>Update UA part of README.md.</li>
-
-</ul>
-<hr />
-<h3>👍 Покращення</h3>
-<ul>
-<li>Видалено залежності для <code>language_check</code>.</li>
-<li>Рефакторинг програмного коду.</li>
-
-</ul>
-<h3>📚 Документація</h3>
-<ul>
-<li>Оновлення україномовної частини <code>README.md</code>.</li>
-
-</ul>
-<h2>v0.2.2, 2019-06-23</h2>
-<h3>👍 Improvements</h3>
-<ul>
-<li>Fix Highlighting terms in text area <code>id=&quot;text-content&quot;</code>.</li>
-<li>Fix <code>loader</code> colour.</li>
-
-</ul>
-<hr />
-<h3>👍 Покращення</h3>
-<ul>
-<li>Виправлено підсвічування виокремлених термінів у <code>id=&quot;text-content&quot;</code>.</li>
-<li>Змінено колір елементу <code>loader</code>.</li>
-
-</ul>
-<h2>v0.2.1, 2019-06-23</h2>
-<h3>👍 Improvements</h3>
-<ul>
-<li>Add save to <code>csv</code>.</li>
-<li>Add save of all lists (terms, NER, files).</li>
-<li>Add new notifications.</li>
-<li>Fix titles.</li>
-
-</ul>
-<h3>🔴 Bug fixes</h3>
-<ul>
-<li>Various bug fixes.</li>
-
-</ul>
-<h3>📚 Tutorial and doc improvements</h3>
-<ul>
-<li>Update UA part of <code>README.md</code>.</li>
-
-</ul>
-<hr />
-<h3>👍 Покращення</h3>
-<ul>
-<li>Додано збереження в формат <code>csv</code>.</li>
-<li>Додано можливість збереження списків (terms, NER, files).</li>
-<li>Додні нотифікації про виконання процесів.</li>
-<li>Виправлені елементи title.</li>
-
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Дрібні виправлення.</li>
-
-</ul>
-<h3>📚 Документація</h3>
-<ul>
-<li>Оновлення україномовної частини <code>README.md</code>.</li>
-
-</ul>
-<h2>v0.2.0, 2019-06-21</h2>
-<h3>👍 Improvements</h3>
-<ul>
-<li>All new table.</li>
-<li>All new table controls.</li>
-<li>Added saving table in Excel <code>.xls</code> format.</li>
-
-</ul>
-<h3>⚠️ Deprecations</h3>
-<ul>
-<li>Removed saving in <code>.csv</code>.</li>
-
-</ul>
-<h3>🔴 Bug fixes</h3>
-<ul>
-<li>Various bug fixes.</li>
-
-</ul>
-<h3>📚 Tutorial and doc improvements</h3>
-<ul>
-<li>Update UA part of <code>README.md</code>.</li>
-
-</ul>
-<hr />
-<h3>👍 Покращення</h3>
-<ul>
-<li>Нова таблиця.</li>
-<li>Нові елементи управління таблицею.</li>
-<li>Додана можливість збереження таблиці в формат Excel <code>.xls</code>.</li>
-
-</ul>
-<h3>⚠️ Застаріле</h3>
-<ul>
-<li>Видалено збереження в формат <code>.csv</code>.</li>
-
-</ul>
-<h3>🔴 Виправлення помилок</h3>
-<ul>
-<li>Різні дрібні виправлення.</li>
-
-</ul>
-<h3>📚 Документація</h3>
-<ul>
-<li>Оновлення україномовної частини <code>README.md</code>.</li>
-
-</ul>
-<h2>v0.1.1, 2019-06-02</h2>
-<h3>🌟 Початковий попередній реліз</h3>
-<hr />
-<h3>🌟 Initial pre-release</h3>
+<span>стало:</span>
+<code>host[:port]/ken/api/en/file/allterms</code><span>.</span></li><li><span>Додано горизонтальный скролл до елементів </span><code>id=&quot;uploadResultList&quot;</code><span>; </span><code>#term-tree</code><span>.</span></li><li><span>Додано можливість видалення файлів зі списку &quot;Файли&quot; </span><code>id=&quot;projectFileList&quot;</code><span> по кліку правої кнопки миші.</span></li><li><span>Оновлено структуру проекту.</span></li><li><span>Рефакторинг програмного коду.</span></li></ul><h3><a name="📚-документація-n526" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>Додана настанова користувача Як зберегти Docker image в файл (резервне копіювання) для подальшого використання на іншому сервері.</span></li><li><span>Виправлено </span><strong><span>виділення</span></strong><span> термінів на </span><strong><span>виокремлення</span></strong><span> термінів.</span></li><li><span>Оновлення україномовної частини </span><code>README.md</code><span>.</span></li></ul><h2><a name="v024-2019-07-08" class="md-header-anchor"></a><span>v0.2.4, 2019-07-08</span></h2><h3><a name="🔴-bug-fixes" class="md-header-anchor"></a><span>🔴 Bug fixes</span></h3><ul><li><span>Fix sentence duplication in </span><code>id=&quot;text-content&quot;</code><span>.</span></li><li><span>Fix </span><code>id=&quot;sents_from_text&quot;</code><span> area to update for a new text.</span></li><li><span>Fix add text from last file to </span><code>id=&quot;sents_from_text&quot;</code><span> area.</span></li><li><span>Fix add text to </span><code>id=&quot;sents_from_text&quot;</code><span> area when selecting files from </span><code>id=&quot;projectFileList&quot;</code><span> select list.</span></li></ul><h3><a name="👍-improvements" class="md-header-anchor"></a><span>👍 Improvements</span></h3><ul><li><span>Update project structure.</span></li><li><span>Clean up source code.</span></li></ul><h3><a name="📚-tutorial-and-doc-improvements" class="md-header-anchor"></a><span>📚 Tutorial and doc improvements</span></h3><ul><li><span>Update UA part of </span><code>README.md</code><span>.</span></li></ul><hr /><h3><a name="🔴-виправлення-помилок-n556" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Виправлено дублювання речення в елементі </span><code>id =&quot; text-content &quot;</code><span>.</span></li><li><span>Виправлено оновлення елементу </span><code>id=&quot;sents_from_text&quot;</code><span> згідно нового тексту.</span></li><li><span>Виправлено додавання тексту з останнього опрацьованого файлу в область `id =&quot; sents_from_text &quot;.</span></li><li><span>Виправлено додавання тексту в елемент </span><code>id=&quot;sents_from_text&quot;</code><span> при виборі відповідного файлу зі списку елементу </span><code>id=&quot;projectFileList&quot;</code><span>.</span></li><li><span>Дрібні виправлення.</span></li></ul><h3><a name="👍-покращення-n568" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Оновлено структуру проекту.</span></li><li><span>Рефакторинг програмного коду.</span></li></ul><h3><a name="📚-документація-n574" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>Оновлення україномовної частини </span><code>README.md</code><span>.</span></li></ul><h2><a name="v023-2019-06-25" class="md-header-anchor"></a><span>v0.2.3, 2019-06-25</span></h2><h3><a name="👍-improvements-n579" class="md-header-anchor"></a><span>👍 Improvements</span></h3><ul><li><span>Remove (comment) dependencies for language_check.</span></li><li><span>Clean up source code.</span></li></ul><h3><a name="📚-tutorial-and-doc-improvements-n585" class="md-header-anchor"></a><span>📚 Tutorial and doc improvements</span></h3><ul><li><span>Update UA part of README.md.</span></li></ul><hr /><h3><a name="👍-покращення-n590" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Видалено залежності для </span><code>language_check</code><span>.</span></li><li><span>Рефакторинг програмного коду.</span></li></ul><h3><a name="📚-документація-n596" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>Оновлення україномовної частини </span><code>README.md</code><span>.</span></li></ul><h2><a name="v022-2019-06-23" class="md-header-anchor"></a><span>v0.2.2, 2019-06-23</span></h2><h3><a name="👍-improvements-n601" class="md-header-anchor"></a><span>👍 Improvements</span></h3><ul><li><span>Fix Highlighting terms in text area </span><code>id=&quot;text-content&quot;</code><span>.</span></li><li><span>Fix </span><code>loader</code><span> colour.</span></li></ul><hr /><h3><a name="👍-покращення-n608" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Виправлено підсвічування виокремлених термінів у </span><code>id=&quot;text-content&quot;</code><span>.</span></li><li><span>Змінено колір елементу </span><code>loader</code><span>.</span></li></ul><h2><a name="v021-2019-06-23" class="md-header-anchor"></a><span>v0.2.1, 2019-06-23</span></h2><h3><a name="👍-improvements-n615" class="md-header-anchor"></a><span>👍 Improvements</span></h3><ul><li><span>Add save to </span><code>csv</code><span>.</span></li><li><span>Add save of all lists (terms, NER, files).</span></li><li><span>Add new notifications.</span></li><li><span>Fix titles.</span></li></ul><h3><a name="🔴-bug-fixes-n625" class="md-header-anchor"></a><span>🔴 Bug fixes</span></h3><ul><li><span>Various bug fixes.</span></li></ul><h3><a name="📚-tutorial-and-doc-improvements-n629" class="md-header-anchor"></a><span>📚 Tutorial and doc improvements</span></h3><ul><li><span>Update UA part of </span><code>README.md</code><span>.</span></li></ul><hr /><h3><a name="👍-покращення-n634" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Додано збереження в формат </span><code>csv</code><span>.</span></li><li><span>Додано можливість збереження списків (terms, NER, files).</span></li><li><span>Додні нотифікації про виконання процесів.</span></li><li><span>Виправлені елементи title.</span></li></ul><h3><a name="🔴-виправлення-помилок-n644" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Дрібні виправлення.</span></li></ul><h3><a name="📚-документація-n648" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>Оновлення україномовної частини </span><code>README.md</code><span>.</span></li></ul><h2><a name="v020-2019-06-21" class="md-header-anchor"></a><span>v0.2.0, 2019-06-21</span></h2><h3><a name="👍-improvements-n653" class="md-header-anchor"></a><span>👍 Improvements</span></h3><ul><li><span>All new table.</span></li><li><span>All new table controls.</span></li><li><span>Added saving table in Excel </span><code>.xls</code><span> format.</span></li></ul><h3><a name="⚠️-deprecations" class="md-header-anchor"></a><span>⚠️ Deprecations</span></h3><ul><li><span>Removed saving in </span><code>.csv</code><span>.</span></li></ul><h3><a name="🔴-bug-fixes-n665" class="md-header-anchor"></a><span>🔴 Bug fixes</span></h3><ul><li><span>Various bug fixes.</span></li></ul><h3><a name="📚-tutorial-and-doc-improvements-n669" class="md-header-anchor"></a><span>📚 Tutorial and doc improvements</span></h3><ul><li><span>Update UA part of </span><code>README.md</code><span>.</span></li></ul><hr /><h3><a name="👍-покращення-n674" class="md-header-anchor"></a><span>👍 Покращення</span></h3><ul><li><span>Нова таблиця.</span></li><li><span>Нові елементи управління таблицею.</span></li><li><span>Додана можливість збереження таблиці в формат Excel </span><code>.xls</code><span>.</span></li></ul><h3><a name="⚠️-застаріле-n682" class="md-header-anchor"></a><span>⚠️ Застаріле</span></h3><ul><li><span>Видалено збереження в формат </span><code>.csv</code><span>.</span></li></ul><h3><a name="🔴-виправлення-помилок-n686" class="md-header-anchor"></a><span>🔴 Виправлення помилок</span></h3><ul><li><span>Різні дрібні виправлення.</span></li></ul><h3><a name="📚-документація-n690" class="md-header-anchor"></a><span>📚 Документація</span></h3><ul><li><span>Оновлення україномовної частини </span><code>README.md</code><span>.</span></li></ul><h2><a name="v011-2019-06-02" class="md-header-anchor"></a><span>v0.1.1, 2019-06-02</span></h2><h3><a name="🌟-початковий-попередній-реліз" class="md-header-anchor"></a><span>🌟 Початковий попередній реліз</span></h3><hr /><h3><a name="🌟-initial-pre-release" class="md-header-anchor"></a><span>🌟 Initial pre-release</span></h3></div>
 </body>
 </html>
