@@ -63,7 +63,7 @@ from werkzeug.utils import secure_filename
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 # Load globally spaCy model via package name
-NLP_EN = spacy.load('en_core_web_lg')
+NLP_EN = spacy.load('en_core_web_sm')
 NLP_EN_TRF = spacy.load('en_core_web_trf')
 
 __author__ = "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
