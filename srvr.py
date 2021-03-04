@@ -1578,7 +1578,7 @@ def get_trf():
                 sentence_clean = sentence_normalization_default(sentence.text)
                 logging.debug(sentence_clean)
                 sentences.append(sentence_clean)
-            return jsonify(sentences)
+            return Response(jsonify(sentences), mimetype='application/json')
         except Exception as e:
             logging.error(e, exc_info=True)
             return abort(500)
