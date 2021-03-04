@@ -63,8 +63,8 @@ from werkzeug.utils import secure_filename
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 # Load globally spaCy model via package name
-# NLP_EN = spacy.load('en_core_web_sm')
-NLP_EN = spacy.load('en_core_web_trf')
+NLP_EN = spacy.load('en_core_web_lg')
+NLP_EN_TRF = spacy.load('en_core_web_trf')
 
 __author__ = "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
 __copyright__ = "Copyright (C) 2020 Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
@@ -1528,6 +1528,62 @@ def get_allterms_json():
 # allterms.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
+
+@app.route('/ken/api/en/file/trf', methods=['POST'])
+def get_trf():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return abort(400)
+
+    file = request.files['file']
+
+    # if user does not select file, browser also submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return abort(400)
+
+    if file and allowed_file(file.filename):
+        # pdf processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+            pdf_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),pdf_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                # raw_text = get_text_from_pdfminer(destination)
+                raw_text = get_text_from_pdf(destination)
+        # docx processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'docx':
+            docx_file = secure_filename(file.filename)
+            destination = "/".join([tempfile.mkdtemp(),docx_file])
+            file.save(destination)
+            file.close()
+            if os.path.isfile(destination):
+                raw_text = get_text_from_docx(destination)
+        # txt processing
+        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+            # decode the file as UTF-8 ignoring any errors
+            raw_text = file.read().decode('utf-8', errors='replace')
+            file.close()
+        try:
+            sentences = []
+            text_normalized = text_normalization_default(raw_text)
+            # default sentence normalization + spaCy doc init
+            doc = NLP_EN_TRF(text_normalized)
+            # Measure the Size of doc Python Object
+            logging.info("%s byte", get_size(doc))
+            for sentence in doc.sents:
+                # default sentence normalization
+                sentence_clean = sentence_normalization_default(sentence.text)
+                logging.debug(sentence_clean)
+                sentences.append(sentence_clean)
+            return jsonify(sentences)
+        except Exception as e:
+            logging.error(e, exc_info=True)
+            return abort(500)
+    file.close()
+    return abort(400)
 
 if __name__ == '__main__':
     # default port = 5000
