@@ -13,18 +13,20 @@
 
 ```JSON
 {
-	"message": "Не зважаючи на стрімкий розвиток індустрії інформатики протягом останніх кількох десятків років, процес самовизначення інформатики як науки все ще не можна вважати завершеним."
+ "message": "Не зважаючи на стрімкий розвиток індустрії інформатики протягом останніх кількох десятків років, процес самовизначення інформатики як науки все ще не можна вважати завершеним."
 }
 ```
+
 ##### E1 - Output data
+
 ```JSON
 {
-	"task":
-		{
-			"id":"uwsgi_spoolfile_on_21fa8f5446fd_66_1_31460570_1597945797_65983",
-			"message":"yes",
-			"status":"queued"
-		}
+ "task":
+  {
+   "id":"uwsgi_spoolfile_on_21fa8f5446fd_66_1_31460570_1597945797_65983",
+   "message":"yes",
+   "status":"queued"
+  }
 }
 ```
 
@@ -40,7 +42,7 @@
 curl "http://194.44.28.250:45100/kua/api/task/status?id=uwsgi_spoolfile_on_21fa8f5446fd_66_1_31460570_1597945797_65983"
 ```
 
-**E2 - Output data**
+##### E2 - Output data
 
 `Return 204 (no content)`
 
@@ -60,7 +62,7 @@ curl "http://194.44.28.250:45100/kua/api/task/status?id=uwsgi_spoolfile_on_21fa8
 curl "http://194.44.28.250:45100/kua/api/task/allterms/result?id=uwsgi_spoolfile_on_21fa8f5446fd_66_1_31460570_1597945797_65983"
 ```
 
-**E3 - Output data**
+##### E3 - Output data
 
 `Return 204 (no content)`
 
@@ -80,7 +82,7 @@ curl "http://194.44.28.250:45100/kua/api/task/allterms/result?id=uwsgi_spoolfile
 curl "http://194.44.28.250:45100/kua/api/task/parce/result?id=uwsgi_spoolfile_on_21fa8f5446fd_66_1_31460570_1597945797_65983"
 ```
 
-**E3 - Output data**
+##### E3 - Output data
 
 `Return 204 (no content)`
 
@@ -125,13 +127,14 @@ fetch("file", 'host[:port]/ken/api/en/allterms', {
 .catch(error => console.error('Error:', error))
 .then(response => console.log('Success:', response));
 ```
+
 Процес формування спеціалізованої `XML`-структури тексту може зайняти деякий час (в залежності від обсягу тексту), але в загальному випадку вихідні дані формуються миттєво.
 
 ##### E2 - Input data
 
 ```JSON
 {
-	"message": "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.."
+ "message": "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.."
 }
 ```
 
