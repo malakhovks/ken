@@ -1202,7 +1202,6 @@ def get_allterms_xml_en():
                                 # print('root NOUN not exists in one_word_terms_help_list --->> ' + chunk.root.lemma_)
 
                                 one_word_terms_help_list.append(chunk.root.lemma_)
-
                                 # create and append <wcount>
                                 new_wcount_element = ET.Element('wcount')
                                 new_wcount_element.text = '1'
