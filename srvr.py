@@ -27,12 +27,12 @@ ENGLISH_STEMMER = SnowballStemmer("english")
 import pickle
 import logging
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
 # ! for spooler DO NOT FORGET TURN IT ON!!!!!
-# import uwsgi
-# from tasks import konspekt_task_ua
+import uwsgi
+from tasks import konspekt_task_ua
 
 # load libraries for docx processing
 import zipfile
@@ -1355,7 +1355,7 @@ def get_allterms_xml_en():
                     logging.debug('Three-words [ALL terms] lemma --> ' + chunk.lemma_ +' POS[0]: '+ doc_for_tokens[0].pos_ + ' POS[1]: ' + doc_for_tokens[1].pos_ + ' POS[2]: ' + doc_for_tokens[2].pos_)
                     logging.debug('--------------------')
 
-                    # * If FIRST WORD is DET then extract only TWO-WORDS term
+                    # * If FIRST WORD is DET then extract only TWO-WORDS term --> [the language processing] --> [language processing]
                     if doc_for_tokens[0].pos_ in ['DET']:
                         # If two-word term already exists in two_word_terms_help_list
                         # if chunk.lower_ in two_word_terms_help_list:
@@ -1867,7 +1867,64 @@ def get_allterms_xml_en():
                                                 new_reldown_element = ET.Element('reldown')
                                                 new_reldown_element.text = str(reldown_index)
                                                 one_term.append(new_reldown_element)
+                            # TODO Extract two-words terms from the first part of three-words terms --> [natural language processing] --> [natural language]
+                            # * ------------------------------------------------------------------------------------------------------------------------
+                            # * Extract two-words terms from the first part of three-words terms --> [natural language processing] --> [natural language]
+                            if doc_for_tokens[0].pos_ and doc_for_tokens[1].pos_ not in ['ADJ', 'PUNCT', 'DET']:
+                                first_two_words_term_lemma = " ".join(chunk.lemma_.split(" ", 2)[:2])
+                                logging.debug('1 two-words term lemma: ' + first_two_words_term_lemma)
+                                # if first_two_words_term_lemma in two_word_terms_help_list:
+                                #     sent_pos_helper = []
+                                #     # add new <sentpos> for existing two-word term
+                                #     for term in exporterms_element.findall('term'):
+                                #         if term.find('tname').text == first_two_words_term_lemma:
+                                #             for sent_pos in term.findall('sentpos'):
+                                #                 sent_pos_helper.append(sent_pos.text)
+                                #             if (str(sentence_index) + '/' + str(chunk.start+1)) not in sent_pos_helper:
+                                #                 new_sentpos_element = ET.Element('sentpos')
+                                #                 new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                #                 term.append(new_sentpos_element)
+                                # if first_two_words_term_lemma not in two_word_terms_help_list:
+                                #     # update two_word_terms_help_list with the new two-word term
+                                #     # two_word_terms_help_list.append(chunk.lower_)
+                                #     two_word_terms_help_list.append(first_two_words_term_lemma)
 
+                                #     # create and append <wcount>
+                                #     new_wcount_element = ET.Element('wcount')
+                                #     new_wcount_element.text = '2'
+                                #     # create and append <ttype>
+                                #     new_ttype_element = ET.Element('ttype')
+                                #     new_ttype_element.text = doc_for_tokens[0].pos_ + '_' + doc_for_tokens[1].pos_
+                                #     # create <term>
+                                #     new_term_element = ET.Element('term')
+                                #     # create and append <tname>
+                                #     new_tname_element = ET.Element('tname')
+                                #     # new_tname_element.text = chunk.lower_
+                                #     new_tname_element.text = first_two_words_term_lemma
+                                #     # create and append <osn>
+                                #     new_osn_element = ET.Element('osn')
+                                #     new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[0].text)
+                                #     new_term_element.append(new_osn_element)
+                                #     new_osn_element = ET.Element('osn')
+                                #     new_osn_element.text = ENGLISH_STEMMER.stem(doc_for_tokens[1].text)
+                                #     new_term_element.append(new_osn_element)
+                                #     # create and append <sentpos>
+                                #     new_sentpos_element = ET.Element('sentpos')
+                                #     new_sentpos_element.text = str(sentence_index) + '/' + str(chunk.start+1)
+                                #     new_term_element.append(new_sentpos_element)
+
+                                #     # append to <term>
+                                #     new_term_element.append(new_ttype_element)
+                                #     new_term_element.append(new_tname_element)
+                                #     new_term_element.append(new_wcount_element)
+
+                                #     # append to <exporterms>
+                                #     exporterms_element.append(new_term_element)
+                            # * Extract two-words terms from the first part of three-words terms --> [natural language processing] --> [language processing]
+                            if doc_for_tokens[1].pos_ and doc_for_tokens[2].pos_ not in ['ADJ', 'PUNCT', 'DET']:
+                                second_two_words_term_lemma = chunk.lemma_.split(" ", 1)[1]
+                                logging.debug('2 two-words term lemma: ' + second_two_words_term_lemma)
+                             # * ------------------------------------------------------------------------------------------------------------------------
                 '''
                 # ! EXTRACT FOUR-WORD TERMS -----------------------------------------------------------------------------
                 '''
