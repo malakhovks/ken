@@ -1,3 +1,40 @@
+## v3.2.0, 2021-04-16
+
+### ⚠️ Зауваження
+
+- ENG🇬🇧 оновлено бібліотеку spaCy до версії `3.0.5`;
+- ENG🇬🇧 оновлено модель бібліотеки spaCy для англійської мови `en_core_web_sm` до версії `3.0.0`;
+- оновлено бібліотеку `pdfminer.six` до версії `20201018`;
+- оновлено бібліотеку `flask-cors` до версії `3.0.10`;
+- ENG🇬🇧 додано нові документи для тестування сервісів для Англійської мови;
+- ENG🇬🇧 Змінено URL кінцевої точки API для отримання XML-структуру **allterms.xml**:
+  було:
+  `host[:port]/ken/api/en/file/allterm`
+  стало:
+  `host[:port]/ken/api/en/allterms`
+  Відтепер для обробки/аналізу текстів у вигляді повідомлень та файлів діє одна й та сама кінцева точка API: `host[:port]/ken/api/en/allterms`.
+
+### 🏭 Нові можливості
+
+- ENG🇬🇧 Додано API для обробки/аналізу текстів (а саме, отримання `allterms.xml`) у вигляді повідомлень. Приклад вхідних даних:
+  ```json
+  {
+    "message": "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way. Some years later, the success of Google shows us that the vision has not come true, being hampered by the incredible amount of extra work required for the intellectual encoding of semantic mark-up – as compared to simply uploading an HTML page."
+  }
+  ```
+  HTTP method: POST
+  Кінцева точка: `host[:port]/ken/api/en/allterms`
+
+### 👍 Покращення
+
+- ENG🇬🇧 покращено обробку складних термінів, зокрема, з трьох слів;
+- UKR🇺🇦 ENG🇬🇧 Оновлено опис API для обробки/аналізу текстів у вигляді повідомлень та файлів для Англійської та Української мов у файлі `HELP.md`.
+
+### 🔴 Виправлення помилок
+
+- UKR🇺🇦 ENG🇬🇧 виправлені помилки відображення/візуалізації залежностей для термінів в елементі `#depparse_tab`, а саме в `#displacy`;
+- UKR🇺🇦 ENG🇬🇧 дрібні виправлення.
+
 ## v3.1.0, 2021-03-02
 
 ### 👍 Покращення

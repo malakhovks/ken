@@ -632,7 +632,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 | Позначення |Служба|Кінцева точка API|Метод http-запиту|
 | :--------: | :---------------------: | :--------- | :--------: |
-|    **S1**    | формування спеціалізованої `XML`-структури тексту *allterms.xml* |`host[:port]/ken/api/en/file/allterms`|POST|
+|    **S1**    | формування спеціалізованої `XML`-структури тексту *allterms.xml* |`host[:port]/ken/api/en/allterms`|POST|
 | **S2** | формування спеціалізованої `XML`-структури тексту *parce.xml* |`host[:port]/ken/api/en/file/parcexml`|POST|
 | **S3** | візуалізації залежностей термінів |`host[:port]/ken/api/en/html/depparse/nounchunk`|POST|
 | **S4** | візуалізації іменованих сутностей тексту |`host[:port]/ken/api/en/html/ner`|POST|
@@ -660,7 +660,7 @@ var fileField = document.querySelector('input[type="file"]');
 # formData.append(name, value);
 formData.append('file', fileField.files[0]);
 
-fetch("file", 'host[:port]/ken/api/en/file/allterms', {
+fetch("file", 'host[:port]/ken/api/en/allterms', {
                 method: 'post',
                 body: formData
             })
