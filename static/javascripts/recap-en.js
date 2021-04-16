@@ -723,7 +723,8 @@ function fetchFileToRecapService() {
 
         if (self.fetch) {
 
-            fetch('/ken/api/en/file/allterms', {
+            // fetch('/ken/api/en/file/allterms', {
+            fetch('/ken/api/en/allterms', {
                 method: 'post',
                 body: form
             })
