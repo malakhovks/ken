@@ -132,9 +132,11 @@ fetch("file", 'host[:port]/ken/api/en/allterms', {
 
 ##### E2 - Input data
 
+Вхідними даними може бути JSON-структура:
+
 ```JSON
 {
- "message": "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way.."
+ "message": "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way."
 }
 ```
 
