@@ -595,200 +595,207 @@ def merge_alltermsxml_structurexml():
 # ! parce.xml service
 # ------------------------------------------------------------------------------------------------------
 # """
-@app.route('/ken/api/en/file/parcexml', methods=['POST'])
+@app.route('/ken/api/en/parcexml', methods=['POST'])
 def get_parce_xml_en():
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        flash('No file part')
-        return abort(400)
+    req_data = request.get_json()
+    logging.debug(req_data)
 
-    file = request.files['file']
+    if req_data is not None and 'message' in req_data:
+        raw_text = req_data['message']
+        file_name = 'message'
+    else:
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return abort(400)
 
-    # if user does not select file, browser also submit an empty part without filename
-    if file.filename == '':
-        flash('No selected file')
-        return abort(400)
+        file = request.files['file']
 
-    if file and allowed_file(file.filename):
-        # pdf processing
-        if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
-            pdf_file = secure_filename(file.filename)
-            destination = "/".join([tempfile.mkdtemp(),pdf_file])
-            file.save(destination)
-            file.close()
-            if os.path.isfile(destination):
-                # raw_text = get_text_from_pdfminer(destination)
-                raw_text = get_text_from_pdf(destination)
-        # docx processing
-        if file.filename.rsplit('.', 1)[1].lower() == 'docx':
-            docx_file = secure_filename(file.filename)
-            destination = "/".join([tempfile.mkdtemp(),docx_file])
-            file.save(destination)
-            file.close()
-            if os.path.isfile(destination):
-                raw_text = get_text_from_docx(destination)
-        # txt processing
-        if file.filename.rsplit('.', 1)[1].lower() == 'txt':
-            # decode the file as UTF-8 ignoring any errors
-            raw_text = file.read().decode('utf-8', errors='replace')
-            file.close()
+        # if user does not select file, browser also submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return abort(400)
 
-        # POS UD
-        # https://universaldependencies.org/u/pos/
-        if (request.args.get('pos', None) == 'ud') or (request.args.get('pos', None) == None):
-            speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'99', 'PRON':'S11', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'99', 'CCONJ':'U', 'DET':'99', 'PART':'99', 'SCONJ':'U', 'SPACE':'98'}
+        if file and allowed_file(file.filename):
+            # pdf processing
+            if file.filename.rsplit('.', 1)[1].lower() == 'pdf':
+                pdf_file = secure_filename(file.filename)
+                destination = "/".join([tempfile.mkdtemp(),pdf_file])
+                file.save(destination)
+                file.close()
+                if os.path.isfile(destination):
+                    # raw_text = get_text_from_pdfminer(destination)
+                    raw_text = get_text_from_pdf(destination)
+            # docx processing
+            if file.filename.rsplit('.', 1)[1].lower() == 'docx':
+                docx_file = secure_filename(file.filename)
+                destination = "/".join([tempfile.mkdtemp(),docx_file])
+                file.save(destination)
+                file.close()
+                if os.path.isfile(destination):
+                    raw_text = get_text_from_docx(destination)
+            # txt processing
+            if file.filename.rsplit('.', 1)[1].lower() == 'txt':
+                # decode the file as UTF-8 ignoring any errors
+                raw_text = file.read().decode('utf-8', errors='replace')
+                file.close()
 
-        # TODO Correctly relate the parts of speech with spaCy
-        # POS spaCy
-        if request.args.get('pos', None) == 'spacy':
-            speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
+    # POS UD
+    # https://universaldependencies.org/u/pos/
+    if (request.args.get('pos', None) == 'ud') or (request.args.get('pos', None) == None):
+        speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'99', 'PRON':'S11', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'99', 'CCONJ':'U', 'DET':'99', 'PART':'99', 'SCONJ':'U', 'SPACE':'98'}
 
-        try:
+    # TODO Correctly relate the parts of speech with spaCy
+    # POS spaCy
+    if request.args.get('pos', None) == 'spacy':
+        speech_dict_POS_tags = {'NOUN':'S1', 'ADJ':'S2', 'VERB': 'S4', 'INTJ':'S21', 'PUNCT':'98', 'SYM':'98', 'CONJ':'U', 'NUM':'S7', 'X':'S29', 'PRON':'S10', 'ADP':'P', 'PROPN':'S22', 'ADV':'S16', 'AUX':'AUX', 'CCONJ':'CCONJ', 'DET':'DET', 'PART':'PART', 'SCONJ':'SCONJ', 'SPACE':'SPACE'}
 
-            text_normalized = text_normalization_default(raw_text)
+    try:
 
-            # spelling correction with language_check - Python wrapper for LanguageTool
+        text_normalized = text_normalization_default(raw_text)
+
+        # spelling correction with language_check - Python wrapper for LanguageTool
+        # if request.args.get('spell', None) != None:
+        #     lt = language_check.LanguageTool('en-US')
+        #     matches = lt.check(text_normalized)
+        #     text_normalized = language_check.correct(text_normalized, matches)
+
+        # default sentence normalization + spaCy doc init
+        doc = NLP_EN(text_normalized)
+        # Measure the Size of doc Python Object
+        logging.info("%s byte", get_size(doc))
+
+        """
+        # create the <parce.xml> file structure
+        """
+        # create root element <text>
+        root_element = ET.Element("text")
+        sentence_index = 0
+
+        for sentence in doc.sents:
+            sentence_index+=1
+
+            # default sentence normalization
+            sentence_clean = sentence_normalization_default(sentence.text)
+
+            # spelling Correction with TextBlob
             # if request.args.get('spell', None) != None:
-            #     lt = language_check.LanguageTool('en-US')
-            #     matches = lt.check(text_normalized)
-            #     text_normalized = language_check.correct(text_normalized, matches)
+            #     sentence_clean = sentence_spelling(sentence_clean)
 
-            # default sentence normalization + spaCy doc init
-            doc = NLP_EN(text_normalized)
-            # Measure the Size of doc Python Object
-            logging.info("%s byte", get_size(doc))
+            # XML structure creation
+            new_sentence_element = ET.Element('sentence')
+            # create and append <sentnumber>
+            new_sentnumber_element = ET.Element('sentnumber')
+            new_sentnumber_element.text = str(sentence_index)
+            new_sentence_element.append(new_sentnumber_element)
+            # create and append <sent>
+            new_sent_element = ET.Element('sent')
+            new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
+            new_sentence_element.append(new_sent_element)
 
-            """
-            # create the <parce.xml> file structure
-            """
-            # create root element <text>
-            root_element = ET.Element("text")
-            sentence_index = 0
+            doc_for_lemmas = NLP_EN(sentence_clean)
+            # Measure the Size of doc_for_lemmas Python Object
+            logging.info("%s byte", get_size(doc_for_lemmas))
 
-            for sentence in doc.sents:
-                sentence_index+=1
+            # create amd append <ner>, <entity>
+            # NER labels description https://spacy.io/api/annotation#named-entities
+            if len(doc_for_lemmas.ents) != 0:
+                # create <ner>
+                ner_element = ET.Element('ner')
+                for ent in doc_for_lemmas.ents:
+                    # create <entity>
+                    new_entity_element = ET.Element('entity')
+                    # create and append <entitytext>
+                    new_entity_text_element = ET.Element('entitytext')
+                    new_entity_text_element.text = ent.text
+                    new_entity_element.append(new_entity_text_element)
+                    # create and append <label>
+                    new_entity_label_element = ET.Element('label')
+                    new_entity_label_element.text = ent.label_
+                    new_entity_element.append(new_entity_label_element)
+                    # create and append <startentitypos>
+                    new_start_entity_pos_character_element = ET.Element('startentityposcharacter')
+                    new_start_entity_pos_token_element = ET.Element('startentitypostoken')
+                    new_start_entity_pos_character_element.text = str(ent.start_char + 1)
+                    new_start_entity_pos_token_element.text = str(ent.start + 1)
+                    new_entity_element.append(new_start_entity_pos_character_element)
+                    new_entity_element.append(new_start_entity_pos_token_element)
+                    # create and append <endentitypos>
+                    new_end_entity_pos_character_element = ET.Element('endentityposcharacter')
+                    new_end_entity_pos_token_element = ET.Element('endentitypostoken')
+                    new_end_entity_pos_character_element.text = str(ent.end_char)
+                    new_end_entity_pos_token_element.text = str(ent.end)
+                    new_entity_element.append(new_end_entity_pos_character_element)
+                    new_entity_element.append(new_end_entity_pos_token_element)
+                    # append <entity> to <ner>
+                    ner_element.append(new_entity_element)
+                # append <ner> to <sentence>
+                new_sentence_element.append(ner_element)
 
-                # default sentence normalization
-                sentence_clean = sentence_normalization_default(sentence.text)
+            # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
+            # doc_for_lemmas = NLP_EN(sentence_clean)
+            for lemma in doc_for_lemmas:
+            # for lemma in sentence:
+                # create and append <item>
+                new_item_element = ET.Element('item')
+                # create and append <word>
+                new_word_element = ET.Element('word')
+                new_word_element.text = lemma.text
+                new_item_element.append(new_word_element)
+                # create and append <lemma>
+                new_lemma_element = ET.Element('lemma')
+                if lemma.lemma_ not in ['-PRON-']:
+                    new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
+                else:
+                    new_lemma_element.text = lemma.text
+                new_item_element.append(new_lemma_element)
+                # create and append <number>
+                new_number_element = ET.Element('number')
+                new_number_element.text = str(lemma.i+1)
+                new_item_element.append(new_number_element)
+                # create and append <speech>
+                new_speech_element = ET.Element('speech')
+                # relate the universal dependencies parts of speech with konspekt tags
+                if (request.args.get('pos', None) == 'ud') or (request.args.get('pos', None) == None):
+                    new_speech_element.text = speech_dict_POS_tags[lemma.pos_]
+                # relate the spaCy parts of speech with konspekt tags
+                if request.args.get('pos', None) == 'spacy':
+                    new_speech_element.text = speech_dict_POS_tags[lemma.tag_]
+                new_item_element.append(new_speech_element)
+                # create and append <pos>
+                new_pos_element = ET.Element('pos')
+                new_pos_element.text = str(lemma.idx+1)
+                new_item_element.append(new_pos_element)
 
-                # spelling Correction with TextBlob
-                # if request.args.get('spell', None) != None:
-                #     sentence_clean = sentence_spelling(sentence_clean)
+                # create and append <relate> and <rel_type>
+                new_rel_type_element = ET.Element('rel_type')
+                new_relate_element = ET.Element('relate')
+                if lemma.dep_ == 'punct':
+                    new_rel_type_element.text = 'K0'
+                    new_relate_element.text = '0'
+                    new_item_element.append(new_rel_type_element)
+                    new_item_element.append(new_relate_element)
+                else:
+                    new_rel_type_element.text = lemma.dep_
+                    new_item_element.append(new_rel_type_element)
+                    new_relate_element.text = str(lemma.head.i+1)
+                    new_item_element.append(new_relate_element)
 
-                # XML structure creation
-                new_sentence_element = ET.Element('sentence')
-                # create and append <sentnumber>
-                new_sentnumber_element = ET.Element('sentnumber')
-                new_sentnumber_element.text = str(sentence_index)
-                new_sentence_element.append(new_sentnumber_element)
-                # create and append <sent>
-                new_sent_element = ET.Element('sent')
-                new_sent_element.text = sentence_clean #.encode('ascii', 'ignore') errors='replace'
-                new_sentence_element.append(new_sent_element)
+                # create and append <group_n>
+                new_group_n_element = ET.Element('group_n')
+                new_group_n_element.text = '1'
+                new_item_element.append(new_group_n_element)
 
-                doc_for_lemmas = NLP_EN(sentence_clean)
-                # Measure the Size of doc_for_lemmas Python Object
-                logging.info("%s byte", get_size(doc_for_lemmas))
+                new_sentence_element.append(new_item_element)
 
-                # create amd append <ner>, <entity>
-                # NER labels description https://spacy.io/api/annotation#named-entities
-                if len(doc_for_lemmas.ents) != 0:
-                    # create <ner>
-                    ner_element = ET.Element('ner')
-                    for ent in doc_for_lemmas.ents:
-                        # create <entity>
-                        new_entity_element = ET.Element('entity')
-                        # create and append <entitytext>
-                        new_entity_text_element = ET.Element('entitytext')
-                        new_entity_text_element.text = ent.text
-                        new_entity_element.append(new_entity_text_element)
-                        # create and append <label>
-                        new_entity_label_element = ET.Element('label')
-                        new_entity_label_element.text = ent.label_
-                        new_entity_element.append(new_entity_label_element)
-                        # create and append <startentitypos>
-                        new_start_entity_pos_character_element = ET.Element('startentityposcharacter')
-                        new_start_entity_pos_token_element = ET.Element('startentitypostoken')
-                        new_start_entity_pos_character_element.text = str(ent.start_char + 1)
-                        new_start_entity_pos_token_element.text = str(ent.start + 1)
-                        new_entity_element.append(new_start_entity_pos_character_element)
-                        new_entity_element.append(new_start_entity_pos_token_element)
-                        # create and append <endentitypos>
-                        new_end_entity_pos_character_element = ET.Element('endentityposcharacter')
-                        new_end_entity_pos_token_element = ET.Element('endentitypostoken')
-                        new_end_entity_pos_character_element.text = str(ent.end_char)
-                        new_end_entity_pos_token_element.text = str(ent.end)
-                        new_entity_element.append(new_end_entity_pos_character_element)
-                        new_entity_element.append(new_end_entity_pos_token_element)
-                        # append <entity> to <ner>
-                        ner_element.append(new_entity_element)
-                    # append <ner> to <sentence>
-                    new_sentence_element.append(ner_element)
-
-                # create and append <item>, <word>, <lemma>, <number>, <pos>, <speech>
-                # doc_for_lemmas = NLP_EN(sentence_clean)
-                for lemma in doc_for_lemmas:
-                # for lemma in sentence:
-                    # create and append <item>
-                    new_item_element = ET.Element('item')
-                    # create and append <word>
-                    new_word_element = ET.Element('word')
-                    new_word_element.text = lemma.text
-                    new_item_element.append(new_word_element)
-                    # create and append <lemma>
-                    new_lemma_element = ET.Element('lemma')
-                    if lemma.lemma_ not in ['-PRON-']:
-                        new_lemma_element.text = lemma.lemma_ #.encode('ascii', 'ignore')
-                    else:
-                        new_lemma_element.text = lemma.text
-                    new_item_element.append(new_lemma_element)
-                    # create and append <number>
-                    new_number_element = ET.Element('number')
-                    new_number_element.text = str(lemma.i+1)
-                    new_item_element.append(new_number_element)
-                    # create and append <speech>
-                    new_speech_element = ET.Element('speech')
-                    # relate the universal dependencies parts of speech with konspekt tags
-                    if (request.args.get('pos', None) == 'ud') or (request.args.get('pos', None) == None):
-                        new_speech_element.text = speech_dict_POS_tags[lemma.pos_]
-                    # relate the spaCy parts of speech with konspekt tags
-                    if request.args.get('pos', None) == 'spacy':
-                        new_speech_element.text = speech_dict_POS_tags[lemma.tag_]
-                    new_item_element.append(new_speech_element)
-                    # create and append <pos>
-                    new_pos_element = ET.Element('pos')
-                    new_pos_element.text = str(lemma.idx+1)
-                    new_item_element.append(new_pos_element)
-
-                    # create and append <relate> and <rel_type>
-                    new_rel_type_element = ET.Element('rel_type')
-                    new_relate_element = ET.Element('relate')
-                    if lemma.dep_ == 'punct':
-                        new_rel_type_element.text = 'K0'
-                        new_relate_element.text = '0'
-                        new_item_element.append(new_rel_type_element)
-                        new_item_element.append(new_relate_element)
-                    else:
-                        new_rel_type_element.text = lemma.dep_
-                        new_item_element.append(new_rel_type_element)
-                        new_relate_element.text = str(lemma.head.i+1)
-                        new_item_element.append(new_relate_element)
-
-                    # create and append <group_n>
-                    new_group_n_element = ET.Element('group_n')
-                    new_group_n_element.text = '1'
-                    new_item_element.append(new_group_n_element)
-
-                    new_sentence_element.append(new_item_element)
-
-                # create full <parce.xml> file structure
-                root_element.append(new_sentence_element)
-            return ET.tostring(root_element, encoding='utf8', method='xml')
-        except Exception as e:
-            logging.error(e, exc_info=True)
-            return abort(500)
-    file.close()
-    return abort(400)
+            # create full <parce.xml> file structure
+            root_element.append(new_sentence_element)
+        return ET.tostring(root_element, encoding='utf8', method='xml')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        return abort(500)
+    # file.close()
+    # return abort(400)
 """
 # parce.xml service
 # ------------------------------------------------------------------------------------------------------
