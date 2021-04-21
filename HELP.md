@@ -98,7 +98,8 @@ curl "http://194.44.28.250:45100/kua/api/task/parce/result?id=uwsgi_spoolfile_on
 | :----: | :------------------------------------------: | :----------------------------------------------------------- | :---------: |
 | **E1** |  Отримати XML-структуру **allterms.xml** з файлу | `host[:port]/ken/api/en/allterms` |    POST   |
 | **E2** |  Отримати XML-структуру **allterms.xml** з повідомлення | `host[:port]/ken/api/en/allterms` |    POST   |
-| **E3** |  Отримати XML-структуру **parce.xml** з файлу | `host[:port]/ken/api/en/file/parcexml` |    POST   |
+| **E3** |  Отримати XML-структуру **parce.xml** з файлу | `host[:port]/ken/api/en/parcexml` |    POST   |
+| **E4** |  Отримати XML-структуру **parce.xml** з повідомлення | `host[:port]/ken/api/en/parcexml` |    POST   |
 
 ##### E1 - Input data
 
@@ -159,7 +160,7 @@ var fileField = document.querySelector('input[type="file"]');
 # formData.append(name, value);
 formData.append('file', fileField.files[0]);
 
-fetch("file", 'host[:port]/ken/api/en/file/parcexml', {
+fetch("file", 'host[:port]/ken/api/en/parcexml', {
                 method: 'post',
                 body: formData
             })
@@ -169,3 +170,13 @@ fetch("file", 'host[:port]/ken/api/en/file/parcexml', {
 ```
 
 Процес формування спеціалізованої `XML`-структури тексту може зайняти деякий час (в залежності від обсягу тексту), але в загальному випадку вихідні дані формуються миттєво.
+
+##### E4 - Input data
+
+Вхідними даними може бути JSON-структура:
+
+```JSON
+{
+ "message": "After the vision of the Semantic Web was broadcasted at the turn of the millennium, ontology became a synonym for the solution to many problems concerning the fact that computers do not understand human language: if there were an ontology and every document were marked up with it and we had agents that would understand the mark-up, then computers would finally be able to process our queries in a really sophisticated way."
+}
+```
