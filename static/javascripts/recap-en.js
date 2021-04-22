@@ -795,7 +795,8 @@ function fetchFileToRecapService() {
                 })
                 // fetch to parce.xml for NER
                 .then(next => {
-                    return fetch('/ken/api/en/file/parcexml', {
+                    // return fetch('/ken/api/en/file/parcexml', {
+                        return fetch('/ken/api/en/parcexml', {
                         method: 'post',
                         body: form
                     })
