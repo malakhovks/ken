@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export TERM=xterm
 
 # turn on bash's job control
 set -m
