@@ -1,16 +1,21 @@
-Flask==1.1.2
+# Flask==1.1.2
+Flask==1.1.4
 # flask-cors==3.0.8
 flask-cors==3.0.10
 # spacy>=2.2.0,<3.0.0
-spacy==3.0.6
+# spacy==3.0.6
+spacy==3.0.7
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz#egg=en_core_web_sm
 # https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.0.0/en_core_web_trf-3.0.0.tar.gz#egg=en_core_web_trf
 # https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.0.0/en_core_web_lg-3.0.0.tar.gz#egg=en_core_web_lg
 # pdfminer.six==20200402
 # pdfminer.six==20200517
-pdfminer.six==20201018
-uWSGI==2.0.18
-nltk==3.5
+# pdfminer.six==20201018
+pdfminer.six==20211012
+# uWSGI==2.0.18
+uWSGI==2.0.20
+# nltk==3.5
+nltk==3.6.4
 chardet==3.0.4
 # textblob==0.15.3
 # language-check>=1.1
