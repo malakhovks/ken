@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export TERM=xterm
+# export TERM=xterm
 
 # turn on bash's job control
 set -m
@@ -24,9 +24,9 @@ set -m
 export WINEDEBUG=-all
 export DISPLAY=:1
 export LC_ALL=ru_RU.CP1251
-# Xvfb :1 -screen 0 800x600x16 &
+Xvfb :1 -screen 0 800x600x16 &
 cd ./deploy/konspekt
-# wine Konspekt.exe 1.txt 1 10000
-wineconsole Konspekt.exe 1.txt 1 10000
+wine Konspekt.exe 1.txt 1 10000
+# wineconsole Konspekt.exe 1.txt 1 10000
 # for konspekt-old:
 # cd ./deploy/konspekt && env LC_ALL=ru_RU.CP1251 wine Konspekt.exe 1.txt 1 5000
