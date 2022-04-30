@@ -6,16 +6,19 @@ Werkzeug<2.0.0
 #---------------------
 # Flask==2.0.3
 flask-cors==3.0.10
+#---------------------
 # spacy>=2.2.0,<3.0.0
-# spacy==3.0.8
-spacy==3.1.6
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.1.0/en_core_web_sm-3.1.0.tar.gz#egg=en_core_web_sm
-# https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz#egg=en_core_web_sm
+spacy==3.0.8
+# spacy==3.1.6
+# https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.1.0/en_core_web_sm-3.1.0.tar.gz#egg=en_core_web_sm
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz#egg=en_core_web_sm
 # https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.0.0/en_core_web_trf-3.0.0.tar.gz#egg=en_core_web_trf
 # https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.0.0/en_core_web_lg-3.0.0.tar.gz#egg=en_core_web_lg
+#---------------------
 # pdfminer.six==20200402
 # pdfminer.six==20200517
 pdfminer.six==20201018
+#---------------------
 uWSGI==2.0.18
 nltk==3.5
 chardet==3.0.4
