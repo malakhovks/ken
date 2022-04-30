@@ -2,7 +2,8 @@
 Flask==2.1.2
 flask-cors==3.0.10
 # spacy>=2.2.0,<3.0.0
-spacy==3.0.6
+# spacy==3.0.6
+spacy==3.0.8
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz#egg=en_core_web_sm
 # https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.0.0/en_core_web_trf-3.0.0.tar.gz#egg=en_core_web_trf
 # https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.0.0/en_core_web_lg-3.0.0.tar.gz#egg=en_core_web_lg
