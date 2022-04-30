@@ -55,7 +55,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
 
 # load libraries for API proccessing
-from flask import Flask, jsonify, flash, request, Response, redirect, url_for, abort, render_template, send_file, safe_join
+from flask import Flask, jsonify, flash, request, Response, abort, render_template, send_file, safe_join
 # A Flask extension for handling Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
