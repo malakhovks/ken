@@ -64,6 +64,16 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 # Load globally spaCy model via package name
 NLP_EN = spacy.load('en_core_web_sm')
+# TODO Dynamically set the nlp.max_length according to the length of the document. This makes it simpler while handling documents/text of unknown length.
+"""
+# Example
+for file in folder_text_files:
+    with open(file, 'r', errors="ignore") as f:
+         text = f.read()
+         f.close()
+    nlp.max_length = len(text) + 100 """
+# Text of length 1195652 exceeds maximum of 1000000. The parser and NER models require roughly 1GB of temporary memory per 100,000 characters in the input. This means long texts may cause memory allocation errors. If you're not using the parser or NER, it's probably safe to increase the `nlp.max_length` limit. The limit is in number of characters, so you can check whether your inputs are too long by checking `len(text)`.
+NLP_EN.max_length = 2000000
 # NLP_EN_TRF = spacy.load('en_core_web_trf')
 
 __author__ = "Kyrylo Malakhov <malakhovks@nas.gov.ua> and Vitalii Velychko <aduisukr@gmail.com>"
