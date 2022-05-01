@@ -1,3 +1,44 @@
+## v3.3.2, 2021-05-01
+
+### 🔴 Виправлення помилок
+
+#### ENG🇬🇧
+
+- виправлено помилку `nlp.max_length limit exceeded`:
+  Text of length 1195652 exceeds maximum of 1000000. The parser and NER models require roughly 1GB of temporary memory per 100,000 characters in the input. This means long texts may cause memory allocation errors. If you're not using the parser or NER, it's probably safe to increase the nlp.max_length limit. The limit is in number of characters, so you can check whether your inputs are too long by checking len(text).
+  Встановлено ліміт `NLP_EN.max_length = 5000000`;
+- виправлено помилку `ImportError: cannot import name 'escape' from 'jinja2'`:
+  This happens because Jinja has removed those functions in a recent version —  3.1.0 — [released on March 24th, 2022](https://jinja.palletsprojects.com/en/3.1.x/changes/#version-3-1-0).
+
+  > ``Markup`` and ``escape`` should be imported from MarkupSafe.
+
+  You have two options form here:
+  1. either this error comes from one of your dependency.
+    The first thing you should consider is to upgrade the said dependence(s). If this is not possible, what you can do, from here is to downgrade your Jinja version to a version that would still include `escape`, for example, adding it explicitly in your _requirements.txt_:
+    
+    ```
+    jinja2<3.1.0
+    ```
+  2. or, your error is from code you wrote, so you can fix it by importing it from MarkupSafe, as suggested in the Jinja release notes.
+    
+    So, you should use
+    ```python
+    from markupsafe import escape
+    ```
+    instead of 
+    ```python
+    from jinja2 import escape
+    ```
+  При використанні `Flask==1.1.2` треба зафікмувати наступні залежності: `jinja2<3.1.0`; `itsdangerous==2.0.1`, `Werkzeug<2.0.0`;
+- дрібні виправлення коду.
+
+### ⚠️ Зауваження
+
+#### ENG🇬🇧
+
+- оновлено бібліотеку spaCy до версії `3.0.6`;
+- встановлено `keepalive_timeout   1050` для nginx;
+
 ## v3.3.1, 2021-04-21
 
 ### 🔴 Виправлення помилок
