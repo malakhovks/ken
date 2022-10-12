@@ -6,7 +6,7 @@
 
 -------
 
-Актуальна версія **KEn** (Konspekt English & Ukkrainian) доступна для вільного використання в науково-дослідних та педагогічних ціляз за посиланням: [https://konspekt.ai-service.ml](https://konspekt.ai-service.ml/)
+Актуальна версія **KEn** (Konspekt English & Ukkrainian) доступна для вільного використання в науково-дослідних та педагогічних ціляз за посиланням: [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/)
 
 <a name="toc-ua"></a>
 ## **KEn** (Konspekt English) - мережевий засіб виокремлення термінів з природномовних текстів англійською мовою
