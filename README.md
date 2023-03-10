@@ -8,6 +8,8 @@
 
 Актуальна версія **KEn** (Konspekt English & Ukkrainian) доступна для вільного використання в науково-дослідних та педагогічних ціляз за посиланням: [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/)
 
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/) server.
+
 <a name="toc-ua"></a>
 ## **KEn** (Konspekt English) - мережевий засіб виокремлення термінів з природномовних текстів англійською мовою
 
