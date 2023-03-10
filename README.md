@@ -984,6 +984,8 @@ jQuery.ajax({
 <a name="toc-en"></a>
 **KEn** (Konspekt English) is an NLP-powered Web service for contextual and semantic analysis with document taxonomy building feature.
 
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/) server.
+
 ### Table of Contents
 - **[Features](#features-en)**
 - **[Building and running under UNIX (Linux/MacOS) with Docker](#building-running-linux)**
