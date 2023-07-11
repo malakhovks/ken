@@ -1,4 +1,5 @@
-FROM python:3.7.10-slim-stretch
+FROM python:3.7.17-slim-bookworm
+# FROM python:3.7.10-slim-stretch
 # FROM python:3.7.7-slim-stretch
 # FROM python:2.7-slim-stretch
 
@@ -29,9 +30,12 @@ RUN chgrp -R www-data /srv/ken/deploy/konspekt \
     # install wine stable
     && apt-get install -y software-properties-common apt-transport-https \
     && dpkg --add-architecture i386 \
-    && wget -nc https://dl.winehq.org/wine-builds/winehq.key \
-    && apt-key add winehq.key \
-    && apt-add-repository https://dl.winehq.org/wine-builds/debian/ \
+    # && wget -nc https://dl.winehq.org/wine-builds/winehq.key \
+    && mkdir -pm755 /etc/apt/keyrings \
+    && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
+    # && apt-key add winehq.key \
+    # && apt-add-repository https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
+    && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
     && apt-get update \
     && apt-get install -y --install-recommends winehq-stable \
     && apt-get install -y xvfb --fix-missing \
