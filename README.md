@@ -14,6 +14,8 @@
 
 **Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.
 
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/) server.
+
 <a name="toc-ua"></a>
 ## **KEn** (Konspekt English) - мережевий засіб виокремлення термінів з природномовних текстів англійською мовою
 
