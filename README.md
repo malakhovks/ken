@@ -1,14 +1,18 @@
 # KEn (Konspekt English)
 
+## Donation/Funding
+
+[https://send.monobank.ua/jar/5ad56oNAcD](https://send.monobank.ua/jar/5ad56oNAcD)
+
 ### Choose your language / Оберіть мову
 - **[Українська](#toc-ua)**
 - **[English](#toc-en)**
 
 -------
 
-Актуальна версія **KEn** (Konspekt English & Ukkrainian) доступна для вільного використання в науково-дослідних та педагогічних ціляз за посиланням: [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/)
+Актуальна версія **KEn** (Konspekt English & Ukkrainian) доступна для вільного використання в науково-дослідних та педагогічних ціляз за посиланням: [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//)
 
-**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/) server.
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.
 
 <a name="toc-ua"></a>
 ## **KEn** (Konspekt English) - мережевий засіб виокремлення термінів з природномовних текстів англійською мовою
@@ -984,7 +988,7 @@ jQuery.ajax({
 <a name="toc-en"></a>
 **KEn** (Konspekt English) is an NLP-powered Web service for contextual and semantic analysis with document taxonomy building feature.
 
-**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/) server.
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.
 
 ### Table of Contents
 - **[Features](#features-en)**

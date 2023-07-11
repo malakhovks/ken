@@ -1,3 +1,14 @@
+## v3.3.3: Bug fixes of deployment process
+
+### 🔴 Bug fixes
+
+- updated up to python:3.7.17-slim-bookworm base docker image;
+- fixes wine installation/setup on Debian 12 Bookworm.
+
+### 👥 Contributors
+
+@malakhovks
+
 ## v3.3.2, 2021-05-01
 
 ### 🔴 Виправлення помилок
