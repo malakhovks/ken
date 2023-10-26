@@ -17,12 +17,14 @@ Please support @malakhovks. Despite the Wartime in Ukraine, R&D in the field of 
 
 -------
 
-Актуальна версія **KEn** (Ukrainian, English) доступна для вільного використання в науково-дослідних та педагогічних цілях за посиланням: [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua/)
+The latest version of **KEn** (Ukrainian, English) is available for free use (for research and educational purposes) via the link: [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua/)
 
-**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.ы
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua/) server.
 
 <a name="toc-ua"></a>
 ## **KEn** (Ukrainian, English) - мережевий засіб виокремлення термінів з природномовних текстів українською та англійською мовами.
+
+Актуальна версія **KEn** (Ukrainian, English) доступна для вільного використання в науково-дослідних та педагогічних цілях за посиланням: [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua/)
 
 ### Зміст
 - **[Призначення та функції](#features-ua)**
@@ -49,7 +51,6 @@ Please support @malakhovks. Despite the Wartime in Ukraine, R&D in the field of 
 - автоматична екстракція/виокремлення з документів одно- та багатослівних термінів;
 - автоматична екстракція/виокремлення контекстів, у яких використовуються відповідні терміни, та представлення їх у вигляді спеціалізованих XML- та HTML- структур;
 - виокремлення заданих семантичних відношень на основі шаблонів їх описів.
-
 
 Мережевий засіб (у вигляді веб-сервісу з API) **KEn** (Ukrainian, English) призначений для виокремлення термінів з природномовних текстів українською та англійською мовами з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 
