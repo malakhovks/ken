@@ -2,18 +2,13 @@
 
 ## 💳 Funding
 
-This study would not have been possible without the financial support of the [National Research Foundation of Ukraine](https://nrfu.org.ua/) (Open Funder Registry: 10.13039/100018227).
-Our work was funded by Grant contract:
+This study would not have been possible without the financial support of the [National Research Foundation of Ukraine](https://nrfu.org.ua/) (Open Funder Registry: 10.13039/100018227). Our work was funded by Grant contract:
 
 - Development of the cloud-based platform for patient-centered telerehabilitation of oncology patients with mathematical-related modeling, application ID: 2021.01/0136.
 
 ## 🚀 Sponsor this project
 
 Please support @malakhovks. Despite the Wartime in Ukraine, R&D in the field of Digital Health are being resumed.
-[https://send.monobank.ua/jar/5ad56oNAcD](https://send.monobank.ua/jar/5ad56oNAcD)
-
-## Donation/Funding
-
 [https://send.monobank.ua/jar/5ad56oNAcD](https://send.monobank.ua/jar/5ad56oNAcD)
 
 ### Choose your language / Оберіть мову
