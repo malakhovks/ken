@@ -1,3 +1,13 @@
+## v3.3.4: Update project description
+
+### 📚 Docs
+
+- updated project description.
+
+### 👥 Contributors
+
+@malakhovks
+
 ## v3.3.3: Bug fixes of deployment process
 
 ### 🔴 Bug fixes

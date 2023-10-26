@@ -22,7 +22,7 @@ RUN chgrp -R www-data /srv/ken/deploy/konspekt \
     && apt-get -y update \
     && apt-get -y install wget \
     && apt-get -y install nginx \
-    && apt-get -y install python-dev \
+    && apt-get -y install python3-dev \
     && apt-get -y install build-essential \
     # install app dependencies
     && pip install -r ./deploy/requirements.txt --src /usr/local/src \

@@ -1,4 +1,15 @@
-# KEn (Konspekt English)
+# KEn (Ukrainian, English)
+
+## 💳 Funding
+
+This study would not have been possible without the financial support of the [National Research Foundation of Ukraine](https://nrfu.org.ua/) (Open Funder Registry: 10.13039/100018227). Our work was funded by Grant contract:
+
+- Development of the cloud-based platform for patient-centered telerehabilitation of oncology patients with mathematical-related modeling, application ID: 2021.01/0136.
+
+## 🚀 Sponsor this project
+
+Please support @malakhovks. Despite the Wartime in Ukraine, R&D in the field of Digital Health are being resumed.
+[https://send.monobank.ua/jar/5ad56oNAcD](https://send.monobank.ua/jar/5ad56oNAcD)
 
 ## Donation/Funding
 
@@ -10,14 +21,12 @@
 
 -------
 
-Актуальна версія **KEn** (Konspekt English & Ukkrainian) доступна для вільного використання в науково-дослідних та педагогічних ціляз за посиланням: [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//)
+Актуальна версія **KEn** (Ukrainian, English) доступна для вільного використання в науково-дослідних та педагогічних цілях за посиланням: [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua/)
 
-**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.
-
-**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://konspekt.ai-service.pp.ua](https://konspekt.ai-service.pp.ua/) server.
+**Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.ы
 
 <a name="toc-ua"></a>
-## **KEn** (Konspekt English) - мережевий засіб виокремлення термінів з природномовних текстів англійською мовою
+## **KEn** (Ukrainian, English) - мережевий засіб виокремлення термінів з природномовних текстів українською та англійською мовами.
 
 ### Зміст
 - **[Призначення та функції](#features-ua)**
@@ -38,7 +47,7 @@
 <a name="features-ua"></a>
 ## Призначення та функції
 
-Лінгвістично-семантичний аналіз природної мови – це процес обробки природномовних текстів англійською, російською та українською мовами та формування визначених вихідних даних:
+Лінгвістично-семантичний аналіз природної мови – це процес обробки природномовних текстів англійською та українською мовами та формування визначених вихідних даних:
 
 - формалізація представлення синтактико-семантичної структури речень у вигляді спеціалізованих XML- та HTML- структур;
 - автоматична екстракція/виокремлення з документів одно- та багатослівних термінів;
@@ -46,7 +55,7 @@
 - виокремлення заданих семантичних відношень на основі шаблонів їх описів.
 
 
-Мережевий засіб (у вигляді веб-сервісу з API) **KEn** (Konspekt English) призначений для виокремлення термінів з природномовних текстів англійською мовою з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
+Мережевий засіб (у вигляді веб-сервісу з API) **KEn** (Ukrainian, English) призначений для виокремлення термінів з природномовних текстів українською та англійською мовами з використанням бібліотеки з відкритим вихідним кодом для передової обробки природних мов - [spaCy](https://spacy.io/).
 
 Мережевий засіб (у вигляді веб-сервісу з API) **KEn** охоплює всі найважливіші етапи обробки природної мови, а саме:
 
@@ -231,7 +240,7 @@ SpaCy – це бібліотека з відкритим вихідним ко�
 
 #### Конвеєр обробки електронних текстових документів.
 
-Архітектура макету мережевого засобу (у вигляді веб-сервісу з API) KEn (Konspekt English) представлена у вигляді конвеєру обробки електронних текстових документів (англ. NLP Pipeline), що містять природномовний текст, та складається з наступних етапів та компонентів:
+Архітектура макету мережевого засобу (у вигляді веб-сервісу з API) KEn представлена у вигляді конвеєру обробки електронних текстових документів (англ. NLP Pipeline), що містять природномовний текст, та складається з наступних етапів та компонентів:
 
 - Екстракція тексту з документів форматів .pdf, .docx, .doc. На етапі екстракції тексту з електронних документів використовуються бібліотеки з відкритим вихідним кодом: Textract, pdftotext.
 - Базова нормалізація тексту – так званий лінгвістичний препроцесінг (виправлення дефектів отриманих в результаті процедури екстрагування тексту з документів .pdf, .docx, .txt).
@@ -636,7 +645,7 @@ $ docker run --restart always --name ken -d -p 80:80 ken_image
 
 <a name="api-ua"></a>
 
-## Опис служб (веб-сервісів) мережевого засобу `KEn` (Konspekt English) доступних розробнику
+## Опис служб (веб-сервісів) мережевого засобу `KEn` (Ukrainian, English) доступних розробнику
 
 Розробнику доступні наступні служби через кінцеві точки API (API endpoints):
 
@@ -988,7 +997,7 @@ jQuery.ajax({
 -------
 
 <a name="toc-en"></a>
-**KEn** (Konspekt English) is an NLP-powered Web service for contextual and semantic analysis with document taxonomy building feature.
+**KEn** (Ukrainian, English) is an NLP-powered Web service for contextual and semantic analysis with document taxonomy building feature.
 
 **Important note:** ken project and documentation are in active development. For any technical clarifications and questions contact us via email: [malakhovks@nas.gov.ua](mailto:malakhovks@nas.gov.ua) or via Issues. The recent Russian's rocket shelling on critical infrastructure in Ukraine and Kyiv led to the shutdown of the [https://ken.e-rehab.pp.ua/](https://ken.e-rehab.pp.ua//) server.
 
@@ -1003,7 +1012,7 @@ jQuery.ajax({
 
 **KEn** network toolkit (Web service with API) is designed to distinguish terms from the natural language texts in English using [spaCy](https://spacy.io/) - an open source library for advanced natural language processing.
 
-**KEn** (Konspekt English) Web service covers all the most important stages of the natural language processing, namely:
+**KEn** (Ukrainian, English) Web service covers all the most important stages of the natural language processing, namely:
 
 - extracting text data from e-documents (`pdf`, `docx`, `txt`);
 - text preprocessing (or text normalization) - in our case this means correction of defects resulting from the procedure of extracting text data from e-documents;
