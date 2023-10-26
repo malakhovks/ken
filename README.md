@@ -11,10 +11,6 @@ This study would not have been possible without the financial support of the [Na
 Please support @malakhovks. Despite the Wartime in Ukraine, R&D in the field of Digital Health are being resumed.
 [https://send.monobank.ua/jar/5ad56oNAcD](https://send.monobank.ua/jar/5ad56oNAcD)
 
-## Donation/Funding
-
-[https://send.monobank.ua/jar/5ad56oNAcD](https://send.monobank.ua/jar/5ad56oNAcD)
-
 ### Choose your language / Оберіть мову
 - **[Українська](#toc-ua)**
 - **[English](#toc-en)**
