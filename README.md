@@ -2,7 +2,7 @@
 
 ## 💳 Funding
 
-![alt text](https://github.com/knowledge-ukraine/MedRehabBot/blob/main/logo_nrfu_eng.png?raw=true)
+![alt text](https://github.com/knowledge-ukraine/MedRehabBot/blob/main/logo_nrfu_eng.png?raw=true){:height="50px" width="50px"}
 
 This study would not have been possible without the financial support of the [National Research Foundation of Ukraine](https://nrfu.org.ua/) (Open Funder Registry: 10.13039/100018227). Our work was funded by Grant contract:
 
